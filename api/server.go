@@ -29,14 +29,14 @@ func configServerHandler(c *ServerConfig) http.Handler {
 	r := mux.NewRouter().SkipClean(true)
 	
 	// Register all routers.
-	RegisterAPIRouter(r)
+	return RegisterAPIRouter(r)
 	// Add new routers here.
 
 	// List of some generic handlers which are applied for all
 	// incoming requests.
-	var handlerFns = []api.HandlerFunc{
+	//var handlerFns = []api.HandlerFunc{
 		// Limits the number of concurrent http requests.
-		api.SetCommonHeaderHandler,
+		//api.SetCommonHeaderHandler,
 		// CORS setting for all browser API requests.
 		//api.SetCorsHandler,
 		// Validates all incoming URL resources, for invalid/unsupported
@@ -49,10 +49,10 @@ func configServerHandler(c *ServerConfig) http.Handler {
 		// Add new handlers here.
 
 		//api.SetLogHandler,
-	}
+	//}
 
 	// Register rest of the handlers.
-	return RegisterHandlers(r, handlerFns...)
+	//return RegisterHandlers(r, handlerFns...)
 }
 
 func NewApiServer(c *ServerConfig) *Server {
