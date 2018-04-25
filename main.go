@@ -4,7 +4,9 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"api"
+	
+	"elibot-apiserver/api"
+	"elibot-apiserver/config"
 )
 
 func func main() {
