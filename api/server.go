@@ -1,7 +1,6 @@
 package api
 
 import (
-	"net"
 	"net/http"
 	"time"
 	"github.com/gorilla/mux"
