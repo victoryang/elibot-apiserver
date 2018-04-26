@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 	"time"
+	"fmt"
 	"github.com/gorilla/mux"
 )
 
@@ -19,6 +20,7 @@ type Server struct {
 }
 
 func (s *Server) Run() {
+	fmt.Println("server listening...")
 	s.entryPoint.httpServer.ListenAndServe()
 }
 
