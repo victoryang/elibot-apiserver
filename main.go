@@ -6,10 +6,10 @@ import (
 	"syscall"
 
 	"elibot-apiserver/api"
-	"elibot-apiserver/config"
+	//"elibot-apiserver/config"
 )
 
-func handleSignals(s *api.Server) {
+func handleSignals(server *api.Server) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGINT, syscall.SIGTERM,
@@ -24,7 +24,7 @@ func handleSignals(s *api.Server) {
 			//go DumpStacks()
 		default:
 			// stop server
-			s.Shutdown()
+			server.Shutdown()
 			os.Exit(0)
 			return
 		}

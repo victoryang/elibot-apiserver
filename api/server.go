@@ -23,7 +23,7 @@ func (s *Server) Run() {
 }
 
 func (s *Server) Shutdown() {
-	s.entryPoint.httpServer.Shutdown()
+	s.entryPoint.httpServer.Close()
 }
 
 // configureServer handler returns final handler for the http server.
