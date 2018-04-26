@@ -25,6 +25,7 @@ func (s *Server) Run() {
 }
 
 func (s *Server) Shutdown() {
+	fmt.Println("server shuting down...")
 	s.entryPoint.httpServer.Close()
 }
 
