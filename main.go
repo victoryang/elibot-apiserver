@@ -33,7 +33,7 @@ func handleSignals(server *api.Server) {
 
 func main() {
 	c := new(api.ServerConfig)
-	c.Addr = "www.elibot.cn:9000"
+	c.Addr = "127.0.0.1:9000"
 	s := api.NewApiServer(c)
 	go s.Run();
 	handleSignals(s)
