@@ -5,9 +5,11 @@ import (
 	"fmt"
 
 	"github.com/gorilla/mux"
+	"elibot-apiserver/db"
 )
 
 func hello(w http.ResponseWriter, r *http.Request) {
+	db.NewDBContext("elibotDB.db")
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "test\n")
 	return

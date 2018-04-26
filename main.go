@@ -35,6 +35,6 @@ func main() {
 	c := new(api.ServerConfig)
 	c.Addr = "127.0.0.1:9000"
 	s := api.NewApiServer(c)
-	go s.Run();
+	s.Run();
 	handleSignals(s)
 }
