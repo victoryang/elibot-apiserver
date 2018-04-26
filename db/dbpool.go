@@ -17,9 +17,10 @@ type DBConnPool struct {
 }
 
 func CreateDBConnPool(s string, size int) (pool *DBConnPool, err error){
-	pool := new(DBConnPool)
+	pool = new(DBConnPool)
 	pool.db = new(DB)
-	if err = pool.db.OpenDB(s) && err!=nil {
+	err = pool.db.OpenDB(s)
+	if err!=nil {
 		pool=nil
 		return
 	}

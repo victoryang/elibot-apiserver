@@ -1,9 +1,9 @@
 package db
 
 import (
-	"fmt"
-	"errors"
-	"database/sql"
+	//"fmt"
+	//"errors"
+	//"database/sql"
 	_ "github.com/mattn/go-sqlite3"
 )
 
