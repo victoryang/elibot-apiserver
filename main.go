@@ -4,20 +4,12 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	
+
 	"elibot-apiserver/api"
 	"elibot-apiserver/config"
 )
 
-func func main() {
-	//eliBotConfig := config.NewElibotConfig()
-	//admin := api.NewAdminServer()
-	config := new(api.ServerConfig)
-	config.addr = "www.elibot.cn:9000"
-	s := api.NewApiServer(config)
-	s.Run();
-
-	// ignore signal handlers set by Iris
+func handleSignals(s *api.Server) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGINT, syscall.SIGTERM,
@@ -31,10 +23,18 @@ func func main() {
 		case syscall.SIGUSR1:
 			//go DumpStacks()
 		default:
-			// stop YIG server, order matters
-			s.Stop()
+			// stop server
+			s.Shutdown()
 			os.Exit(0)
 			return
 		}
 	}
+}
+
+func main() {
+	c := new(api.ServerConfig)
+	c.Addr = "www.elibot.cn:9000"
+	s := api.NewApiServer(c)
+	go s.Run();
+	handleSignals(s)
 }
