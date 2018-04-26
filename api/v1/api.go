@@ -11,7 +11,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func testv1(w http.ResponseWriter, r *http.Request) {
+func test(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "echo")
 	return
