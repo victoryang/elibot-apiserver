@@ -5,7 +5,7 @@ import (
 )
 
 func RegisterAPIRouter(r *mux.Router) *mux.Router {
-	r.HandleFunc("/",
+	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/api/v1/testv1", testv1).Methods("GET")
 	return r
 }
