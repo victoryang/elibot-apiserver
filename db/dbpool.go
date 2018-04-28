@@ -1,10 +1,10 @@
 package db
 
 import(
-	//"context"
+	"context"
 	//"errors"
 	//"fmt"
-	"database/sql"
+	//"database/sql"
 )
 
 const DB_POOL_SIZE_DEFAULT = 1
@@ -13,7 +13,7 @@ type DBConnPool struct {
 	db       *DB
 	//conn     []*sql.Conn
 	size     int
-	ctx      context
+	ctx      context.Context
 }
 
 func CreateDBConnPool(s string, size int) (pool *DBConnPool, err error){
