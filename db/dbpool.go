@@ -1,9 +1,9 @@
 package db
 
 import(
-	"context"
-	"errors"
-	"fmt"
+	//"context"
+	//"errors"
+	//"fmt"
 	"database/sql"
 )
 
@@ -11,7 +11,7 @@ const DB_POOL_SIZE_DEFAULT = 1
 
 type DBConnPool struct {
 	db       *DB
-	conn     []*sql.Conn
+	//conn     []*sql.Conn
 	size     int
 	ctx      context
 }

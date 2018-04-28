@@ -2,12 +2,12 @@ package db
 
 import (
 	"fmt"
-	"errors"
+	//"errors"
 	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
 )
 
-const SQLITE3 := "sqlite3"
+const SQLITE3 = "sqlite3"
 
 type DB struct {
 	db     *sql.DB
