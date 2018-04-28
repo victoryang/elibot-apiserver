@@ -21,6 +21,19 @@ func test(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
+	fmt.Printf ("starting get all bookprograms")
+	res, err := db.Get_All_Bookprograms()
+	if err!=nil {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, err)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, res)
+	return
+}
+
 func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/api/v1/test", test).Methods("GET")
