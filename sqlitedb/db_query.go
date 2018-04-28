@@ -2,7 +2,7 @@ package sqlitedb
 
 // #cgo LDFLAGS: -lsqlitedb
 // #include<stdlib.h>
-// #include<db/db_context.h>
+// #include<db/db_query.h>
 
 import "C"
 
