@@ -21,7 +21,7 @@ type Server struct {
 
 func (s *Server) Run() {
 	fmt.Println("server listening...")
-	s.entryPoint.httpServer.ListenAndServe()
+	go s.entryPoint.httpServer.ListenAndServe()
 }
 
 func (s *Server) Shutdown() {
@@ -40,6 +40,7 @@ func configServerHandler(c *ServerConfig) http.Handler {
 
 func NewApiServer(c *ServerConfig) *Server {
 	s := new(Server)
+
 	s.entryPoint.httpServer = &http.Server {
 		Addr:	c.Addr,
 		ReadTimeout:    10 * time.Minute,
