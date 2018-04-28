@@ -29,5 +29,5 @@ func (d *DB)OpenDB(name string) error {
 }
 
 func (d *DB)CloseDB() {
-	d.Close()
+	d.db.Close()
 }
