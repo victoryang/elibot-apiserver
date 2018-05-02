@@ -37,5 +37,6 @@ func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/api/v1/test", test).Methods("GET")
+	r.HandleFunc("/test", getAllBookprograms).Methods("GET")
 	return r
 }
