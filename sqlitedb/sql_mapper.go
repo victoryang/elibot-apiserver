@@ -3,15 +3,14 @@ package sqlitedb
 // #cgo LDFLAGS: -lsqlitedb
 // #include<stdlib.h>
 // #include<db/sql_mapper.h>
-
 import "C"
 import (
 	"errors"
 )
 
-/*type SqlMapper struct {
-	Mapper   *C.sql_mapper
-}*/
+type SqlMapper struct {
+	m   *C.sql_mapper
+}
 
 func Get_bookprogram_sql_mapper() (*SqlMapper, error) {
 	mapper := C.get_bookprogram_sql_mapper()
@@ -19,6 +18,6 @@ func Get_bookprogram_sql_mapper() (*SqlMapper, error) {
 		return nil, errors.Error("Getting sqlmapper fails")
 	}
 	//sql.Mapper = mapper
-	C.register_sql_mapper(mapper)
+	C.register_sql_mapper(mapper.m)
 	return mapper, nil
 }
