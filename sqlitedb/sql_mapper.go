@@ -19,7 +19,7 @@ func Get_bookprogram_sql_mapper(q_id string) (*SqlMapper, error) {
     defer C.free(unsafe.Pointer(id))
 
     var mapper *SqlMapper
-	mapper.m := C.get_bookprogram_sql_mapper(id)
+	mapper.m = C.get_bookprogram_sql_mapper(id)
 	if mapper == nil {
 		return nil, errors.New("Getting sqlmapper fails")
 	}

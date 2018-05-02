@@ -49,7 +49,7 @@ func db_query(q_id string) ([]byte, error){
     res := C.db_query(req)
     if res==nil {
     	fmt.Println("fail to query")
-    	return nil, errors.Error("fail to query")
+    	return nil, errors.New("fail to query")
     }
     return res, nil
 }
