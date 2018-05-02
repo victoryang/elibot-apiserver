@@ -6,6 +6,8 @@ package sqlitedb
 import "C"
 import (
     "unsafe"
+    "fmt"
+    "errors"
 )
 
 /*type query_req_option struct {
@@ -29,10 +31,11 @@ type query_req struct {
 }
 
 func db_query(q_id string) ([]byte, error){
-    id := CString(q_id)
+    id := C.CString(q_id)
     defer C.free(unsafe.Pointer(id))
 
     conn := C.CString("/root/elibotDB.db")
+    defer C.free(unsafe.Pointer(conn))
 
     opt := &C.db_query_req_option{C.DB_QUERY_MODE_STANDARD}
     req := &query_req{
@@ -43,7 +46,7 @@ func db_query(q_id string) ([]byte, error){
 					0,
 				}
 
-    res := C.db_query(&req)
+    res := C.db_query(req)
     if res==0 {
     	fmt.Println("fail to query")
     	return nil, errors.Error("fail to query")
