@@ -5,6 +5,7 @@ import (
 	"time"
 	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/urfave/negroni"
 )
 
 type ServerConfig struct {
@@ -33,9 +34,12 @@ func (s *Server) Shutdown() {
 func configServerHandler(c *ServerConfig) http.Handler {
 	// Initialize router.
 	r := mux.NewRouter().SkipClean(true)
+
+	n := negroni.Classic()
+	n.UseHandler(RegisterAPIRouter(r))
 	
 	// Register all routers.
-	return RegisterAPIRouter(r)
+	return n
 }
 
 func NewApiServer(c *ServerConfig) *Server {
