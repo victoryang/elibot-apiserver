@@ -18,8 +18,8 @@ type query_req_page struct {
 }
 
 type query_req struct {
-    query_id        C.CString
-    conn_str        C.CString
+    query_id        string
+    conn_str        string
     option          *query_req_option.option
     parameter       *query_req_parameter.parameter
     page            *query_req_page.page
