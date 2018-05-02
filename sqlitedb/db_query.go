@@ -42,12 +42,12 @@ func db_query(q_id string) ([]byte, error){
 					id,
 					conn,
 					opt,
-					*C.db_query_req_parameter(0),
-					*C.db_query_req_page(0),
+					nil,
+					nil,
 				}
 
     res := C.db_query(req)
-    if res==0 {
+    if res==nil {
     	fmt.Println("fail to query")
     	return nil, errors.Error("fail to query")
     }
