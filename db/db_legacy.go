@@ -2,7 +2,7 @@ package db
 
 import (
     "fmt"
-    sql "sqlitedb"
+    sql "elibot-apiserver/sqlitedb"
 )
 
 func Get_All_Bookprograms() {
