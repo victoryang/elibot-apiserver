@@ -8,7 +8,7 @@ import (
     "unsafe"
 )
 
-type query_req_option struct {
+/*type query_req_option struct {
     option C.db_query_req_option
 }
 
@@ -18,14 +18,14 @@ type query_req_parameter struct {
 
 type query_req_page struct {
     page            *C.db_query_req_page
-}
+}*/
 
 type query_req struct {
     query_id        string
     conn_str        string
-    option          *query_req_option.option
-    parameter       *query_req_parameter.parameter
-    page            *query_req_page.page
+    option          *C.db_query_req_option
+    parameter       *C.db_query_req_parameter
+    page            *C.db_query_req_page
 }
 
 func db_query(q_id string) ([]byte, error){
@@ -34,7 +34,7 @@ func db_query(q_id string) ([]byte, error){
 
     conn := C.CString("/root/elibotDB.db")
 
-    opt := &query_req_option{C.DB_QUERY_MODE_STANDARD}
+    opt := &C.db_query_req_option{C.DB_QUERY_MODE_STANDARD}
     req := &query_req{
 					id,
 					conn,
