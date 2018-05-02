@@ -6,7 +6,7 @@ package sqlitedb
 import "C"
 
 type query_req_option struct {
-    option C.query_req_option
+    option C.db_query_req_option
 }
 
 type query_req_parameter struct {
@@ -29,10 +29,12 @@ func db_query(q_id string) ([]byte, error){
     id := CString(q_id)
     defer C.free(unsafe.Pointer(id))
 
+    conn := C.CString("/root/elibotDB.db")
+
     opt := &query_req_option{C.DB_QUERY_MODE_STANDARD}
     req := &query_req{
 					id,
-					C.CString(C.CONN_STRINGS),
+					conn,
 					opt,
 					0,
 					0,
