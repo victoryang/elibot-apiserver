@@ -14,7 +14,9 @@ type SqlMapper struct {
 	m   *C.sql_mapper
 }
 
-func Get_bookprogram_sql_mapper(q_id *C.char) (*SqlMapper, error) {
+func Get_bookprogram_sql_mapper(q_id string) (*SqlMapper, error) {
+	id := C.CString(q_id)
+	defer C.free(unsafe.Pointer(id))
     var sm *SqlMapper
 	sm.m = C.get_bookprogram_sql_mapper(id)
 	if sm == nil {
