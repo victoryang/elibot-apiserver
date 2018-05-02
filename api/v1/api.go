@@ -26,11 +26,11 @@ func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 	res, err := db.Get_All_Bookprograms()
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, err)
+		fmt.Fprintf(w, err.Error())
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
+	fmt.Fprintf(w, string(res))
 	return
 }
 

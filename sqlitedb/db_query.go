@@ -30,7 +30,7 @@ type query_req_page struct {
     page            *C.db_query_req_page
 }*/
 
-func db_query(q_id string) ([]byte, error){
+func Db_query(q_id string) ([]byte, error){
     id := C.CString(q_id)
     defer C.free(unsafe.Pointer(id))
 
