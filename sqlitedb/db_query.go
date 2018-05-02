@@ -3,7 +3,6 @@ package sqlitedb
 // #cgo LDFLAGS: -lsqlitedb
 // #include<stdlib.h>
 // #include<db_query.h>
-
 import "C"
 
 type query_req_option struct {
