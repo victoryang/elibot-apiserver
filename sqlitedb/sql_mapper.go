@@ -2,7 +2,7 @@ package sqlitedb
 
 // #cgo LDFLAGS: -lsqlitedb
 // #include<stdlib.h>
-// #include<db/sql_mapper.h>
+// #include<sql_mapper.h>
 import "C"
 import (
 	"errors"
