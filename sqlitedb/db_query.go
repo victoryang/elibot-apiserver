@@ -51,5 +51,6 @@ func Db_query(q_id string) ([]byte, error){
     	fmt.Println("fail to query")
     	return nil, errors.New("fail to query")
     }
-    return res, nil
+    fmt.Println(res)
+    return nil, nil
 }
