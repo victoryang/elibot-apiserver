@@ -22,13 +22,13 @@ type query_req_page struct {
     page            *C.db_query_req_page
 }*/
 
-type query_req struct {
-    query_id        string
-    conn_str        string
+/*type query_req struct {
+    query_id        *C.char
+    conn_str        *C.char
     option          *C.db_query_req_option
     parameter       *C.db_query_req_parameter
     page            *C.db_query_req_page
-}
+}*/
 
 func db_query(q_id string) ([]byte, error){
     id := C.CString(q_id)
@@ -38,12 +38,12 @@ func db_query(q_id string) ([]byte, error){
     defer C.free(unsafe.Pointer(conn))
 
     opt := &C.db_query_req_option{C.DB_QUERY_MODE_STANDARD}
-    req := &query_req{
+    req := &C.db_query_req{
 					id,
 					conn,
 					opt,
-					0,
-					0,
+					*C.db_query_req_parameter(0),
+					*C.db_query_req_page(0),
 				}
 
     res := C.db_query(req)
