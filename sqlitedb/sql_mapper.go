@@ -13,8 +13,11 @@ type SqlMapper struct {
 	m   *C.sql_mapper
 }
 
-func Get_bookprogram_sql_mapper() (*SqlMapper, error) {
-	mapper := C.get_bookprogram_sql_mapper()
+func Get_bookprogram_sql_mapper(id string) (*SqlMapper, error) {
+	id := C.CString(q_id)
+    defer C.free(unsafe.Pointer(id))
+
+	mapper := C.get_bookprogram_sql_mapper(id)
 	if mapper == 0 {
 		return nil, errors.Error("Getting sqlmapper fails")
 	}
