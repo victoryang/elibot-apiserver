@@ -4,7 +4,7 @@
 #ifndef MCSERVER_BOOKPROGRAM_SQL_MAPPER_H
 #define MCSERVER_BOOKPROGRAM_SQL_MAPPER_H
 
-#include "db/sql_mapper.h"
+#include "../sql_mapper.h"
 
 #  ifdef __cplusplus
 extern "C" {
