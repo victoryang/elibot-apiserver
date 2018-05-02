@@ -4,6 +4,9 @@ package sqlitedb
 // #include<stdlib.h>
 // #include<db_query.h>
 import "C"
+import (
+    "unsafe"
+)
 
 type query_req_option struct {
     option C.db_query_req_option

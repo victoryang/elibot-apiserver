@@ -2,8 +2,7 @@ package sqlitedb
 
 // #cgo LDFLAGS: -lsqlitedb
 // #include<stdlib.h>
-// #include<db/db_context.h>
-
+// #include<sqlmapper/bookprogram_sql_mapper.h>
 import "C"
 
 const (
