@@ -11,18 +11,18 @@ import (
 )
 
 type SqlMapper struct {
-	m   *C.sql_mapper
+	M   *sqlitedb._Ctype_struct_sql_mapper
 }
 
-func Get_bookprogram_sql_mapper(q_id string) (*SqlMapper, error) {
+func Get_bookprogram_sql_mapper(q_id string) error {
 	id := C.CString(q_id)
 	defer C.free(unsafe.Pointer(id))
     var sm *SqlMapper
 	sm.m = C.get_bookprogram_sql_mapper(id)
 	if sm == nil {
-		return nil, errors.New("Getting sqlmapper fails")
+		return errors.New("Getting sqlmapper fails")
 	}
 
 	C.register_sql_mapper(sm.m)
-	return sm, nil
+	return nil
 }
