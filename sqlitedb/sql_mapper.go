@@ -14,7 +14,7 @@ func Get_bookprogram_sql_mapper(q_id string) error {
 	id := C.CString(q_id)
 	defer C.free(unsafe.Pointer(id))
 
-	bsm = C.get_bookprogram_sql_mapper(id)
+	bsm := C.get_bookprogram_sql_mapper(id)
 	if bsm == nil {
 		return errors.New("Getting sqlmapper fails")
 	}
