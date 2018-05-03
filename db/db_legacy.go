@@ -2,6 +2,7 @@ package db
 
 import (
     "fmt"
+    "errors"
     sql "elibot-apiserver/sqlitedb"
 )
 
@@ -9,7 +10,15 @@ const (
     DBName="/root/elibotDB.db"
 )
 
-func RegisterAndQueryAll(sm *sql.BaseSqlMapper) (string, error) {
+func RegisterAndQueryAll(sm interface{}) (string, error) {
+    switch sm.(type) {
+    case *sql.InterferenceSqlMapper:
+
+    default:
+        fmt.Println("type not correct")
+        return "", errors.New("type not correct")
+    }
+
     err := sm.RegisterSqlMapper()
     if err!=nil {
         return "", err

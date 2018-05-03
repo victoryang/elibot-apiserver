@@ -10,7 +10,7 @@ import (
 )
 
 type InterferenceSqlMapper struct {
-	Id         string
+	BaseSqlMapper
 }
 
 func (m *InterferenceSqlMapper) get_interference_sql_mapper(q_id string) error {

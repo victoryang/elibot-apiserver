@@ -7,5 +7,5 @@ type SqlMapper interface {
 
 // BaseSqlMapper should be inherited by sql mappers
 type BaseSqlMapper struct {
-	
+	id        string
 }
