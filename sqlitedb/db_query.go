@@ -21,14 +21,13 @@ func Db_query(q_id string) ([]byte, error){
     conn := C.CString("/root/elibotDB.db")
     defer C.free(unsafe.Pointer(conn))
 
-    query_req_option := db_query_req_option{
-        option:C.DB_QUERY_MODE_STANDARD
-    }
+    option := C.new_db_query_req_option(C.DB_QUERY_MODE_STANDARD)
+    defer C.free(unsafe.Pointer(option))
 
     req := &C.db_query_req{
 					id,
 					conn,
-					&query_req_option.option,
+					option,
 					nil,
 					nil,
 				}
