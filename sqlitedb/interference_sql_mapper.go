@@ -10,7 +10,7 @@ import (
 )
 
 type InterferenceSqlMapper struct {
-	BaseSqlMapper
+	Id		string
 }
 
 func (m *InterferenceSqlMapper) get_interference_sql_mapper(q_id string) error {
@@ -24,6 +24,10 @@ func (m *InterferenceSqlMapper) get_interference_sql_mapper(q_id string) error {
 
 	C.register_sql_mapper(bsm)
 	return nil
+}
+
+func (m *InterferenceSqlMapper) GetID() string {
+	return m.Id
 }
 
 func (m *InterferenceSqlMapper) RegisterSqlMapper() error{
