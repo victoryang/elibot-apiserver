@@ -9,6 +9,7 @@ import (
 )
 
 type InterferenceSqlMapper struct {
+	BaseSqlMapper
 	Id         string
 }
 
@@ -26,6 +27,7 @@ func (m *InterferenceSqlMapper) get_interference_sql_mapper(q_id string) error {
 }
 
 func (m *InterferenceSqlMapper) RegisterSqlMapper() error{
+	fmt.Println("RegisterSqlMapper in InterferenceSqlMapper")
 	m.Id = C.ELIBOT_INTERFERENCE_GET_ALL
 	return m.get_interference_sql_mapper(m.Id)
 }

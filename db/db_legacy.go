@@ -10,11 +10,7 @@ const (
 )
 
 func Register(sm sql.SqlMapper) error {
-    err := sm.RegisterSqlMapper()
-    if err!=nil {
-        return "", err
-    }
-    return nil
+    return sm.RegisterSqlMapper()
 }
 
 func QueryAll(sm *sql.BaseSqlMapper) (string, error) {
