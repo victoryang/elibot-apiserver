@@ -9,7 +9,6 @@ import (
 )
 
 type InterferenceSqlMapper struct {
-	BaseSqlMapper
 	Id         string
 }
 

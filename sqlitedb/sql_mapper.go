@@ -2,9 +2,10 @@ package sqlitedb
 
 // SqlMapper defines methods of a sql mapper
 type SqlMapper interface {
-	RegisterSqlMapper(id string) ()
+	RegisterSqlMapper() error
 }
 
 // BaseSqlMapper should be inherited by sql mappers
 type BaseSqlMapper struct {
+	
 }
