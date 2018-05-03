@@ -34,7 +34,7 @@ func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, string(res))
+	fmt.Fprintf(w, res)
 	return
 }
 

@@ -3,6 +3,7 @@ package sqlitedb
 // #cgo LDFLAGS: -lsqlitedb
 // #include<stdlib.h>
 // #include<db_query.h>
+// #include<cJSON.h>
 import "C"
 import (
     "unsafe"
@@ -10,11 +11,7 @@ import (
     "errors"
 )
 
-type db_query_req_option struct {
-    option       C.db_query_req_option
-}
-
-func Db_query(q_id string) ([]byte, error){
+func Db_query(q_id string) (string, error){
     id := C.CString(q_id)
     defer C.free(unsafe.Pointer(id))
 
@@ -32,10 +29,17 @@ func Db_query(q_id string) ([]byte, error){
 					nil,
 				}
 
-    res := C.db_query(req)
+    q_res := C.db_query(req)
     if res==nil {
     	fmt.Println("fail to query")
-    	return nil, errors.New("fail to query")
+    	return "", errors.New("fail to query")
     }
+
+    str := C.cJSON_Print(q_res)
+    defer C.cJSON_Delete(q_res)
+
+    res := C.GoString(str)
+    defer C.free(unsafe.Pointer(str))
+
     return res, nil
 }
