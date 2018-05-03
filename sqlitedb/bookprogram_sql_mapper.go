@@ -1,7 +1,6 @@
 package sqlitedb
 
 // #include<stdlib.h>
-// #include<sql_mapper.h>
 // #include<sqlmapper/bookprogram_sql_mapper.h>
 import "C"
 import (
