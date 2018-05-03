@@ -22,7 +22,7 @@ func test(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf ("starting get all bookprograms")
+	fmt.Println("starting get all bookprograms")
 	res, err := db.Get_All_Bookprograms()
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
