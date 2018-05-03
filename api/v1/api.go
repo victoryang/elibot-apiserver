@@ -21,6 +21,20 @@ func test(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func getAllInterference(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("starting get all Interference")
+	res, err := db.Get_All_Interference()
+	if err!=nil {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, res)
+	return
+}
+
 func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all zeropoints")
 	res, err := db.Get_All_Zeropoints()
@@ -54,5 +68,6 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/test", test).Methods("GET")
 	r.HandleFunc("/v1/bookprograms", getAllBookprograms).Methods("GET")
 	r.HandleFunc("/v1/zeropoints", getAllZeroPoints).Methods("GET")
+	r.HandleFunc("/v1/interference", getAllInterference).Methods("GET")
 	return r
 }
