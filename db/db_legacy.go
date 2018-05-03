@@ -2,7 +2,6 @@ package db
 
 import (
     "fmt"
-    "errors"
     sql "elibot-apiserver/sqlitedb"
 )
 
@@ -11,21 +10,12 @@ const (
 )
 
 func RegisterAndQueryAll(sm sql.SqlMapper) (string, error) {
-    switch t := sm.(type) {
-    case *sql.InterferenceSqlMapper:
-
-    default:
-        fmt.Println("type not correct")
-        return "", errors.New("type not correct")
-    }
-
-
     err := sm.RegisterSqlMapper()
     if err!=nil {
         return "", err
     }
 
-    res, err := sql.Db_query(sm.Id, DBName)
+    res, err := sql.Db_query(sm.GetID(), DBName)
     if err!=nil {
         fmt.Printf("query fails")
         return "", err
