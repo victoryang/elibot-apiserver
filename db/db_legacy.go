@@ -8,8 +8,8 @@ import (
 func Get_All_Bookprograms() (string, error){
     fmt.Println("in Get_All_Bookprograms")
     
-	id := sql.ELIBOT_BOOKPROGRAM_GET_ALL
-    err := sql.Get_bookprogram_sql_mapper(id)
+	sm := new(sql.BookProgramSqlMapper)
+    err := sm.RegisterSqlMapper()
     if err!=nil {
         return "", err
     }
