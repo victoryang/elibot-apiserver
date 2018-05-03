@@ -10,14 +10,15 @@ const (
     DBName="/root/elibotDB.db"
 )
 
-func RegisterAndQueryAll(sm interface{}) (string, error) {
-    switch sm.(type) {
+func RegisterAndQueryAll(sm sql.SqlMapper) (string, error) {
+    switch t := sm.(type) {
     case *sql.InterferenceSqlMapper:
 
     default:
         fmt.Println("type not correct")
         return "", errors.New("type not correct")
     }
+
 
     err := sm.RegisterSqlMapper()
     if err!=nil {
