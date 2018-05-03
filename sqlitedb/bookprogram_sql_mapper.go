@@ -10,6 +10,7 @@ import (
 )
 
 type BookProgramSqlMapper struct {
+	id         string
 }
 
 func (m *BookProgramSqlMapper) get_bookprogram_sql_mapper(q_id string) error {
@@ -26,6 +27,6 @@ func (m *BookProgramSqlMapper) get_bookprogram_sql_mapper(q_id string) error {
 }
 
 func (m *BookProgramSqlMapper) RegisterSqlMapper() error{
-	id := ELIBOT_BOOKPROGRAM_GET_ALL
-	return m.get_bookprogram_sql_mapper(id)
+	m.id := ELIBOT_BOOKPROGRAM_GET_ALL
+	return m.get_bookprogram_sql_mapper(m.id)
 }
