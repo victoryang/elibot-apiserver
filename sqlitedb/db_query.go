@@ -10,25 +10,9 @@ import (
     "errors"
 )
 
-/*type query_req_option struct {
-    option C.db_query_req_option
+type db_query_req_option struct {
+    option       C.db_query_req_option
 }
-
-type query_req_parameter struct {
-    parameter       *C.db_query_req_parameter
-}
-
-type query_req_page struct {
-    page            *C.db_query_req_page
-}*/
-
-/*type query_req struct {
-    query_id        *C.char
-    conn_str        *C.char
-    option          *C.db_query_req_option
-    parameter       *C.db_query_req_parameter
-    page            *C.db_query_req_page
-}*/
 
 func Db_query(q_id string) ([]byte, error){
     id := C.CString(q_id)
@@ -37,11 +21,14 @@ func Db_query(q_id string) ([]byte, error){
     conn := C.CString("/root/elibotDB.db")
     defer C.free(unsafe.Pointer(conn))
 
-    opt := &C.db_query_req_option{C.DB_QUERY_MODE_STANDARD}
+    query_req_option := db_query_req_option{
+        option:C.DB_QUERY_MODE_STANDARD
+    }
+
     req := &C.db_query_req{
 					id,
 					conn,
-					opt,
+					&query_req_option.option,
 					nil,
 					nil,
 				}
