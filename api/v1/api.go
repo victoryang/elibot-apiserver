@@ -3,10 +3,13 @@ package v1
 import (
 	"net/http"
 	"fmt"
+	"encoding/json"
 
 	"github.com/gorilla/mux"
 	"elibot-apiserver/db"
 )
+
+type
 
 func hello(w http.ResponseWriter, r *http.Request) {
 	db.NewDBContext("elibotDB.db")
@@ -29,6 +32,7 @@ func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, err.Error())
 		return
 	}
+
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, string(res))
 	return
