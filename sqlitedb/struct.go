@@ -6,5 +6,5 @@ package sqlitedb
 import "C"
 
 const (
-	ELIBOT_BOOKPROGRAM_GET_ALL = "elibot.bookprogram.getAll"
+	//ELIBOT_BOOKPROGRAM_GET_ALL = "elibot.bookprogram.getAll"
 )
