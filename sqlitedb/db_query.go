@@ -11,11 +11,11 @@ import (
     "errors"
 )
 
-func Db_query(q_id string) (string, error){
+func Db_query(q_id string, db_name string) (string, error){
     id := C.CString(q_id)
     defer C.free(unsafe.Pointer(id))
 
-    conn := C.CString("/root/elibotDB.db")
+    conn := C.CString(db_name)
     defer C.free(unsafe.Pointer(conn))
 
     option := C.new_db_query_req_option(C.DB_QUERY_MODE_STANDARD)

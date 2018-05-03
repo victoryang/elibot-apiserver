@@ -14,7 +14,7 @@ func Get_All_Bookprograms() (string, error){
         return "", err
     }
 
-    res, err := sql.Db_query(sm.Id)
+    res, err := sql.Db_query(sm.Id, "/root/elibotDB.db")
     if err!=nil {
         fmt.Printf("query fails")
         return "", err
