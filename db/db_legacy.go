@@ -9,11 +9,12 @@ const (
     DBName="/root/elibotDB.db"
 )
 
-func Register(sm sql.SqlMapper) error {
-    return sm.RegisterSqlMapper()
-}
+func RegisterAndQueryAll(sm *sql.BaseSqlMapper) (string, error) {
+    err := sm.RegisterSqlMapper()
+    if err!=nil {
+        return "", err
+    }
 
-func QueryAll(sm *sql.BaseSqlMapper) (string, error) {
     res, err := sql.Db_query(sm.Id, DBName)
     if err!=nil {
         fmt.Printf("query fails")
@@ -29,8 +30,7 @@ func Get_All_Interference() (string, error) {
     fmt.Println("in Get_All_Interference")
     
     sm := new(sql.InterferenceSqlMapper)
-    Register(sm)
-    return QueryAll(sm)
+    return RegisterAndQueryAll(sm)
 }
 
 func Get_All_Zeropoints() (string, error) {

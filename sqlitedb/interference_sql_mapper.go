@@ -4,12 +4,12 @@ package sqlitedb
 // #include<sqlmapper/interference_sql_mapper.h>
 import "C"
 import (
+	"fmt"
 	"errors"
 	"unsafe"
 )
 
 type InterferenceSqlMapper struct {
-	BaseSqlMapper
 	Id         string
 }
 
