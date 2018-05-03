@@ -80,12 +80,12 @@ struct db_query_req {
 cJSON* db_query(db_query_req *req);
 
 db_query_req_option* new_db_query_req_option(int32_t type_handle_mode) {
-    option = (db_query_req_option*)malloc(sizeof(db_query_req_option))
+    db_query_req_option* option = (db_query_req_option*)malloc(sizeof(db_query_req_option));
     if (NULL==option) {
         return NULL
     }
-    option->type_handle_mode = type_handle_mode
-    return option
+    option->type_handle_mode = type_handle_mode;
+    return option;
 }
 
 #  ifdef __cplusplus
