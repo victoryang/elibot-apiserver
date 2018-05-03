@@ -82,7 +82,7 @@ cJSON* db_query(db_query_req *req);
 db_query_req_option* new_db_query_req_option(int32_t type_handle_mode) {
     db_query_req_option* option = (db_query_req_option*)malloc(sizeof(db_query_req_option));
     if (NULL==option) {
-        return NULL
+        return NULL;
     }
     option->type_handle_mode = type_handle_mode;
     return option;

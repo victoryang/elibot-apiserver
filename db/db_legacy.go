@@ -6,7 +6,7 @@ import (
 )
 
 func Get_All_Bookprograms() ([]byte, error){
-    fmt.Printf("in Get_All_Bookprograms")
+    fmt.Println("in Get_All_Bookprograms")
     
 	id := sql.ELIBOT_BOOKPROGRAM_GET_ALL
     err := sql.Get_bookprogram_sql_mapper(id)
