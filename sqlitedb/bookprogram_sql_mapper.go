@@ -4,6 +4,10 @@ package sqlitedb
 // #include<sql_mapper.h>
 // #include<sqlmapper/bookprogram_sql_mapper.h>
 import "C"
+import (
+	"errors"
+	"unsafe"
+)
 
 type BookProgramSqlMapper struct {
 }
