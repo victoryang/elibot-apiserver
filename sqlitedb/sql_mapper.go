@@ -10,15 +10,9 @@ import (
 	"unsafe"
 )
 
-func Get_bookprogram_sql_mapper(q_id string) error {
-	id := C.CString(q_id)
-	defer C.free(unsafe.Pointer(id))
+type SqlMapper interface {
+	RegisterSqlMapper(id string) ()
+}
 
-	bsm := C.get_bookprogram_sql_mapper(id)
-	if bsm == nil {
-		return errors.New("Getting sqlmapper fails")
-	}
-
-	C.register_sql_mapper(bsm)
-	return nil
+type BaseSqlMapper struct {
 }
