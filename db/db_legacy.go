@@ -11,7 +11,7 @@ func Get_All_Bookprograms() (string, error){
 	id := sql.ELIBOT_BOOKPROGRAM_GET_ALL
     err := sql.Get_bookprogram_sql_mapper(id)
     if err!=nil {
-        return nil, err
+        return "", err
     }
 
     res, err := sql.Db_query(id)

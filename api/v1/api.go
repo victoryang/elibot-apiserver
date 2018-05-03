@@ -3,7 +3,6 @@ package v1
 import (
 	"net/http"
 	"fmt"
-	"encoding/json"
 
 	"github.com/gorilla/mux"
 	"elibot-apiserver/db"
@@ -12,7 +11,7 @@ import (
 func hello(w http.ResponseWriter, r *http.Request) {
 	db.NewDBContext("elibotDB.db")
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "test\n")
+	fmt.Fprintf(w, "Welcome to elibot\n")
 	return
 }
 
