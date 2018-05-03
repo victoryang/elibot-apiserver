@@ -88,6 +88,26 @@ db_query_req_option* new_db_query_req_option(int32_t type_handle_mode) {
     return option;
 }
 
+db_query_req_parameter* new_db_query_req_parameter(sql_parameter *params, int param_size) {
+    db_query_req_parameter* param = (db_query_req_parameter*)malloc(sizeof(db_query_req_parameter));
+    if (NULL==param) {
+        return NULL;
+    }
+    param->params = params;
+    param->param_size = param_size;
+    return param;
+}
+
+db_query_req_page* new_db_query_req_page(int page_start, int page_size) {
+    db_query_req_page* page = (db_query_req_page*)malloc(sizeof(db_query_req_page));
+    if (NULL==page) {
+        return NULL;
+    }
+    page->page_start = page_start;
+    page->page_size = page_size;
+    return page;
+}
+
 #  ifdef __cplusplus
 }
 #  endif /* __cplusplus */

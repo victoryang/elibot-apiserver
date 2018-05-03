@@ -21,6 +21,20 @@ func test(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("starting get all zeropoints")
+	res, err := db.Get_All_Zeropoints()
+	if err!=nil {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, res)
+	return
+}
+
 func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all bookprograms")
 	res, err := db.Get_All_Bookprograms()
@@ -37,7 +51,8 @@ func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 
 func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/", hello).Methods("GET")
-	r.HandleFunc("/api/v1/test", test).Methods("GET")
-	r.HandleFunc("/test", getAllBookprograms).Methods("GET")
+	r.HandleFunc("/v1/test", test).Methods("GET")
+	r.HandleFunc("/v1/bookprograms", getAllBookprograms).Methods("GET")
+	r.HandleFunc("/v1/zeropoints", getAllZeroPoints).Methods("GET")
 	return r
 }
