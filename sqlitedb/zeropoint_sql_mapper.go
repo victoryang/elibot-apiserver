@@ -25,6 +25,10 @@ func (m *ZeroPointSqlMapper) get_zeropoint_sql_mapper(q_id string) error {
 	return nil
 }
 
+func (m *ZeroPointSqlMapper) GetID() string {
+	return m.Id
+}
+
 func (m *ZeroPointSqlMapper) RegisterSqlMapper() error{
 	m.Id = C.ELIBOT_ZEROPOINT_GET_ALL
 	return m.get_zeropoint_sql_mapper(m.Id)
