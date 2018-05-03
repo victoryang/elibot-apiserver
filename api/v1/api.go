@@ -9,8 +9,6 @@ import (
 	"elibot-apiserver/db"
 )
 
-type
-
 func hello(w http.ResponseWriter, r *http.Request) {
 	db.NewDBContext("elibotDB.db")
 	w.WriteHeader(http.StatusOK)

@@ -30,7 +30,7 @@ func Db_query(q_id string) (string, error){
 				}
 
     q_res := C.db_query(req)
-    if res==nil {
+    if q_res==nil {
     	fmt.Println("fail to query")
     	return "", errors.New("fail to query")
     }

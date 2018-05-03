@@ -17,7 +17,7 @@ func Get_All_Bookprograms() (string, error){
     res, err := sql.Db_query(id)
     if err!=nil {
         fmt.Printf("query fails")
-        return res, err
+        return "", err
     }
 
     fmt.Println(res)
