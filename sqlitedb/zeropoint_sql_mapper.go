@@ -30,6 +30,7 @@ func (m *ZeroPointSqlMapper) GetID() string {
 }
 
 func (m *ZeroPointSqlMapper) RegisterSqlMapperForQueryAll() error{
+	fmt.Println("RegisterSqlMapperForQueryAll in ZeroPointSqlMapper")
 	m.Id = C.ELIBOT_ZEROPOINT_GET_ALL
 	return m.get_zeropoint_sql_mapper(m.Id)
 }

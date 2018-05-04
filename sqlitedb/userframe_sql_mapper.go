@@ -30,8 +30,8 @@ func (m *UserframeSqlMapper) GetID() string {
 	return m.Id
 }
 
-func (m *UserframeSqlMapper) RegisterSqlMapper() error{
-	fmt.Println("RegisterSqlMapper in UserframeSqlMapper")
+func (m *UserframeSqlMapper) RegisterSqlMapperForQueryAll() error{
+	fmt.Println("RegisterSqlMapperForQueryAll in UserframeSqlMapper")
 	m.Id = C.ELIBOT_USER_FRAME_GET_ALL
 	return m.get_userframe_sql_mapper(m.Id)
 }

@@ -17,7 +17,7 @@ func (m *ToolframeSqlMapper) get_toolframe_sql_mapper(q_id string) error {
 	id := C.CString(q_id)
 	defer C.free(unsafe.Pointer(id))
 
-	tsm := C.get_toolframe_sql_mapper(id)
+	tsm := C.get_common_toolframe_sql_mapper(id)
 	if tsm == nil {
 		return errors.New("Getting sqlmapper fails")
 	}
@@ -30,8 +30,8 @@ func (m *ToolframeSqlMapper) GetID() string {
 	return m.Id
 }
 
-func (m *ToolframeSqlMapper) RegisterSqlMapper() error{
-	fmt.Println("RegisterSqlMapper in ToolframeSqlMapper")
+func (m *ToolframeSqlMapper) RegisterSqlMapperForQueryAll() error{
+	fmt.Println("RegisterSqlMapperForQueryAll in ToolframeSqlMapper")
 	m.Id = C.ELIBOT_COMMON_GET_ALL_TOOLFRAMES
 	return m.get_toolframe_sql_mapper(m.Id)
 }
