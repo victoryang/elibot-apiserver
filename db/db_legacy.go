@@ -29,7 +29,7 @@ func RegisterAndQueryAll(sm sql.SqlMapper) (string, error) {
 func Get_ALL_ArcSqlMapper() (string, error) {
     fmt.Println("in Get_ALL_ArcSqlMapper")
     
-    sm := new(ArcSqlMapper)
+    sm := new(sql.ArcSqlMapper)
     return RegisterAndQueryAll(sm)
 }
 
@@ -43,7 +43,7 @@ func Get_All_Bookprograms() (string, error){
 func Get_ALL_ExtaxisSqlMapper() (string, error) {
     fmt.Println("in Get_ALL_ExtaxisSqlMapper")
     
-    sm := new(ExtaxisSqlMapper)
+    sm := new(sql.ExtaxisSqlMapper)
     return RegisterAndQueryAll(sm)
 }
 
@@ -57,14 +57,14 @@ func Get_All_Interference() (string, error) {
 func Get_ALL_ToolframeSqlMapper() (string, error) {
     fmt.Println("in Get_ALL_ToolframeSqlMapper")
     
-    sm := new(ToolframeSqlMapper)
+    sm := new(sql.ToolframeSqlMapper)
     return RegisterAndQueryAll(sm)
 }
 
 func Get_ALL_UserframeSqlMapper() (string, error) {
     fmt.Println("in Get_ALL_UserframeSqlMapper")
 
-    sm := new(UserframeSqlMapper)
+    sm := new(sql.UserframeSqlMapper)
     return RegisterAndQueryAll(sm)
 }
 
