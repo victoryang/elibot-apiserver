@@ -26,11 +26,19 @@ func RegisterAndQueryAll(sm sql.SqlMapper) (string, error) {
     return res, nil
 }
 
-func Get_ALL_ArcSqlMapper() (string, error) {
-    fmt.Println("in Get_ALL_ArcSqlMapper")
+func Get_ALL_Arc() (string, error) {
+    fmt.Println("in Get_ALL_Arc")
     
     sm := new(sql.ArcSqlMapper)
     return RegisterAndQueryAll(sm)
+}
+
+func Get_Arc_Params(vars map[string]string) (string, error) {
+    fmt.Println("in Get_Arc_Params")
+    for k,v := vars {
+        fmt.Println("key: ", k, "v", v)
+    }
+    return "", nil
 }
 
 func Get_All_Backup() (string, error){
@@ -47,15 +55,15 @@ func Get_All_Bookprograms() (string, error){
     return RegisterAndQueryAll(sm)
 }
 
-func Get_ALL_EnumSqlMapper() (string, error) {
-    fmt.Println("in Get_ALL_EnumSqlMapper")
+func Get_ALL_Enum() (string, error) {
+    fmt.Println("in Get_ALL_Enum")
     
     sm := new(sql.EnumSqlMapper)
     return RegisterAndQueryAll(sm)
 }
 
-func Get_ALL_ExtaxisSqlMapper() (string, error) {
-    fmt.Println("in Get_ALL_ExtaxisSqlMapper")
+func Get_ALL_Extaxis() (string, error) {
+    fmt.Println("in Get_ALL_Extaxis")
     
     sm := new(sql.ExtaxisSqlMapper)
     return RegisterAndQueryAll(sm)
@@ -96,15 +104,15 @@ func Get_All_Ref() (string, error) {
     return RegisterAndQueryAll(sm)
 }
 
-func Get_ALL_ToolframeSqlMapper() (string, error) {
-    fmt.Println("in Get_ALL_ToolframeSqlMapper")
+func Get_ALL_Toolframe() (string, error) {
+    fmt.Println("in Get_ALL_Toolframe")
     
     sm := new(sql.ToolframeSqlMapper)
     return RegisterAndQueryAll(sm)
 }
 
-func Get_ALL_UserframeSqlMapper() (string, error) {
-    fmt.Println("in Get_ALL_UserframeSqlMapper")
+func Get_ALL_Userframe() (string, error) {
+    fmt.Println("in Get_ALL_Userframe")
 
     sm := new(sql.UserframeSqlMapper)
     return RegisterAndQueryAll(sm)
