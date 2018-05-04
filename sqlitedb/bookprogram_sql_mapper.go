@@ -4,6 +4,7 @@ package sqlitedb
 // #include<sqlmapper/bookprogram_sql_mapper.h>
 import "C"
 import (
+	"fmt"
 	"errors"
 	"unsafe"
 )

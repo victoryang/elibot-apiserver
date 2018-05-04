@@ -4,6 +4,7 @@ package sqlitedb
 // #include<sqlmapper/zeropoint_sql_mapper.h>
 import "C"
 import (
+	"fmt"
 	"errors"
 	"unsafe"
 )
