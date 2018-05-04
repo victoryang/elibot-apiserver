@@ -23,7 +23,7 @@ func test(w http.ResponseWriter, r *http.Request) {
 
 func getAllArc(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Arc")
-	res, err := db.Get_ALL_ArcSqlMapper()
+	res, err := db.Get_ALL_Arc()
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, err.Error())
@@ -80,7 +80,7 @@ func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 
 func getAllEnum(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Enum")
-	res, err := db.Get_ALL_EnumSqlMapper()
+	res, err := db.Get_ALL_Enum()
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, err.Error())
@@ -94,7 +94,7 @@ func getAllEnum(w http.ResponseWriter, r *http.Request) {
 
 func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Extaxis")
-	res, err := db.Get_ALL_ExtaxisSqlMapper()
+	res, err := db.Get_ALL_Extaxis()
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, err.Error())
@@ -178,7 +178,7 @@ func getAllRef(w http.ResponseWriter, r *http.Request) {
 
 func getAllToolframe(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all toolframe")
-	res, err := db.Get_ALL_ToolframeSqlMapper()
+	res, err := db.Get_ALL_Toolframe()
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, err.Error())
@@ -192,7 +192,7 @@ func getAllToolframe(w http.ResponseWriter, r *http.Request) {
 
 func getAllUserframe(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all userframe")
-	res, err := db.Get_ALL_UserframeSqlMapper()
+	res, err := db.Get_ALL_Userframe()
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, err.Error())
