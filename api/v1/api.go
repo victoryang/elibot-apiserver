@@ -63,6 +63,20 @@ func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func getAllEnum(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("starting get all Enum")
+	res, err := db.Get_ALL_EnumSqlMapper()
+	if err!=nil {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, res)
+	return
+}
+
 func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Extaxis")
 	res, err := db.Get_ALL_ExtaxisSqlMapper()
@@ -80,6 +94,62 @@ func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
 func getAllInterference(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Interference")
 	res, err := db.Get_All_Interference()
+	if err!=nil {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, res)
+	return
+}
+
+func getAllIO(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("starting get all IO")
+	res, err := db.Get_All_IO()
+	if err!=nil {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, res)
+	return
+}
+
+func getAllMetadata(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("starting get all Metadata")
+	res, err := db.Get_All_Metadata()
+	if err!=nil {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, res)
+	return
+}
+
+func getAllParameter(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("starting get all Parameter")
+	res, err := db.Get_All_Parameter()
+	if err!=nil {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, res)
+	return
+}
+
+func getAllRef(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("starting get all Ref")
+	res, err := db.Get_All_Ref()
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, err.Error())
@@ -139,8 +209,13 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/arc", getAllArc).Methods("GET")
 	r.HandleFunc("/v1/backup", getAllBackup).Methods("GET")
 	r.HandleFunc("/v1/bookprograms", getAllBookprograms).Methods("GET")
+	r.HandleFunc("/v1/enum", getAllEnum).Methods("GET")
 	r.HandleFunc("/v1/extaxis", getAllExtaxis).Methods("GET")
 	r.HandleFunc("/v1/interference", getAllInterference).Methods("GET")
+	r.HandleFunc("/v1/io", getAllIO).Methods("GET")
+	r.HandleFunc("/v1/metadata", getAllMetadata).Methods("GET")
+	r.HandleFunc("/v1/parameter", getAllParameter).Methods("GET")
+	r.HandleFunc("/v1/ref", getAllRef).Methods("GET")
 	r.HandleFunc("/v1/toolframe", getAllToolframe).Methods("GET")
 	r.HandleFunc("/v1/userframe", getAllUserframe).Methods("GET")
 	r.HandleFunc("/v1/zeropoints", getAllZeroPoints).Methods("GET")
