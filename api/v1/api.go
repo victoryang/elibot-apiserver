@@ -36,8 +36,8 @@ func getAllArc(w http.ResponseWriter, r *http.Request) {
 }
 
 func getArcParams(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("starting get all Arc")
-	var queries map[string]string
+	fmt.Println("starting get Arc parameters")
+	queries := make(map[string]string)
 	queries["file_no"] = r.URL.Query().Get("file_no")
 	res, err := db.Get_Arc_Params(queries)
 	if err!=nil {
