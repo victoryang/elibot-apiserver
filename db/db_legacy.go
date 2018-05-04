@@ -35,7 +35,7 @@ func Get_ALL_Arc() (string, error) {
 
 func Get_Arc_Params(vars map[string]string) (string, error) {
     fmt.Println("in Get_Arc_Params")
-    for k,v := vars {
+    for k,v := range vars {
         fmt.Println("key: ", k, "v", v)
     }
     return "", nil
