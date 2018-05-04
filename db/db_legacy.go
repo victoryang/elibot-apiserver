@@ -10,7 +10,7 @@ const (
 )
 
 func RegisterAndQueryAll(sm sql.SqlMapper) (string, error) {
-    err := sm.RegisterSqlMapper()
+    err := sm.RegisterSqlMapper(sql.ELIBOT_GET_ALL_PARAMS)
     if err!=nil {
         return "", err
     }
@@ -26,10 +26,45 @@ func RegisterAndQueryAll(sm sql.SqlMapper) (string, error) {
     return res, nil
 }
 
+func Get_ALL_ArcSqlMapper() (string, error) {
+    fmt.Println("in Get_ALL_ArcSqlMapper")
+    
+    sm := new(ArcSqlMapper)
+    return RegisterAndQueryAll(sm)
+}
+
+func Get_All_Bookprograms() (string, error){
+    fmt.Println("in Get_All_Bookprograms")
+ 
+    sm := new(sql.BookProgramSqlMapper)
+    return RegisterAndQueryAll(sm)
+}
+
+func Get_ALL_ExtaxisSqlMapper() (string, error) {
+    fmt.Println("in Get_ALL_ExtaxisSqlMapper")
+    
+    sm := new(ExtaxisSqlMapper)
+    return RegisterAndQueryAll(sm)
+}
+
 func Get_All_Interference() (string, error) {
     fmt.Println("in Get_All_Interference")
     
     sm := new(sql.InterferenceSqlMapper)
+    return RegisterAndQueryAll(sm)
+}
+
+func Get_ALL_ToolframeSqlMapper() (string, error) {
+    fmt.Println("in Get_ALL_ToolframeSqlMapper")
+    
+    sm := new(ToolframeSqlMapper)
+    return RegisterAndQueryAll(sm)
+}
+
+func Get_ALL_UserframeSqlMapper() (string, error) {
+    fmt.Println("in Get_ALL_UserframeSqlMapper")
+
+    sm := new(UserframeSqlMapper)
     return RegisterAndQueryAll(sm)
 }
 
@@ -40,22 +75,3 @@ func Get_All_Zeropoints() (string, error) {
     return RegisterAndQueryAll(sm)
 }
 
-func Get_All_Bookprograms() (string, error){
-    fmt.Println("in Get_All_Bookprograms")
-    
-	sm := new(sql.BookProgramSqlMapper)
-    err := sm.RegisterSqlMapper()
-    if err!=nil {
-        return "", err
-    }
-
-    res, err := sql.Db_query(sm.Id, DBName)
-    if err!=nil {
-        fmt.Printf("query fails")
-        return "", err
-    }
-
-    fmt.Println(res)
-    fmt.Println("get_all_metadatas OK")
-    return res, nil
-}
