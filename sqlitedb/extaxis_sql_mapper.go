@@ -30,8 +30,8 @@ func (m *ExtaxisSqlMapper) GetID() string {
 	return m.Id
 }
 
-func (m *ExtaxisSqlMapper) RegisterSqlMapper() error{
-	fmt.Println("RegisterSqlMapper in ExtaxisSqlMapper")
+func (m *ExtaxisSqlMapper) RegisterSqlMapperForQueryAll() error{
+	fmt.Println("RegisterSqlMapperForQueryAll in ExtaxisSqlMapper")
 	m.Id = C.ELIBOT_EXTAXIS_GET_ALL
 	return m.get_extaxis_sql_mapper(m.Id)
 }

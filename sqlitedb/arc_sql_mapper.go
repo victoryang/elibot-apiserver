@@ -32,7 +32,7 @@ func (m *ArcSqlMapper) GetID() string {
 
 func (m *ArcSqlMapper) RegisterSqlMapperForQueryAll() error{
 	fmt.Println("RegisterSqlMapper in RegisterSqlMapperForQueryAll")
-	m.Id = C.ELIBOT_arc_GET_ALL
+	m.Id = C.ELIBOT_ARC_GET_ALL_PARAMS
 	return m.get_arc_sql_mapper(m.Id)
 }
 
