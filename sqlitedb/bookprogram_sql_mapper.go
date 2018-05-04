@@ -26,6 +26,10 @@ func (m *BookProgramSqlMapper) get_bookprogram_sql_mapper(q_id string) error {
 	return nil
 }
 
+func (m *BookProgramSqlMapper) GetID() string {
+	return m.Id
+}
+
 func (m *BookProgramSqlMapper) RegisterSqlMapperForQueryAll() error{
 	fmt.Println("RegisterSqlMapperForQueryAll in BookProgramSqlMapper")
 	m.Id = C.ELIBOT_BOOKPROGRAM_GET_ALL
