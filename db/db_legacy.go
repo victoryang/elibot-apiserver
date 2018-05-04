@@ -47,6 +47,13 @@ func Get_All_Bookprograms() (string, error){
     return RegisterAndQueryAll(sm)
 }
 
+func Get_ALL_EnumSqlMapper() (string, error) {
+    fmt.Println("in Get_ALL_EnumSqlMapper")
+    
+    sm := new(sql.EnumSqlMapper)
+    return RegisterAndQueryAll(sm)
+}
+
 func Get_ALL_ExtaxisSqlMapper() (string, error) {
     fmt.Println("in Get_ALL_ExtaxisSqlMapper")
     
@@ -58,6 +65,34 @@ func Get_All_Interference() (string, error) {
     fmt.Println("in Get_All_Interference")
     
     sm := new(sql.InterferenceSqlMapper)
+    return RegisterAndQueryAll(sm)
+}
+
+func Get_All_IO() (string, error) {
+    fmt.Println("in Get_All_IO")
+    
+    sm := new(sql.IoSqlMapper)
+    return RegisterAndQueryAll(sm)
+}
+
+func Get_All_Metadata() (string, error) {
+    fmt.Println("in Get_All_Metadata")
+    
+    sm := new(sql.MetadataSqlMapper)
+    return RegisterAndQueryAll(sm)
+}
+
+func Get_All_Parameter() (string, error) {
+    fmt.Println("in Get_All_Parameter")
+    
+    sm := new(sql.ParameterSqlMapper)
+    return RegisterAndQueryAll(sm)
+}
+
+func Get_All_Ref() (string, error) {
+    fmt.Println("in Get_All_Ref")
+    
+    sm := new(sql.RefSqlMapper)
     return RegisterAndQueryAll(sm)
 }
 
