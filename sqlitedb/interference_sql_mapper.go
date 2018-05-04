@@ -31,12 +31,12 @@ func (m *InterferenceSqlMapper) GetID() string {
 }
 
 func (m *InterferenceSqlMapper) RegisterSqlMapperForQueryAll() error{
-	fmt.Println("RegisterSqlMapper in RegisterSqlMapperForQueryAll")
 	m.Id = C.ELIBOT_INTERFERENCE_GET_ALL
 	return m.get_interference_sql_mapper(m.Id)
 }
 
 func (m *InterferenceSqlMapper) RegisterSqlMapper(mode int) error {
+	fmt.Println("RegisterSqlMapper in InterferenceSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		return m.RegisterSqlMapperForQueryAll()

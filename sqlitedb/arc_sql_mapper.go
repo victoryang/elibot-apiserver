@@ -31,12 +31,12 @@ func (m *ArcSqlMapper) GetID() string {
 }
 
 func (m *ArcSqlMapper) RegisterSqlMapperForQueryAll() error{
-	fmt.Println("RegisterSqlMapper in RegisterSqlMapperForQueryAll")
 	m.Id = C.ELIBOT_ARC_GET_ALL_PARAMS
 	return m.get_arc_sql_mapper(m.Id)
 }
 
 func (m *ArcSqlMapper) RegisterSqlMapper(mode int) error {
+	fmt.Println("RegisterSqlMapper in ArcSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		return m.RegisterSqlMapperForQueryAll()

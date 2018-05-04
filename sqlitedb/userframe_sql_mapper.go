@@ -31,12 +31,12 @@ func (m *UserframeSqlMapper) GetID() string {
 }
 
 func (m *UserframeSqlMapper) RegisterSqlMapperForQueryAll() error{
-	fmt.Println("RegisterSqlMapperForQueryAll in UserframeSqlMapper")
 	m.Id = C.ELIBOT_USER_FRAME_GET_ALL
 	return m.get_userframe_sql_mapper(m.Id)
 }
 
 func (m *UserframeSqlMapper) RegisterSqlMapper(mode int) error {
+	fmt.Println("RegisterSqlMapper in UserframeSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		return m.RegisterSqlMapperForQueryAll()
