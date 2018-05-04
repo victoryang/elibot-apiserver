@@ -31,12 +31,12 @@ func (m *BookProgramSqlMapper) GetID() string {
 }
 
 func (m *BookProgramSqlMapper) RegisterSqlMapperForQueryAll() error{
-	fmt.Println("RegisterSqlMapperForQueryAll in BookProgramSqlMapper")
 	m.Id = C.ELIBOT_BOOKPROGRAM_GET_ALL
 	return m.get_bookprogram_sql_mapper(m.Id)
 }
 
 func (m *BookProgramSqlMapper) RegisterSqlMapper(mode int) error {
+	fmt.Println("RegisterSqlMapper in BookProgramSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		return m.RegisterSqlMapperForQueryAll()

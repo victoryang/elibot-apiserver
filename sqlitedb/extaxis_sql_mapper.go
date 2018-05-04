@@ -31,12 +31,12 @@ func (m *ExtaxisSqlMapper) GetID() string {
 }
 
 func (m *ExtaxisSqlMapper) RegisterSqlMapperForQueryAll() error{
-	fmt.Println("RegisterSqlMapperForQueryAll in ExtaxisSqlMapper")
 	m.Id = C.ELIBOT_EXTAXIS_GET_ALL
 	return m.get_extaxis_sql_mapper(m.Id)
 }
 
 func (m *ExtaxisSqlMapper) RegisterSqlMapper(mode int) error {
+	fmt.Println("RegisterSqlMapper in ExtaxisSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		return m.RegisterSqlMapperForQueryAll()

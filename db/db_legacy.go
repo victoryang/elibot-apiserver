@@ -33,6 +33,13 @@ func Get_ALL_ArcSqlMapper() (string, error) {
     return RegisterAndQueryAll(sm)
 }
 
+func Get_All_Backup() (string, error){
+    fmt.Println("in Get_All_Backup")
+ 
+    sm := new(sql.BackupSqlMapper)
+    return RegisterAndQueryAll(sm)
+}
+
 func Get_All_Bookprograms() (string, error){
     fmt.Println("in Get_All_Bookprograms")
  
