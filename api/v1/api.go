@@ -35,6 +35,21 @@ func getAllArc(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func getArcParams(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("starting get all Arc")
+	vars := mux.Vars(r)
+	res, err := db.Get_Arc_Params(vars)
+	if err!=nil {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, res)
+	return
+}
+
 func getAllBackup(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Backup")
 	res, err := db.Get_All_Backup()
@@ -207,13 +222,14 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/v1/test", test).Methods("GET")
 	r.HandleFunc("/v1/arc", getAllArc).Methods("GET")
-	r.HandleFunc("/v1/backup", getAllBackup).Methods("GET")
+	r.HandleFunc("/v1/arc", getArcParams).Methods("GET").Queries("file_no", "group")
+	//r.HandleFunc("/v1/backup", getAllBackup).Methods("GET")
 	r.HandleFunc("/v1/bookprograms", getAllBookprograms).Methods("GET")
-	r.HandleFunc("/v1/enum", getAllEnum).Methods("GET")
+	//r.HandleFunc("/v1/enum", getAllEnum).Methods("GET")
 	r.HandleFunc("/v1/extaxis", getAllExtaxis).Methods("GET")
 	r.HandleFunc("/v1/interference", getAllInterference).Methods("GET")
-	r.HandleFunc("/v1/io", getAllIO).Methods("GET")
-	r.HandleFunc("/v1/metadata", getAllMetadata).Methods("GET")
+	//r.HandleFunc("/v1/io", getAllIO).Methods("GET")
+	//r.HandleFunc("/v1/metadata", getAllMetadata).Methods("GET")
 	r.HandleFunc("/v1/parameter", getAllParameter).Methods("GET")
 	r.HandleFunc("/v1/ref", getAllRef).Methods("GET")
 	r.HandleFunc("/v1/toolframe", getAllToolframe).Methods("GET")
