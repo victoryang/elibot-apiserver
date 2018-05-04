@@ -25,7 +25,16 @@ func (m *BookProgramSqlMapper) get_bookprogram_sql_mapper(q_id string) error {
 	return nil
 }
 
-func (m *BookProgramSqlMapper) RegisterSqlMapper() error{
+func (m *BookProgramSqlMapper) RegisterSqlMapperForQueryAll() error{
 	m.Id = C.ELIBOT_BOOKPROGRAM_GET_ALL
 	return m.get_bookprogram_sql_mapper(m.Id)
+}
+
+func (m *BookProgramSqlMapper) RegisterSqlMapper(mode int) error {
+	switch mode {
+	case ELIBOT_GET_ALL_PARAMS:
+		return m.RegisterSqlMapperForQueryAll()
+	default:
+		return errors.New("Not support")
+	}
 }
