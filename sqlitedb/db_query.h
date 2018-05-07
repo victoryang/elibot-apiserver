@@ -88,13 +88,22 @@ db_query_req_option* new_db_query_req_option(int32_t type_handle_mode) {
     return option;
 }
 
-db_query_req_parameter* new_db_query_req_parameter(sql_parameter *params, int param_size) {
+sql_parameter* new_sql_parameter(size_t size) {
+    sql_parameter* params = (sql_parameter*) malloc(sizeof(sql_parameter) * size);
+    if NULL == params {
+        return NULL;
+    }
+    return params;
+}
+
+db_query_req_parameter* new_db_query_req_parameter() {
     db_query_req_parameter* param = (db_query_req_parameter*)malloc(sizeof(db_query_req_parameter));
     if (NULL==param) {
         return NULL;
     }
-    param->params = params;
-    param->param_size = param_size;
+
+    param->params = NULL
+    param->param_size = 0;
     return param;
 }
 
