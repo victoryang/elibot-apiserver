@@ -88,8 +88,11 @@ db_query_req_option* new_db_query_req_option(int32_t type_handle_mode) {
     return option;
 }
 
-sql_parameter* getsqlparam(sql_parameter* params, int16_t i) {
-    if ()
+sql_parameter* getindexedsqlparam(db_query_req_parameter* req_params, int16_t i) {
+    if(i >= req_params->param_size) {
+        return NULL;
+    }
+    return &req_params->params[i]
 }
 
 sql_parameter* new_sql_parameter(int16_t size) {
