@@ -89,7 +89,7 @@ db_query_req_option* new_db_query_req_option(int32_t type_handle_mode) {
 }
 
 sql_parameter* new_sql_parameter(size_t size) {
-    sql_parameter* params = (sql_parameter*) malloc(sizeof(sql_parameter) * size);
+    sql_parameter* params = (sql_parameter*) malloc(sizeof(sql_parameter)*size);
     if NULL == params {
         return NULL;
     }
