@@ -83,7 +83,7 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
 
     for _,param := range req_params.params {
         C.free(unsafe.Pointer(param.name))
-        if param._type = C.DATA_STRING {
+        if param._type == C.DATA_STRING {
             C.free(unsafe.Pointer(param.value))
         }
     }
