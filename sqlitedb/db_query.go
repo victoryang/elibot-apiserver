@@ -23,16 +23,16 @@ func newsqlparams(key string, value interface{}, param *C.sql_parameter) error{
    
     switch t := value.(type) {
     case int32:
-        param.type = C.DATA_UINT32
+        param._type = C.DATA_UINT32
         binary.LittleEndian.PutUint32(param.value[:], value)
     case int64:
-        param.type = C.DATA_UINT64
+        param._type = C.DATA_UINT64
         binary.LittleEndian.PutUint64(param.value[:], value)
     case float64:
-        param.type = C.DATA_DOUBLE
+        param._type = C.DATA_DOUBLE
         binary.LittleEndian.PutUint32(param.value[:], math.Float64bits(value))
     case string:
-        param.type = C.DATA_STRING
+        param._type = C.DATA_STRING
         copy(param.value, C.Cstring(value))
 
     default:
@@ -63,7 +63,7 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
     req_params.params = C.new_sql_parameter(req_params.param_size)
     defer C.free(unsafe.Pointer(params))
  
-    int i=0
+    var i int = 0
     for k,v := range queries {
         err := newsqlparams(k, v, &req_params.params[i])
         if i > req_params.param_size || err != nil{
@@ -83,7 +83,7 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
 
     for _,param := range req_params.params {
         C.free(unsafe.Pointer(param.name))
-        if param.type = C.DATA_STRING {
+        if param._type = C.DATA_STRING {
             C.free(unsafe.Pointer(param.value))
         }
     }
