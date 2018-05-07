@@ -21,18 +21,18 @@ func newsqlparams(key string, value interface{}, param *C.sql_parameter) error{
     param.name = C.CString(key)
    
     switch t := value.(type) {
-    case int32:
+    case uint32:
         param._type = C.DATA_UINT32
-        binary.LittleEndian.PutUint32(param.value[:], value)
-    case int64:
+        binary.LittleEndian.PutUint32(param.value[:], value.(uint32))
+    case uint64:
         param._type = C.DATA_UINT64
-        binary.LittleEndian.PutUint64(param.value[:], value)
+        binary.LittleEndian.PutUint64(param.value[:], value.(uint64))
     case float64:
         param._type = C.DATA_DOUBLE
-        binary.LittleEndian.PutUint32(param.value[:], math.Float64bits(value))
+        binary.LittleEndian.PutUint32(param.value[:], math.Float64bits(value.(float64)))
     case string:
         param._type = C.DATA_STRING
-        copy(param.value, C.CString(value))
+        param.value = C.CString(value.(string))
 
     default:
         fmt.Println("not support")
@@ -57,10 +57,10 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
 
     req_params = C.new_db_query_req_parameter()
     defer C.free(unsafe.Pointer(req_params))
-    req_params.param_size = len(queries)
+    req_params.param_size = len(queries).(C.int16_t)
 
     req_params.params = C.new_sql_parameter(req_params.param_size)
-    defer C.free(unsafe.Pointer(params))
+    defer C.free(unsafe.Pointer(req_params.params))
  
     var i int = 0
     for k,v := range queries {
