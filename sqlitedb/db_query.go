@@ -18,8 +18,7 @@ const (
 )
 
 func newsqlparams(key string, value interface{}, param *C.sql_parameter) error{
-    param.name = C.Cstring(key)
-    //defer C.free(unsafe.Pointer(param.name))
+    param.name = C.CString(key)
    
     switch t := value.(type) {
     case int32:
@@ -33,7 +32,7 @@ func newsqlparams(key string, value interface{}, param *C.sql_parameter) error{
         binary.LittleEndian.PutUint32(param.value[:], math.Float64bits(value))
     case string:
         param._type = C.DATA_STRING
-        copy(param.value, C.Cstring(value))
+        copy(param.value, C.CString(value))
 
     default:
         fmt.Println("not support")
