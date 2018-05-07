@@ -29,10 +29,10 @@ func newsqlparams(key string, value interface{}, param *C.sql_parameter) error{
         binary.LittleEndian.PutUint64(param.value[:], value.(uint64))
     case float64:
         param._type = C.DATA_DOUBLE
-        binary.LittleEndian.PutUint32(param.value[:], math.Float64bits(value.(float64)))
+        binary.LittleEndian.PutUint64(param.value[:], math.Float64bits(value.(float64)))
     case string:
         param._type = C.DATA_STRING
-        param.value = C.CString(value.(string))
+        copy(param.value, C.CString(value.(string)))
 
     default:
         fmt.Println("not support")
@@ -57,16 +57,16 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
 
     req_params = C.new_db_query_req_parameter()
     defer C.free(unsafe.Pointer(req_params))
-    req_params.param_size = len(queries).(C.int16_t)
+    req_params.param_size = C.int16_t(len(queries))
 
     req_params.params = C.new_sql_parameter(req_params.param_size)
     defer C.free(unsafe.Pointer(req_params.params))
  
     var i int = 0
     for k,v := range queries {
-        err := newsqlparams(k, v, &req_params.params[i])
+        err := newsqlparams(k, v, C.getindexedsqlparam(req_params, i))
         if i > req_params.param_size || err != nil{
-            return nil, errors.New("fail to start a query")
+            return "", errors.New("fail to start a query")
         }
     }
 

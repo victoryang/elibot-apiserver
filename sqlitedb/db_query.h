@@ -88,6 +88,10 @@ db_query_req_option* new_db_query_req_option(int32_t type_handle_mode) {
     return option;
 }
 
+sql_parameter* getsqlparam(sql_parameter* params, int16_t i) {
+    if ()
+}
+
 sql_parameter* new_sql_parameter(int16_t size) {
     sql_parameter* params = (sql_parameter*) malloc(sizeof(sql_parameter)*size);
     if (NULL == params) {
