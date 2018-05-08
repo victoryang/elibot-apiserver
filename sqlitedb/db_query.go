@@ -7,23 +7,26 @@ package sqlitedb
 import "C"
 import (
     "unsafe"
+    "bytes"
     "fmt"
     "math"
     "errors"
     "encoding/binary"
 )
 
-const (
-    SQL_PARAMETER_VALUE_SIZE = 8
-)
-
-func newsqlparams(key string, value interface{}, param *C.sql_parameter) error{
+func newsqlparams(key string, value interface{}, param *C.sql_parameter) error {
     param.name = C.CString(key)
    
     switch t := value.(type) {
+    case int32:
+        param._type = C.DB_TYPE_INT32
+        binary.Write(param.value[:], binary.LittleEndian, value.(int32))
     case uint32:
         param._type = C.DB_TYPE_INT32
         binary.LittleEndian.PutUint32(param.value[:], value.(uint32))
+    case int64:
+        param._type = C.DB_TYPE_INT64
+        binary.Write(param.value[:], binary.LittleEndian, value.(int64))
     case uint64:
         param._type = C.DB_TYPE_INT64
         binary.LittleEndian.PutUint64(param.value[:], value.(uint64))

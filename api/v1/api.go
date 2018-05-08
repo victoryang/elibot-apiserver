@@ -38,7 +38,7 @@ func getAllArc(w http.ResponseWriter, r *http.Request) {
 func getArcParams(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get Arc parameters")
 	queries := make(map[string]interface{})
-	queries["file_no"] = uint32(0)
+	queries["file_no"] = int32(0)
 	queries["group"] = "arc.welder"
 	res, err := db.Get_Arc_Params(queries)
 	if err!=nil {
