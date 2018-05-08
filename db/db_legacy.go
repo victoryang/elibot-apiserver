@@ -110,11 +110,11 @@ func Get_All_Metadata(vars map[string]interface{}) (string, error) {
     return RegisterAndQueryWithParams(sm, vars)
 }
 
-func Get_All_Parameter() (string, error) {
-    fmt.Println("in Get_All_Parameter")
+func Get_Parameter_By_Id(vars map[string]interface{}) (string, error) {
+    fmt.Println("in Get_Parameter_By_Id")
     
     sm := new(sql.ParameterSqlMapper)
-    return RegisterAndQueryAll(sm)
+    return RegisterAndQueryWithParams(sm, vars)
 }
 
 func Get_All_Ref() (string, error) {

@@ -30,6 +30,10 @@ func (m *ParameterSqlMapper) GetID() string {
 	return m.Id
 }
 
+func (m *ParameterSqlMapper) RegisterSqlMapperForQueryWithParams() error {
+	m.Id = C.ELIBOT_PARAMS_GET_VALID_PARAM_BY_ID
+	return m.get_parameter_sql_mapper(m.Id)
+
 func (m *ParameterSqlMapper) RegisterSqlMapperForQueryAll() error{
 	m.Id = C.ELIBOT_ENUM_GET_ALL
 	return m.get_parameter_sql_mapper(m.Id)
@@ -40,6 +44,8 @@ func (m *ParameterSqlMapper) RegisterSqlMapper(mode int) error {
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		return m.RegisterSqlMapperForQueryAll()
+	case ELIBOT_GET_WITH_PARAMS:
+		return m.RegisterSqlMapperForQueryWithParams()
 	default:
 		return errors.New("Not support")
 	}
