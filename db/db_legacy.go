@@ -9,6 +9,23 @@ const (
     DBName="/root/elibotDB.db"
 )
 
+func RegisterAndQueryWithParams(sm sql.SqlMapper, vars map[string]interface{}) (string, error) {
+    err := sm.RegisterSqlMapper(sql.ELIBOT_GET_WITH_PARAMS)
+    if err!=nil {
+        return "", err
+    }
+
+    res, err := sql.Db_query_with_params(sm.GetID(), DBName, vars)
+    if err!=nil {
+        fmt.Printf("query fails")
+        return "", err
+    }
+
+    fmt.Println(res)
+    fmt.Println("get_all_metadatas OK")
+    return res, nil
+}
+
 func RegisterAndQueryAll(sm sql.SqlMapper) (string, error) {
     err := sm.RegisterSqlMapper(sql.ELIBOT_GET_ALL_PARAMS)
     if err!=nil {
@@ -33,12 +50,12 @@ func Get_ALL_Arc() (string, error) {
     return RegisterAndQueryAll(sm)
 }
 
-func Get_Arc_Params(vars map[string]string) (string, error) {
+func Get_Arc_Params(vars map[string]interface{}) (string, error) {
     fmt.Println("in Get_Arc_Params")
     for k,v := range vars {
         fmt.Println("key: ", k, "v", v)
     }
-    return "", nil
+    return RegisterAndQueryWithParams(sm, vars)
 }
 
 func Get_All_Backup() (string, error){

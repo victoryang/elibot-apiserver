@@ -8,6 +8,7 @@ type SqlMapper interface {
 
 const (
 	ELIBOT_GET_ALL_PARAMS = 0
+	ELIBOT_GET_WITH_PARAMS = 1
 )
 
 // BaseSqlMapper should be inherited by sql mappers
