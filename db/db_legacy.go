@@ -104,13 +104,6 @@ func Get_Parameter_By_Id(vars map[string]interface{}) (string, error) {
 }
 
 func Get_Parameter_By_Group(vars map[string]interface{}) (string, error) {
-    fmt.Println("in Get_Parameter_By_Id")
-    
-    sm := new(sql.ParameterSqlMapper)
-    return RegisterAndQuery(sm, sql.ELIBOT_PARAMETER_GET_BY_GROUP, vars)
-}
-
-func Get_Parameter_By_Group(vars map[string]interface{}) (string, error) {
     fmt.Println("in Get_Parameter_By_Group")
     
     sm := new(sql.ParameterSqlMapper)
