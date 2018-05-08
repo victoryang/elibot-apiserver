@@ -20,7 +20,7 @@ const (
 func newsqlparams(key string, value interface{}, param *C.sql_parameter) error{
     param.name = C.CString(key)
    
-    switch t := value.(type) {
+    switch value.(type) {
     case uint32:
         param._type = C.DATA_UINT32
         binary.LittleEndian.PutUint32(param.value[:], value.(uint32))
@@ -87,7 +87,7 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
             C.free(unsafe.Pointer(param.name))
             if param._type == C.DATA_STRING {
                 p := binary.LittleEndian.Uint64(param.value[:])
-                C.free((*C.char)(unsafe.Pointer(uintptr(p))))
+                C.free(unsafe.Pointer(uintptr(p)))
             }
         }
     }
