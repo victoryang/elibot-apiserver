@@ -27,6 +27,7 @@ const (
 	ELIBOT_PARAMETER_GET_BY_GROUP
 
 	/*For ref sqlmapper*/
+	ELIBOT_REF_GET_ALL
 )
 
 // BaseSqlMapper should be inherited by sql mappers
