@@ -117,6 +117,13 @@ func Get_Parameter_By_Id(vars map[string]interface{}) (string, error) {
     return RegisterAndQueryWithParams(sm, vars)
 }
 
+func Get_Parameter_By_Group(vars map[string]interface{}) (string, error) {
+    fmt.Println("in Get_Parameter_By_Group")
+    
+    sm := new(sql.ParameterSqlMapper)
+    return RegisterAndQueryWithParams(sm, vars)
+}
+
 func Get_All_Ref() (string, error) {
     fmt.Println("in Get_All_Ref")
     
@@ -144,4 +151,3 @@ func Get_All_Zeropoints() (string, error) {
     sm := new(sql.ZeroPointSqlMapper)
     return RegisterAndQueryAll(sm)
 }
-
