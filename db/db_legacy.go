@@ -17,7 +17,8 @@ func RegisterAndQueryWithParams(sm sql.SqlMapper, vars map[string]interface{}) (
 
     res, err := sql.Db_query_with_params(sm.GetID(), DBName, vars)
     if err!=nil {
-        fmt.Printf("query fails")
+        fmt.Println("query fails")
+        fmt.Println(err)
         return "", err
     }
 
@@ -34,7 +35,8 @@ func RegisterAndQueryAll(sm sql.SqlMapper) (string, error) {
 
     res, err := sql.Db_query(sm.GetID(), DBName)
     if err!=nil {
-        fmt.Printf("query fails")
+        fmt.Println("query fails")
+        fmt.Println(err)
         return "", err
     }
 

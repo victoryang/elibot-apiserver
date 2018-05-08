@@ -20,7 +20,7 @@ const (
 func newsqlparams(key string, value interface{}, param *C.sql_parameter) error{
     param.name = C.CString(key)
    
-    switch value.(type) {
+    switch t := value.(type) {
     case uint32:
         param._type = C.DATA_UINT32
         binary.LittleEndian.PutUint32(param.value[:], value.(uint32))
@@ -36,8 +36,8 @@ func newsqlparams(key string, value interface{}, param *C.sql_parameter) error{
         binary.LittleEndian.PutUint64(param.value[:], uint64(uintptr(unsafe.Pointer(p))))
 
     default:
-        fmt.Println("not support")
-        return errors.New("not support this type")
+        fmt.Println("not support for ", t)
+        return errors.New("not support this type\n")
     }
 
     return nil
@@ -67,7 +67,7 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
     for k,v := range queries {
         err := newsqlparams(k, v, C.getindexedsqlparam(req_params, i))
         if i > req_params.param_size || err != nil{
-            return "", errors.New("fail to start a query")
+            return "", errors.New("fail to start a query\n")
         }
     }
 
@@ -94,7 +94,7 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
 
     if q_res==nil {
         fmt.Println("fail to query")
-        return "", errors.New("fail to query")
+        return "", errors.New("fail to query\n")
     }
 
     str := C.cJSON_Print(q_res)
@@ -127,7 +127,7 @@ func Db_query(q_id string, db_name string) (string, error){
     q_res := C.db_query(req)
     if q_res==nil {
     	fmt.Println("fail to query")
-    	return "", errors.New("fail to query")
+    	return "", errors.New("fail to query\n")
     }
 
     str := C.cJSON_Print(q_res)
