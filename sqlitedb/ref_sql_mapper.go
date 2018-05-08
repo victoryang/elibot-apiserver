@@ -17,12 +17,12 @@ func (m *RefSqlMapper) get_ref_sql_mapper(q_id string) error {
 	id := C.CString(q_id)
 	defer C.free(unsafe.Pointer(id))
 
-	ism := C.get_ref_sql_mapper(id)
-	if ism == nil {
+	rsm := C.get_ref_sql_mapper(id)
+	if rsm == nil {
 		return errors.New("Getting sqlmapper fails")
 	}
 
-	C.register_sql_mapper(ism)
+	C.register_sql_mapper(rsm)
 	return nil
 }
 
@@ -38,7 +38,7 @@ func (m *RefSqlMapper) RegisterSqlMapperForQueryAll() error{
 func (m *RefSqlMapper) RegisterSqlMapper(mode int) error {
 	fmt.Println("RegisterSqlMapper in RefSqlMapper | mode: ", mode)
 	switch mode {
-	case ELIBOT_GET_ALL_PARAMS:
+	case ELIBOT_REF_GET_ALL:
 		return m.RegisterSqlMapperForQueryAll()
 	default:
 		return errors.New("Not support")

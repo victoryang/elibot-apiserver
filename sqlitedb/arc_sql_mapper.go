@@ -45,8 +45,10 @@ func (m *ArcSqlMapper) RegisterSqlMapper(mode int) error {
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		return m.RegisterSqlMapperForQueryAll()
-	case ELIBOT_GET_WITH_PARAMS:
+	case ELIBOT_ARC_GET_PARAMS:
 		return m.RegisterSqlMapperForQueryWithParams()
+	case ELIBOT_UPDATE_PARAM:
+		return errors.New("Not support now")
 	default:
 		return errors.New("Not support")
 	}

@@ -9,47 +9,32 @@ const (
     DBName="/root/elibotDB.db"
 )
 
-func RegisterAndQueryWithParams(sm sql.SqlMapper, vars map[string]interface{}) (string, error) {
-    err := sm.RegisterSqlMapper(sql.ELIBOT_GET_WITH_PARAMS)
+func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res string, err error) {
+    err := sm.RegisterSqlMapper(mode)
     if err!=nil {
         return "", err
     }
 
-    res, err := sql.Db_query_with_params(sm.GetID(), DBName, vars)
-    if err!=nil {
-        fmt.Println("query fails")
-        fmt.Println(err)
-        return "", err
+    if vars == nil {
+        res, err = sql.Db_query(sm.GetID(), DBName)
+    } else {
+        res, err = sql.Db_query_with_params(sm.GetID(), DBName, vars)
     }
-
-    fmt.Println(res)
-    fmt.Println("get_all_metadatas OK")
-    return res, nil
-}
-
-func RegisterAndQueryAll(sm sql.SqlMapper) (string, error) {
-    err := sm.RegisterSqlMapper(sql.ELIBOT_GET_ALL_PARAMS)
     if err!=nil {
-        return "", err
-    }
-
-    res, err := sql.Db_query(sm.GetID(), DBName)
-    if err!=nil {
-        fmt.Println("query fails")
-        fmt.Println(err)
-        return "", err
+        fmt.Println("query fails: ", err)
+        return
     }
 
     fmt.Println(res)
     fmt.Println("get_all_metadatas OK")
-    return res, nil
+    return
 }
 
 func Get_ALL_Arc() (string, error) {
     fmt.Println("in Get_ALL_Arc")
     
     sm := new(sql.ArcSqlMapper)
-    return RegisterAndQueryAll(sm)
+    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, nil)
 }
 
 func Get_Arc_Params(vars map[string]interface{}) (string, error) {
@@ -58,96 +43,96 @@ func Get_Arc_Params(vars map[string]interface{}) (string, error) {
         fmt.Println("key: ", k, "v", v)
     }
     sm := new(sql.ArcSqlMapper)
-    return RegisterAndQueryWithParams(sm, vars)
+    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, vars)
 }
 
 func Get_All_Backup() (string, error){
     fmt.Println("in Get_All_Backup")
  
     sm := new(sql.BackupSqlMapper)
-    return RegisterAndQueryAll(sm)
+    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, nil)
 }
 
 func Get_All_Bookprograms() (string, error){
     fmt.Println("in Get_All_Bookprograms")
  
     sm := new(sql.BookProgramSqlMapper)
-    return RegisterAndQueryAll(sm)
+    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, nil)
 }
 
 func Get_ALL_Enum() (string, error) {
     fmt.Println("in Get_ALL_Enum")
     
     sm := new(sql.EnumSqlMapper)
-    return RegisterAndQueryAll(sm)
+    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, nil)
 }
 
 func Get_ALL_Extaxis() (string, error) {
     fmt.Println("in Get_ALL_Extaxis")
     
     sm := new(sql.ExtaxisSqlMapper)
-    return RegisterAndQueryAll(sm)
+    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, nil)
 }
 
 func Get_All_Interference() (string, error) {
     fmt.Println("in Get_All_Interference")
     
     sm := new(sql.InterferenceSqlMapper)
-    return RegisterAndQueryAll(sm)
+    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, nil)
 }
 
 func Get_All_IO() (string, error) {
     fmt.Println("in Get_All_IO")
     
     sm := new(sql.IoSqlMapper)
-    return RegisterAndQueryAll(sm)
+    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, nil)
 }
 
 func Get_All_Metadata(vars map[string]interface{}) (string, error) {
     fmt.Println("in Get_All_Metadata")
     
     sm := new(sql.MetadataSqlMapper)
-    return RegisterAndQueryWithParams(sm, vars)
+    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, vars)
 }
 
 func Get_Parameter_By_Id(vars map[string]interface{}) (string, error) {
     fmt.Println("in Get_Parameter_By_Id")
     
     sm := new(sql.ParameterSqlMapper)
-    return RegisterAndQueryWithParams(sm, vars)
+    return RegisterAndQuery(sm, sql.ELIBOT_PARAMETER_GET_BY_ID, vars)
 }
 
 func Get_Parameter_By_Group(vars map[string]interface{}) (string, error) {
     fmt.Println("in Get_Parameter_By_Group")
     
     sm := new(sql.ParameterSqlMapper)
-    return RegisterAndQueryWithParams(sm, vars)
+    return RegisterAndQuery(sm, sql.ELIBOT_PARAMETER_GET_BY_GROUP, vars)
 }
 
 func Get_All_Ref() (string, error) {
     fmt.Println("in Get_All_Ref")
     
     sm := new(sql.RefSqlMapper)
-    return RegisterAndQueryAll(sm)
+    return RegisterAndQuery(sm, sql.ELIBOT_REF_GET_ALL, nil)
 }
 
 func Get_ALL_Toolframe() (string, error) {
     fmt.Println("in Get_ALL_Toolframe")
     
     sm := new(sql.ToolframeSqlMapper)
-    return RegisterAndQueryAll(sm)
+    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, nil)
 }
 
 func Get_ALL_Userframe() (string, error) {
     fmt.Println("in Get_ALL_Userframe")
 
     sm := new(sql.UserframeSqlMapper)
-    return RegisterAndQueryAll(sm)
+    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, nil)
 }
 
 func Get_All_Zeropoints() (string, error) {
     fmt.Println("in Get_All_Zeropoints")
     
     sm := new(sql.ZeroPointSqlMapper)
-    return RegisterAndQueryAll(sm)
+    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, nil)
 }

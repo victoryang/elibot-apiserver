@@ -40,6 +40,10 @@ func (m *ExtaxisSqlMapper) RegisterSqlMapper(mode int) error {
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		return m.RegisterSqlMapperForQueryAll()
+	case ELIBOT_EXTAXIS_UPDATE:
+		return errors.New("Not support now")
+	case ELIBOT_EXTAXIS_UPDATE_POS:
+		return errors.New("Not support now")
 	default:
 		return errors.New("Not support")
 	}
