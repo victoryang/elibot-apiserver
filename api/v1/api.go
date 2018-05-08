@@ -154,9 +154,8 @@ func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 
 func getParameter(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Parameter")
-	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
-	queries["md_id"] = vars["md_id"]
+	queries["md_id"] = "param.speed.speed_min_joint"
 	res, err := db.Get_Parameter_By_Id(queries)
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
@@ -237,7 +236,7 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/interference", getAllInterference).Methods("GET")
 	//r.HandleFunc("/v1/io", getAllIO).Methods("GET")
 	r.HandleFunc("/v1/metadata", getAllMetadata).Methods("GET")
-	r.HandleFunc("/v1/parameter", getParameter).Methods("GET").Queries("md_id", "{md_id}", "group", "{group}")
+	r.HandleFunc("/v1/parameter", getParameter).Methods("GET")/*.Queries("md_id", "{md_id}", "group", "{group}")*/
 	r.HandleFunc("/v1/ref", getAllRef).Methods("GET")
 	r.HandleFunc("/v1/toolframe", getAllToolframe).Methods("GET")
 	r.HandleFunc("/v1/userframe", getAllUserframe).Methods("GET")
