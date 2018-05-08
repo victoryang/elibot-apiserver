@@ -22,16 +22,16 @@ func newsqlparams(key string, value interface{}, param *C.sql_parameter) error{
    
     switch t := value.(type) {
     case uint32:
-        param._type = C.DATA_UINT32
+        param._type = C.DB_TYPE_INT32
         binary.LittleEndian.PutUint32(param.value[:], value.(uint32))
     case uint64:
-        param._type = C.DATA_UINT64
+        param._type = C.DB_TYPE_INT64
         binary.LittleEndian.PutUint64(param.value[:], value.(uint64))
     case float64:
-        param._type = C.DATA_DOUBLE
+        param._type = C.DB_TYPE_DOUBLE
         binary.LittleEndian.PutUint64(param.value[:], math.Float64bits(value.(float64)))
     case string:
-        param._type = C.DATA_STRING
+        param._type = C.DB_TYPE_TEXT
         p := C.CString(value.(string))
         binary.LittleEndian.PutUint64(param.value[:], uint64(uintptr(unsafe.Pointer(p))))
 
