@@ -138,7 +138,10 @@ func getAllIO(w http.ResponseWriter, r *http.Request) {
 
 func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Metadata")
-	res, err := db.Get_All_Metadata()
+	queries := make(map[string]interface{})
+	queries["file_no"] = uint32(0)
+	queries["group"] = "arc.welder"
+	res, err := db.Get_All_Metadata(queries)
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, err.Error())
@@ -231,7 +234,7 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/extaxis", getAllExtaxis).Methods("GET")
 	r.HandleFunc("/v1/interference", getAllInterference).Methods("GET")
 	//r.HandleFunc("/v1/io", getAllIO).Methods("GET")
-	//r.HandleFunc("/v1/metadata", getAllMetadata).Methods("GET")
+	r.HandleFunc("/v1/metadata", getAllMetadata).Methods("GET")
 	r.HandleFunc("/v1/parameter", getAllParameter).Methods("GET")
 	r.HandleFunc("/v1/ref", getAllRef).Methods("GET")
 	r.HandleFunc("/v1/toolframe", getAllToolframe).Methods("GET")
