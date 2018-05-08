@@ -139,8 +139,7 @@ func getAllIO(w http.ResponseWriter, r *http.Request) {
 func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Metadata")
 	queries := make(map[string]interface{})
-	queries["file_no"] = uint32(0)
-	queries["group"] = "arc.welder"
+	queries["lang"] = "zh_cn"
 	res, err := db.Get_All_Metadata(queries)
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
