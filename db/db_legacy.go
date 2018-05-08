@@ -10,7 +10,7 @@ const (
 )
 
 func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res string, err error) {
-    err := sm.RegisterSqlMapper(mode)
+    err = sm.RegisterSqlMapper(mode)
     if err!=nil {
         return "", err
     }
@@ -43,7 +43,7 @@ func Get_Arc_Params(vars map[string]interface{}) (string, error) {
         fmt.Println("key: ", k, "v", v)
     }
     sm := new(sql.ArcSqlMapper)
-    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, vars)
+    return RegisterAndQuery(sm, sql.ELIBOT_ARC_GET_PARAMS, vars)
 }
 
 func Get_All_Backup() (string, error){

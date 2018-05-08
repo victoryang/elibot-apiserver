@@ -13,7 +13,7 @@ type InterferenceSqlMapper struct {
 	Id		string
 }
 
-func (m *InterferenceSqlMapper) get_interference_sql_mapper(q_id string) error {
+func (m *InterferenceSqlMapper) register_interference_sql_mapper(q_id string) error {
 	id := C.CString(q_id)
 	defer C.free(unsafe.Pointer(id))
 
@@ -30,17 +30,15 @@ func (m *InterferenceSqlMapper) GetID() string {
 	return m.Id
 }
 
-func (m *InterferenceSqlMapper) RegisterSqlMapperForQueryAll() error{
-	m.Id = C.ELIBOT_INTERFERENCE_GET_ALL
-	return m.get_interference_sql_mapper(m.Id)
-}
-
 func (m *InterferenceSqlMapper) RegisterSqlMapper(mode int) error {
 	fmt.Println("RegisterSqlMapper in InterferenceSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
-		return m.RegisterSqlMapperForQueryAll()
+		m.Id = C.ELIBOT_INTERFERENCE_GET_ALL
+
 	default:
 		return errors.New("Not support")
 	}
+
+	return m.register_interference_sql_mapper(m.Id)
 }

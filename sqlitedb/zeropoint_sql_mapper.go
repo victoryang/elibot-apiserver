@@ -13,7 +13,7 @@ type ZeroPointSqlMapper struct {
 	Id         string
 }
 
-func (m *ZeroPointSqlMapper) get_zeropoint_sql_mapper(q_id string) error {
+func (m *ZeroPointSqlMapper) register_zeropoint_sql_mapper(q_id string) error {
 	id := C.CString(q_id)
 	defer C.free(unsafe.Pointer(id))
 
@@ -30,17 +30,15 @@ func (m *ZeroPointSqlMapper) GetID() string {
 	return m.Id
 }
 
-func (m *ZeroPointSqlMapper) RegisterSqlMapperForQueryAll() error{
-	m.Id = C.ELIBOT_ZEROPOINT_GET_ALL
-	return m.get_zeropoint_sql_mapper(m.Id)
-}
-
 func (m *ZeroPointSqlMapper) RegisterSqlMapper(mode int) error {
 	fmt.Println("RegisterSqlMapper in ZeroPointSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
-		return m.RegisterSqlMapperForQueryAll()
+		m.Id = C.ELIBOT_ZEROPOINT_GET_ALL
+
 	default:
 		return errors.New("Not support")
 	}
+
+	return m.register_zeropoint_sql_mapper(m.Id)
 }

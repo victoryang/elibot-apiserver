@@ -13,7 +13,7 @@ type ExtaxisSqlMapper struct {
 	Id		string
 }
 
-func (m *ExtaxisSqlMapper) get_extaxis_sql_mapper(q_id string) error {
+func (m *ExtaxisSqlMapper) register_extaxis_sql_mapper(q_id string) error {
 	id := C.CString(q_id)
 	defer C.free(unsafe.Pointer(id))
 
@@ -30,21 +30,15 @@ func (m *ExtaxisSqlMapper) GetID() string {
 	return m.Id
 }
 
-func (m *ExtaxisSqlMapper) RegisterSqlMapperForQueryAll() error{
-	m.Id = C.ELIBOT_EXTAXIS_GET_ALL
-	return m.get_extaxis_sql_mapper(m.Id)
-}
-
 func (m *ExtaxisSqlMapper) RegisterSqlMapper(mode int) error {
 	fmt.Println("RegisterSqlMapper in ExtaxisSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
-		return m.RegisterSqlMapperForQueryAll()
-	case ELIBOT_EXTAXIS_UPDATE:
-		return errors.New("Not support now")
-	case ELIBOT_EXTAXIS_UPDATE_POS:
-		return errors.New("Not support now")
+		m.Id = C.ELIBOT_EXTAXIS_GET_ALL
+
 	default:
 		return errors.New("Not support")
 	}
+
+	return m.register_extaxis_sql_mapper(m.Id)
 }

@@ -13,7 +13,7 @@ type UserframeSqlMapper struct {
 	Id		string
 }
 
-func (m *UserframeSqlMapper) get_userframe_sql_mapper(q_id string) error {
+func (m *UserframeSqlMapper) register_userframe_sql_mapper(q_id string) error {
 	id := C.CString(q_id)
 	defer C.free(unsafe.Pointer(id))
 
@@ -30,17 +30,15 @@ func (m *UserframeSqlMapper) GetID() string {
 	return m.Id
 }
 
-func (m *UserframeSqlMapper) RegisterSqlMapperForQueryAll() error{
-	m.Id = C.ELIBOT_USER_FRAME_GET_ALL
-	return m.get_userframe_sql_mapper(m.Id)
-}
-
 func (m *UserframeSqlMapper) RegisterSqlMapper(mode int) error {
 	fmt.Println("RegisterSqlMapper in UserframeSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
-		return m.RegisterSqlMapperForQueryAll()
+		m.Id = C.ELIBOT_USER_FRAME_GET_ALL
+
 	default:
 		return errors.New("Not support")
 	}
+
+	return m.register_userframe_sql_mapper(m.Id)
 }
