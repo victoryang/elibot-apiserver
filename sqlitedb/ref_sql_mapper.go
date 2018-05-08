@@ -13,7 +13,7 @@ type RefSqlMapper struct {
 	Id		string
 }
 
-func (m *RefSqlMapper) get_ref_sql_mapper(q_id string) error {
+func (m *RefSqlMapper) register_ref_sql_mapper(q_id string) error {
 	id := C.CString(q_id)
 	defer C.free(unsafe.Pointer(id))
 
@@ -30,17 +30,15 @@ func (m *RefSqlMapper) GetID() string {
 	return m.Id
 }
 
-func (m *RefSqlMapper) RegisterSqlMapperForQueryAll() error{
-	m.Id = C.ELIBOT_REF_GET_ALL
-	return m.get_ref_sql_mapper(m.Id)
-}
-
 func (m *RefSqlMapper) RegisterSqlMapper(mode int) error {
 	fmt.Println("RegisterSqlMapper in RefSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_REF_GET_ALL:
-		return m.RegisterSqlMapperForQueryAll()
+		m.Id = C.ELIBOT_REF_GET_ALL
+
 	default:
 		return errors.New("Not support")
 	}
+
+	return m.register_ref_sql_mapper(m.Id)
 }

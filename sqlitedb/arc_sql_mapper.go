@@ -13,7 +13,7 @@ type ArcSqlMapper struct {
 	Id		string
 }
 
-func (m *ArcSqlMapper) get_arc_sql_mapper(q_id string) error {
+func (m *ArcSqlMapper) register_arc_sql_mapper(q_id string) error {
 	id := C.CString(q_id)
 	defer C.free(unsafe.Pointer(id))
 
@@ -30,26 +30,20 @@ func (m *ArcSqlMapper) GetID() string {
 	return m.Id
 }
 
-func (m *ArcSqlMapper) RegisterSqlMapperForQueryWithParams() error {
-	m.Id = C.ELIBOT_ARC_GET_PARAMS
-	return m.get_arc_sql_mapper(m.Id)
-}
-
-func (m *ArcSqlMapper) RegisterSqlMapperForQueryAll() error{
-	m.Id = C.ELIBOT_ARC_GET_ALL_PARAMS
-	return m.get_arc_sql_mapper(m.Id)
-}
-
 func (m *ArcSqlMapper) RegisterSqlMapper(mode int) error {
 	fmt.Println("RegisterSqlMapper in ArcSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
-		return m.RegisterSqlMapperForQueryAll()
+		m.Id = C.ELIBOT_ARC_GET_ALL_PARAMS
+
 	case ELIBOT_ARC_GET_PARAMS:
-		return m.RegisterSqlMapperForQueryWithParams()
+		m.Id = C.ELIBOT_ARC_GET_PARAMS
+
 	case ELIBOT_UPDATE_PARAMS:
 		return errors.New("Not support now")
 	default:
 		return errors.New("Not support")
 	}
+
+	return m.register_arc_sql_mapper(m.Id)
 }

@@ -13,7 +13,7 @@ type EnumSqlMapper struct {
 	Id		string
 }
 
-func (m *EnumSqlMapper) get_enum_sql_mapper(q_id string) error {
+func (m *EnumSqlMapper) register_enum_sql_mapper(q_id string) error {
 	id := C.CString(q_id)
 	defer C.free(unsafe.Pointer(id))
 
@@ -30,17 +30,15 @@ func (m *EnumSqlMapper) GetID() string {
 	return m.Id
 }
 
-func (m *EnumSqlMapper) RegisterSqlMapperForQueryAll() error{
-	m.Id = C.ELIBOT_ENUM_GET_ALL
-	return m.get_enum_sql_mapper(m.Id)
-}
-
 func (m *EnumSqlMapper) RegisterSqlMapper(mode int) error {
 	fmt.Println("RegisterSqlMapper in EnumSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
-		return m.RegisterSqlMapperForQueryAll()
+		m.Id = C.ELIBOT_ENUM_GET_ALL
+
 	default:
 		return errors.New("Not support")
 	}
+
+	return m.register_enum_sql_mapper(m.Id)
 }
