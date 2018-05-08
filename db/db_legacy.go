@@ -12,7 +12,8 @@ const (
 func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res string, err error) {
     err = sm.RegisterSqlMapper(mode)
     if err!=nil {
-        return "", err
+        res = ""
+        return
     }
 
     if vars == nil {
