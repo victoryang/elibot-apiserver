@@ -33,6 +33,7 @@ func (m *ParameterSqlMapper) GetID() string {
 func (m *ParameterSqlMapper) RegisterSqlMapperForQueryWithParams() error {
 	m.Id = C.ELIBOT_PARAMS_GET_VALID_PARAM_BY_ID
 	return m.get_parameter_sql_mapper(m.Id)
+}
 
 func (m *ParameterSqlMapper) RegisterSqlMapperForQueryAll() error{
 	m.Id = C.ELIBOT_ENUM_GET_ALL
