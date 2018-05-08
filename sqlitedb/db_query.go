@@ -82,10 +82,12 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
     q_res := C.db_query(req)
 
     for i=0;i<req_params.param_size;i++ {
-        if param := C.getindexedsqlparam(req_params, i) && param!=nil {
+        param := C.getindexedsqlparam(req_params, i)
+        if param!=nil {
             C.free(unsafe.Pointer(param.name))
             if param._type == C.DATA_STRING {
-                C.free(unsafe.Pointer(param.value))
+                p := binary.LittleEndian.Uint64(param.value[:])
+                C.free((*C.char)unsafe.Pointer(uintptr(p)))
             }
         }
     }
