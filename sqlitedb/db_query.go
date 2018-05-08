@@ -72,7 +72,7 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
  
     var i C.int16_t = 0
     for k,v := range queries {
-        err := newsqlparams(k, v, C.getindexedsqlparam(req_params))
+        err := newsqlparams(k, v, C.getindexedsqlparam(req_params, i))
         i++
         if i > req_params.param_size || err != nil{
             return "", errors.New("fail to start a query\n")
