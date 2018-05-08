@@ -20,7 +20,7 @@ func newsqlparams(key string, value interface{}, param *C.sql_parameter) error {
     switch t := value.(type) {
     case int32:
         param._type = C.DB_TYPE_INT32
-        buf := bytes.Buffer()
+        buf := new(bytes.Buffer)
         binary.Write(buf, binary.LittleEndian, value.(int32))
         copy(param.value[:], buf.Bytes())
     case uint32:
@@ -28,7 +28,7 @@ func newsqlparams(key string, value interface{}, param *C.sql_parameter) error {
         binary.LittleEndian.PutUint32(param.value[:], value.(uint32))
     case int64:
         param._type = C.DB_TYPE_INT64
-        buf := bytes.Buffer()
+        buf := new(bytes.Buffer)
         binary.Write(buf, binary.LittleEndian, value.(int64))
         copy(param.value[:], buf.Bytes())
     case uint64:
