@@ -32,7 +32,8 @@ func newsqlparams(key string, value interface{}, param *C.sql_parameter) error{
         binary.LittleEndian.PutUint64(param.value[:], math.Float64bits(value.(float64)))
     case string:
         param._type = C.DATA_STRING
-        copy(param.value, C.CString(value.(string)))
+        p := C.CString(value.(string))
+        binary.LittleEndian.PutUint64(param.value[:], uint64(uintptr(unsafe.Pointer(p))))
 
     default:
         fmt.Println("not support")
@@ -62,7 +63,7 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
     req_params.params = C.new_sql_parameter(req_params.param_size)
     defer C.free(unsafe.Pointer(req_params.params))
  
-    var i int = 0
+    var i C.int16_t = 0
     for k,v := range queries {
         err := newsqlparams(k, v, C.getindexedsqlparam(req_params, i))
         if i > req_params.param_size || err != nil{
@@ -80,10 +81,12 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
 
     q_res := C.db_query(req)
 
-    for _,param := range req_params.params {
-        C.free(unsafe.Pointer(param.name))
-        if param._type == C.DATA_STRING {
-            C.free(unsafe.Pointer(param.value))
+    for i=0;i<req_params.param_size;i++ {
+        if param := C.getindexedsqlparam(req_params, i) && param!=nil {
+            C.free(unsafe.Pointer(param.name))
+            if param._type == C.DATA_STRING {
+                C.free(unsafe.Pointer(param.value))
+            }
         }
     }
 
