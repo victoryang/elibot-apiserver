@@ -30,11 +30,6 @@ func (m *MetadataSqlMapper) GetID() string {
 	return m.Id
 }
 
-func (m *ArcSqlMapper) RegisterSqlMapperForQueryWithParams() error{
-	m.Id = C.ELIBOT_METADATA_GET_ALL
-	return m.get_metadata_sql_mapper(m.Id)
-}
-
 func (m *MetadataSqlMapper) RegisterSqlMapperForQueryAll() error{
 	m.Id = C.ELIBOT_METADATA_GET_ALL
 	return m.get_metadata_sql_mapper(m.Id)
@@ -46,7 +41,7 @@ func (m *MetadataSqlMapper) RegisterSqlMapper(mode int) error {
 	case ELIBOT_GET_ALL_PARAMS:
 		return m.RegisterSqlMapperForQueryAll()
 	case ELIBOT_GET_WITH_PARAMS:
-		return m.RegisterSqlMapperForQueryWithParams()
+		return m.RegisterSqlMapperForQueryAll()
 	default:
 		return errors.New("Not support")
 	}
