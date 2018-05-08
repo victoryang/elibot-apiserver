@@ -55,6 +55,7 @@ func Get_Arc_Params(vars map[string]interface{}) (string, error) {
     for k,v := range vars {
         fmt.Println("key: ", k, "v", v)
     }
+    sm := new(sql.ArcSqlMapper)
     return RegisterAndQueryWithParams(sm, vars)
 }
 
