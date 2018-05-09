@@ -17,6 +17,8 @@ const (
 
 type DBManager struct {
 	mgr 		*C.db_manager
+	conn        *C.char
+	dir         *C.char
 }
 
 func (m *DBManager) Exec() error {
@@ -28,6 +30,8 @@ func (m *DBManager) Exec() error {
 	defer C.free(out)
 
 	res := C.DBMgrExecute(m.mgr, out)
+	C.free(unsafe.Pointer(m.conn))
+	C.free(unsafe.Pointer(m.dir))
 	if res != C.DB_OK {
 		return errors.New("DBManager: fail to execute the cmd")
 	}
@@ -35,18 +39,15 @@ func (m *DBManager) Exec() error {
 }
 
 func NewDBManager(DBname string, DBdir string, mode int) (*DBManager, error) {
-    conn_str := C.CString(DBname)
-	defer C.free(unsafe.Pointer(conn_str))
-
-	db_dir := C.CString(DBdir)
-	defer C.free(unsafe.Pointer(db_dir))
-
 	db_mgr := new(DBManager)
 	db_mgr.mgr = C.NewDBManager()
 
+	db_mgr.conn = C.CString(DBname)
+	db_mgr.dir = C.CString(DBdir)
+
     res := C.new_db_manager(
-    		conn_str,
-    		db_dir,
+    		db_mgr.conn,
+    		db_mgr.dir,
     		nil,
     		C.int(mode),
     		nil,

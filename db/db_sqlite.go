@@ -7,7 +7,7 @@ import (
 
 const (
     DBName="/root/elibotDB.db"
-    BackupDir="/root/backup"
+    BackupDir="/root/"
 )
 
 func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res string, err error) {
