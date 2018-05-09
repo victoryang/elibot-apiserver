@@ -20,11 +20,11 @@ type DBManager struct {
 }
 
 func (m *DBManager) Exec() error {
-	C.set_cmds(m.mgr, C.ELIBOT_BAK_BACKUP_PARAMS)
+	m.mgr.cmds = C.ELIBOT_BAK_BACKUP_PARAMS
 	op := new([]byte, 255)
 	out := C.CBytes(op)
 	defer C.free(out)
-	res := m.mgr.execute(m.mgr, *C.Char(out))
+	res := m.mgr.execute(m.mgr, *C.char(out))
 	if res != C.DB_OK {
 		return errors.New("DBManager: fail to execute the cmd")
 	}
