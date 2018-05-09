@@ -41,7 +41,7 @@ func NewDBManager(DBname string, DBdir string, mode int) (*DBManager, error) {
 	db_dir := C.CString(DBdir)
 	defer C.free(unsafe.Pointer(db_dir))
 
-	db_mgr = new(DBManager)
+	db_mgr := new(DBManager)
 	db_mgr.mgr = C.NewDBManager()
 
     res := C.new_db_manager(
