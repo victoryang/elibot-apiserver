@@ -27,7 +27,7 @@ func (m *DBManager) Exec() error {
 	out := C.CBytes(op)
 	defer C.free(out)
 
-	res := m.mgr.execute(m.mgr, out)
+	res := C.DBMgrExecute(m.mgr, out)
 	if res != C.DB_OK {
 		return errors.New("DBManager: fail to execute the cmd")
 	}
@@ -50,7 +50,7 @@ func NewDBManager(DBname string, DBdir string, mode int) (*DBManager, error) {
     		C.int(mode),
     		nil,
     		db_mgr.mgr,
-    		C.CString("0"),
+    		C.char(0),
     	)
     if res != C.DB_OK {
     	return nil, errors.New("fail to new db manager")

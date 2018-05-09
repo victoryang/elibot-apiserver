@@ -52,6 +52,10 @@ struct db_manager {
     int (*_execute)(db_manager *mgr, void *output);
 };
 
+int DBMgrExecute(struct db_manager* mgr, void *output) {
+    return mgr->execute(mgr, output);
+};
+
 
 /**
  * 创建数据库管理器
