@@ -6,8 +6,13 @@ import (
 	"fmt"
 )
 
+const ipAddr := "http://127.0.0.1"
+const port := ":9000"
+
 func Test_Get_root(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/")
+	var path string := "/"
+	url := ipAddr + port + path
+	resp, err := http.Get(url)
 	if err!=nil {
 		t.Error("test failed")
 	} else {
