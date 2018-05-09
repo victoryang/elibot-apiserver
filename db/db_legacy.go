@@ -96,6 +96,13 @@ func Get_All_Metadata(vars map[string]interface{}) (string, error) {
     return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, vars)
 }
 
+func Get_Params() (string, error) {
+    fmt.Println("in Get_Parameter_By_Id")
+    
+    sm := new(sql.ParameterSqlMapper)
+    return RegisterAndQuery(sm, sql.ELIBOT_PARAMETER_GET_PARAMS)
+}
+
 func Get_Parameter_By_Id(vars map[string]interface{}) (string, error) {
     fmt.Println("in Get_Parameter_By_Id")
     

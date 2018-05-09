@@ -152,6 +152,22 @@ func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+Get_Parameter_Get_Params
+
+func getParams(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("starting get all Parameter")
+	res, err := db.Get_Params()
+	if err!=nil {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, res)
+	return
+}
+
 func getParameterById(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Parameter")
 	queries := make(map[string]interface{})
@@ -247,11 +263,12 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/arcparams", getArcParams).Methods("GET")/*.Queries("file_no", "{file_no}")*/
 	//r.HandleFunc("/v1/backup", getAllBackup).Methods("GET")
 	r.HandleFunc("/v1/bookprograms", getAllBookprograms).Methods("GET")
-	//r.HandleFunc("/v1/enum", getAllEnum).Methods("GET")
+	r.HandleFunc("/v1/enum", getAllEnum).Methods("GET")
 	r.HandleFunc("/v1/extaxis", getAllExtaxis).Methods("GET")
 	r.HandleFunc("/v1/interference", getAllInterference).Methods("GET")
 	//r.HandleFunc("/v1/io", getAllIO).Methods("GET")
 	r.HandleFunc("/v1/metadata", getAllMetadata).Methods("GET")
+	r.HandleFunc("/v1/params", getParams).Methods("GET")
 	r.HandleFunc("/v1/parameterbyid", getParameterById).Methods("GET")/*.Queries("md_id", "{md_id}", "group", "{group}")*/
 	r.HandleFunc("/v1/parameterbygroup", parameterbygroup).Methods("GET")
 	r.HandleFunc("/v1/ref", getAllRef).Methods("GET")

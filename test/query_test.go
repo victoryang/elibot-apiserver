@@ -54,6 +54,16 @@ func Test_Get_all_bookprograms(t *testing.T) {
 	}
 }
 
+func Test_Get_all_enum(t *testing.T) {
+	resp, err := http.Get(GetIP("/enum"))
+	if err!=nil {
+		t.Error("test failed")
+	} else {
+		t.Log("test pass")
+		fmt.Println(resp)
+	}
+}
+
 func Test_Get_all_extaxis(t *testing.T) {
 	resp, err := http.Get(GetIP("/extaxis"))
 	if err!=nil {
