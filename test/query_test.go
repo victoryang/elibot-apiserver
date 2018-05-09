@@ -9,12 +9,13 @@ import (
 const ipAddr = "http://127.0.0.1"
 const port = ":9000"
 const version = "/v1"
+
 func GetIP(p string) string {
 	return ipAddr + port + v1 + p
 }
 
 func Test_Get_root(t *testing.T) {
-	resp, err := http.Get(GetIP("/"))
+	resp, err := http.Get(ipAddr + port + "/")
 	if err!=nil {
 		t.Error("test failed")
 	} else {
