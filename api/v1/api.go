@@ -9,7 +9,6 @@ import (
 )
 
 func hello(w http.ResponseWriter, r *http.Request) {
-	db.NewDBContext("elibotDB.db")
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Welcome to elibot\n")
 	return
