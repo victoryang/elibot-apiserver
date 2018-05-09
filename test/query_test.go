@@ -8,11 +8,13 @@ import (
 
 const ipAddr = "http://127.0.0.1"
 const port = ":9000"
+const version = "/v1"
+func GetIP(p string) string {
+	return ipAddr + port + p
+}
 
 func Test_Get_root(t *testing.T) {
-	var path string = "/"
-	url := ipAddr + port + path
-	resp, err := http.Get(url)
+	resp, err := http.Get(GetIP("/"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -22,7 +24,7 @@ func Test_Get_root(t *testing.T) {
 }
 
 func Test_Get_all_arc(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/v1/arc")
+	resp, err := http.Get(GetIP("/arc"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -32,7 +34,7 @@ func Test_Get_all_arc(t *testing.T) {
 }
 
 func Test_Get_all_arcparams(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/v1/arcparams")
+	resp, err := http.Get(GetIP("/arcparams"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -42,7 +44,7 @@ func Test_Get_all_arcparams(t *testing.T) {
 }
 
 func Test_Get_all_bookprograms(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/v1/bookprograms")
+	resp, err := http.Get(GetIP("/bookprograms"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -52,7 +54,7 @@ func Test_Get_all_bookprograms(t *testing.T) {
 }
 
 func Test_Get_all_extaxis(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/v1/extaxis")
+	resp, err := http.Get(GetIP("/extaxis"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -62,7 +64,7 @@ func Test_Get_all_extaxis(t *testing.T) {
 }
 
 func Test_Get_all_interference(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/v1/interference")
+	resp, err := http.Get(GetIP("/interference"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -72,7 +74,7 @@ func Test_Get_all_interference(t *testing.T) {
 }
 
 func Test_Get_all_metadata(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/v1/metadata")
+	resp, err := http.Get(GetIP("/metadata"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -82,7 +84,7 @@ func Test_Get_all_metadata(t *testing.T) {
 }
 
 func Test_Get_all_parameterbyid(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/v1/parameterbyid")
+	resp, err := http.Get(GetIP("/parameterbyid"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -92,7 +94,7 @@ func Test_Get_all_parameterbyid(t *testing.T) {
 }
 
 func Test_Get_all_parameterbygroup(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/v1/parameterbygroup")
+	resp, err := http.Get(GetIP("/parameterbygroup"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -102,7 +104,7 @@ func Test_Get_all_parameterbygroup(t *testing.T) {
 }
 
 func Test_Get_all_ref(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/v1/ref")
+	resp, err := http.Get(GetIP("/ref"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -112,7 +114,7 @@ func Test_Get_all_ref(t *testing.T) {
 }
 
 func Test_Get_all_toolframe(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/v1/toolframe")
+	resp, err := http.Get(GetIP("/toolframe"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -122,7 +124,7 @@ func Test_Get_all_toolframe(t *testing.T) {
 }
 
 func Test_Get_all_userframe(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/v1/userframe")
+	resp, err := http.Get(GetIP("/userframe"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -132,7 +134,7 @@ func Test_Get_all_userframe(t *testing.T) {
 }
 
 func Test_Get_all_zeropoints(t *testing.T) {
-	resp, err := http.Get("http://127.0.0.1:9000/v1/zeropoints")
+	resp, err := http.Get(GetIP("/zeropoints"))
 	if err!=nil {
 		t.Error("test failed")
 	} else {
