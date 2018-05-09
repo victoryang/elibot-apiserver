@@ -11,7 +11,7 @@ const port = ":9000"
 const version = "/v1"
 
 func GetIP(p string) string {
-	return ipAddr + port + v1 + p
+	return ipAddr + port + version + p
 }
 
 func Test_Get_root(t *testing.T) {
