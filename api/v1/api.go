@@ -152,8 +152,6 @@ func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-Get_Parameter_Get_Params
-
 func getParams(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Parameter")
 	res, err := db.Get_Params()
