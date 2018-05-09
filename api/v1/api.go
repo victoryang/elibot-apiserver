@@ -241,7 +241,7 @@ func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
 
 func DBBackup(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Backup")
-	res, err := db.DBBackup()
+	err := db.DBBackup()
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, err.Error())
@@ -249,7 +249,7 @@ func DBBackup(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
+	fmt.Fprintf(w, "succeed in backup")
 	return
 }
 
