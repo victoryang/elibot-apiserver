@@ -94,6 +94,16 @@ func Test_Get_all_metadata(t *testing.T) {
 	}
 }
 
+func Test_Get_all_params(t *testing.T) {
+	resp, err := http.Get(GetIP("/params"))
+	if err!=nil {
+		t.Error("test failed")
+	} else {
+		t.Log("test pass")
+		fmt.Println(resp)
+	}
+}
+
 func Test_Get_all_parameterbyid(t *testing.T) {
 	resp, err := http.Get(GetIP("/parameterbyid"))
 	if err!=nil {
