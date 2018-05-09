@@ -51,20 +51,6 @@ func getArcParams(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func getAllBackup(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("starting get all Backup")
-	res, err := db.Get_All_Backup()
-	if err!=nil {
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, err.Error())
-		return
-	}
-
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
-}
-
 func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all bookprograms")
 	res, err := db.Get_All_Bookprograms()
@@ -253,12 +239,25 @@ func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func DBBackup(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("starting get all Backup")
+	res, err := db.DBBackup()
+	if err!=nil {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, res)
+	return
+}
+
 func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/v1/test", test).Methods("GET")
 	r.HandleFunc("/v1/arc", getAllArc).Methods("GET")
 	r.HandleFunc("/v1/arcparams", getArcParams).Methods("GET")/*.Queries("file_no", "{file_no}")*/
-	//r.HandleFunc("/v1/backup", getAllBackup).Methods("GET")
 	r.HandleFunc("/v1/bookprograms", getAllBookprograms).Methods("GET")
 	r.HandleFunc("/v1/enum", getAllEnum).Methods("GET")
 	r.HandleFunc("/v1/extaxis", getAllExtaxis).Methods("GET")
@@ -272,5 +271,8 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/toolframe", getAllToolframe).Methods("GET")
 	r.HandleFunc("/v1/userframe", getAllUserframe).Methods("GET")
 	r.HandleFunc("/v1/zeropoints", getAllZeroPoints).Methods("GET")
+
+	/*For DB backup, restore and upgrade*/
+	r.HandleFunc("/v1/backup", DBBackup).Methods("GET")
 	return r
 }

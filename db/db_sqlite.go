@@ -7,6 +7,7 @@ import (
 
 const (
     DBName="/root/elibotDB.db"
+    BackupDir="/root/backup"
 )
 
 func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res string, err error) {
@@ -45,13 +46,6 @@ func Get_Arc_Params(vars map[string]interface{}) (string, error) {
     }
     sm := new(sql.ArcSqlMapper)
     return RegisterAndQuery(sm, sql.ELIBOT_ARC_GET_PARAMS, vars)
-}
-
-func Get_All_Backup() (string, error){
-    fmt.Println("in Get_All_Backup")
- 
-    sm := new(sql.BackupSqlMapper)
-    return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, nil)
 }
 
 func Get_All_Bookprograms() (string, error){
@@ -143,4 +137,16 @@ func Get_All_Zeropoints() (string, error) {
     
     sm := new(sql.ZeroPointSqlMapper)
     return RegisterAndQuery(sm, sql.ELIBOT_GET_ALL_PARAMS, nil)
+}
+
+
+/* For sqlitedb backup, restore and upgrade*/
+func DBBackup() error{
+    fmt.Println("in DBBackup")
+ 
+    mgr, err := sql.NewDBManager(DBName, BackupDir, sql.DB_BACKUP)
+    if err != nil {
+        return err
+    }
+    return mgr.Exec()
 }
