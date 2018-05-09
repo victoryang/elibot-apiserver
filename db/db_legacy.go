@@ -100,7 +100,7 @@ func Get_Params() (string, error) {
     fmt.Println("in Get_Parameter_By_Id")
     
     sm := new(sql.ParameterSqlMapper)
-    return RegisterAndQuery(sm, sql.ELIBOT_PARAMETER_GET_PARAMS)
+    return RegisterAndQuery(sm, sql.ELIBOT_PARAMETER_GET_PARAMS, nil)
 }
 
 func Get_Parameter_By_Id(vars map[string]interface{}) (string, error) {
