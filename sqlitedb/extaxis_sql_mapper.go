@@ -1,7 +1,7 @@
 package sqlitedb
 
 // #include<stdlib.h>
-// #include<sqlmapper/extaxis_sql_mapper.h>
+// #include<include/sqlmapper/extaxis_sql_mapper.h>
 import "C"
 import (
 	"fmt"

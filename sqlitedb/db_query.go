@@ -2,8 +2,7 @@ package sqlitedb
 
 // #cgo LDFLAGS: -lsqlitedb
 // #include<stdlib.h>
-// #include<db_query.h>
-// #include<cJSON.h>
+// #include<include/db_query.h>
 import "C"
 import (
     "unsafe"
