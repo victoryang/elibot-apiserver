@@ -20,11 +20,14 @@ type DBManager struct {
 }
 
 func (m *DBManager) Exec() error {
-	m.mgr.cmds = C.ELIBOT_BAK_BACKUP_PARAMS
-	op := new([]byte, 255)
+	m.mgr.commands = C.CString(C.ELIBOT_BAK_BACKUP_PARAMS)
+	defer C.free(unsafe.Pointer(m.mgr.commands))
+
+	op := make([]byte, 255)
 	out := C.CBytes(op)
 	defer C.free(out)
-	res := m.mgr.execute(m.mgr, *C.char(out))
+
+	res := m.mgr.execute(m.mgr, out)
 	if res != C.DB_OK {
 		return errors.New("DBManager: fail to execute the cmd")
 	}
@@ -40,8 +43,6 @@ func NewDBManager(DBname string, DBdir string, mode int) (*DBManager, error) {
 
 	db_mgr := new(DBManager)
 
-	var force byte = 0
-
     res := C.new_db_manager(
     		conn_str,
     		db_dir,
@@ -49,10 +50,10 @@ func NewDBManager(DBname string, DBdir string, mode int) (*DBManager, error) {
     		C.int(mode),
     		nil,
     		db_mgr.mgr,
-    		force,
+    		C.CString("0"),
     	)
     if res != C.DB_OK {
     	return nil, errors.New("fail to new db manager")
     }
-    return db_mgr
+    return db_mgr, nil
 }
