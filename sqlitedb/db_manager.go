@@ -1,5 +1,6 @@
-package sqlite
+package sqlitedb
 
+// #include<stdlib.h>
 // #include<include/db/db_manager.h>
 // #include<include/backup_sql_mapper.h>
 import"C"
@@ -30,26 +31,28 @@ func (m *DBManager) Exec() error {
 	return nil
 }
 
-func NewDBManager(DBname string, DBdir string, mode int) *DBManager {
-    conn_str := C.CString(m.conn)
+func NewDBManager(DBname string, DBdir string, mode int) (*DBManager, error) {
+    conn_str := C.CString(DBname)
 	defer C.free(unsafe.Pointer(conn_str))
 
-	db_dir := C.CString(m.dir)
+	db_dir := C.CString(DBdir)
 	defer C.free(unsafe.Pointer(db_dir))
 
 	db_mgr := new(DBManager)
+
+	var force byte = 0
 
     res := C.new_db_manager(
     		conn_str,
     		db_dir,
     		nil,
-    		mode,
+    		C.int(mode),
     		nil,
     		db_mgr.mgr,
-    		byte(0),
+    		force,
     	)
     if res != C.DB_OK {
-    	return errors.New("fail to new db manager")
+    	return nil, errors.New("fail to new db manager")
     }
     return db_mgr
 }
