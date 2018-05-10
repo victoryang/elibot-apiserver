@@ -240,7 +240,7 @@ func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
 }
 
 func DBBackup(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("starting get all Backup")
+	fmt.Println("starting DB Backup")
 	err := db.DBBackup()
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
@@ -249,13 +249,28 @@ func DBBackup(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "succeed in backup")
+	fmt.Fprintf(w, "succeed in backup\n")
+	return
+}
+
+func DBRestore(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("starting DB Restore")
+	err := db.DBRestore()
+	if err!=nil {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "succeed in restore\n")
 	return
 }
 
 func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/v1/test", test).Methods("GET")
+	
 	r.HandleFunc("/v1/arc", getAllArc).Methods("GET")
 	r.HandleFunc("/v1/arcparams", getArcParams).Methods("GET")/*.Queries("file_no", "{file_no}")*/
 	r.HandleFunc("/v1/bookprograms", getAllBookprograms).Methods("GET")
@@ -273,6 +288,7 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/zeropoints", getAllZeroPoints).Methods("GET")
 
 	/*For DB backup, restore and upgrade*/
-	r.HandleFunc("/v1/backup", DBBackup).Methods("GET")
+	r.HandleFunc("/v1/db/backup", DBBackup).Methods("GET")
+	r.HandleFunc("/v1/db/restore", DBRestore).Methods("GET")
 	return r
 }

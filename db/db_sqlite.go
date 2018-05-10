@@ -8,6 +8,7 @@ import (
 const (
     DBName="/root/elibotDB.db"
     BackupDir="/root/"
+    BackupName="elibotDB_2.0.0.2018030210_Alpha_20180509210642.bak"
 )
 
 func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res string, err error) {
@@ -144,7 +145,17 @@ func Get_All_Zeropoints() (string, error) {
 func DBBackup() error{
     fmt.Println("in DBBackup")
  
-    mgr, err := sql.NewDBManager(DBName, BackupDir, sql.DB_BACKUP)
+    mgr, err := sql.NewDBManager(DBName, BackupDir, nil, sql.DB_BACKUP, 0)
+    if err != nil {
+        return err
+    }
+    return mgr.Exec()
+}
+
+func DBRestore() error{
+    fmt.Println("in DBRestore")
+ 
+    mgr, err := sql.NewDBManager(DBName, BackupDir, BackupName, sql.DB_RESTORE, 1)
     if err != nil {
         return err
     }

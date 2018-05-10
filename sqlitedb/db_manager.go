@@ -19,6 +19,7 @@ type DBManager struct {
 	mgr 		*C.db_manager
 	conn        *C.char
 	dir         *C.char
+	bakname 	*C.char
 }
 
 func (m *DBManager) Exec() error {
@@ -30,29 +31,43 @@ func (m *DBManager) Exec() error {
 	defer C.free(out)
 
 	res := C.DBMgrExecute(m.mgr, out)
-	C.free(unsafe.Pointer(m.conn))
-	C.free(unsafe.Pointer(m.dir))
+	m.FreeMembers()
 	if res != C.DB_OK {
 		return errors.New("DBManager: fail to execute the cmd")
 	}
 	return nil
 }
 
-func NewDBManager(DBname string, DBdir string, mode int) (*DBManager, error) {
+func (m *DBManager)FreeMembers() {
+	C.free(unsafe.Pointer(m.conn))
+	C.free(unsafe.Pointer(m.dir))
+	if m.bakname!=nil {
+		C.free(unsafe.Pointer(m.bakname))
+	}
+	C.free(unsafe.Pointer(m.mgr))
+}
+
+func NewDBManager(DBname string, DBdir string, backupname string, mode int, force_restore int) (*DBManager, error) {
 	mgr := new(DBManager)
 	mgr.mgr = C.NewDBManager()
 
 	mgr.conn = C.CString(DBname)
 	mgr.dir = C.CString(DBdir)
 
+	if backupname!=nil {
+		mgr.bakname = C.CString(backupname)
+	} else {
+		mgr.bakname = nil
+	}
+
     res := C.new_db_manager(
     		mgr.conn,
     		mgr.dir,
-    		nil,
+    		mgr.bakname,
     		C.int(mode),
     		nil,
     		mgr.mgr,
-    		C.char(0),
+    		C.char(force_restore),
     	)
     if res != C.DB_OK {
     	return nil, errors.New("fail to new db manager")
