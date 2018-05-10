@@ -28,7 +28,7 @@ func (s *Server) Shutdown() {
 }
 
 // configureServer handler returns final handler for the http server.
-func configServerHandler(c *ServerConfig) http.Handler {
+func configServerHandler() http.Handler {
 	// Initialize router.
 	r := mux.NewRouter().SkipClean(true)
 
@@ -46,7 +46,7 @@ func NewApiServer(c *config.GlobalConfiguration) *Server {
 		Addr:			c.ListenAddress,
 		ReadTimeout:    10 * time.Minute,
 		WriteTimeout:   10 * time.Minute,
-		Handler:        configServerHandler(c),
+		Handler:        configServerHandler(),
 		MaxHeaderBytes: 1 << 20,
 	}
 	return s
