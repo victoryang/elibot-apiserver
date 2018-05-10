@@ -156,7 +156,7 @@ func getParameterById(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Parameter")
 	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
-	queries["group"] = vars["group"]
+	queries["md_id"] = vars["md_id"]
 
 	res, err := db.Get_Parameter_By_Id(queries)
 	if err!=nil {
