@@ -10,7 +10,6 @@ const (
     DBName="/root/elibotDB.db"
     BackupDir="/root/"
     BackupPath="backups/"
-    BackupName="elibotDB_2.0.0.2018030210_Alpha_20180509210642.bak"
 )
 
 func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res string, err error) {
@@ -170,7 +169,7 @@ func DBList() ([]string, error) {
     return list, nil
 }
 
-func DBRestore() error{
+func DBRestore(BackupName string) error{
     fmt.Println("in DBRestore")
  
     mgr, err := sql.NewDBManager(DBName, BackupDir, BackupDir+BackupPath+BackupName, sql.DB_RESTORE, 1)
