@@ -42,7 +42,8 @@ func getArcParams(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("file_no: ", vars["file_no"])
 	queries := make(map[string]interface{})
 	if vars["file_no"] != "" {
-		queries["file_no"], _ = strconv.Atoi(vars["file_no"])
+		res, _ = strconv.Atoi(vars["file_no"])
+		queries["file_no"] = int32(res)
 	}
 	queries["group"] = vars["group"]
 	res, err := db.Get_Arc_Params(queries)
@@ -129,8 +130,10 @@ func getAllIO(w http.ResponseWriter, r *http.Request) {
 
 func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Metadata")
+	vars := mux.Vars(r)
+
 	queries := make(map[string]interface{})
-	queries["lang"] = "zh_cn"
+	queries["lang"] = vars["lang"]
 	res, err := db.Get_All_Metadata(queries)
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
@@ -303,7 +306,7 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/extaxis", getAllExtaxis).Methods("GET")
 	r.HandleFunc("/v1/interference", getAllInterference).Methods("GET")
 	//r.HandleFunc("/v1/io", getAllIO).Methods("GET")
-	r.HandleFunc("/v1/metadata", getAllMetadata).Methods("GET")
+	r.HandleFunc("/v1/metadata", getAllMetadata).Methods("GET").Queries("lang", "{lang}")
 	r.HandleFunc("/v1/params", getParams).Methods("GET")
 	r.HandleFunc("/v1/parameterbyid", getParameterById).Methods("GET").Queries("md_id", "{md_id}")
 	r.HandleFunc("/v1/parameterbygroup", parameterbygroup).Methods("GET").Queries("group", "{group}")

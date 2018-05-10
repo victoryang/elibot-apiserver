@@ -85,7 +85,7 @@ func Test_Get_all_interference(t *testing.T) {
 }
 
 func Test_Get_all_metadata(t *testing.T) {
-	resp, err := http.Get(GetIP("/metadata"))
+	resp, err := http.Get(GetIP("/metadata")+"?lang=zh_cn")
 	if err!=nil {
 		t.Error("test failed")
 	} else {
