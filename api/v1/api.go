@@ -3,6 +3,7 @@ package v1
 import (
 	"net/http"
 	"fmt"
+	"strconv"
 	"encoding/json"
 
 	"github.com/gorilla/mux"
@@ -40,7 +41,9 @@ func getArcParams(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	fmt.Println("file_no: ", vars["file_no"])
 	queries := make(map[string]interface{})
-	queries["file_no"] = int32(0)
+	if vars["file_no"] != "" {
+		queries["file_no"] = strconv.Atoi(vars["file_no"])
+	}
 	queries["group"] = vars["group"]
 	res, err := db.Get_Arc_Params(queries)
 	if err!=nil {
@@ -294,7 +297,7 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/test", test).Methods("GET")
 
 	r.HandleFunc("/v1/arc", getAllArc).Methods("GET")
-	r.HandleFunc("/v1/arcparams", getArcParams).Methods("GET").Queries("group", "{group}")
+	r.HandleFunc("/v1/arcparams", getArcParams).Methods("GET").Queries("file_no", "{file_no}", "group", "{group}")
 	r.HandleFunc("/v1/bookprograms", getAllBookprograms).Methods("GET")
 	r.HandleFunc("/v1/enum", getAllEnum).Methods("GET")
 	r.HandleFunc("/v1/extaxis", getAllExtaxis).Methods("GET")
