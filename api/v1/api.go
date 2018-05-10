@@ -271,6 +271,8 @@ func DBList(w http.ResponseWriter, r *http.Request) {
 
 func DBRestore(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting DB Restore")
+	vars = mux.Vars()
+	fmt.Println(vars["name"])
 	err := db.DBRestore()
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
@@ -306,6 +308,6 @@ func RegisterV1(r *mux.Router) http.Handler {
 	/*For DB backup, restore and upgrade*/
 	r.HandleFunc("/v1/db/backup", DBBackup).Methods("POST")
 	r.HandleFunc("/v1/db/backup", DBList).Methods("GET")
-	r.HandleFunc("/v1/db/restore", DBRestore).Methods("GET")
+	r.HandleFunc("/v1/db/restore", DBRestore).Methods("POST").Queries("name", "{name}")
 	return r
 }
