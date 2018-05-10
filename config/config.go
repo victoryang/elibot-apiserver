@@ -41,7 +41,7 @@ func LoadFile(filename string) (*GlobalConfiguration, error) {
 	return cfg, nil
 }
 
-func NewConfiguration(filename string) *ElibotServerConfiguration {
+func NewConfiguration() *ElibotServerConfiguration {
 	return &ElibotServerConfiguration {
 			GlobalConfig:	&GlobalConfiguration{
 				AccessLogsFile:			"/var/lib/elibot-server/access.Log",
