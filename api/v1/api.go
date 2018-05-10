@@ -41,8 +41,8 @@ func getArcParams(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
 
-	res, _ := strconv.Atoi(vars["file_no"])
-	queries["file_no"] = int32(res)
+	file_no, _ := strconv.Atoi(vars["file_no"])
+	queries["file_no"] = int32(file_no)
 	queries["group"] = vars["group"]
 	res, err := db.Get_Arc_Params(queries)
 	if err!=nil {
