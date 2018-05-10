@@ -9,3 +9,7 @@ curl 127.0.0.1:9000/v1/ref
 curl 127.0.0.1:9000/v1/toolframe
 curl 127.0.0.1:9000/v1/userframe
 curl 127.0.0.1:9000/v1/zeropoints
+
+curl -X GET 127.0.0.1:9000/v1/db/backup
+curl -X POST 127.0.0.1:9000/v1/db/backup
+curl -X POST 127.0.0.1:9000/v1/db/restore?name=elibotDB_2.0.0.2018030210_Alpha_20180509210643.bak
