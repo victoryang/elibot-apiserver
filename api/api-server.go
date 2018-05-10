@@ -7,6 +7,7 @@ import (
 	"elibot-apiserver/config"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
+	"github.com/meatballhat/negroni-logrus"
 )
 
 type ServerEntryPoint struct {
@@ -33,6 +34,7 @@ func configServerHandler() http.Handler {
 	r := mux.NewRouter().SkipClean(true)
 
 	n := negroni.Classic()
+	n.Use(negronilogrus.NewMiddleware())
 	n.UseHandler(RegisterAPIRouter(r))
 	
 	// Register all routers.
