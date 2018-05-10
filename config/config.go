@@ -1,6 +1,8 @@
 package config
 
 import (
+	"io/ioutil"
+	"fmt"
 	"gopkg.in/yaml.v2"
 )
 
@@ -42,12 +44,11 @@ func LoadFile(filename string) (*GlobalConfiguration, error) {
 func NewConfiguration(filename string) *ElibotServerConfiguration {
 	return &ElibotServerConfiguration {
 			GlobalConfig:	&GlobalConfiguration{
-				ConfigFile:				"/etc/elibot-server.yaml"
 				AccessLogsFile:			"/var/lib/elibot-server/access.Log",
 				ElibotLogsFile:			"/var/lib/elibot-server/elibot.Log",
 				EntryPoints:			[]string{"http"},
-				ListenAddress			"127.0.0.1:9000",
-			}
-			ConfigFile:	"/etc/elibot-server.yaml"
+				ListenAddress:			"127.0.0.1:9000",
+			},
+			ConfigFile:	"/etc/elibot-server.yaml",
 	}
 }
