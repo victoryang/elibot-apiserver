@@ -4,30 +4,27 @@ import (
 	"net/http"
 	"time"
 	"fmt"
+	"elibot-apiserver/config"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 )
-
-type ServerConfig struct {
-	Addr	string
-}
 
 type ServerEntryPoint struct {
 	httpServer       *http.Server
 }
 
 type Server struct {
-	entryPoint      ServerEntryPoint
+	EntryPoint      ServerEntryPoint
 }
 
 func (s *Server) Run() {
 	fmt.Println("server listening...")
-	go s.entryPoint.httpServer.ListenAndServe()
+	go s.EntryPoint.httpServer.ListenAndServe()
 }
 
 func (s *Server) Shutdown() {
 	fmt.Println("server shuting down...")
-	s.entryPoint.httpServer.Close()
+	s.EntryPoint.httpServer.Close()
 }
 
 // configureServer handler returns final handler for the http server.
@@ -42,11 +39,11 @@ func configServerHandler(c *ServerConfig) http.Handler {
 	return n
 }
 
-func NewApiServer(c *ServerConfig) *Server {
+func NewApiServer(c *config.GlobalConfiguration) *Server {
 	s := new(Server)
 
-	s.entryPoint.httpServer = &http.Server {
-		Addr:	c.Addr,
+	s.EntryPoint.httpServer = &http.Server {
+		Addr:			c.ListenAddress,
 		ReadTimeout:    10 * time.Minute,
 		WriteTimeout:   10 * time.Minute,
 		Handler:        configServerHandler(c),

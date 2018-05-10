@@ -6,7 +6,7 @@ import (
 	"syscall"
 
 	"elibot-apiserver/api"
-	//"elibot-apiserver/config"
+	"elibot-apiserver/config"
 )
 
 func handleSignals(server *api.Server) {
@@ -32,9 +32,10 @@ func handleSignals(server *api.Server) {
 }
 
 func main() {
-	c := new(api.ServerConfig)
-	c.Addr = "127.0.0.1:9000"
-	s := api.NewApiServer(c)
+	c := config.NewConfiguration()
+	c.GlobalConfig = c.LoadFile(c.ConfigFile)
+
+	s := api.NewApiServer(c.GlobalConfig)
 	s.Run();
 	handleSignals(s)
 }
