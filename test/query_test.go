@@ -105,7 +105,7 @@ func Test_Get_all_params(t *testing.T) {
 }
 
 func Test_Get_all_parameterbyid(t *testing.T) {
-	resp, err := http.Get(GetIP("/parameterbyid"))
+	resp, err := http.Get(GetIP("/parameterbyid")+"?md_id=param.speed.speed_min_joint")
 	if err!=nil {
 		t.Error("test failed")
 	} else {
@@ -115,7 +115,7 @@ func Test_Get_all_parameterbyid(t *testing.T) {
 }
 
 func Test_Get_all_parameterbygroup(t *testing.T) {
-	resp, err := http.Get(GetIP("/parameterbygroup"))
+	resp, err := http.Get(GetIP("/parameterbygroup")+"?group=param.speed")
 	if err!=nil {
 		t.Error("test failed")
 	} else {

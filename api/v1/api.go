@@ -155,9 +155,9 @@ func getParams(w http.ResponseWriter, r *http.Request) {
 func getParameterById(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Parameter")
 	vars := mux.Vars(r)
-	fmt.Println(vars["md_id"])
 	queries := make(map[string]interface{})
-	queries["md_id"] = "param.speed.speed_min_joint"
+	queries["group"] = vars["group"]
+
 	res, err := db.Get_Parameter_By_Id(queries)
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
@@ -172,8 +172,9 @@ func getParameterById(w http.ResponseWriter, r *http.Request) {
 
 func parameterbygroup(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Parameter")
+	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
-	queries["group"] = "param.speed"
+	queries["group"] = vars["group"]
 	res, err := db.Get_Parameter_By_Group(queries)
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)

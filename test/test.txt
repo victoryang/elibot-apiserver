@@ -4,7 +4,8 @@ curl 127.0.0.1:9000/v1/bookprograms
 curl 127.0.0.1:9000/v1/extaxis
 curl 127.0.0.1:9000/v1/interference
 curl 127.0.0.1:9000/v1/metadata
-curl 127.0.0.1:9000/v1/parameter
+curl 127.0.0.1:9000/v1/parameterbyid?md_id=param.speed.speed_min_joint
+curl 127.0.0.1:9000/v1/parameterbygroup?group=param.speed
 curl 127.0.0.1:9000/v1/ref
 curl 127.0.0.1:9000/v1/toolframe
 curl 127.0.0.1:9000/v1/userframe
