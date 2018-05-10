@@ -2,6 +2,7 @@ package db
 
 import (
     "fmt"
+    "io/ioutil"
     sql "elibot-apiserver/sqlitedb"
 )
 
@@ -143,7 +144,7 @@ func Get_All_Zeropoints() (string, error) {
 
 
 /* For sqlitedb backup, restore and upgrade*/
-func DBBackup() error{
+func DBBackup() error {
     fmt.Println("in DBBackup")
  
     mgr, err := sql.NewDBManager(DBName, BackupDir, "", sql.DB_BACKUP, 0)
@@ -151,6 +152,22 @@ func DBBackup() error{
         return err
     }
     return mgr.Exec()
+}
+
+func DBList() ([]string, error) {
+    fmt.Println("in DBList")
+    path := BackupDir+BackupPath
+
+    files, err := ioutil.ReadDir(path)
+    if err != nil {
+        return nil, err
+    }
+
+    var list []string
+    for _, f := range files {
+        list = append(list, f)
+    }
+    return list, nil
 }
 
 func DBRestore() error{
