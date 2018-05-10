@@ -42,7 +42,7 @@ func getArcParams(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("file_no: ", vars["file_no"])
 	queries := make(map[string]interface{})
 	if vars["file_no"] != "" {
-		queries["file_no"] = strconv.Atoi(vars["file_no"])
+		queries["file_no"], _ = strconv.Atoi(vars["file_no"])
 	}
 	queries["group"] = vars["group"]
 	res, err := db.Get_Arc_Params(queries)
