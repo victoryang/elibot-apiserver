@@ -5,6 +5,7 @@ import (
 	"net"
 	"net/http"
 	"net/http/pprof"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -43,7 +44,7 @@ func configureAdminHandler() http.Handler {
 func startAdminServer() {
 	host := "127.0.0.1"
 	port := "9090"
-	serverAddress = net.JoinHostPort(host, port)
+	serverAddress := net.JoinHostPort(host, port)
 	adminServer := &http.Server{
 		Addr: 			serverAddress,
 		// Adding timeout of 10 minutes for unresponsive client connections.
@@ -55,7 +56,7 @@ func startAdminServer() {
 
 	go func() {
 		// Configure TLS if certs are available.
-		err = adminServer.ListenAndServe()
+		err := adminServer.ListenAndServe()
 		if err!= nil {
 			fmt.Println ("API server error.")
 		}
