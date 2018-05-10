@@ -1,5 +1,5 @@
 curl 127.0.0.1:9000/v1/arc
-curl 127.0.0.1:9000/v1/arcparams
+curl 127.0.0.1:9000/v1/arcparams?group=arc.welder
 curl 127.0.0.1:9000/v1/bookprograms
 curl 127.0.0.1:9000/v1/extaxis
 curl 127.0.0.1:9000/v1/interference

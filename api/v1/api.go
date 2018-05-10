@@ -37,9 +37,11 @@ func getAllArc(w http.ResponseWriter, r *http.Request) {
 
 func getArcParams(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get Arc parameters")
+	vars := mux.Vars(r)
+	fmt.Println("file_no: ", vars["file_no"])
 	queries := make(map[string]interface{})
 	queries["file_no"] = int32(0)
-	queries["group"] = "arc.welder"
+	queries["group"] = vars["group"]
 	res, err := db.Get_Arc_Params(queries)
 	if err!=nil {
 		w.WriteHeader(http.StatusOK)
@@ -292,7 +294,7 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/test", test).Methods("GET")
 
 	r.HandleFunc("/v1/arc", getAllArc).Methods("GET")
-	r.HandleFunc("/v1/arcparams", getArcParams).Methods("GET")/*.Queries("file_no", "{file_no}")*/
+	r.HandleFunc("/v1/arcparams", getArcParams).Methods("GET")Queries("group", "{group}")
 	r.HandleFunc("/v1/bookprograms", getAllBookprograms).Methods("GET")
 	r.HandleFunc("/v1/enum", getAllEnum).Methods("GET")
 	r.HandleFunc("/v1/extaxis", getAllExtaxis).Methods("GET")

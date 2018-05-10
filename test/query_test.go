@@ -35,7 +35,7 @@ func Test_Get_all_arc(t *testing.T) {
 }
 
 func Test_Get_all_arcparams(t *testing.T) {
-	resp, err := http.Get(GetIP("/arcparams"))
+	resp, err := http.Get(GetIP("/arcparams")+"?group=arc.welder")
 	if err!=nil {
 		t.Error("test failed")
 	} else {
