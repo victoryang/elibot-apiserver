@@ -271,7 +271,7 @@ func DBList(w http.ResponseWriter, r *http.Request) {
 
 func DBRestore(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting DB Restore")
-	vars = mux.Vars()
+	vars := mux.Vars(r)
 	fmt.Println(vars["name"])
 	err := db.DBRestore()
 	if err!=nil {
