@@ -3,6 +3,7 @@ package v1
 import (
 	"net/http"
 	"fmt"
+	"encodig/json"
 
 	"github.com/gorilla/mux"
 	"elibot-apiserver/db"
@@ -262,8 +263,9 @@ func DBList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	res, _ := json.Marshal(files)
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, files)
+	fmt.Fprintf(w, string(res))
 	return
 }
 

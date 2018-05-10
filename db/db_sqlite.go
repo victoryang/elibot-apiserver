@@ -165,7 +165,7 @@ func DBList() ([]string, error) {
 
     var list []string
     for _, f := range files {
-        list = append(list, f)
+        list = append(list, f.Name())
     }
     return list, nil
 }
