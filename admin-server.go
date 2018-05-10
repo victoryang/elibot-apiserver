@@ -14,9 +14,9 @@ var handlerFns = []handlerFunc{
 //	SetJwtMiddlewareHandler,
 }
 
-func RegisterHandlers (mux.Router, handlerFns ...handlerFunc) http.Handler {
+func RegisterHandlers (r *mux.Router, handlerFns ...handlerFunc) http.Handler {
 	var f http.Handler
-	f =mux
+	f =r
 	for _, hFn := range handlerFns {
 		f = hFn(f)
 	}
