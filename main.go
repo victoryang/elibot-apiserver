@@ -33,7 +33,7 @@ func handleSignals(server *api.Server) {
 
 func main() {
 	c := config.NewConfiguration()
-	/*err:=config.LoadFile(c.ConfigFile) 
+	/*err:=c.LoadFile() 
 	if err!=nil {
 		return
 	}*/
