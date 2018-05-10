@@ -1,6 +1,7 @@
 package db
 
 import (
+    "os"
     "fmt"
     "io/ioutil"
     sql "elibot-apiserver/sqlitedb"
@@ -167,6 +168,20 @@ func DBList() ([]string, error) {
         list = append(list, f.Name())
     }
     return list, nil
+}
+
+func DBDel(name string) error {
+    fmt.Println("in DBDel")
+    if name == "" {
+        return errors.New("file name is empty")
+    }
+
+    filename := BackupDir+BackupPath+name
+    if _, err := os.Stat(filename); os.IsNotExist(err) {
+       return errors.New("file does not exist")
+    }
+
+    return os.Remove(filename)
 }
 
 func DBRestore(BackupName string) error{
