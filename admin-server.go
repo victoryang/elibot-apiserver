@@ -4,15 +4,17 @@ import (
 	"fmt"
 	"net"
 	"net/http"
+	"net/http/pprof"
 
 	"github.com/gorilla/mux"
 )
 
+type handlerFunc func(http.Handler) http.Handler
 var handlerFns = []handlerFunc{
 //	SetJwtMiddlewareHandler,
 }
 
-func RegisterHandlersmux mux.Router, handlerFns ...handlerFunc) http.Handler {
+func RegisterHandlers (mux.Router, handlerFns ...handlerFunc) http.Handler {
 	var f http.Handler
 	f =mux
 	for _, hFn := range handlerFns {
@@ -41,8 +43,6 @@ func configureAdminHandler() http.Handler {
 func startAdminServer() {
 	host := "127.0.0.1"
 	port := "9090"
-	checkPortAvailability(getPort(net.JoinHostPort(host, port)))
-
 	serverAddress = net.JoinHostPort(host, port)
 	adminServer := &http.Server{
 		Addr: 			serverAddress,
