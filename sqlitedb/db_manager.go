@@ -39,23 +39,23 @@ func (m *DBManager) Exec() error {
 }
 
 func NewDBManager(DBname string, DBdir string, mode int) (*DBManager, error) {
-	db_mgr := new(DBManager)
-	db_mgr.mgr = C.NewDBManager()
+	mgr := new(DBManager)
+	mgr.mgr = C.NewDBManager()
 
-	db_mgr.conn = C.CString(DBname)
-	db_mgr.dir = C.CString(DBdir)
+	mgr.conn = C.CString(DBname)
+	mgr.dir = C.CString(DBdir)
 
     res := C.new_db_manager(
-    		db_mgr.conn,
-    		db_mgr.dir,
+    		mgr.conn,
+    		mgr.dir,
     		nil,
     		C.int(mode),
     		nil,
-    		db_mgr.mgr,
+    		mgr.mgr,
     		C.char(0),
     	)
     if res != C.DB_OK {
     	return nil, errors.New("fail to new db manager")
     }
-    return db_mgr, nil
+    return mgr, nil
 }
