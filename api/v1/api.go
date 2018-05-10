@@ -3,7 +3,7 @@ package v1
 import (
 	"net/http"
 	"fmt"
-	"encodig/json"
+	"encoding/json"
 
 	"github.com/gorilla/mux"
 	"elibot-apiserver/db"
