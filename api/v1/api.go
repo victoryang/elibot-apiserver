@@ -301,7 +301,7 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/metadata", getAllMetadata).Methods("GET")
 	r.HandleFunc("/v1/params", getParams).Methods("GET")
 	r.HandleFunc("/v1/parameterbyid", getParameterById).Methods("GET").Queries("md_id", "{md_id}")
-	r.HandleFunc("/v1/parameterbygroup", parameterbygroup).Methods("GET")/*.Queries("group", "{group}")*/
+	r.HandleFunc("/v1/parameterbygroup", parameterbygroup).Methods("GET").Queries("group", "{group}")
 	r.HandleFunc("/v1/ref", getAllRef).Methods("GET")
 	r.HandleFunc("/v1/toolframe", getAllToolframe).Methods("GET")
 	r.HandleFunc("/v1/userframe", getAllUserframe).Methods("GET")
