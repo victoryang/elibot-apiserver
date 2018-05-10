@@ -37,7 +37,7 @@ func main() {
 	if err!=nil {
 		return
 	}*/
-
+	s := startAdminServer()
 	s := api.NewApiServer(c.GlobalConfig)
 	s.Run();
 	handleSignals(s)
