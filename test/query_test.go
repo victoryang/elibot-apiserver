@@ -164,7 +164,7 @@ func Test_Get_all_zeropoints(t *testing.T) {
 	}
 }
 
-func Test_Backup(t *testing.T) {
+/*func Test_Backup(t *testing.T) {
 	resp, err := http.Post(GetIP("/db/backup"))
 	if err!=nil {
 		t.Error("test failed")
@@ -172,7 +172,7 @@ func Test_Backup(t *testing.T) {
 		t.Log("test pass")
 		fmt.Println(resp)
 	}
-}
+}*/
 
 func Test_Backup_List(t *testing.T) {
 	resp, err := http.Get(GetIP("/db/backup"))
@@ -184,7 +184,7 @@ func Test_Backup_List(t *testing.T) {
 	}
 }
 
-func Test_Restore(t *testing.T) {
+/*func Test_Restore(t *testing.T) {
 	resp, err := http.Post(GetIP("/db/restore"))
 	if err!=nil {
 		t.Error("test failed")
@@ -192,4 +192,4 @@ func Test_Restore(t *testing.T) {
 		t.Log("test pass")
 		fmt.Println(resp)
 	}
-}
+}*/
