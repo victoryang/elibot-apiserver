@@ -29,16 +29,16 @@ func Load(s string) (*GlobalConfiguration, error) {
 	return cfg, nil
 }
 
-func LoadFile(filename string) (*GlobalConfiguration, error) {
-	content, err := ioutil.ReadFile(filename)
+func (c *ElibotServerConfiguration)LoadFile() error {
+	content, err := ioutil.ReadFile(c.ConfigFile)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	cfg, err := Load(string(content))
+	c.GlobalConfig, err := Load(string(content))
 	if err != nil {
-		return nil, fmt.Errorf("parsing YAML file %s: %v", filename, err)
+		return fmt.Errorf("parsing YAML file %s: %v", filename, err)
 	}
-	return cfg, nil
+	return nil
 }
 
 func NewConfiguration() *ElibotServerConfiguration {
