@@ -54,7 +54,7 @@ func NewDBManager(DBname string, DBdir string, backupname string, mode int, forc
 	mgr.conn = C.CString(DBname)
 	mgr.dir = C.CString(DBdir)
 
-	if backupname!=nil {
+	if backupname!="" {
 		mgr.bakname = C.CString(backupname)
 	} else {
 		mgr.bakname = nil

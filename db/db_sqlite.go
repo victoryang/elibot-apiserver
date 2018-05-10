@@ -145,7 +145,7 @@ func Get_All_Zeropoints() (string, error) {
 func DBBackup() error{
     fmt.Println("in DBBackup")
  
-    mgr, err := sql.NewDBManager(DBName, BackupDir, nil, sql.DB_BACKUP, 0)
+    mgr, err := sql.NewDBManager(DBName, BackupDir, "", sql.DB_BACKUP, 0)
     if err != nil {
         return err
     }
