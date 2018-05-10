@@ -155,7 +155,7 @@ func getParams(w http.ResponseWriter, r *http.Request) {
 func getParameterById(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("starting get all Parameter")
 	vars := mux.Vars(r)
-	fmt.Println(vars["md_id"]])
+	fmt.Println(vars["md_id"])
 	queries := make(map[string]interface{})
 	queries["md_id"] = "param.speed.speed_min_joint"
 	res, err := db.Get_Parameter_By_Id(queries)
