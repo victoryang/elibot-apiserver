@@ -27,10 +27,10 @@ func RegisterHandlers (r *mux.Router, handlerFns ...handlerFunc) http.Handler {
 func configureAdminHandler() http.Handler {
 	r := mux.NewRouter()
 	apiRouter := r.NewRoute().PathPrefix("/").Subrouter()
-	admin := apiRouter.PathPrefix("/admin").Subrouter()
 
 	/*TODO: get some status of controller back to admin*/
-	/*admin.Methods("GET").Path("/usage").HandlerFunc(SetJwtMiddlewareFunc(getUsage))*/
+	/*admin := apiRouter.PathPrefix("/admin").Subrouter()
+	admin.Methods("GET").Path("/usage").HandlerFunc(SetJwtMiddlewareFunc(getUsage))*/
 
 	apiRouter.Path("/debug/cmdline").HandlerFunc(pprof.Cmdline)
 	apiRouter.Path("/debug/profile").HandlerFunc(pprof.Profile)
