@@ -3,6 +3,7 @@ package db
 import (
     "os"
     "fmt"
+    "errors"
     "io/ioutil"
     sql "elibot-apiserver/sqlitedb"
 )
