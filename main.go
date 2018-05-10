@@ -33,9 +33,10 @@ func handleSignals(server *api.Server) {
 
 func main() {
 	c := config.NewConfiguration()
-	if err:=config.LoadFile(c.ConfigFile) && err!=nil {
+	/*err:=config.LoadFile(c.ConfigFile) 
+	if err!=nil {
 		return
-	}
+	}*/
 
 	s := api.NewApiServer(c.GlobalConfig)
 	s.Run();
