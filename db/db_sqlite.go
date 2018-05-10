@@ -156,7 +156,7 @@ func DBBackup() error{
 func DBRestore() error{
     fmt.Println("in DBRestore")
  
-    mgr, err := sql.NewDBManager(DBName, BackupDir, BackupDir+BackupPath+BackBackupName, sql.DB_RESTORE, 1)
+    mgr, err := sql.NewDBManager(DBName, BackupDir, BackupDir+BackupPath+BackupName, sql.DB_RESTORE, 1)
     if err != nil {
         return err
     }
