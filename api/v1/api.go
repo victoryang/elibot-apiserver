@@ -294,7 +294,7 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/test", test).Methods("GET")
 
 	r.HandleFunc("/v1/arc", getAllArc).Methods("GET")
-	r.HandleFunc("/v1/arcparams", getArcParams).Methods("GET")Queries("group", "{group}")
+	r.HandleFunc("/v1/arcparams", getArcParams).Methods("GET").Queries("group", "{group}")
 	r.HandleFunc("/v1/bookprograms", getAllBookprograms).Methods("GET")
 	r.HandleFunc("/v1/enum", getAllEnum).Methods("GET")
 	r.HandleFunc("/v1/extaxis", getAllExtaxis).Methods("GET")
