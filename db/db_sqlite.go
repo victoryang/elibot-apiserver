@@ -8,6 +8,7 @@ import (
 const (
     DBName="/root/elibotDB.db"
     BackupDir="/root/"
+    BackupPath="backups/"
     BackupName="elibotDB_2.0.0.2018030210_Alpha_20180509210642.bak"
 )
 
@@ -155,7 +156,7 @@ func DBBackup() error{
 func DBRestore() error{
     fmt.Println("in DBRestore")
  
-    mgr, err := sql.NewDBManager(DBName, BackupDir, BackupName, sql.DB_RESTORE, 1)
+    mgr, err := sql.NewDBManager(DBName, BackupDir, BackupDir+BackupPath+BackBackupName, sql.DB_RESTORE, 1)
     if err != nil {
         return err
     }
