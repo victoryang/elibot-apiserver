@@ -39,7 +39,7 @@ func configServerHandler() http.Handler {
 	return n
 }
 
-func NewApiServer(c config.GlobalConfiguration) *Server {
+func NewApiServer(c *config.GlobalConfiguration) *Server {
 	s := new(Server)
 
 	s.EntryPoint.httpServer = &http.Server {
