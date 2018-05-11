@@ -16,7 +16,7 @@ import (
 
 type AccessLogMiddleware struct {
 	File 		string
-	Logger 		*accesslog.logger
+	Logger 		*accesslog.Logger
 }
 
 type ServerEntryPoint struct {
@@ -47,7 +47,7 @@ func (s *Server) configServerHandler() http.Handler {
 	r := mux.NewRouter().SkipClean(true)
 
 	n := negroni.New(negroni.NewRecovery())
-	
+
 	s.AccessLog.Logger = middleware.AddAccesslog(n, s.AccessLog.File)
 	if s.AccessLog.Logger!=nil {
 		n.Use(s.AccessLog.Logger)
