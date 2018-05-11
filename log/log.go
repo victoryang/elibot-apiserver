@@ -10,6 +10,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+type logrus.Fields Fields
+
 var (
 	logger      *logrus.Entry
 	logFilePath string
