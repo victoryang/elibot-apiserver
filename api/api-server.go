@@ -5,7 +5,8 @@ import (
 	"time"
 
 	Log "elibot-apiserver/log"
-	"elibot-apiserver/middleware/accesslog"
+
+	"elibot-apiserver/middlewares"
 	"elibot-apiserver/config"
 	
 	"github.com/gorilla/mux"
@@ -38,13 +39,7 @@ func configServerHandler() http.Handler {
 	r := mux.NewRouter().SkipClean(true)
 
 	n := negroni.New(negroni.NewRecovery())
-	alogger, err := accesslog.NewAccessLog(accesslogfile)
-	if err!=nil {
-		Log.Error("Error in opening access log file： ", err)
-	} else {
-		n.Use(alogger)
-	}
-	/*static := negroni.NewStatic()*/
+	middlewares.AddAccesslog(n)
 	
 	n.UseHandler(RegisterAPIRouter(r))
 	
