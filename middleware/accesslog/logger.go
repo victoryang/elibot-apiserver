@@ -3,13 +3,12 @@ package accesslog
 import (
 	"bytes"
 
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"text/template"
 	"time"
-
-	Log "elibot-apiserver/log"
 )
 
 var LoggerDefaultName = "elibot-server "
