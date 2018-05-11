@@ -10,8 +10,6 @@ import (
 	
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
-	nlogrus "github.com/meatballhat/negroni-logrus"
-	"github.com/sirupsen/logrus"
 )
 
 var accesslogfile string
