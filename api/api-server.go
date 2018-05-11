@@ -39,7 +39,7 @@ func configServerHandler() http.Handler {
 	r := mux.NewRouter().SkipClean(true)
 
 	n := negroni.New(negroni.NewRecovery())
-	middleware.AddAccesslog(n)
+	middleware.AddAccesslog(n, accesslogfile)
 	
 	n.UseHandler(RegisterAPIRouter(r))
 	
