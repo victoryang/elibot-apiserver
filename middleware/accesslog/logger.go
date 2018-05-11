@@ -88,7 +88,7 @@ func (l *Logger) ServeHTTP(rw http.ResponseWriter, r *http.Request, next http.Ha
 
 	next(rw, r)
 
-	res := rw.(ResponseWriter)
+	res ：= NewResponseWriter(rw)
 	log := LoggerEntry{
 		StartTime: start.Format(l.dateFormat),
 		Status:    res.Status(),
