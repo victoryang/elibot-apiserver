@@ -37,7 +37,8 @@ func (c *ElibotServerConfiguration)LoadFile() error {
 	}
 	c.GlobalConfig, err = Load(string(content))
 	if err != nil {
-		return Log.Error("parsing YAML file %s: %s", c.ConfigFile, err)
+		Log.Error("parsing YAML file %s: %s", c.ConfigFile, err)
+		return err
 	}
 	return nil
 }
