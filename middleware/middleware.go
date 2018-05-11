@@ -7,7 +7,7 @@ import (
 )
 
 func AddAccesslog(n *negroni.Negroni) {
-	alogger, err := accesslog.NewAccessLog(accesslogfile)
+	alogger, err := accesslog.NewLogger(accesslogfile)
 	if err!=nil {
 		Log.Error("Error in opening access log file： ", err)
 	} else {
