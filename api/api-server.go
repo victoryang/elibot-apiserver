@@ -62,7 +62,7 @@ func (s *Server) configServerHandler() http.Handler {
 func NewApiServer(c *config.GlobalConfiguration) *Server {
 	s := new(Server)
 	
-	s.AccessLogMiddleware.File = c.AccessLogsFile
+	s.AccessLog.File = c.AccessLogsFile
 	s.EntryPoint.httpServer = &http.Server {
 		Addr:			c.ListenAddress,
 		ReadTimeout:    10 * time.Minute,
