@@ -40,10 +40,11 @@ func main() {
 	}*/
 	err := Log.OpenFile(c.GlobalConfig.ElibotLogsFile)
 	if err!=nil {
-		Log.Error("Could not open log file")
+		Log.Error("Could not open log file: ", err)
 		return
 	}
 	defer Log.CloseFile()
+
 	startAdminServer()
 	s := api.NewApiServer(c.GlobalConfig)
 	s.Run();
