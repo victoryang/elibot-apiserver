@@ -1,4 +1,5 @@
 AccessLogsFile: /var/lib/elibot-server/access.Log
 ElibotLogsFile: /var/lib/elibot-server/elibot.Log
-EntryPoints: http
+EntryPoints: 
+  ["http"]
 ListenAddress: 127.0.0.1:9000

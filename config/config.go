@@ -48,7 +48,7 @@ func NewConfiguration() *ElibotServerConfiguration {
 			GlobalConfig:	&GlobalConfiguration{
 				AccessLogsFile:			"/var/lib/elibot-server/access.Log",
 				ElibotLogsFile:			"/var/lib/elibot-server/elibot.Log",
-				EntryPoints:			"",
+				EntryPoints:			nil,
 				ListenAddress:			"127.0.0.1:9000",
 			},
 			ConfigFile:	"/etc/elibot-server.yaml",
