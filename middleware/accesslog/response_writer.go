@@ -103,11 +103,3 @@ func (rw *responseWriter) Flush() {
 		flusher.Flush()
 	}
 }
-
-type responseWriterCloseNotifer struct {
-	*responseWriter
-}
-
-func (rw *responseWriterCloseNotifer) CloseNotify() <-chan bool {
-	return rw.ResponseWriter.(http.CloseNotifier).CloseNotify()
-}
