@@ -47,6 +47,7 @@ type Logger struct {
 	ALogger
 	dateFormat string
 	template   *template.Template
+	file 	   *os.File
 }
 
 func openAccessLogFile(filePath string) (*os.File, error) {
@@ -64,13 +65,18 @@ func openAccessLogFile(filePath string) (*os.File, error) {
 	return file, nil
 }
 
+func (l *Logger) Close() error {
+	return l.file.Close()
+}
+
 // NewLogger returns a new Logger instance
 func NewLogger(filename string) (*Logger, error) {
 	file, err := openAccessLogFile(filename)
 	if err!=nil {
 		return nil, err
 	}
-	logger := &Logger{ALogger: log.New(file, LoggerDefaultName, 0), dateFormat: LoggerDefaultDateFormat}
+	l.file = file
+	logger := &Logger{ALogger: log.New(l.file, LoggerDefaultName, 0), dateFormat: LoggerDefaultDateFormat}
 	logger.SetFormat(LoggerDefaultFormat)
 	return logger, nil
 }

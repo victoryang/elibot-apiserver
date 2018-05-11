@@ -13,4 +13,5 @@ func AddAccesslog(n *negroni.Negroni, accesslogfile string) {
 	} else {
 		n.Use(alogger)
 	}
+	defer alogger.Close()
 }
