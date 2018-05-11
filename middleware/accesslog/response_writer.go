@@ -1,4 +1,4 @@
-package negroni
+package accesslog
 
 import (
 	"bufio"
