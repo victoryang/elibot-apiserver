@@ -75,8 +75,8 @@ func NewLogger(filename string) (*Logger, error) {
 	if err!=nil {
 		return nil, err
 	}
-	l.file = file
-	logger := &Logger{ALogger: log.New(l.file, LoggerDefaultName, 0), dateFormat: LoggerDefaultDateFormat}
+	logger := &Logger{ALogger: log.New(file, LoggerDefaultName, 0), dateFormat: LoggerDefaultDateFormat}
+	logger.file = file
 	logger.SetFormat(LoggerDefaultFormat)
 	return logger, nil
 }

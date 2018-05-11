@@ -6,12 +6,11 @@ import (
 	"github.com/urfave/negroni"
 )
 
-func AddAccesslog(n *negroni.Negroni, accesslogfile string) {
+func AddAccesslog(n *negroni.Negroni, accesslogfile string) *accesslog.Logger {
 	alogger, err := accesslog.NewLogger(accesslogfile)
 	if err!=nil {
 		Log.Error("Error in opening access log file： ", err)
 	} else {
 		n.Use(alogger)
 	}
-	defer alogger.Close()
 }
