@@ -34,10 +34,11 @@ func handleSignals(server *api.Server) {
 
 func main() {
 	c := config.NewConfiguration()
-	/*err:=c.LoadFile() 
+	err:=c.LoadFile() 
 	if err!=nil {
 		return
-	}*/
+	}
+	fmt.Println(c.GlobalConfig)
 	err := Log.OpenFile(c.GlobalConfig.ElibotLogsFile)
 	if err!=nil {
 		Log.Error("Could not open log file: ", err)
