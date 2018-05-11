@@ -1,9 +1,6 @@
 package accesslog
 
 import (
-	"bufio"
-	"fmt"
-	"net"
 	"net/http"
 )
 
@@ -15,7 +12,7 @@ type ResponseWriter struct {
 	http.ResponseWriter
 }
 
-func NewResponseWriter(res http.ResponseWriter) *MyResponseWriter {
+func NewResponseWriter(res http.ResponseWriter) *ResponseWriter {
 	// Default the status code to 200
 	return &ResponseWriter{200, res}
 }
