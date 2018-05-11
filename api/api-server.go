@@ -6,7 +6,7 @@ import (
 
 	Log "elibot-apiserver/log"
 
-	"elibot-apiserver/middlewares"
+	"elibot-apiserver/middleware"
 	"elibot-apiserver/config"
 	
 	"github.com/gorilla/mux"
@@ -39,7 +39,7 @@ func configServerHandler() http.Handler {
 	r := mux.NewRouter().SkipClean(true)
 
 	n := negroni.New(negroni.NewRecovery())
-	middlewares.AddAccesslog(n)
+	middleware.AddAccesslog(n)
 	
 	n.UseHandler(RegisterAPIRouter(r))
 	
