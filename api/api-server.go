@@ -35,7 +35,9 @@ func (s *Server) Run() {
 
 func (s *Server) Shutdown() {
 	Log.Print("server shuting down...")
-	s.AccessLog.Logger.Close()
+	if s.AccessLog.Logger!=nil {
+		s.AccessLog.Logger.Close()
+	}
 	s.EntryPoint.httpServer.Close()
 }
 
@@ -45,7 +47,11 @@ func (s *Server) configServerHandler() http.Handler {
 	r := mux.NewRouter().SkipClean(true)
 
 	n := negroni.New(negroni.NewRecovery())
+	
 	s.AccessLog.Logger = middleware.AddAccesslog(n, s.AccessLog.File)
+	if s.AccessLog.Logger!=nil {
+		n.Use(s.AccessLog.Logger)
+	}
 	
 	n.UseHandler(RegisterAPIRouter(r))
 	
