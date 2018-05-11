@@ -3,7 +3,6 @@ package api
 import (
 	"net/http"
 	"time"
-	"fmt"
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/config"

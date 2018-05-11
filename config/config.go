@@ -2,7 +2,6 @@ package config
 
 import (
 	"io/ioutil"
-	"fmt"
 
 	Log "elibot-apiserver/log"
 	"gopkg.in/yaml.v2"
@@ -38,7 +37,7 @@ func (c *ElibotServerConfiguration)LoadFile() error {
 	}
 	c.GlobalConfig, err = Load(string(content))
 	if err != nil {
-		return Log.Error("parsing YAML file %s: %v", c.ConfigFile, err)
+		return Log.WithFields(logrus.Fields{"configfile":c.ConfigFile, "err":err}).Error("parsing YAML file configfile: err", c.ConfigFile, err)
 	}
 	return nil
 }

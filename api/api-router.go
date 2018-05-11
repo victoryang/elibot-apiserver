@@ -2,7 +2,6 @@ package api
 
 import (
 	"net/http"
-	"fmt"
 
 	"elibot-apiserver/api/v1"
 	Log "elibot-apiserver/log"
