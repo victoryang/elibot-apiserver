@@ -10,7 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type logrus.Fields Fields
+type Fields logrus.Fields
 
 var (
 	logger      *logrus.Entry
