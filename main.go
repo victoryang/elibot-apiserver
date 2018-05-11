@@ -5,6 +5,7 @@ import (
 	"os/signal"
 	"syscall"
 
+	Log "elibot-apiserver/log"
 	"elibot-apiserver/api"
 	"elibot-apiserver/config"
 )
@@ -37,6 +38,8 @@ func main() {
 	if err!=nil {
 		return
 	}*/
+	Log.OpenFile(c.GlobalConfig.ElibotLogsFile)
+	defer Log.CloseFile()
 	startAdminServer()
 	s := api.NewApiServer(c.GlobalConfig)
 	s.Run();

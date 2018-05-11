@@ -4,7 +4,10 @@ import (
 	"net/http"
 	"time"
 	"fmt"
+
+	Log "elibot-apiserver/log"
 	"elibot-apiserver/config"
+	
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 )
@@ -18,12 +21,12 @@ type Server struct {
 }
 
 func (s *Server) Run() {
-	fmt.Println("server listening...")
+	Log.Print("server listening...")
 	go s.EntryPoint.httpServer.ListenAndServe()
 }
 
 func (s *Server) Shutdown() {
-	fmt.Println("server shuting down...")
+	Log.Print("server shuting down...")
 	s.EntryPoint.httpServer.Close()
 }
 

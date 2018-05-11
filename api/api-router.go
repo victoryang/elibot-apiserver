@@ -5,11 +5,12 @@ import (
 	"fmt"
 
 	"elibot-apiserver/api/v1"
+	Log "elibot-apiserver/log"
 
 	"github.com/gorilla/mux"
 )
 
 func RegisterAPIRouter(r *mux.Router) http.Handler {
-	fmt.Println("Register V1 api...")
+	Log.Info("Register V1 api...")
 	return v1.RegisterV1(r)
 }
