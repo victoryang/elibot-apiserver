@@ -31,7 +31,7 @@ func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (
         return
     }
 
-    Log.Print(res)
+    Log.Debug(res)
     Log.Print("get_all_metadatas OK")
     return
 }
