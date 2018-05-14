@@ -223,7 +223,7 @@ func CloseFile() error {
 // it does nothing.
 func RotateFile() error {
 	if logFile == nil && logFilePath == "" {
-		Debug("Traefik log is not writing to a file, ignoring rotate request")
+		Debug("log is not writing to a file, ignoring rotate request")
 		return nil
 	}
 

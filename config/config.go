@@ -8,6 +8,11 @@ import (
 )
 
 var (
+	DefaultDebug = &DEBUG {
+		Enable:			false,
+		Level:			4,
+	}
+
 	DefaultSqliteDB = &SqliteDB {
 		Path:			"/root/",
 		FileName:		"elibotDB",
@@ -62,8 +67,29 @@ func (s *SqliteDB) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	return nil
 }
 
+type DEBUG struct {
+	Enable			bool			`yaml:"enable,omitempty"`
+	Level			int 			`yaml:"level,omitempty"`
+}
+
+func (d *DEBUG) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain DEBUG
+	if err := unmarshal((*plain)(d)); err != nil {
+		return err
+	}
+
+	if d.Enable == true {
+		d.Level = 5
+	} else {
+		d.Level = DefaultDebug.Level
+	}
+	Log.SetLevel(d.Level)
+	return nil
+}
+
 type Config struct {
 	AccessLogsFile		string		`yaml:"accessLog,omitempty"`
+	Debug				DEBUG		`yaml:"debug,omitempty"`
 	ElibotLogsFile		string		`yaml:"serverLog,omitempty"`
 	EntryPoints			[]string	`yaml:"entrypoints,omitempty"`
 	ListenAddress		string		`yaml:"server_address,omitempty"`
