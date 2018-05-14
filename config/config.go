@@ -8,53 +8,37 @@ import (
 )
 
 var (
-	DefaultGlobalConfiguration = GlobalConfiguration{
-			AccessLogsFile:			"/var/lib/elibot-server/access.Log",
-			ElibotLogsFile:			"/var/lib/elibot-server/elibot.Log",
-			EntryPoints:			nil,
-			ListenAddress:			"127.0.0.1:9000",
+	DefaultConfig = &Config{
+		AccessLogsFile:			"/var/lib/elibot-server/access.Log",
+		ElibotLogsFile:			"/var/lib/elibot-server/elibot.Log",
+		EntryPoints:			nil,
+		ListenAddress:			"127.0.0.1:9000",
 	}
 )
 
-type GlobalConfiguration struct {
+type Config struct {
 	AccessLogsFile		string		`yaml:"AccessLogsFile,omitempty"`
 	ElibotLogsFile		string		`yaml:"ElibotLogsFile,omitempty"`
 	EntryPoints			[]string	`yaml:"EntryPoints,omitempty"`
 	ListenAddress		string		`yaml:"ListenAddress,omitempty"`
 }
 
-type ElibotServerConfiguration struct {
-	GlobalConfig		*GlobalConfiguration
-	ConfigFile			string
-}
-
 // Load parses the YAML input s into a Config.
-func Load(s string) (*GlobalConfiguration, error) {
-	cfg := &GlobalConfiguration{}
+func Load(s string) (*Config, error) {
+	cfg := &Config{}
 
 	err := yaml.UnmarshalStrict([]byte(s), cfg)
 	if err != nil {
+		Log.Error("parsing YAML file %s: %s", filename, err)
 		return nil, err
 	}
 	return cfg, nil
 }
 
-func (c *ElibotServerConfiguration)LoadFile() error {
-	content, err := ioutil.ReadFile(c.ConfigFile)
+func LoadFile(filename string) (*Config, error) {
+	content, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return err
 	}
-	c.GlobalConfig, err = Load(string(content))
-	if err != nil {
-		Log.Error("parsing YAML file %s: %s", c.ConfigFile, err)
-		return err
-	}
-	return nil
-}
-
-func NewConfiguration() *ElibotServerConfiguration {
-	return &ElibotServerConfiguration {
-			GlobalConfig: &DefaultGlobalConfiguration,
-			ConfigFile:	"/etc/elibot-server.yaml",
-	}
+	return Load(string(content))
 }

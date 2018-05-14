@@ -10,6 +10,10 @@ import (
 	"elibot-apiserver/config"
 )
 
+const (
+	configFile = "/etc/elibot-server.yaml"
+)
+
 func handleSignals(server *api.Server) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
@@ -33,12 +37,12 @@ func handleSignals(server *api.Server) {
 }
 
 func main() {
-	c := config.NewConfiguration()
-	err := c.LoadFile() 
+	cfg, err := config.LoadFile(configFile) 
 	if err!=nil {
-		return
+		Log.Error("Parse configure file error: ", err)
+		cfg = config.DefaultConfig
 	}
-	Log.Printf("EntryPoints: ", c.GlobalConfig.EntryPoints)
+	Log.Print("EntryPoints: ", cfg.EntryPoints)
 	err = Log.OpenFile(c.GlobalConfig.ElibotLogsFile)
 	if err!=nil {
 		Log.Error("Could not open log file: ", err)
