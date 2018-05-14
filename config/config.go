@@ -31,9 +31,9 @@ type BackUp struct {
 	Dir 				string		`yaml:"dir,omitempty"`
 }
 
-func (b *Backup) UnmarshalYAML(unmarshal func(interface{}) error) error {
+func (b *BackUp) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	type plain Config
-	if err := unmarshal((*plain)(c)); err != nil {
+	if err := unmarshal((*plain)(b)); err != nil {
 		return err
 	}
 	if b.Dir == "" {
@@ -49,7 +49,7 @@ type SqliteDB struct {
 
 func (s *SqliteDB) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	type plain Config
-	if err := unmarshal((*plain)(c)); err != nil {
+	if err := unmarshal((*plain)(s)); err != nil {
 		return err
 	}
 	if s.Path == "" {
