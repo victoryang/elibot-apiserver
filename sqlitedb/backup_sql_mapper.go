@@ -4,9 +4,10 @@ package sqlitedb
 // #include<include/backup_sql_mapper.h>
 import "C"
 import (
-	"fmt"
 	"errors"
 	"unsafe"
+
+	Log "elibot-apiserver/log"
 )
 
 type BackupSqlMapper struct {
@@ -36,7 +37,7 @@ func (m *BackupSqlMapper) RegisterSqlMapperForQueryAll() error{
 }
 
 func (m *BackupSqlMapper) RegisterSqlMapper(mode int) error {
-	fmt.Println("RegisterSqlMapper in BackupSqlMapper | mode: ", mode)
+	Log.Print("RegisterSqlMapper in BackupSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		return m.RegisterSqlMapperForQueryAll()

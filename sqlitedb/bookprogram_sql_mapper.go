@@ -4,9 +4,10 @@ package sqlitedb
 // #include<include/bookprogram_sql_mapper.h>
 import "C"
 import (
-	"fmt"
 	"errors"
 	"unsafe"
+
+	Log "elibot-apiserver/log"
 )
 
 type BookProgramSqlMapper struct {
@@ -31,7 +32,7 @@ func (m *BookProgramSqlMapper) GetID() string {
 }
 
 func (m *BookProgramSqlMapper) RegisterSqlMapper(mode int) error {
-	fmt.Println("RegisterSqlMapper in BookProgramSqlMapper | mode: ", mode)
+	Log.Print("RegisterSqlMapper in BookProgramSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_BOOKPROGRAM_GET_ALL

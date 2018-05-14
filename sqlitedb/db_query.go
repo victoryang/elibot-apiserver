@@ -7,10 +7,11 @@ import "C"
 import (
     "unsafe"
     "bytes"
-    "fmt"
     "math"
     "errors"
     "encoding/binary"
+
+    Log "elibot-apiserver/log"
 )
 
 func newsqlparams(key string, value interface{}, param *C.sql_parameter) error {
@@ -42,7 +43,7 @@ func newsqlparams(key string, value interface{}, param *C.sql_parameter) error {
         binary.LittleEndian.PutUint64(param.value[:], uint64(uintptr(unsafe.Pointer(p))))
 
     default:
-        fmt.Println("not support for ", t)
+        Log.Print("not support for ", t)
         return errors.New("not support this type\n")
     }
 
@@ -100,7 +101,7 @@ func Db_query_with_params(q_id, db_name string, queries map[string]interface{}) 
     }
 
     if q_res==nil {
-        fmt.Println("fail to query")
+        Log.Error("fail to query")
         return "", errors.New("fail to query\n")
     }
 
@@ -133,7 +134,7 @@ func Db_query(q_id string, db_name string) (string, error){
 
     q_res := C.db_query(req)
     if q_res==nil {
-    	fmt.Println("fail to query")
+    	Log.Error("fail to query")
     	return "", errors.New("fail to query\n")
     }
 

@@ -4,9 +4,10 @@ package sqlitedb
 // #include<include/extaxis_sql_mapper.h>
 import "C"
 import (
-	"fmt"
 	"errors"
 	"unsafe"
+
+	Log "elibot-apiserver/log"
 )
 
 type ExtaxisSqlMapper struct {
@@ -31,7 +32,7 @@ func (m *ExtaxisSqlMapper) GetID() string {
 }
 
 func (m *ExtaxisSqlMapper) RegisterSqlMapper(mode int) error {
-	fmt.Println("RegisterSqlMapper in ExtaxisSqlMapper | mode: ", mode)
+	Log.Print("RegisterSqlMapper in ExtaxisSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_EXTAXIS_GET_ALL

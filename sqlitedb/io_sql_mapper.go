@@ -4,9 +4,10 @@ package sqlitedb
 // #include<include/io_sql_mapper.h>
 import "C"
 import (
-	"fmt"
 	"errors"
 	"unsafe"
+
+	Log "elibot-apiserver/log"
 )
 
 type IoSqlMapper struct {
@@ -31,7 +32,7 @@ func (m *IoSqlMapper) GetID() string {
 }
 
 func (m *IoSqlMapper) RegisterSqlMapper(mode int) error {
-	fmt.Println("RegisterSqlMapper in IoSqlMapper | mode: ", mode)
+	Log.Print("RegisterSqlMapper in IoSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_IO_GET_VALID_IOS_BY_GROUP

@@ -4,9 +4,10 @@ package sqlitedb
 // #include<include/enum_sql_mapper.h>
 import "C"
 import (
-	"fmt"
 	"errors"
 	"unsafe"
+
+	Log "elibot-apiserver/log"
 )
 
 type EnumSqlMapper struct {
@@ -31,7 +32,7 @@ func (m *EnumSqlMapper) GetID() string {
 }
 
 func (m *EnumSqlMapper) RegisterSqlMapper(mode int) error {
-	fmt.Println("RegisterSqlMapper in EnumSqlMapper | mode: ", mode)
+	Log.Print("RegisterSqlMapper in EnumSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_ENUM_GET_ALL

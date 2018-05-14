@@ -4,9 +4,10 @@ package sqlitedb
 // #include<include/metadata_sql_mapper.h>
 import "C"
 import (
-	"fmt"
 	"errors"
 	"unsafe"
+
+	Log "elibot-apiserver/log"
 )
 
 type MetadataSqlMapper struct {
@@ -31,7 +32,7 @@ func (m *MetadataSqlMapper) GetID() string {
 }
 
 func (m *MetadataSqlMapper) RegisterSqlMapper(mode int) error {
-	fmt.Println("RegisterSqlMapper in MetadataSqlMapper | mode: ", mode)
+	Log.Print("RegisterSqlMapper in MetadataSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_METADATA_GET_ALL

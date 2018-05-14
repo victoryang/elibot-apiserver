@@ -4,9 +4,10 @@ package sqlitedb
 // #include<include/interference_sql_mapper.h>
 import "C"
 import (
-	"fmt"
 	"errors"
 	"unsafe"
+
+	Log "elibot-apiserver/log"
 )
 
 type InterferenceSqlMapper struct {
@@ -31,7 +32,7 @@ func (m *InterferenceSqlMapper) GetID() string {
 }
 
 func (m *InterferenceSqlMapper) RegisterSqlMapper(mode int) error {
-	fmt.Println("RegisterSqlMapper in InterferenceSqlMapper | mode: ", mode)
+	Log.Print("RegisterSqlMapper in InterferenceSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_INTERFERENCE_GET_ALL

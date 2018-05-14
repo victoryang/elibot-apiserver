@@ -4,9 +4,10 @@ package sqlitedb
 // #include<include/ref_sql_mapper.h>
 import "C"
 import (
-	"fmt"
 	"errors"
 	"unsafe"
+
+	Log "elibot-apiserver/log"
 )
 
 type RefSqlMapper struct {
@@ -31,7 +32,7 @@ func (m *RefSqlMapper) GetID() string {
 }
 
 func (m *RefSqlMapper) RegisterSqlMapper(mode int) error {
-	fmt.Println("RegisterSqlMapper in RefSqlMapper | mode: ", mode)
+	Log.Print("RegisterSqlMapper in RefSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_REF_GET_ALL:
 		m.Id = C.ELIBOT_REF_GET_ALL

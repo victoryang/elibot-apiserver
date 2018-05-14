@@ -4,9 +4,10 @@ package sqlitedb
 // #include<include/zeropoint_sql_mapper.h>
 import "C"
 import (
-	"fmt"
 	"errors"
 	"unsafe"
+
+	Log "elibot-apiserver/log"
 )
 
 type ZeroPointSqlMapper struct {
@@ -31,7 +32,7 @@ func (m *ZeroPointSqlMapper) GetID() string {
 }
 
 func (m *ZeroPointSqlMapper) RegisterSqlMapper(mode int) error {
-	fmt.Println("RegisterSqlMapper in ZeroPointSqlMapper | mode: ", mode)
+	Log.Print("RegisterSqlMapper in ZeroPointSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_ZEROPOINT_GET_ALL

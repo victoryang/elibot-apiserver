@@ -4,9 +4,10 @@ package sqlitedb
 // #include<include/parameter_sql_mapper.h>
 import "C"
 import (
-	"fmt"
 	"errors"
 	"unsafe"
+
+	Log "elibot-apiserver/log"
 )
 
 type ParameterSqlMapper struct {
@@ -31,7 +32,7 @@ func (m *ParameterSqlMapper) GetID() string {
 }
 
 func (m *ParameterSqlMapper) RegisterSqlMapper(mode int) error {
-	fmt.Println("RegisterSqlMapper in ParameterSqlMapper | mode: ", mode)
+	Log.Print("RegisterSqlMapper in ParameterSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_ENUM_GET_ALL

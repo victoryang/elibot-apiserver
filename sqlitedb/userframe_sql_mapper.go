@@ -4,9 +4,10 @@ package sqlitedb
 // #include<include/userframe_sql_mapper.h>
 import "C"
 import (
-	"fmt"
 	"errors"
 	"unsafe"
+
+	Log "elibot-apiserver/log"
 )
 
 type UserframeSqlMapper struct {
@@ -31,7 +32,7 @@ func (m *UserframeSqlMapper) GetID() string {
 }
 
 func (m *UserframeSqlMapper) RegisterSqlMapper(mode int) error {
-	fmt.Println("RegisterSqlMapper in UserframeSqlMapper | mode: ", mode)
+	Log.Print("RegisterSqlMapper in UserframeSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_USER_FRAME_GET_ALL
