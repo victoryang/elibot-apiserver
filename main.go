@@ -38,7 +38,7 @@ func main() {
 	if err!=nil {
 		return
 	}
-	Log.Printf("EntryPoints: "c.GlobalConfig.EntryPoints)
+	Log.Printf("EntryPoints: ", c.GlobalConfig.EntryPoints)
 	err = Log.OpenFile(c.GlobalConfig.ElibotLogsFile)
 	if err!=nil {
 		Log.Error("Could not open log file: ", err)
