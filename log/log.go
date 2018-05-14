@@ -40,7 +40,7 @@ func SetOwnFormatter(format string) {
 		disableColors := logFile!=nil
 		formatter = &logrus.TextFormatter{DisableColors: disableColors, FullTimestamp: true, DisableSorting: true}
 	}
-	Log.SetFormatter(formatter)
+	logrus.SetFormatter(formatter)
 }
 
 // SetFormatter sets the standard logger formatter.
