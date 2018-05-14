@@ -7,6 +7,15 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+var (
+	DefaultGlobalConfiguration = GlobalConfiguration{
+			AccessLogsFile:			"/var/lib/elibot-server/access.Log",
+			ElibotLogsFile:			"/var/lib/elibot-server/elibot.Log",
+			EntryPoints:			nil,
+			ListenAddress:			"127.0.0.1:9000",
+	}
+)
+
 type GlobalConfiguration struct {
 	AccessLogsFile		string		`yaml:"AccessLogsFile,omitempty"`
 	ElibotLogsFile		string		`yaml:"ElibotLogsFile,omitempty"`
@@ -45,12 +54,7 @@ func (c *ElibotServerConfiguration)LoadFile() error {
 
 func NewConfiguration() *ElibotServerConfiguration {
 	return &ElibotServerConfiguration {
-			GlobalConfig:	&GlobalConfiguration{
-				AccessLogsFile:			"/var/lib/elibot-server/access.Log",
-				ElibotLogsFile:			"/var/lib/elibot-server/elibot.Log",
-				EntryPoints:			nil,
-				ListenAddress:			"127.0.0.1:9000",
-			},
+			GlobalConfig: &DefaultGlobalConfiguration,
 			ConfigFile:	"/etc/elibot-server.yaml",
 	}
 }
