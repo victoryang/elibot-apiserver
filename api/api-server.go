@@ -59,7 +59,7 @@ func (s *Server) configServerHandler() http.Handler {
 	return n
 }
 
-func NewApiServer(c *config.GlobalConfiguration) *Server {
+func NewApiServer(c *config.Config) *Server {
 	s := new(Server)
 	
 	s.AccessLog.File = c.AccessLogsFile

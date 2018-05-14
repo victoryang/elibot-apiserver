@@ -43,7 +43,7 @@ func main() {
 		cfg = config.DefaultConfig
 	}
 	Log.Print("EntryPoints: ", cfg.EntryPoints)
-	err = Log.OpenFile(c.GlobalConfig.ElibotLogsFile)
+	err = Log.OpenFile(cfg.ElibotLogsFile)
 	if err!=nil {
 		Log.Error("Could not open log file: ", err)
 		return
@@ -51,7 +51,7 @@ func main() {
 	defer Log.CloseFile()
 
 	startAdminServer()
-	s := api.NewApiServer(c.GlobalConfig)
+	s := api.NewApiServer(cfg)
 	s.Run();
 	handleSignals(s)
 }
