@@ -34,7 +34,7 @@ func (s *Server) Run() {
 	go s.EntryPoint.httpServer.ListenAndServe()
 }
 
-// A Graceful shut down for server
+// A Graceful shutdown for server
 func (s *Server) Shutdown() {
 	if s.AccessLog.Logger!=nil {
 		s.AccessLog.Logger.Close()
