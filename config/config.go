@@ -29,7 +29,6 @@ func Load(s string) (*Config, error) {
 
 	err := yaml.UnmarshalStrict([]byte(s), cfg)
 	if err != nil {
-		Log.Error("parsing YAML file %s: %s", filename, err)
 		return nil, err
 	}
 	return cfg, nil
@@ -38,7 +37,12 @@ func Load(s string) (*Config, error) {
 func LoadFile(filename string) (*Config, error) {
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return Load(string(content))
+	cfg, err = Load(string(content))
+	if err != nil {
+		Log.Error("parsing YAML file %s: %s", filename, err)
+		return nil, err
+	}
+	return cfg, nil
 }
