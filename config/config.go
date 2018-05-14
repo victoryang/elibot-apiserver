@@ -23,6 +23,10 @@ type Config struct {
 	ListenAddress		string		`yaml:"ListenAddress,omitempty"`
 }
 
+func ReloadConfig(filename string) (*Config, error) {
+	Log.Info("Reload the configuration, file: ", filename)
+}
+
 // Load parses the YAML input s into a Config.
 func Load(s string) (*Config, error) {
 	cfg := &Config{}
