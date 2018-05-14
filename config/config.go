@@ -11,7 +11,7 @@ var (
 	DefaultConfig = &Config{
 		AccessLogsFile:			"/var/lib/elibot-server/access.Log",
 		ElibotLogsFile:			"/var/lib/elibot-server/elibot.Log",
-		EntryPoints:			[]{"http"},
+		EntryPoints:			[]string{"http"},
 		ListenAddress:			"127.0.0.1:9000",
 	}
 )
@@ -58,8 +58,20 @@ func (c *Config) UnmarshalYAML(unmarshal func(interface{}) error) error {
 		return err
 	}
 
+	if c.AccessLogsFile == nil {
+		c.AccessLogsFile = DefaultConfig.AccessLogsFile
+	}
+
+	if c.ElibotLogsFile == nil {
+		c.ElibotLogsFile = DefaultConfig.ElibotLogsFile
+	}
+
 	if c.EntryPoints == nil {
 		c.EntryPoints = DefaultConfig.EntryPoints
+	}
+
+	if c.ListenAddress == nil {
+		c.ListenAddress = DefaultConfig.ListenAddress
 	}
 	return nil
 }
