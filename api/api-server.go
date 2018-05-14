@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 	"time"
+	"context"
 
 	Log "elibot-apiserver/log"
 
@@ -33,12 +34,18 @@ func (s *Server) Run() {
 	go s.EntryPoint.httpServer.ListenAndServe()
 }
 
+// A Graceful shut down for server
 func (s *Server) Shutdown() {
-	Log.Print("server shuting down...")
 	if s.AccessLog.Logger!=nil {
 		s.AccessLog.Logger.Close()
 	}
-	s.EntryPoint.httpServer.Close()
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+    // Doesn't block if no connections, but will otherwise wait
+    // until the timeout deadline.
+    s.EntryPoint.httpServer.Shutdown(ctx)
+    Log.Print("server shuting down...")
 }
 
 // configureServer handler returns final handler for the http server.

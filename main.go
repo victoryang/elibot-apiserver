@@ -17,17 +17,13 @@ const (
 func handleSignals(server *api.Server) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
-	signal.Notify(signalQueue, syscall.SIGINT, syscall.SIGTERM,
-		syscall.SIGQUIT, syscall.SIGHUP, syscall.SIGUSR1)
+	signal.Notify(syscall.SIGHUP, os.Interrupt)
 	for {
 		s := <-signalQueue
 		switch s {
 		//TODO:
 		//case syscall.SIGHUP:
 			//reload config file
-			
-		case syscall.SIGUSR1:
-			//go DumpStacks()
 		default:
 			// stop server
 			server.Shutdown()
