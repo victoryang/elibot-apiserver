@@ -58,11 +58,11 @@ func (c *Config) UnmarshalYAML(unmarshal func(interface{}) error) error {
 		return err
 	}
 
-	if c.AccessLogsFile == nil {
+	if c.AccessLogsFile == "" {
 		c.AccessLogsFile = DefaultConfig.AccessLogsFile
 	}
 
-	if c.ElibotLogsFile == nil {
+	if c.ElibotLogsFile == "" {
 		c.ElibotLogsFile = DefaultConfig.ElibotLogsFile
 	}
 
@@ -70,7 +70,7 @@ func (c *Config) UnmarshalYAML(unmarshal func(interface{}) error) error {
 		c.EntryPoints = DefaultConfig.EntryPoints
 	}
 
-	if c.ListenAddress == nil {
+	if c.ListenAddress == "" {
 		c.ListenAddress = DefaultConfig.ListenAddress
 	}
 	return nil
