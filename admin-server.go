@@ -10,6 +10,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
+const (
+	host = "127.0.0.1"
+	port = "9090"
+)
+
 type handlerFunc func(http.Handler) http.Handler
 var handlerFns = []handlerFunc{
 //	SetJwtMiddlewareHandler,
@@ -42,8 +47,6 @@ func configureAdminHandler() http.Handler {
 }
 
 func startAdminServer() {
-	host := "127.0.0.1"
-	port := "9090"
 	serverAddress := net.JoinHostPort(host, port)
 	adminServer := &http.Server{
 		Addr: 			serverAddress,

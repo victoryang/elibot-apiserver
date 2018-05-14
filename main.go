@@ -10,7 +10,6 @@ import (
 	"elibot-apiserver/config"
 )
 
-var cfg *config.Config
 const (
 	configFile = "/etc/elibot-server.yaml"
 )
@@ -23,10 +22,10 @@ func handleSignals(server *api.Server) {
 	for {
 		s := <-signalQueue
 		switch s {
-		case syscall.SIGHUP:
-			// reload config file
-			cfg, _ = config.ReloadConfig(configFile)
-			Log.Print("Reloaded EntryPoints: ", cfg.EntryPoints)
+		//TODO:
+		//case syscall.SIGHUP:
+			//reload config file
+			
 		case syscall.SIGUSR1:
 			//go DumpStacks()
 		default:
@@ -39,8 +38,7 @@ func handleSignals(server *api.Server) {
 }
 
 func main() {
-	var err error
-	cfg, err = config.LoadFile(configFile) 
+	cfg, err := config.LoadFile(configFile) 
 	if err!=nil {
 		Log.Error("Parse configure file error: ", err)
 		cfg = config.DefaultConfig
