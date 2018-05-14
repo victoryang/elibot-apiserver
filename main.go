@@ -47,6 +47,7 @@ func main() {
 		return
 	}
 	defer Log.CloseFile()
+	Log.SetOwnFormatter("text")
 
 	startAdminServer()
 	s := api.NewApiServer(cfg)

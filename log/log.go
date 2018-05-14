@@ -31,6 +31,18 @@ func SetOutput(out io.Writer) {
 	logrus.SetOutput(out)
 }
 
+func SetOwnFormatter(format string) {
+	// configure log format
+	var formatter logrus.Formatter
+	if format == "json" {
+		formatter = &logrus.JSONFormatter{}
+	} else {
+		disableColors := len(logFile) > 0
+		formatter = &logrus.TextFormatter{DisableColors: disableColors, FullTimestamp: true, DisableSorting: true}
+	}
+	log.SetFormatter(formatter)
+}
+
 // SetFormatter sets the standard logger formatter.
 func SetFormatter(formatter logrus.Formatter) {
 	logrus.SetFormatter(formatter)
