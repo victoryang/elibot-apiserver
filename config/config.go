@@ -83,7 +83,7 @@ func (d *DEBUG) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	} else {
 		d.Level = DefaultDebug.Level
 	}
-	Log.SetLevel(d.Level)
+	Log.SetLevelInt(d.Level)
 	return nil
 }
 
