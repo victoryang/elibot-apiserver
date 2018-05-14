@@ -11,7 +11,7 @@ var (
 	DefaultConfig = &Config{
 		AccessLogsFile:			"/var/lib/elibot-server/access.Log",
 		ElibotLogsFile:			"/var/lib/elibot-server/elibot.Log",
-		EntryPoints:			nil,
+		EntryPoints:			[]{"http"},
 		ListenAddress:			"127.0.0.1:9000",
 	}
 )
@@ -46,4 +46,20 @@ func LoadFile(filename string) (*Config, error) {
 		return nil, err
 	}
 	return cfg, nil
+}
+
+// UnmarshalYAML implements the yaml.Unmarshaler interface.
+func (c *Config) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	// We want to set c to the defaults and then overwrite it with the input.
+	// To make unmarshal fill the plain data struct rather than calling UnmarshalYAML
+	// again, we have to hide it using a type indirection.
+	type plain Config
+	if err := unmarshal((*plain)(c)); err != nil {
+		return err
+	}
+
+	if c.EntryPoints == nil {
+		c.EntryPoints = DefaultConfig.EntryPoints
+	}
+	return nil
 }
