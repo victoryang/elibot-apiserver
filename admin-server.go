@@ -66,3 +66,7 @@ func startAdminServer() {
 		fmt.Println ("API server running...")
 	}()
 }
+
+func stopAdminServer() {
+	//TODO
+}

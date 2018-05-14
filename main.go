@@ -17,7 +17,7 @@ const (
 func handleSignals(server *api.Server) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
-	signal.Notify(syscall.SIGHUP, os.Interrupt)
+	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
 	for {
 		s := <-signalQueue
 		switch s {
@@ -26,6 +26,7 @@ func handleSignals(server *api.Server) {
 			//reload config file
 		default:
 			// stop server
+			stopAdminServer()
 			server.Shutdown()
 			os.Exit(0)
 			return
