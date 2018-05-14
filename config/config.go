@@ -32,7 +32,7 @@ type BackUp struct {
 }
 
 func (b *BackUp) UnmarshalYAML(unmarshal func(interface{}) error) error {
-	type plain Config
+	type plain BackUp
 	if err := unmarshal((*plain)(b)); err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ type SqliteDB struct {
 }
 
 func (s *SqliteDB) UnmarshalYAML(unmarshal func(interface{}) error) error {
-	type plain Config
+	type plain SqliteDB
 	if err := unmarshal((*plain)(s)); err != nil {
 		return err
 	}
