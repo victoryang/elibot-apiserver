@@ -8,19 +8,68 @@ import (
 )
 
 var (
+	DefaultSqliteDB = &SqliteDB {
+		Path:			"/root/",
+		FileName:		"elibotDB",
+	}
+
+	DefaultBackup = &BackUp {
+		Dir:			"backups/",
+	}
+
 	DefaultConfig = &Config{
 		AccessLogsFile:			"/var/lib/elibot-server/access.Log",
 		ElibotLogsFile:			"/var/lib/elibot-server/elibot.Log",
 		EntryPoints:			[]string{"http"},
 		ListenAddress:			"127.0.0.1:9000",
+		Sqlite:					DefaultSqliteDB,
+		Backup:					DefaultBackup,
 	}
 )
 
+type BackUp struct {
+	Dir 				string		`yaml:"dir,omitempty"`
+}
+
+func (b *Backup) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain Config
+	if err := unmarshal((*plain)(c)); err != nil {
+		return err
+	}
+	if b.Dir == "" {
+		b.Dir = DefaultBackup.Dir
+	}
+	return nil
+}
+
+type SqliteDB struct {
+	Path 				string		`yaml:"path,omitempty"`
+	FileName 			string		`yaml:"name,omitempty"`
+}
+
+func (s *SqliteDB) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain Config
+	if err := unmarshal((*plain)(c)); err != nil {
+		return err
+	}
+	if s.Path == "" {
+		s.Path = DefaultSqliteDB.Path
+	}
+
+	if s.FileName == "" {
+		s.FileName = DefaultSqliteDB.FileName
+	}
+	return nil
+}
+
 type Config struct {
-	AccessLogsFile		string		`yaml:"AccessLogsFile,omitempty"`
-	ElibotLogsFile		string		`yaml:"ElibotLogsFile,omitempty"`
-	EntryPoints			[]string	`yaml:"EntryPoints,omitempty"`
-	ListenAddress		string		`yaml:"ListenAddress,omitempty"`
+	AccessLogsFile		string		`yaml:"accessLog,omitempty"`
+	ElibotLogsFile		string		`yaml:"serverLog,omitempty"`
+	EntryPoints			[]string	`yaml:"entrypoints,omitempty"`
+	ListenAddress		string		`yaml:"server_address,omitempty"`
+
+	Sqlite				*SqliteDB	`yaml:"sqlite,omitempty"`
+	Backup				*BackUp 	`yaml:"backup,omitempty"`
 }
 
 // Load parses the YAML input s into a Config.
@@ -72,6 +121,14 @@ func (c *Config) UnmarshalYAML(unmarshal func(interface{}) error) error {
 
 	if c.ListenAddress == "" {
 		c.ListenAddress = DefaultConfig.ListenAddress
+	}
+
+	if c.Sqlite == nil {
+		c.Sqlite = DefaultSqliteDB
+	}
+
+	if c.Backup == nil {
+		c.Backup = DefaultBackup
 	}
 	return nil
 }
