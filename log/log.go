@@ -37,10 +37,10 @@ func SetOwnFormatter(format string) {
 	if format == "json" {
 		formatter = &logrus.JSONFormatter{}
 	} else {
-		disableColors := len(logFile) > 0
+		disableColors := logFile!=nil
 		formatter = &logrus.TextFormatter{DisableColors: disableColors, FullTimestamp: true, DisableSorting: true}
 	}
-	log.SetFormatter(formatter)
+	Log.SetFormatter(formatter)
 }
 
 // SetFormatter sets the standard logger formatter.
