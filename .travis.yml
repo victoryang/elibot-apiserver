@@ -16,3 +16,4 @@ install: true
 script:
   - mkdir -p $HOME/gopath/src/elibot-apiserver
   - cp -r $HOME/gopath/src/github.com/victoryang/elibot-apiserver/ $HOME/gopath/src/
+  - go build
