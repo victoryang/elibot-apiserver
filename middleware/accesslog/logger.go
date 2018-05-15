@@ -92,9 +92,9 @@ func (l *Logger) SetDateFormat(format string) {
 func (l *Logger) ServeHTTP(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	start := time.Now()
 
-	next(rw, r)
-
 	res := NewResponseWriter(rw)
+	next(res, r)
+
 	log := LoggerEntry{
 		StartTime: start.Format(l.dateFormat),
 		Status:    res.Status(),
