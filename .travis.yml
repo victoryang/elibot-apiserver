@@ -1,0 +1,13 @@
+sudo: required
+dist: trusty
+
+language: go
+go:
+  - "1.8"
+
+
+install: true
+  #- cp travis-ci/libsqlitedb.so /usr/lib/
+
+script:
+  - go build
