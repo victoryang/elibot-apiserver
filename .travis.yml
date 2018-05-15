@@ -10,8 +10,8 @@ env:
 
 go_import_path: github.com/victoryang/elibot-apiserver
 
-install: true
-  - cp travis-ci/libsqlitedb.so /usr/lib/
+install:
+  - cp travis-ci/libsqlitedb.so /usr/lib64/
 
 script:
   - mkdir -p $HOME/gopath/src/elibot-apiserver
