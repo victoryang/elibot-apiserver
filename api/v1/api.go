@@ -28,7 +28,7 @@ func getAllArc(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting get all Arc")
 	res, err := db.Get_ALL_Arc()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -48,7 +48,7 @@ func getArcParams(w http.ResponseWriter, r *http.Request) {
 	queries["group"] = vars["group"]
 	res, err := db.Get_Arc_Params(queries)
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -62,7 +62,7 @@ func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting get all bookprograms")
 	res, err := db.Get_All_Bookprograms()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -76,7 +76,7 @@ func getAllEnum(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting get all Enum")
 	res, err := db.Get_ALL_Enum()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -90,7 +90,7 @@ func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting get all Extaxis")
 	res, err := db.Get_ALL_Extaxis()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -104,7 +104,7 @@ func getAllInterference(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting get all Interference")
 	res, err := db.Get_All_Interference()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -118,7 +118,7 @@ func getAllIO(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting get all IO")
 	res, err := db.Get_All_IO()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -136,7 +136,7 @@ func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 	queries["lang"] = vars["lang"]
 	res, err := db.Get_All_Metadata(queries)
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -150,7 +150,7 @@ func getParams(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting get all Parameter")
 	res, err := db.Get_Params()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -168,7 +168,7 @@ func getParameterById(w http.ResponseWriter, r *http.Request) {
 
 	res, err := db.Get_Parameter_By_Id(queries)
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -185,7 +185,7 @@ func parameterbygroup(w http.ResponseWriter, r *http.Request) {
 	queries["group"] = vars["group"]
 	res, err := db.Get_Parameter_By_Group(queries)
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -199,7 +199,7 @@ func getAllRef(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting get all Ref")
 	res, err := db.Get_All_Ref()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -213,7 +213,7 @@ func getAllToolframe(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting get all toolframe")
 	res, err := db.Get_ALL_Toolframe()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -227,7 +227,7 @@ func getAllUserframe(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting get all userframe")
 	res, err := db.Get_ALL_Userframe()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -241,7 +241,7 @@ func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting get all zeropoints")
 	res, err := db.Get_All_Zeropoints()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -255,7 +255,7 @@ func DBBackup(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting DB Backup")
 	err := db.DBBackup()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -269,7 +269,7 @@ func DBList(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting DB List")
 	files, err := db.DBList()
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -285,7 +285,7 @@ func DBDel(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	err := db.DBDel(vars["name"])
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
@@ -300,7 +300,7 @@ func DBRestore(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	err := db.DBRestore(vars["name"])
 	if err!=nil {
-		w.WriteHeader(http.StatusOK)
+		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 		return
 	}
