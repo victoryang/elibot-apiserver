@@ -16,4 +16,13 @@ install:
 script:
   - mkdir -p $HOME/gopath/src/elibot-apiserver
   - cp -r $HOME/gopath/src/github.com/victoryang/elibot-apiserver/ $HOME/gopath/src/
-  - go build
+  - go build -o elibot-apiserver
+
+
+deploy:
+  provider: releases
+  api_key: ${GH_TOKEN}
+  file: elibot-apiserver
+  skip_cleanup: true
+  on:
+    tags: true
