@@ -178,5 +178,9 @@ func (c *Config) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	if c.Backup == nil {
 		c.Backup = DefaultBackup
 	}
+
+	if c.Admin == nil {
+		c.Admin = DefaultAdmin
+	}
 	return nil
 }
