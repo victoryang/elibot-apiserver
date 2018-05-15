@@ -87,7 +87,9 @@ func Test_Get_all_extaxis(t *testing.T) {
 		t.Error("test failed")
 	} else {
 		t.Log("test pass")
+		d := time.Since(start)
 		fmt.Println(resp)
+		fmt.Println("time: ", d)
 	}
 }
 
