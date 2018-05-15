@@ -8,13 +8,13 @@ import (
 // the response. It is recommended that middleware handlers use this construct to wrap a responsewriter
 // if the functionality calls for it.
 type ResponseWriter struct {
+	status int 
 	http.ResponseWriter
-	status int
 }
 
 func NewResponseWriter(res http.ResponseWriter) *ResponseWriter {
 	// Default the status code to 200
-	return &ResponseWriter{res}
+	return &ResponseWriter{200, res}
 }
 
 // Give a way to get the status
@@ -28,9 +28,6 @@ func (w ResponseWriter) Header() http.Header {
 }
 
 func (w ResponseWriter) Write(data []byte) (int, error) {
-	if w.status == 0 {
-		w.status = http.StatusOK
-	}
 	return w.ResponseWriter.Write(data)
 }
 
