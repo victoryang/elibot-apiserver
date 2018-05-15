@@ -22,7 +22,7 @@ var (
 		Dir:			"backups/",
 	}
 
-	DefaultAdmin = &Admin {
+	DefaultAdmin = &AdminSever {
 		ListenAddress:			"0.0.0.0:9090",
 	}
 
@@ -91,12 +91,12 @@ func (d *DEBUG) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	return nil
 }
 
-type Admin struct {
+type AdminSever struct {
 	ListenAddress		string		`yaml:"admin_address,omitempty"`
 }
 
-func (a *Admin) UnmarshalYAML(unmarshal func(interface{}) error) error {
-	type plain Admin
+func (a *AdminSever) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain AdminSever
 	if err := unmarshal((*plain)(a)); err != nil {
 		return err
 	}
@@ -117,7 +117,7 @@ type Config struct {
 
 	Sqlite				*SqliteDB	`yaml:"sqlite,omitempty"`
 	Backup				*BackUp 	`yaml:"backup,omitempty"`
-	Admin 				*Admin 		`yaml:"admin,omitempty"`
+	Admin 				*AdminSever `yaml:"admin,omitempty"`
 }
 
 // Load parses the YAML input s into a Config.
