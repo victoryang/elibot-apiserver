@@ -7,11 +7,13 @@ import (
 	"net/http/pprof"
 	"time"
 
+	"elibot-apiserver/config"
+
 	"github.com/gorilla/mux"
 )
 
 const (
-	host = "127.0.0.1"
+	host = "0.0.0.0"
 	port = "9090"
 )
 
@@ -46,8 +48,8 @@ func configureAdminHandler() http.Handler {
 	return RegisterHandlers(r, handlerFns...)
 }
 
-func startAdminServer() {
-	serverAddress := net.JoinHostPort(host, port)
+func startAdminServer(c *config.Config) {
+	serverAddress := c.Admin.ListenAddress
 	adminServer := &http.Server{
 		Addr: 			serverAddress,
 		// Adding timeout of 10 minutes for unresponsive client connections.

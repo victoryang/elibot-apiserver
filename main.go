@@ -49,7 +49,7 @@ func main() {
 	defer Log.CloseFile()
 	Log.SetOwnFormatter("text")
 
-	startAdminServer()
+	startAdminServer(cfg)
 	s := api.NewApiServer(cfg)
 	s.Run();
 	handleSignals(s)

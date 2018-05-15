@@ -22,11 +22,15 @@ var (
 		Dir:			"backups/",
 	}
 
+	DefaultAdmin = &Admin {
+		ListenAddress:			"0.0.0.0:9090"
+	}
+
 	DefaultConfig = &Config{
 		AccessLogsFile:			"/var/lib/elibot-server/access.Log",
 		ElibotLogsFile:			"/var/lib/elibot-server/elibot.Log",
 		EntryPoints:			[]string{"http"},
-		ListenAddress:			"127.0.0.1:9000",
+		ListenAddress:			"0.0.0.0:9000",
 		Sqlite:					DefaultSqliteDB,
 		Backup:					DefaultBackup,
 	}
@@ -87,6 +91,23 @@ func (d *DEBUG) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	return nil
 }
 
+type Admin struct {
+	ListenAddress		string		`yaml:"admin_address,omitempty"`
+}
+
+func (a *Admin) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain Admin
+	if err := unmarshal((*plain)(a)); err != nil {
+		return err
+	}
+
+	if a.ListenAddress == "" {
+		a.ListenAddress = DefaultAdmin.ListenAddress
+	}
+	return nil
+}
+
+
 type Config struct {
 	AccessLogsFile		string		`yaml:"accessLog,omitempty"`
 	Debug				DEBUG		`yaml:"debug,omitempty"`
@@ -96,6 +117,7 @@ type Config struct {
 
 	Sqlite				*SqliteDB	`yaml:"sqlite,omitempty"`
 	Backup				*BackUp 	`yaml:"backup,omitempty"`
+	Admin 				*Admin 		`yaml:"admin,omitempty"`
 }
 
 // Load parses the YAML input s into a Config.
