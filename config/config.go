@@ -23,7 +23,7 @@ var (
 	}
 
 	DefaultAdmin = &Admin {
-		ListenAddress:			"0.0.0.0:9090"
+		ListenAddress:			"0.0.0.0:9090",
 	}
 
 	DefaultConfig = &Config{
