@@ -5,7 +5,10 @@ language: go
 go:
   - "1.8"
 
-go_import_path: GOPATH/src/github.com/victoryang/elibot-apiserver
+env:
+  - 
+
+go_import_path: github.com/victoryang/elibot-apiserver
 
 install: true
   #- cp travis-ci/libsqlitedb.so /usr/lib/
