@@ -3,7 +3,7 @@ package sqlitedb
 // #include<stdlib.h>
 // #include<include/db/db_manager.h>
 // #include<include/backup_sql_mapper.h>
-import"C"
+import "C"
 import (
 	"unsafe"
 	"errors"
