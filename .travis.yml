@@ -16,7 +16,7 @@ install:
 script:
   - mkdir -p $HOME/gopath/src/elibot-apiserver
   - cp -r $HOME/gopath/src/github.com/victoryang/elibot-apiserver/ $HOME/gopath/src/
-  - go build -o elibot-apiserver
+  - chmod +x package/go-build.sh && sh -C package/go-build.sh
 
 deploy:
   provider: releases
