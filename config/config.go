@@ -140,7 +140,7 @@ func LoadFile(filename string) (*Config, error) {
 	var cfg *Config
 	cfg, err = Load(string(content))
 	if err != nil {
-		Log.Error("parsing YAML file %s: %s", filename, err)
+		Log.Error("parsing YAML file ", filename, ": ", err)
 		return nil, err
 	}
 	return cfg, nil
