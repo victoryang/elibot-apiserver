@@ -1,6 +1,7 @@
 GO = /usr/bin/go
 BUILD_PATH = $(PWD)/build
 TEST_PATH = $(PWD)/test
+KILLALL = /usr/bin/killall
 
 # build all
 all: libsqlitedb.so elibot-server.yaml
@@ -21,3 +22,4 @@ test: all
 
 clean:
 	rm -rf $(BUILD_PATH)
+	@$(KILLALL) elibot-apiserver
