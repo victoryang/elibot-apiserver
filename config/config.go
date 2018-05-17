@@ -33,6 +33,7 @@ var (
 		ListenAddress:			"0.0.0.0:9000",
 		Sqlite:					DefaultSqliteDB,
 		Backup:					DefaultBackup,
+		Admin:					DefaultAdmin,
 	}
 )
 
