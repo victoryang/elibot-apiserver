@@ -1,4 +1,4 @@
-GO := /usr/bin/go
+GO = /usr/bin/go
 BUILD_PATH = $(PWD)/build
 TEST_PATH = $(PWD)/test
 
@@ -14,7 +14,7 @@ libsqlitedb.so:
 elibot-server.yaml:
 	cp $(PWD)/conf/elibot-server.yaml /etc/
 
-test:
+test: all
 	echo "Start to test..."
 	@$(GO) test $(TEST_PATH)/query_test.go
 
