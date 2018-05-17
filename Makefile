@@ -6,17 +6,24 @@ SQLITEDB_DIR = /usr/lib/
 LIBSQLITEDB = /usr/lib/libsqlitedb.so
 
 # build all
-all: libsqlitedb.so elibot-server.yaml
+all: golang libsqlitedb.so elibot-server.yaml
 	@[ -d $(BUILD_PATH) ] || mkdir -p $(BUILD_PATH)
 	@$(GO) build -o $(BUILD_PATH)/elibot-apiserver
 	cp -f $(BUILD_PATH)/elibot-apiserver /usr/bin
+
+golang:
+	@if [ ! -f $(GO) ]; then \
+		 echo "Cannot find go executable binary in /usr/bin/, please install"; \
+		 echo "fail to build..."; \
+		 exit -1; \
+	fi
 
 libsqlitedb.so:
 	@if [ ! -f $(LIBSQLITEDB) ]; then \
 		 echo "Cannot find libsqlitedb.so in ${SQLITEDB_DIR}, please install"; \
 		 echo "fail to build..."; \
 		 exit -1; \
-	 fi
+	fi
 
 elibot-server.yaml:
 	cp $(PWD)/conf/elibot-server.yaml /etc/
