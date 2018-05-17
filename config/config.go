@@ -15,7 +15,7 @@ var (
 
 	DefaultSqliteDB = &SqliteDB {
 		Path:			"/rbctrl/db/",
-		FileName:		"elibotDB",
+		FileName:		"elibotDB.db",
 	}
 
 	DefaultBackup = &BackUp {
@@ -27,7 +27,7 @@ var (
 	}
 
 	DefaultConfig = &Config{
-		RootDir:				"/rbctrl/"
+		RootDir:				"/rbctrl/",
 		AccessLogsFile:			"elibot_apiserver/log/access.Log",
 		ElibotLogsFile:			"elibot_apiserver/log/server.Log",
 		EntryPoints:			[]string{"http"},
