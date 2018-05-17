@@ -23,7 +23,7 @@ elibot-server.yaml:
 
 test: all
 	echo "Start to test..."
-	elibot-apiserver&
+	elibot-apiserver& > /dev/null
 	@$(GO) test $(TEST_PATH)/query_test.go
 
 clean:
