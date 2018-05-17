@@ -1,4 +1,2 @@
-accessLog: /var/lib/elibot-server/access.Log
-serverLog: /var/lib/elibot-server/elibot.Log
-#entrypoints: ["https"]
+entrypoints: ["https"]
 #server_address: {host_ip}:9000

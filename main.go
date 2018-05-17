@@ -41,7 +41,7 @@ func main() {
 		cfg = config.DefaultConfig
 	}
 	Log.Print("EntryPoints: ", cfg.EntryPoints)
-	err = Log.OpenFile(cfg.ElibotLogsFile)
+	err = Log.OpenFile(cfg.RootDir+cfg.ElibotLogsFile)
 	if err!=nil {
 		Log.Error("Could not open log file: ", err)
 		return

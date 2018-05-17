@@ -14,7 +14,7 @@ var (
 	}
 
 	DefaultSqliteDB = &SqliteDB {
-		Path:			"/root/",
+		Path:			"/rbctrl/db/",
 		FileName:		"elibotDB",
 	}
 
@@ -27,8 +27,9 @@ var (
 	}
 
 	DefaultConfig = &Config{
-		AccessLogsFile:			"/var/lib/elibot-server/access.Log",
-		ElibotLogsFile:			"/var/lib/elibot-server/elibot.Log",
+		RootDir:				"/rbctrl/"
+		AccessLogsFile:			"elibot_apiserver/log/access.Log",
+		ElibotLogsFile:			"elibot_apiserver/log/server.Log",
 		EntryPoints:			[]string{"http"},
 		ListenAddress:			"0.0.0.0:9000",
 		Sqlite:					DefaultSqliteDB,
@@ -110,6 +111,7 @@ func (a *AdminSever) UnmarshalYAML(unmarshal func(interface{}) error) error {
 
 
 type Config struct {
+	RootDir				string		`yaml:"rootdir,omitempty"`
 	AccessLogsFile		string		`yaml:"accessLog,omitempty"`
 	Debug				DEBUG		`yaml:"debug,omitempty"`
 	ElibotLogsFile		string		`yaml:"serverLog,omitempty"`
@@ -154,6 +156,10 @@ func (c *Config) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	type plain Config
 	if err := unmarshal((*plain)(c)); err != nil {
 		return err
+	}
+
+	if c.RootDir == "" {
+		c.RootDir = DefaultConfig.RootDir
 	}
 
 	if c.AccessLogsFile == "" {

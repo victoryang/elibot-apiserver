@@ -8,11 +8,12 @@ import (
     Log "elibot-apiserver/log"
 )
 
-const (
-    DBName="/root/elibotDB.db"
-    BackupDir="/root/"
-    BackupPath="backups/"
-)
+var DBName string
+var BackupPath string
+func DBsetup(dbname string, backuppath string) {
+    DBName = dbname
+    BackupPath = backuppath
+}
 
 func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res string, err error) {
     err = sm.RegisterSqlMapper(mode)
@@ -148,7 +149,7 @@ func Get_All_Zeropoints() (string, error) {
 func DBBackup() error {
     Log.Info("in DBBackup")
  
-    mgr, err := sql.NewDBManager(DBName, BackupDir, "", sql.DB_BACKUP, 0)
+    mgr, err := sql.NewDBManager(DBName, BackupPath, "", sql.DB_BACKUP, 0)
     if err != nil {
         return err
     }
@@ -157,9 +158,8 @@ func DBBackup() error {
 
 func DBList() ([]string, error) {
     Log.Info("in DBList")
-    path := BackupDir+BackupPath
 
-    files, err := ioutil.ReadDir(path)
+    files, err := ioutil.ReadDir(BackupPath)
     if err != nil {
         return nil, err
     }
@@ -171,13 +171,13 @@ func DBList() ([]string, error) {
     return list, nil
 }
 
-func DBDel(name string) error {
+func DBDel(Name string) error {
     Log.Info("in DBDel")
-    if name == "" {
+    if Name == "" {
         return errors.New("file name is empty")
     }
 
-    filename := BackupDir+BackupPath+name
+    filename := BackupPath + Name
     if _, err := os.Stat(filename); os.IsNotExist(err) {
        return errors.New("file does not exist")
     }
@@ -188,7 +188,7 @@ func DBDel(name string) error {
 func DBRestore(BackupName string) error{
     Log.Info("in DBRestore")
  
-    mgr, err := sql.NewDBManager(DBName, BackupDir, BackupDir+BackupPath+BackupName, sql.DB_RESTORE, 1)
+    mgr, err := sql.NewDBManager(DBName, BackupPath, BackupPath+BackupName, sql.DB_RESTORE, 1)
     if err != nil {
         return err
     }

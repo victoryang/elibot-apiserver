@@ -24,6 +24,10 @@ func test(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func SetupDB(dbname string, backuppath string) {
+	db.DBsetup(dbname, backuppath)
+}
+
 func getAllArc(w http.ResponseWriter, r *http.Request) {
 	Log.Info("starting get all Arc")
 	res, err := db.Get_ALL_Arc()
