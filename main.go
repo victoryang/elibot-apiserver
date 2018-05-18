@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	configFile = "/etc/elibot-server.yaml"
+	configFile = "/rbctrl/configuration/elibot-server.yaml"
 )
 
 func handleSignals(server *api.Server) {

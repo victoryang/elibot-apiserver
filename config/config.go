@@ -28,8 +28,8 @@ var (
 
 	DefaultConfig = &Config{
 		RootDir:				"/rbctrl/",
-		AccessLogsFile:			"elibot_apiserver/log/access.Log",
-		ElibotLogsFile:			"elibot_apiserver/log/server.Log",
+		AccessLogsFile:			"apiserver/log/access.Log",
+		ElibotLogsFile:			"apiserver/log/server.Log",
 		EntryPoints:			[]string{"http"},
 		ListenAddress:			"0.0.0.0:9000",
 		Sqlite:					DefaultSqliteDB,
