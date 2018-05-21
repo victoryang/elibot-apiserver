@@ -15,7 +15,7 @@ type MCserver struct {
 	Conn 		net.Conn
 }
 
-func handleCommand(conn *net.Conn, command string) (string, error) {
+func handleCommand(conn net.Conn, command string) (string, error) {
 	err := WriteMessage(conn, command)
 	if err!=nil {
 		return "", err
@@ -34,14 +34,13 @@ func (mc *MCserver) OnCommandRecived() (string, error) {
 
 func (mc *MCserver) Connect() error {
 	address := mc.Addr + mc.Port
-    conn, err := net.Dial("unix", address)
+    mc.Conn, err := net.Dial("unix", address)
     if err != nil {
         fmt.Println("dial error:", err)
         return err
     }
-    defer conn.Close()
+    defer mc.Conn.Close()
 
-    mc.Conn = (net.Conn)(conn)
     fmt.Println("mcserver connected")
     return nil
 }
