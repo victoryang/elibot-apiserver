@@ -33,8 +33,9 @@ func (mc *MCserver) OnCommandRecived() (string, error) {
 }
 
 func (mc *MCserver) Connect() error {
+	var err error
 	address := mc.Addr + mc.Port
-    mc.Conn, err := net.Dial("unix", address)
+    mc.Conn, err = net.Dial("unix", address)
     if err != nil {
         fmt.Println("dial error:", err)
         return err
