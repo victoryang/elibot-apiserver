@@ -8,15 +8,16 @@ import (
 
 var test = "testGo 0 1"
 var end = "\n"
+var err error
 
 type MCserver struct {
 	Addr		string
 	Port		string
-	Conn 		*net.Conn
+	Conn 		*net.TCPConn
 }
 
 func handleCommand(command string, conn *net.Conn) (string, error) {
-	err := WriteMessage(command, conn)
+	err := WriteMessage(conn, command)
 	if err!=nil {
 		return "", err
 	}
@@ -44,7 +45,7 @@ func (mc *MCserver) Connect() error {
     return nil
 }
 
-func NewServer() {
+func NewServer() *MCserver {
 	mcserver := &MCserver {
 		Addr:	"192.168.1.106",
 		Port:	":8055",
