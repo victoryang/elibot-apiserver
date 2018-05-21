@@ -24,8 +24,8 @@ func ReadMessage(conn *net.Conn) (string, error){
     return string(buf[:n]), nil
 }
 
-func testCommandLine() bool {
-	res, err := ReadMessage()
+func testCommandLine(conn *net.Conn) bool {
+	res, err := ReadMessage(conn)
 	if err!=nil || res!="mcserver>" {
 		fmt.Println("Read error: ", err)
 		return false

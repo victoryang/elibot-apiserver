@@ -27,7 +27,7 @@ func handleCommand(command string, conn *net.Conn) (string, error) {
 
 func (mc *MCserver) OnCommandRecived() (string, error) {
 	cmd := test + end
-	if testCommandLine() {
+	if testCommandLine(mc.Conn) {
 		return handleCommand(cmd, mc.Conn)
 	}
 	return "", errors.New("Not in a proper situation")
