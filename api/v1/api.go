@@ -10,6 +10,7 @@ import (
 
 	"elibot-apiserver/db"
 	Log "elibot-apiserver/log"
+	"elibot-apiserver/mcserver"
 )
 
 func hello(w http.ResponseWriter, r *http.Request) {
@@ -21,6 +22,23 @@ func hello(w http.ResponseWriter, r *http.Request) {
 func test(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusInternalServerError)
 	fmt.Fprintf(w, "echo\n")
+	return
+}
+
+func testSocket(w http.ResponseWriter, r *http.Request) {
+	srv := mcserver.NewServer()
+	err := srv.Connect()
+	if err!=nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, error)
+	}
+	res, err := srv.OnCommandRecived()
+	if err!=nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, error)
+	}
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, res)
 	return
 }
 
@@ -317,6 +335,7 @@ func DBRestore(w http.ResponseWriter, r *http.Request) {
 func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/v1/test", test).Methods("GET")
+	r.HandleFunc("/v1/testSocket", testSocket).Methods("GET")
 
 	r.HandleFunc("/v1/arc", getAllArc).Methods("GET")
 	r.HandleFunc("/v1/arcparams", getArcParams).Methods("GET").Queries("file_no", "{file_no}", "group", "{group}")
