@@ -5,7 +5,7 @@ import (
 	"net"
 )
 
-func WriteMessage(conn *net.Conn, command string) error {
+func WriteMessage(conn net.Conn, command string) error {
     _, e := conn.Write([]byte(command))
     if e != nil {
         fmt.Println("Error to send message because of ", e.Error())
@@ -14,7 +14,7 @@ func WriteMessage(conn *net.Conn, command string) error {
     return nil
 }
 
-func ReadMessage(conn *net.Conn) (string, error){
+func ReadMessage(conn net.Conn) (string, error){
     buf := make([]byte, 1024)
     n , err := conn.Read(buf)
     if err != nil {

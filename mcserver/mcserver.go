@@ -12,7 +12,7 @@ var end = "\n"
 type MCserver struct {
 	Addr		string
 	Port		string
-	Conn 		*net.Conn
+	Conn 		net.Conn
 }
 
 func handleCommand(conn *net.Conn, command string) (string, error) {
@@ -41,7 +41,7 @@ func (mc *MCserver) Connect() error {
     }
     defer conn.Close()
 
-    mc.Conn = (*net.Conn)(conn)
+    mc.Conn = (net.Conn)(conn)
     fmt.Println("mcserver connected")
     return nil
 }
