@@ -30,12 +30,12 @@ func testSocket(w http.ResponseWriter, r *http.Request) {
 	err := srv.Connect()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, error)
+		fmt.Fprintf(w, err.Error())
 	}
 	res, err := srv.OnCommandRecived()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, error)
+		fmt.Fprintf(w, err.Error())
 	}
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, res)
