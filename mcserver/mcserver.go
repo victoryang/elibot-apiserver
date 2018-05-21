@@ -8,12 +8,11 @@ import (
 
 var test = "testGo 0 1"
 var end = "\n"
-var err error
 
 type MCserver struct {
 	Addr		string
 	Port		string
-	Conn 		*net.TCPConn
+	Conn 		*net.Conn
 }
 
 func handleCommand(command string, conn *net.Conn) (string, error) {
@@ -35,11 +34,12 @@ func (mc *MCserver) OnCommandRecived() (string, error) {
 
 func (mc *MCserver) Connect() error {
 	address := mc.Addr + mc.Port
-    mc.Conn, err = net.Dial("tcp", address)
+    conn, err := net.Dial("tcp", address)
     if err != nil {
         fmt.Println("dial error:", err)
         return err
     }
+    mc.Conn = *net.Conn(conn)
     defer mc.Conn.Close()
     fmt.Println("mcserver connected")
     return nil
