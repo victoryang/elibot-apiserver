@@ -37,6 +37,7 @@ func testSocket(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 	}
+	srv.Close()
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, res)
 	return
