@@ -12,10 +12,10 @@ var end = "\n"
 type MCserver struct {
 	Addr		string
 	Port		string
-	Conn 		*net.Conn
+	Conn 		*net.TCPConn
 }
 
-func handleCommand(command string, conn *net.Conn) (string, error) {
+func handleCommand(conn *net.Conn, command string) (string, error) {
 	err := WriteMessage(conn, command)
 	if err!=nil {
 		return "", err
@@ -27,20 +27,21 @@ func handleCommand(command string, conn *net.Conn) (string, error) {
 func (mc *MCserver) OnCommandRecived() (string, error) {
 	cmd := test + end
 	if testCommandLine(mc.Conn) {
-		return handleCommand(cmd, mc.Conn)
+		return handleCommand(mc.Conn, cmd)
 	}
 	return "", errors.New("Not in a proper situation")
 }
 
 func (mc *MCserver) Connect() error {
 	address := mc.Addr + mc.Port
-    conn, err := net.Dial("tcp", address)
+    conn, err := net.Dial("unix", address)
     if err != nil {
         fmt.Println("dial error:", err)
         return err
     }
-    mc.Conn = *net.Conn(conn)
-    defer mc.Conn.Close()
+    defer conn.Close()
+
+    mc.Conn = (*net.TCPConn)(conn)
     fmt.Println("mcserver connected")
     return nil
 }
