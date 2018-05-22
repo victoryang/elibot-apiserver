@@ -29,7 +29,7 @@ func (mc *MCserver) OnCommandRecived() (string, error) {
 	if testCommandLine(mc.Conn) {
 		return handleCommand(mc.Conn, cmd)
 	}
-	return "", errors.New("Not in a proper situation")
+	return "", errors.New("Not in a proper situation\n")
 }
 
 func (mc *MCserver) Connect() error {
