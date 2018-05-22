@@ -11,12 +11,12 @@ env:
 go_import_path: github.com/victoryang/elibot-apiserver
 
 install:
-  - sudo cp package/libsqlitedb.so /usr/lib/
+  - sudo cp build/libsqlitedb.so /usr/lib/
 
 script:
   - mkdir -p $HOME/gopath/src/elibot-apiserver
   - cp -r $HOME/gopath/src/github.com/victoryang/elibot-apiserver/ $HOME/gopath/src/
-  - chmod +x package/go-build.sh && sh -C package/go-build.sh
+  - chmod +x build/go-build.sh && sh -C build/go-build.sh
 
 deploy:
   provider: releases
