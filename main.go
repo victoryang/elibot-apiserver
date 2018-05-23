@@ -52,6 +52,6 @@ func main() {
 	startAdminServer(cfg)
 	s := api.NewApiServer(cfg)
 	s.Run()
-	NewGrpcServer()
+	api.NewGrpcServer()
 	handleSignals(s)
 }
