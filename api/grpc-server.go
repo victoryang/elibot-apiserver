@@ -18,7 +18,7 @@ type GrpcServer struct {
 func (s *GrpcServer)Shutdown() {
 	shutdownNow := func() {
 		// close grpc.Server; cancels all active RPCs
-		ss.grpc.Stop()
+		s.grpc.Stop()
 	}
 
 	ch := make(chan struct{})
@@ -26,7 +26,7 @@ func (s *GrpcServer)Shutdown() {
 		defer close(ch)
 		// close listeners to stop accepting new connections,
 		// will block on any existing transports
-		ss.grpc.GracefulStop()
+		s.grpc.GracefulStop()
 	}()
 
 	// wait until all pending RPCs are finished
