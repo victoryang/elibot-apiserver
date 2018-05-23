@@ -55,7 +55,7 @@ func (mc *MCserver) Close() {
 } 
 
 func NewMCServer() *MCserver {
-	mcserver := &MCserver {
+	mcserver = &MCserver {
 		Addr:	"192.168.1.106",
 		Port:	":8055",
 	}
