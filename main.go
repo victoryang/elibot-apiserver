@@ -14,7 +14,7 @@ const (
 	configFile = "/etc/elibot-server.yaml"
 )
 
-func handleSignals(server *api.Server) {
+func handleSignals(s *api.Server, gs *api.GrpcServer) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
@@ -27,7 +27,8 @@ func handleSignals(server *api.Server) {
 		default:
 			// stop server
 			stopAdminServer()
-			server.Shutdown()
+			s.Shutdown()
+			gs.Shutdown()
 			os.Exit(0)
 			return
 		}
@@ -52,6 +53,6 @@ func main() {
 	startAdminServer(cfg)
 	s := api.NewApiServer(cfg)
 	s.Run()
-	api.NewGrpcServer()
-	handleSignals(s)
+	gs := api.NewGrpcServer()
+	handleSignals(s,gs)
 }
