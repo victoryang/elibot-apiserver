@@ -8,13 +8,14 @@ import (
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/api"
 	"elibot-apiserver/config"
+	"elibot-apiserver/mcserver"
 )
 
 const (
 	configFile = "/etc/elibot-server.yaml"
 )
 
-func handleSignals(s *api.Server, gs *api.GrpcServer) {
+func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
@@ -26,9 +27,12 @@ func handleSignals(s *api.Server, gs *api.GrpcServer) {
 			//reload config file
 		default:
 			// stop server
-			stopAdminServer()
-			s.Shutdown()
 			gs.Shutdown()
+			mcs.Close()
+			
+			s.Shutdown()
+			stopAdminServer()
+			
 			os.Exit(0)
 			return
 		}
@@ -53,6 +57,12 @@ func main() {
 	startAdminServer(cfg)
 	s := api.NewApiServer(cfg)
 	s.Run()
+	
+	mcs := NewMCServer()
+	err := mcs.Connect()
+	if err!=nil {
+		Log.Error("Error in connecting to mc server")
+	}
 	gs := api.NewGrpcServer()
-	handleSignals(s,gs)
+	handleSignals(s, mcs, gs)
 }

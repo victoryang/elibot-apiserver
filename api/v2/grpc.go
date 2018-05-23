@@ -2,7 +2,6 @@ package v2
 
 import (
 	pb "elibot-apiserver/serverpb"
-
 	"google.golang.org/grpc"
 )
 
@@ -29,5 +28,6 @@ func Server() *grpc.Server {
 	pb.RegisterGreeterServer(s, NewHelloServer())
 
 	/*TODO: Register all servers here*/
+
 	return s
 }

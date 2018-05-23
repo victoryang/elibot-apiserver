@@ -2,7 +2,9 @@ package api
 
 import (
 	"net"
+
 	Log "elibot-apiserver/log"
+
 	v2rpc "elibot-apiserver/api/v2"
 	"google.golang.org/grpc"
 )
@@ -48,5 +50,6 @@ func NewGrpcServer() (*GrpcServer){
     }
     gs := v2rpc.Server()
     go gs.Serve(lis)
+
     return &GrpcServer{grpc: gs}
 }

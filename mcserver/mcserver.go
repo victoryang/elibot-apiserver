@@ -15,6 +15,8 @@ type MCserver struct {
 	Conn 		net.Conn
 }
 
+var mcserver *MCserver = nil
+
 func handleCommand(conn net.Conn, command string) (string, error) {
 	err := WriteMessage(conn, command)
 	if err!=nil {
@@ -24,15 +26,18 @@ func handleCommand(conn net.Conn, command string) (string, error) {
 	return ReadMessage(conn)
 }
 
-func (mc *MCserver) OnCommandRecived() (string, error) {
+func OnCommandRecived() (string, error) {
 	cmd := test + end
-	if testCommandLine(mc.Conn) {
-		return handleCommand(mc.Conn, cmd)
+	if testCommandLine(mcserver.Conn) {
+		return handleCommand(mcserver.Conn, cmd)
 	}
 	return "", errors.New("Not in a proper situation\n")
 }
 
 func (mc *MCserver) Connect() error {
+	if mc == nil {
+		return errors.New("Server does not exist")
+	}
 	var err error
 	address := mc.Addr + mc.Port
     mc.Conn, err = net.Dial("tcp", address)
@@ -49,7 +54,7 @@ func (mc *MCserver) Close() {
 	mc.Conn.Close()
 } 
 
-func NewServer() *MCserver {
+func NewMCServer() *MCserver {
 	mcserver := &MCserver {
 		Addr:	"192.168.1.106",
 		Port:	":8055",
