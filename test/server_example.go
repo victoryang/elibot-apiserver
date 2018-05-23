@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	conns := make([]net.Conn, 6)
+	conns := make([]net.Conn, 0)
 	var conn net.Conn
 	l, _ := net.Listen("tcp", ":9200")
 	fmt.Println("start to listen...")

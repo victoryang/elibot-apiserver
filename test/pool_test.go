@@ -50,7 +50,9 @@ func Test_Pool(t *testing.T) {
 	}
 
 	v, err := p.Get()
+	fmt.Println(p.Len())
 	p.Put(v)
+	fmt.Println(p.Len())
 	p.Release()
 	fmt.Println(p.Len())
 
