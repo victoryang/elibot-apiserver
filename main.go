@@ -19,8 +19,8 @@ func handleSignals(s *api.Server, gs *api.GrpcServer) {
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
 	for {
-		s := <-signalQueue
-		switch s {
+		sig := <-signalQueue
+		switch sig {
 		//TODO:
 		//case syscall.SIGHUP:
 			//reload config file
