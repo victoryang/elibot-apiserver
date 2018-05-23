@@ -26,13 +26,13 @@ func test(w http.ResponseWriter, r *http.Request) {
 }
 
 func testSocket(w http.ResponseWriter, r *http.Request) {
-	srv := mcserver.NewServer()
+	srv := mcserver.NewMCServer()
 	err := srv.Connect()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
 	}
-	res, err := srv.OnCommandRecived()
+	res, err := mcserver.OnCommandRecived()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())
