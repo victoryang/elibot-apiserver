@@ -14,13 +14,14 @@ const (
 )
 
 func Test_Pool(t *testing.T) {
-	q := make(chan bool)
+	/*q := make(chan bool)
 	conns := make([]net.Conn, 6)
 	var conn net.Conn
 	go func(quit chan bool){
 		
 		go func() {
 			l, _ := net.Listen("tcp", ":9200")
+			fmt.Println("start to listen...")
 			for {
 				conn, _ = l.Accept()
 				conns = append(conns, conn)
@@ -29,7 +30,7 @@ func Test_Pool(t *testing.T) {
 		}()
 		
 		<-quit
-	}(q)
+	}(q)*/
 
 	factory := func() (interface{}, error){return net.Dial("tcp", address)}
 	close := func(v interface{}) (error){return v.(net.Conn).Close()}
@@ -53,5 +54,5 @@ func Test_Pool(t *testing.T) {
 	p.Release()
 	fmt.Println(p.Len())
 
-	q<-true
+/*	q<-true*/
 }
