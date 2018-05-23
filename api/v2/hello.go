@@ -1,7 +1,7 @@
 package v2
 
 import(
-	Log "elibot-apiserver/log"
+	//Log "elibot-apiserver/log"
 
 	"elibot-apiserver/mcserver"
 
@@ -15,7 +15,7 @@ type helloserver struct {
 func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, error) {
 		var res string = "test Go fail\n"
 		if in.Name == 1 {
-			res, _ = OnCommandRecived()
+			res, _ = mcserver.OnCommandRecived()
 		}
         return &pb.Reply{Message: res}, nil
 }
