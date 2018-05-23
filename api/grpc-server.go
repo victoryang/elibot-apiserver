@@ -4,6 +4,7 @@ import (
 	"net"
 	"fmt"
 	v2rpc "elibot-apiserver/api/v2"
+	"google.golang.org/grpc"
 )
 
 const (
