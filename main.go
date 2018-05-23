@@ -58,8 +58,8 @@ func main() {
 	s := api.NewApiServer(cfg)
 	s.Run()
 	
-	mcs := NewMCServer()
-	err := mcs.Connect()
+	mcs := mcserver.NewMCServer()
+	err = mcs.Connect()
 	if err!=nil {
 		Log.Error("Error in connecting to mc server")
 	}
