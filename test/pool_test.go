@@ -10,26 +10,29 @@ import (
 )
 
 const (
-	address = 127.0.0.1:9200
+	address = "127.0.0.1:9200"
 )
 
 func Test_Pool(t *testing.T) {
 	q := make(chan bool)
-	conns := make([]*net.TCPConn)
+	conns := make([]net.Conn, 6)
+	var conn net.Conn
 	go func(quit chan bool){
-		ln, _ := net.Listen("tcp", ":9200")
-		go func(l net.Listener) {
+		
+		go func() {
+			l, _ := net.Listen("tcp", ":9200")
 			for {
-				conn, err := l.Accept()
+				conn, _ = l.Accept()
 				conns = append(conns, conn)
 				fmt.Println("new connection comming: have ", len(conns), "connections now")
 			}
-		}(ln)
+		}()
 		
 		<-quit
 	}(q)
-	factory := func() {return net.Dial("tcp", address)}
-	close := func(v interface{}) {return v.(net.Conn).Close()}
+
+	factory := func() (interface{}, error){return net.Dial("tcp", address)}
+	close := func(v interface{}) (error){return v.(net.Conn).Close()}
 
 	poolConfig := &pool.PoolConfig{
 		InitialCap: 5,
@@ -48,7 +51,7 @@ func Test_Pool(t *testing.T) {
 	v, err := p.Get()
 	p.Put(v)
 	p.Release()
-	current := p.Len()
+	fmt.Println(p.Len())
 
 	q<-true
 }
