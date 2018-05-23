@@ -2,7 +2,7 @@ package api
 
 import (
 	"net"
-	"fmt"
+	Log "elibot-apiserver/log"
 	v2rpc "elibot-apiserver/api/v2"
 	"google.golang.org/grpc"
 )
@@ -44,7 +44,7 @@ func (s *GrpcServer)Shutdown() {
 func NewGrpcServer() (*GrpcServer){
 	lis, err := net.Listen("tcp", ":2500")
     if err != nil {
-            fmt.Println("failed to listen: %v", err)
+            Log.Error("failed to listen: %v", err)
     }
     gs := v2rpc.Server()
     go gs.Serve(lis)
