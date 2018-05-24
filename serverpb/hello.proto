@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package serverpb;
+
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (Req) returns (Reply) {}
+}
+
+message Req {
+  int32 name = 1;
+}
+
+message Reply {
+  string message = 1;
+}
