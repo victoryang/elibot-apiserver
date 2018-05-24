@@ -4,15 +4,17 @@ import (
 	"errors"
 	"fmt"
 	"net"
+
+	Log "elibot-apiserver/log"
+	"elibot-apiserver/mcserver/pool"
 )
 
 var test = "testGo 0 1"
 var end = "\n"
 
 type MCserver struct {
-	Addr		string
-	Port		string
-	Conn 		net.Conn
+	Addr			string
+	ConnPool 		pool.Pool
 }
 
 var mcserver *MCserver = nil
@@ -28,36 +30,47 @@ func handleCommand(conn net.Conn, command string) (string, error) {
 
 func OnCommandRecived() (string, error) {
 	cmd := test + end
-	if testCommandLine(mcserver.Conn) {
-		return handleCommand(mcserver.Conn, cmd)
+	conn, err := mcserver.ConnPool.Get()
+	if err!=nil {
+		Log.Error("MCServer error: can not get a connection now, try it again later")
+		return "", error
 	}
-	return "", errors.New("Not in a proper situation\n")
-}
+	defer mcserver.ConnPool.Put(conn)
 
-func (mc *MCserver) Connect() error {
-	if mc == nil {
-		return errors.New("Server does not exist")
+	var resp string
+	if testCommandLine(conn) {
+		return handleCommand(conn, cmd)
+	} else {
+		return "", errors.New("MCServer error: not in a normal situation")
 	}
-	var err error
-	address := mc.Addr + mc.Port
-    mc.Conn, err = net.Dial("tcp", address)
-    if err != nil {
-        fmt.Println("dial error:", err)
-        return err
-    }
-
-    fmt.Println("mcserver connected")
-    return nil
 }
 
 func (mc *MCserver) Close() {
-	mc.Conn.Close()
+	mc.ConnPool.Release()
 } 
 
-func NewMCServer() *MCserver {
-	mcserver = &MCserver {
-		Addr:	"192.168.1.106",
-		Port:	":8055",
+func NewMCServer(address string, cap int) *MCserver {
+	factory := func() (interface{}, error){return net.Dial("tcp", address)}
+	close := func(v interface{}) (error){return v.(net.Conn).Close()}
+
+	poolConfig := &pool.PoolConfig{
+		InitialCap: cap,
+		MaxCap:     5,
+		Factory:    factory,
+		Close:      close,
+		//链接最大空闲时间，超过该时间的链接 将会关闭，可避免空闲时链接EOF，自动失效的问题
+		IdleTimeout: 15 * time.Second,
+	}
+
+	p, err := pool.NewChannelPool(poolConfig)
+	if err!=nil {
+		Log.Error("MCServer error: ", err)
+		return mcserver
+	}
+
+	mcserver = &MCserver{
+		Address: 	address,
+		ConnPool: 	p,
 	}
 	return mcserver
 }

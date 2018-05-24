@@ -58,9 +58,8 @@ func main() {
 	s := api.NewApiServer(cfg)
 	s.Run()
 	
-	mcs := mcserver.NewMCServer()
-	err = mcs.Connect()
-	if err!=nil {
+	mcs := mcserver.NewMCServer("192.168.1.106:8055", 3)
+	if mcs!=nil {
 		Log.Error("Error in connecting to mc server")
 	}
 	gs := api.NewGrpcServer()
