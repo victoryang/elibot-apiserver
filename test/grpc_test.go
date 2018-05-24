@@ -4,6 +4,7 @@ import (
         "testing"
         "log"
         "time"
+        "fmt"
         "net/http"
 
         "golang.org/x/net/context"
@@ -12,7 +13,8 @@ import (
 )
 
 const (
-        address     = "localhost:2500"
+        addressForGRPC = "192.168.1.106:2500"
+        addressForAPI  = "http://192.168.1.106:9000"
 )
 
 func Test_Hello(t *testing.T) {
@@ -38,9 +40,9 @@ func Test_Hello(t *testing.T) {
 func Test_Hello_In_Para(t *testing.T) {
         go func() {
                 start := time.Now()
-                resp, err := http.Get(address + "/v1/testSocket")
+                resp, err := http.Get(addressForAPI + "/v1/testSocket")
                 if err!=nil {
-                        t.Error("test failed")
+                        t.Error("test failed: ", err)
                 } else {
                         t.Log("test pass")
                         d := time.Since(start)
@@ -50,7 +52,7 @@ func Test_Hello_In_Para(t *testing.T) {
         }()
 
          // Set up a connection to the server.
-        conn, err := grpc.Dial(address, grpc.WithInsecure())
+        conn, err := grpc.Dial(addressForGRPC, grpc.WithInsecure())
         if err != nil {
                 log.Fatalf("did not connect: %v", err)
         }
