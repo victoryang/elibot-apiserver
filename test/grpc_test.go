@@ -16,6 +16,8 @@ import (
 const (
         addressForGRPC = "192.168.1.106:2500"
         addressForAPI  = "http://192.168.1.106:9000"
+
+        maxThreadnum = 3
 )
 
 func Test_Hello(t *testing.T) {
@@ -39,19 +41,22 @@ func Test_Hello(t *testing.T) {
 }
 
 func Test_Hello_In_Para(t *testing.T) {
-        go func() {
-                start := time.Now()
-                resp, err := http.Get(addressForAPI + "/v1/testSocket")
-                if err!=nil {
-                        t.Error("test failed: ", err)
-                } else {
-                        t.Log("test pass")
-                        d := time.Since(start)
-                        buf, _ := ioutil.ReadAll(resp.Body)
-                        fmt.Println(string(buf))
-                        fmt.Println("time: ", d)
-                }
-        }()
+        for i:=0;i<maxThreadnum;i++ {
+               go func(i int) {
+                        fmt.Println("In thread NO.", i)
+                        start := time.Now()
+                        resp, err := http.Get(addressForAPI + "/v1/testSocket")
+                        if err!=nil {
+                                t.Error("test failed: ", err)
+                        } else {
+                                t.Log("test pass")
+                                d := time.Since(start)
+                                buf, _ := ioutil.ReadAll(resp.Body)
+                                fmt.Println("api server returns: ",string(buf))
+                                fmt.Println("time: ", d)
+                        }
+                }(i)
+        }
 
          // Set up a connection to the server.
         conn, err := grpc.Dial(addressForGRPC, grpc.WithInsecure())
