@@ -5,6 +5,7 @@ import (
         "log"
         "time"
         "fmt"
+        "sync"
         "net/http"
         "io/ioutil"
 
@@ -41,8 +42,11 @@ func Test_Hello(t *testing.T) {
 }
 
 func Test_Hello_In_Para(t *testing.T) {
+        var wg *sync.WaitGroup
         for i:=0;i<maxThreadnum;i++ {
                go func(i int) {
+                        wg.Add(1)
+                        defer wg.Done()
                         fmt.Println("In thread NO.", i)
                         start := time.Now()
                         resp, err := http.Get(addressForAPI + "/v1/testSocket")
@@ -57,6 +61,7 @@ func Test_Hello_In_Para(t *testing.T) {
                         }
                 }(i)
         }
+
 
          // Set up a connection to the server.
         conn, err := grpc.Dial(addressForGRPC, grpc.WithInsecure())
@@ -75,4 +80,6 @@ func Test_Hello_In_Para(t *testing.T) {
                 log.Fatalf("could not greet: %v", err)
         }
         log.Printf("Greeting: %s", r.Message)
+
+        wg.Wait()
 }
