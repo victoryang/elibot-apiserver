@@ -64,6 +64,7 @@ func Test_Hello_In_Para(t *testing.T) {
 
 
          // Set up a connection to the server.
+        start := time.Now()
         conn, err := grpc.Dial(addressForGRPC, grpc.WithInsecure())
         if err != nil {
                 log.Fatalf("did not connect: %v", err)
@@ -79,7 +80,9 @@ func Test_Hello_In_Para(t *testing.T) {
         if err != nil {
                 log.Fatalf("could not greet: %v", err)
         }
+        d := time.Since(start)
         log.Printf("Greeting: %s", r.Message)
+        fmt.Println("time: ", d)
 
         wg.Wait()
 }
