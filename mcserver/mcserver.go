@@ -37,7 +37,6 @@ func OnCommandRecived() (string, error) {
 	}
 	defer mcserver.ConnPool.Put(conn)
 
-	var resp string
 	if testCommandLine(conn.(net.Conn)) {
 		return handleCommand(conn.(net.Conn), cmd)
 	} else {
