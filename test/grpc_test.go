@@ -42,10 +42,9 @@ func Test_Hello(t *testing.T) {
 }
 
 func Test_Hello_In_Para(t *testing.T) {
-        var wg *sync.WaitGroup
+        var wg sync.WaitGroup
         for i:=0;i<maxThreadnum;i++ {
                go func(i int) {
-                        wg.Add(1)
                         defer wg.Done()
                         fmt.Println("In thread NO.", i)
                         start := time.Now()
@@ -60,6 +59,7 @@ func Test_Hello_In_Para(t *testing.T) {
                                 fmt.Println("time: ", d)
                         }
                 }(i)
+                wg.Add(1)
         }
 
 
