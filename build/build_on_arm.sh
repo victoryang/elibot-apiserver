@@ -13,7 +13,8 @@ sudo apt-get install gcc-arm-linux-gnueabi
 sudo apt-get install g++-arm-linux-gnueabi
 
 # Install libz.so.1 for dependency of libsqlitedb.so
-sudo apt-get install lib64z1 # Here should replace the libz with competible one to libsqlitedb.so, which one should be compiled by ourselves
+sudo apt-get install lib64z1 # This library should be replaced with the one which is competible to libsqlitedb.so
+							# which is provided in build directory(a linux sysV version for arm board)
 
 ln -s /usr/arm-linux-gnueabi/lib/libz.so.1.2.8 /usr/lib/gcc-cross/arm-linux-gnueabihf/5/../../../../arm-linux-gnueabihf/lib/libz.so.1
 
