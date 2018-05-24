@@ -58,7 +58,7 @@ func main() {
 	s := api.NewApiServer(cfg)
 	s.Run()
 	
-	mcs := mcserver.NewMCServer("192.168.1.106:8055", 3)
+	mcs := mcserver.NewMCServer("127.0.0.1:8055", 3)
 	if mcs!=nil {
 		Log.Error("Error in connecting to mc server")
 	}

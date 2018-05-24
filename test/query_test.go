@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"fmt"
 	"time"
+	"io/ioutil"
 )
 
 const ipAddr = "http://127.0.0.1"
@@ -15,6 +16,11 @@ func GetIP(p string) string {
 	return ipAddr + port + version + p
 }
 
+func ExtractResponse(r *http.Response) {
+	buf, _ := ioutil.ReadAll(r.Body)
+	fmt.Println(string(buf))
+}
+
 func Test_Get_root(t *testing.T) {
 	start := time.Now()
 	resp, err := http.Get(ipAddr + port + "/")
@@ -23,7 +29,7 @@ func Test_Get_root(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -36,7 +42,7 @@ func Test_Get_all_arc(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -49,7 +55,7 @@ func Test_Get_all_arcparams(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -62,7 +68,7 @@ func Test_Get_all_bookprograms(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -75,7 +81,7 @@ func Test_Get_all_enum(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -88,7 +94,7 @@ func Test_Get_all_extaxis(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -101,7 +107,7 @@ func Test_Get_all_interference(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -114,7 +120,7 @@ func Test_Get_all_metadata(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -127,7 +133,7 @@ func Test_Get_all_params(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -140,7 +146,7 @@ func Test_Get_all_parameterbyid(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -153,7 +159,7 @@ func Test_Get_all_parameterbygroup(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -166,7 +172,7 @@ func Test_Get_all_ref(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -179,7 +185,7 @@ func Test_Get_all_toolframe(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -192,7 +198,7 @@ func Test_Get_all_userframe(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -205,7 +211,7 @@ func Test_Get_all_zeropoints(t *testing.T) {
 	} else {
 		t.Log("test pass")
 		d := time.Since(start)
-		fmt.Println(resp)
+		ExtractResponse(resp)
 		fmt.Println("time: ", d)
 	}
 }
@@ -216,7 +222,7 @@ func Test_Get_all_zeropoints(t *testing.T) {
 		t.Error("test failed")
 	} else {
 		t.Log("test pass")
-		fmt.Println(resp)
+		ExtractResponse(resp)
 	}
 }*/
 
@@ -226,7 +232,7 @@ func Test_Backup_List(t *testing.T) {
 		t.Error("test failed")
 	} else {
 		t.Log("test pass")
-		fmt.Println(resp)
+		ExtractResponse(resp)
 	}
 }
 
@@ -236,6 +242,6 @@ func Test_Backup_List(t *testing.T) {
 		t.Error("test failed")
 	} else {
 		t.Log("test pass")
-		fmt.Println(resp)
+		ExtractResponse(resp)
 	}
 }*/

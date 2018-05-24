@@ -6,6 +6,7 @@ import (
         "time"
         "fmt"
         "net/http"
+        "io/ioutil"
 
         "golang.org/x/net/context"
         "google.golang.org/grpc"
@@ -19,7 +20,7 @@ const (
 
 func Test_Hello(t *testing.T) {
         // Set up a connection to the server.
-        conn, err := grpc.Dial(address, grpc.WithInsecure())
+        conn, err := grpc.Dial(addressForGRPC, grpc.WithInsecure())
         if err != nil {
                 log.Fatalf("did not connect: %v", err)
         }
@@ -46,7 +47,8 @@ func Test_Hello_In_Para(t *testing.T) {
                 } else {
                         t.Log("test pass")
                         d := time.Since(start)
-                        fmt.Println(resp)
+                        buf, _ := ioutil.ReadAll()
+                        fmt.Println(string(buf))
                         fmt.Println("time: ", d)
                 }
         }()
