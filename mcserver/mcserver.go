@@ -37,10 +37,10 @@ func OnCommandRecived() (string, error) {
 	}
 	defer mcserver.ConnPool.Put(conn)
 
-	if testCommandLine(conn.(net.Conn)) {
+	if consumeCommandLineIf(conn.(net.Conn)) {
 		return handleCommand(conn.(net.Conn), cmd)
 	} else {
-		return "", errors.New("MCServer error: not in a normal situation")
+		return "", errors.New("MCServer error: bad connection")
 	}
 }
 

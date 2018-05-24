@@ -1,3 +1,12 @@
+/*
+	Hints:
+	go clean -testcache:
+		To clean the test cache
+
+	go test -v test/query_test.go -run Get_root(Regexp):
+		To test specific case
+*/
+
 package test
 
 import (

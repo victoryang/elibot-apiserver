@@ -47,7 +47,7 @@ func Test_Hello_In_Para(t *testing.T) {
                 } else {
                         t.Log("test pass")
                         d := time.Since(start)
-                        buf, _ := ioutil.ReadAll()
+                        buf, _ := ioutil.ReadAll(resp.Body)
                         fmt.Println(string(buf))
                         fmt.Println("time: ", d)
                 }
