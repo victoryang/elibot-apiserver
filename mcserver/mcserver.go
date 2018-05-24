@@ -2,8 +2,8 @@ package mcserver
 
 import (
 	"errors"
-	"fmt"
 	"net"
+	"time"
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/mcserver/pool"
@@ -13,7 +13,7 @@ var test = "testGo 0 1"
 var end = "\n"
 
 type MCserver struct {
-	Addr			string
+	Address			string
 	ConnPool 		pool.Pool
 }
 
@@ -33,13 +33,13 @@ func OnCommandRecived() (string, error) {
 	conn, err := mcserver.ConnPool.Get()
 	if err!=nil {
 		Log.Error("MCServer error: can not get a connection now, try it again later")
-		return "", error
+		return "", err
 	}
 	defer mcserver.ConnPool.Put(conn)
 
 	var resp string
-	if testCommandLine(conn) {
-		return handleCommand(conn, cmd)
+	if testCommandLine(conn.(net.Conn)) {
+		return handleCommand(conn.(net.Conn), cmd)
 	} else {
 		return "", errors.New("MCServer error: not in a normal situation")
 	}
