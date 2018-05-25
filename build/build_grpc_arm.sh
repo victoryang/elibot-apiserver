@@ -56,6 +56,17 @@ cp /usr/local/bin/protoc /usr/bin/
 make distclean
 
 # configure to compile source to a arm libaray, and make 
-./configure --host=arm-linux-gnueabihf CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ --with-protoc=/usr/bin/protoc 
+# Hints: if we meet problem with "/usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.21' not found", re-compile everything we've got with -static-libstdc++
+# 		 if we want to add this option to makefile, see solutions in: https://www.zhihu.com/question/22940048
+
+LDFLAGS="-static-libstdc++" ./configure --host=arm-linux-gnueabihf CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ --with-protoc=/usr/bin/protoc 
 make
 make install
+
+# how to test examples with protobuf
+arm-linux-gnueabihf-g++ add_person.cc addressbook.pb.cc -o add_person_cpp -pthread -I/usr/local/include -lprotobuf -static-libstdc++
+arm-linux-gnueabihf-g++ list_people.cc addressbook.pb.cc -o list_people_cpp -pthread -I/usr/local/include -lprotobuf -static-libstdc++
+scp libprotobuf.so.xxxx to root@${arm board ip}:/usr/lib/
+scp add_person_cpp list_people_cpp root@${arm board ip}:~
+
+
