@@ -21,10 +21,10 @@ protoc --go_out=plugins=grpc:. *.proto
 # see it on https://github.com/grpc/grpc/blob/master/INSTALL.md
 
 # build pre-requisites for linux
-apt-get install build-essential autoconf libtool pkg-config
+sudo apt-get install build-essential autoconf libtool pkg-config
 # if build from source
-apt-get install libgflags-dev libgtest-dev
-apt-get install clang libc++-dev
+sudo apt-get install libgflags-dev libgtest-dev
+sudo apt-get install clang libc++-dev
 
 # Cross-compile for arm, see issue on https://github.com/grpc/grpc/issues/9719
 git clone -b $(curl -L https://grpc.io/release) https://github.com/grpc/grpc
@@ -55,6 +55,9 @@ cp /usr/local/bin/protoc /usr/bin/
 # then clean the binaries we compiled in $PWD/src/.lib/*
 make distclean
 
+# if we want to run example of pb, cd to example and run make to generate addressbook.pb.cc and addressbook.pb.h with protoc
+protoc --cpp_out=. addressbook.proto
+
 # configure to compile source to a arm libaray, and make 
 # Hints: if we meet problem with "/usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.21' not found", re-compile everything we've got with -static-libstdc++
 # 		 if we want to add this option to makefile, see solutions in: https://www.zhihu.com/question/22940048
@@ -64,8 +67,8 @@ make
 make install
 
 # how to test examples with protobuf
-arm-linux-gnueabihf-g++ add_person.cc addressbook.pb.cc -o add_person_cpp -pthread -I/usr/local/include -lprotobuf -static-libstdc++
-arm-linux-gnueabihf-g++ list_people.cc addressbook.pb.cc -o list_people_cpp -pthread -I/usr/local/include -lprotobuf -static-libstdc++
+arm-linux-gnueabihf-g++ add_person.cc addressbook.pb.cc -o add_person_cpp -pthread -I/usr/local/include -lprotobuf 
+arm-linux-gnueabihf-g++ list_people.cc addressbook.pb.cc -o list_people_cpp -pthread -I/usr/local/include -lprotobuf 
 scp libprotobuf.so.xxxx to root@${arm board ip}:/usr/lib/
 scp add_person_cpp list_people_cpp root@${arm board ip}:~
 
