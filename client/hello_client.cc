@@ -57,7 +57,8 @@ int main(int argc, char** argv) {
   GreeterClient greeter(grpc::CreateChannel(
       "localhost:2500", grpc::InsecureChannelCredentials()));
 
-  std::string reply = greeter.SayHello(1);
+  ::google::protobuf::int32 i = 1;
+  std::string reply = greeter.SayHello(i);
   std::cout << "Greeter received: " << reply << std::endl;
 
   return 0;
