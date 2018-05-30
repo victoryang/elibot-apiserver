@@ -26,18 +26,48 @@ sudo apt-get install build-essential autoconf libtool pkg-config
 sudo apt-get install libgflags-dev libgtest-dev
 sudo apt-get install clang libc++-dev
 
+# IMPORTANT: 
 # Cross-compile for arm, see issue on https://github.com/grpc/grpc/issues/9719
 git clone -b $(curl -L https://grpc.io/release) https://github.com/grpc/grpc
 cd grpc
 git submodule update --init
+
+# Protobuf installation [ HOST ]
+cd grpc/third-party/protobuf
+./autogen.sh
+./configure
+make && make check && sudo make install && sudo ldconfig
+
+# Grpc installation [ HOST ]
+cd grpc
+make && sudo make install && sudo ldconfig
+
+# clean up this build
+make clean
+
+# install libaddress.a to ./lib/opt/
+# install bazel and use it to compile libcares.a
+
+# Grpc compile for ARM (Clean build)
+cd grpc
+make plugins 
+
+export GRPC_CROSS_COMPILE=true
+export GRPC_CROSS_AROPTS="cr --target=elf32-little"
+
 # here comes cross-compile
-CPPFLAGS=-I/usr/arm-linux-gnueabihf/include LDFLAGS=-L/usr/arm-linux-gnueabihf/lib \
-make HAS_PKG_CONFIG=false CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ LD=arm-linux-gnueabihf-ld \
-LDXX=arm-linux-gnueabihf-g++ AR=arm-linux-gnueabihf-ar 
+make HAS_PKG_CONFIG=false \ 
+CC=arm-linux-gnueabihf-gcc \
+CXX=arm-linux-gnueabihf-g++ \
+RANLIB=arm-linux-gnueabihf-ranlib \
+LD=arm-linux-gnueabihf-ld \
+LDXX=arm-linux-gnueabihf-g++ \
+AR=arm-linux-gnueabihf-ar \
+PROTOBUF_CONFIG_OPTS="--host=arm-linux-gnueabihf --with-protoc=/usr/local/bin/protoc" static
 
 
 
-
+# PREQUISITE
 # build protobuf for arm before we try Grpc
 # Hints: issue for cross compile of protobuf, see https://github.com/google/protobuf/tree/master/src 
 # https://github.com/google/protobuf/blob/master/src/README.md
@@ -59,10 +89,11 @@ make distclean
 protoc --cpp_out=. addressbook.proto
 
 # configure to compile source to a arm libaray, and make 
-# Hints: if we meet problem with "/usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.21' not found", re-compile everything we've got with -static-libstdc++
-# 		 if we want to add this option to makefile, see solutions in: https://www.zhihu.com/question/22940048
+# Hints: if we meet problem with "/usr/lib/libstdc++.so.6: version `GLIBCXX_3.4.21' not found", 
+# solution 1.re-compile everything we've got with -static-libstdc++ if we want to add this option to makefile, see solutions in: https://www.zhihu.com/question/22940048
+# solution 2(recommanded): choose Ubuntu 14.04 as our build platform
 
-LDFLAGS="-static-libstdc++" ./configure --host=arm-linux-gnueabihf CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ --with-protoc=/usr/bin/protoc 
+./configure --host=arm-linux-gnueabihf CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ --with-protoc=/usr/bin/protoc 
 make
 make install
 
