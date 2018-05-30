@@ -1,4 +1,4 @@
-CXX = arm-linux-gnueabi-g++
+CXX = arm-linux-gnueabihf-g++
 CPPFLAGS += -I/usr/local/include -pthread -static
 CXXFLAGS += -std=c++11
 LDFLAGS  += -L/root/grpc_for_arm_cross_compile/lib -L/root/grpc_for_arm_cross_compile/lib/protobuf \
@@ -15,9 +15,9 @@ vpath %.proto $(PROTOS_PATH)
 
 .PHONY: all
 
-all: greeter_client
+all: hello_client
 
-greeter_client: helloworld.pb.o helloworld.grpc.pb.o greeter_client.o
+hello_client: hello.pb.o hello.grpc.pb.o hello_client.o
 	$(CXX) $^ $(LDFLAGS) -o $@
 
 .PRECIOUS: %.grpc.pb.cc
@@ -29,4 +29,4 @@ greeter_client: helloworld.pb.o helloworld.grpc.pb.o greeter_client.o
 	$(PROTOC) -I $(PROTOS_PATH) --cpp_out=. $<
 
 clean:
-	rm -f *.o *.pb.cc *.pb.h greeter_client
+	rm -f *.o *.pb.cc *.pb.h hello_client
