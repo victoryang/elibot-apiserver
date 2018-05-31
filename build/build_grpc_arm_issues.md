@@ -104,3 +104,8 @@ scp libprotobuf.so.xxxx to root@${arm board ip}:/usr/lib/
 scp add_person_cpp list_people_cpp root@${arm board ip}:~
 
 
+# compile libares.a
+CC=arm-linux-gnueabihf-gcc LD=arm-linux-gnueabihf-ld AR=arm-linux-gnueabihf-ar ./configure --host=arm-linux --disable-shared
+make
+for i in libcares_la-*.o; do mv $i ${i#libcares_la-}; done
+arm-linux-gnueabihf-ar cr --target=elf32-little libares.a *.o

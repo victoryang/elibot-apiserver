@@ -18,7 +18,7 @@ vpath %.proto $(PROTOS_PATH)
 all: hello_client
 
 hello_client: hello.pb.o hello.grpc.pb.o hello_client.o
-	$(CXX) $^ $(LDFLAGS) -o $@
+	$(CXX) $^ $(LDFLAGS) -lares -o $@
 
 .PRECIOUS: %.grpc.pb.cc
 %.grpc.pb.cc: %.proto
