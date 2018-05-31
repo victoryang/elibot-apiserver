@@ -1,8 +1,8 @@
 CXX = arm-linux-gnueabihf-g++
 CPPFLAGS += -I/usr/local/include -pthread -static
 CXXFLAGS += -std=c++11
-#LDFLAGS  += -L/root/grpc_for_arm_cross_compile/lib -L/root/grpc_for_arm_cross_compile/lib/protobuf
-LDFLAGS += -lgrpc++ -lgrpc    \
+LDFLAGS  += -L/root/grpc_for_arm_cross_compile/lib -L/root/grpc_for_arm_cross_compile/lib/protobuf \
+		   -lgrpc++ -lgrpc    \
            -lgrpc++_reflection \
            -lprotobuf -lpthread -ldl
 
