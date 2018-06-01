@@ -45,12 +45,11 @@ make && sudo make install && sudo ldconfig
 # clean up this build
 make clean
 
-# install libaddress.a to ./lib/opt/
-# install bazel and use it to compile libcares.a
-
 # Grpc compile for ARM (Clean build)
-cd grpc
-make plugins 
+# Important: make plugins will generate libaddress_sorting.a and libares.a
+# And `make plugins` will be called during the `make`, so commented it
+# cd grpc
+# make plugins
 
 export GRPC_CROSS_COMPILE=true
 export GRPC_CROSS_AROPTS="cr --target=elf32-little"
