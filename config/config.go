@@ -14,7 +14,7 @@ var (
 	}
 
 	DefaultSqliteDB = &SqliteDB {
-		Path:			"/root/",
+		Path:			"/rbctrl/db/",
 		FileName:		"elibotDB.db",
 	}
 
@@ -27,9 +27,9 @@ var (
 	}
 
 	DefaultConfig = &Config{
-		RootDir:				"/var/lib/",
-		AccessLogsFile:			"elibot-server/access.Log",
-		ElibotLogsFile:			"elibot-server/server.Log",
+		RootDir:				"/rbctrl/",
+		AccessLogsFile:			"apiserver/log/access.Log",
+		ElibotLogsFile:			"apiserver/log/server.Log",
 		EntryPoints:			[]string{"http"},
 		ListenAddress:			"0.0.0.0:9000",
 		Sqlite:					DefaultSqliteDB,
