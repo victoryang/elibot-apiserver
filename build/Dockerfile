@@ -18,10 +18,11 @@ RUN rm -rf ${GOROOT} \
   && mkdir -p ${GOPATH}/src ${GOPATH}/bin \
   && go version
 
+ENV APISERVER_GIT https://github.com/victoryang/elibot-apiserver.git
 RUN mkdir -p ${GOPATH}/src/ \
 	&& cd ${GOPATH}/src/ \
-	&& git clone https://github.com/victoryang/elibot-apiserver.git
-	&& cd elibot-apiserver/
-	&& cp build/libsqlitedb.so /usr/lib/gcc-cross/arm-linux-gnueabihf/4.8
-	&& cp build/libz.so.1.2.8  /usr/arm-linux-gnueabihf/lib/
-	&& ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1
+	&& git clone  ${APISERVER_GIT} \
+	&& cd elibot-apiserver/ \
+	&& cp build/libsqlitedb.so /usr/lib/gcc-cross/arm-linux-gnueabihf/4.8 \
+	&& cp build/libz.so.1.2.8  /usr/arm-linux-gnueabihf/lib/ \
+	&& ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1 \
