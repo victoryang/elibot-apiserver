@@ -29,6 +29,9 @@ func handleCommand(conn net.Conn, command string) (string, error) {
 }
 
 func OnCommandRecived() (string, error) {
+	if mcserver == nil {
+		return "", errors.New("MCServer Error")
+	}
 	cmd := test + end
 	conn, err := mcserver.ConnPool.Get()
 	if err!=nil {
