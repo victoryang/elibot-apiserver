@@ -15,9 +15,9 @@ type helloserver struct {
 func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, error) {
 		var res string = "test Go fail"
 		if in.Name == 1 {
-			res, _ = mcserver.OnCommandRecived()
+			res, err = mcserver.OnCommandRecived()
 		}
-        return &pb.Reply{Message: res}, nil
+        return &pb.Reply{Message: res}, err
 }
 
 func NewHelloServer() *helloserver {
