@@ -20,7 +20,7 @@ protoc --go_out=plugins=grpc:. *.proto
 # install grpc from source, first try protobuf in the next section
 # see it on https://github.com/grpc/grpc/blob/master/INSTALL.md
 
-# build pre-requisites for linux
+# build pre-requisites for linux(automake libtool,etc...)
 sudo apt-get install build-essential autoconf libtool pkg-config
 # if build from source
 sudo apt-get install libgflags-dev libgtest-dev
