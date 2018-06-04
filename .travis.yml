@@ -11,7 +11,7 @@ env:
 go_import_path: github.com/victoryang/elibot-apiserver
 
 install:
-  - sudo cp build/libsqlitedb.so /usr/lib/
+  - sudo cp build/CGO_ENV/libsqlitedb.so /usr/lib/
 
 script:
   - mkdir -p $HOME/gopath/src/elibot-apiserver
