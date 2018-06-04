@@ -48,7 +48,10 @@ func OnCommandRecived() (string, error) {
 }
 
 func (mc *MCserver) Close() {
-	mc.ConnPool.Release()
+	if mc!=nil {
+		mc.ConnPool.Release()
+		mc=nil
+	}
 } 
 
 func NewMCServer(address string, cap int) *MCserver {
