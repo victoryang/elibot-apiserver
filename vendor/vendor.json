@@ -9,6 +9,12 @@
 			"revisionTime": "2018-05-18T21:57:37Z"
 		},
 		{
+			"checksumSHA1": "iqWBA0GWNr+cwAdF2KVy1eq9mlU=",
+			"path": "github.com/golang/protobuf/protoc-gen-go",
+			"revision": "70c277a8a150a8e069492e6600926300405c2884",
+			"revisionTime": "2018-05-18T21:57:37Z"
+		},
+		{
 			"checksumSHA1": "tkJPssYejSjuAwE2tdEnoEIj93Q=",
 			"path": "github.com/golang/protobuf/ptypes",
 			"revision": "70c277a8a150a8e069492e6600926300405c2884",
