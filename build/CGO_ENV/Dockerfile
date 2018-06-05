@@ -25,4 +25,7 @@ RUN mkdir -p ${GOPATH}/src/ \
 	&& cd elibot-apiserver/build/CGO_ENV/ \
 	&& cp libsqlitedb.so /usr/lib/gcc-cross/arm-linux-gnueabihf/4.8 \
 	&& cp libz.so.1.2.8  /usr/arm-linux-gnueabihf/lib/ \
-	&& ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1 \
+	&& ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1
+
+WORKDIR ${GOPATH}/src/elibot-apiserver/
+CMD git pull
