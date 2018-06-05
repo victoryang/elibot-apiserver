@@ -10,7 +10,7 @@ RUN apt-get install -y libc6-armel-cross libc6-dev-armel-cross \
 
 RUN apt-get install -y build-essential autoconf libtool pkg-config \
 	&& apt-get install -y libgflags-dev libgtest-dev \
-	&& apt-get install -y clang libc++-dev \
+	&& apt-get install -y clang libc++-dev
 
 ENV APISERVER_GIT https://github.com/victoryang/elibot-apiserver.git
 RUN mkdir -p ${GOPATH}/src/ \
@@ -18,7 +18,7 @@ RUN mkdir -p ${GOPATH}/src/ \
 	&& git clone  ${APISERVER_GIT} \
 	&& cd elibot-apiserver/ \
 	&& cp build/libz.so.1.2.8  /usr/arm-linux-gnueabihf/lib/ \
-	&& ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1 \
+	&& ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1
 
 RUN cd ~ \
 	&& git clone -b $(curl -L https://grpc.io/release) https://github.com/grpc/grpc \
