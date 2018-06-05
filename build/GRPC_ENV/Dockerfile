@@ -39,4 +39,3 @@ RUN cd ~ \
 	&& cp -a libs/opt/* /usr/local/cross/lib
 
 WORKDIR ${GOPATH}/src/elibot-apiserver/
-CMD git pull

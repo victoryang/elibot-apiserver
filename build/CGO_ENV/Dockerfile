@@ -28,4 +28,3 @@ RUN mkdir -p ${GOPATH}/src/ \
 	&& ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1
 
 WORKDIR ${GOPATH}/src/elibot-apiserver/
-CMD git pull
