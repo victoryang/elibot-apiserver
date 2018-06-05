@@ -17,7 +17,7 @@ RUN mkdir -p ${GOPATH}/src/ \
 	&& cd ${GOPATH}/src/ \
 	&& git clone  ${APISERVER_GIT} \
 	&& cd elibot-apiserver/ \
-	&& cp build/libz.so.1.2.8  /usr/arm-linux-gnueabihf/lib/ \
+	&& cp build/CGO_ENV/libz.so.1.2.8  /usr/arm-linux-gnueabihf/lib/ \
 	&& ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1
 
 RUN cd ~ \
