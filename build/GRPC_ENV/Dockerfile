@@ -8,9 +8,9 @@ RUN apt-get install -y libc6-armel-cross libc6-dev-armel-cross \
 	&& apt-get install -y gcc-arm-linux-gnueabihf \
 	&& apt-get install -y g++-arm-linux-gnueabihf
 
-RUN apt-get install build-essential autoconf libtool pkg-config \
-	&& apt-get install libgflags-dev libgtest-dev \
-	&& apt-get install clang libc++-dev \
+RUN apt-get install -y build-essential autoconf libtool pkg-config \
+	&& apt-get install -y libgflags-dev libgtest-dev \
+	&& apt-get install -y clang libc++-dev \
 
 ENV APISERVER_GIT https://github.com/victoryang/elibot-apiserver.git
 RUN mkdir -p ${GOPATH}/src/ \
