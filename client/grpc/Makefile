@@ -1,15 +1,15 @@
 CXX = arm-linux-gnueabihf-g++
 CPPFLAGS += -I/usr/local/include -pthread -static
 CXXFLAGS += -std=c++11
-LDFLAGS  += -L/root/grpc_for_arm_cross_compile/lib -L/root/grpc_for_arm_cross_compile/lib/protobuf \
+LDFLAGS  += -L/usr/local/cross/lib -L/usr/local/cross/lib/protobuf \
 		   -lgrpc++ -lgrpc    \
            -lgrpc++_reflection \
-           -lprotobuf -lpthread -ldl
+           -lprotobuf -lpthread
 
 PROTOC = protoc
 GRPC_CPP_PLUGIN = grpc_cpp_plugin
 GRPC_CPP_PLUGIN_PATH ?= `which $(GRPC_CPP_PLUGIN)`
-PROTOS_PATH = ../serverpb
+PROTOS_PATH = ../../serverpb
 
 vpath %.proto $(PROTOS_PATH)
 

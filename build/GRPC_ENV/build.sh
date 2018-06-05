@@ -33,10 +33,11 @@ cd grpc
 git submodule update --init
 
 # Protobuf installation [ HOST ]
-cd grpc/third-party/protobuf
+cd grpc/third_party/protobuf
 ./autogen.sh
 ./configure
 make && make check && sudo make install && sudo ldconfig
+cp /usr/local/bin/protoc /usr/bin/protoc
 
 # Grpc installation [ HOST ]
 cd grpc
