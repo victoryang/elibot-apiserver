@@ -26,15 +26,15 @@ RUN cd ~ \
 	&& git submodule update --init \
 	&& cd third_party/protobuf \
 	&& ./autogen.sh && ./configure \
-	&& make && make check && sudo make install && sudo ldconfig
-	&& cp /usr/local/bin/protoc /usr/bin/protoc
-	&& cd ../..
-	&& make && sudo make install && sudo ldconfig
+	&& make && make check && sudo make install && sudo ldconfig \
+	&& cp /usr/local/bin/protoc /usr/bin/protoc \
+	&& cd ../.. \
+	&& make && sudo make install && sudo ldconfig 
 
 ENV GRPC_CROSS_COMPILE true
 ENV GRPC_CROSS_AROPTS "cr --target=elf32-little"
 RUN make HAS_PKG_CONFIG=false CC=arm-linux-gnueabihf-gcc CXX=arm-linux-gnueabihf-g++ \
 	RANLIB=arm-linux-gnueabihf-ranlib LD=arm-linux-gnueabihf-ld LDXX=arm-linux-gnueabihf-g++ AR=arm-linux-gnueabihf-ar \
 	PROTOBUF_CONFIG_OPTS="--host=arm-linux-gnueabihf --with-protoc=/usr/local/bin/protoc" static \
-	&& mkdir -p /usr/local/cross/lib
+	&& mkdir -p /usr/local/cross/lib \
 	&& cp -a ./libs/opt/* /usr/local/cross/lib
