@@ -9,6 +9,7 @@ import (
 	"elibot-apiserver/api"
 	"elibot-apiserver/config"
 	"elibot-apiserver/mcserver"
+	"elibot-apiserver/sharedmemory"
 )
 
 const (
@@ -67,6 +68,7 @@ func main() {
 	gs := api.NewGrpcServer()
 
 	wss := api.NewWsServer()
-	s.Run()
+	wss.Run()
+	sharedmemory.NewAndWatch(wss)
 	handleSignals(s, mcs, gs, wss)
 }
