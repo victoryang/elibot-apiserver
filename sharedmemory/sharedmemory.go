@@ -6,6 +6,7 @@ package sharedmemory
 // #include<sharedmemory.h>
 import "C"
 import(
+	"bytes"
 	"fmt"
 	"encoding/binary"
 	"elibot-apiserver/api"
@@ -16,12 +17,14 @@ var wss *api.WsServer = nil
 func getPressReset() {
 	value := C.get_press_reset()
 	fmt.Println("Get press reset value: ", value)
-	buf := make([]byte, 4)
-	binary.Write(buf, binary.LittleEndian, value.(int32))
-	wss.Hub.broadcast <- buf
+	b := make([]byte, 4)
+	buf := bytes.NewBuffer(b)
+	binary.Write(buf, binary.LittleEndian, value)
+	wss.Hub.broadcast <- buf.Bytes()
 	return
 }
 
 func NewAndWatch(s *api.WsServer) {
 	wss = s
+	return
 }
