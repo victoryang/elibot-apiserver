@@ -119,7 +119,7 @@ func (c *Client) writePump() {
 func ServeWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
         conn, err := upgrader.Upgrade(w, r, nil)
         if err != nil {
-                log.Println(err)
+                Log.Println(err)
                 return
         }
         client := &Client{hub: hub, conn: conn, send: make(chan []byte, 256)}

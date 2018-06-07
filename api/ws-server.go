@@ -32,11 +32,11 @@ func (s *WsServer) Shutdown() {
 func NewWsServer() *WsServer {
 	s := new(WsServer)
 	
-	s.Hub := v3.NewHub()
+	s.Hub = v3.NewHub()
     go s.Hub.Run()
 	http.HandleFunc("/", v3.ServeHome)
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-                v3.ServeWs(hub, w, r)
+                v3.ServeWs(s.Hub, w, r)
     })
 	s.HttpServer = &http.Server {
 		Addr:			"127.0.0.1:9050",
