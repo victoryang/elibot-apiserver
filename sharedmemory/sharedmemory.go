@@ -1,12 +1,11 @@
 package sharedmemory
 
-// #cgo CXXFLAGS: -I/root/mcserver/include/
+// #cgo CFLAGS: -I/root/mcserver/include/
 // #cgo LDFLAGS: -lshare
 // #include<stdlib.h>
-// #include<include/db/db_query.h>
+// #include<sharedmemory.h>
 import "C"
 import(
-	"byte"
 	"fmt"
 	"encoding/binary"
 	"elibot-apiserver/api"
