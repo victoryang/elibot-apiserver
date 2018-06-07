@@ -15,7 +15,7 @@ const (
 	configFile = "/rbctrl/configuration/elibot-server.yaml"
 )
 
-func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer) {
+func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *api.WsServer) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
@@ -32,6 +32,8 @@ func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer) {
 			
 			s.Shutdown()
 			stopAdminServer()
+
+			wss.Shutdown()
 			
 			os.Exit(0)
 			return
@@ -63,5 +65,8 @@ func main() {
 		Log.Error("Error in connecting to mc server")
 	}
 	gs := api.NewGrpcServer()
-	handleSignals(s, mcs, gs)
+
+	wss := api.NewWsServer()
+	s.Run()
+	handleSignals(s, mcs, gs, wss)
 }
