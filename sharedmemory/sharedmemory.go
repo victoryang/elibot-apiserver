@@ -1,6 +1,6 @@
 package sharedmemory
 
-// #cgo CXXFLAGS: -I.
+// #cgo CXXFLAGS: -I/root/mcserver/include/
 // #cgo LDFLAGS: -lshare
 // #include<stdlib.h>
 // #include<include/db/db_query.h>
