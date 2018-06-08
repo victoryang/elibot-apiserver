@@ -14,7 +14,7 @@ import(
 )
 
 var wss *api.WsServer = nil
-var old int
+var old _Ctype_int
 const (
 	duration = 5
 	watchPeriod = time.Second * duration
@@ -40,7 +40,7 @@ func watcher() {
 	for {
 		select {
 		case <-watchTicker.C:
-			data, modified, err := getPressReset()
+			data, modified, err := getPressResetIfModified()
 			if err!=nil {
 				fmt.Println(err)
 			} else if modified {
