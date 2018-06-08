@@ -14,22 +14,25 @@ import(
 )
 
 var wss *api.WsServer = nil
-var old []byte
+var old int
 const (
 	duration = 5
 	watchPeriod = time.Second * duration
 )
 
-func getPressReset() ([]byte, error) {
+func getPressResetIfModified() ([]byte, bool, error) {
 	value := C.get_press_reset()
-	fmt.Println("Get press reset value: ", value)
+	if old == value {
+		return nil, false, nil
+	}
+	old = value
 	b := make([]byte, 2)
 	buf := bytes.NewBuffer(b)
 	err := binary.Write(buf, binary.LittleEndian, value)
 	if err!=nil {
-		return []byte{}, err
+		return nil, false, err
 	}
-	return buf.Bytes(), nil
+	return buf.Bytes(), true, nil
 }
 
 func watcher() {
@@ -37,11 +40,10 @@ func watcher() {
 	for {
 		select {
 		case <-watchTicker.C:
-			data, err := getPressReset()
+			data, modified, err := getPressReset()
 			if err!=nil {
 				fmt.Println(err)
-			} else if data != old {
-				old = data
+			} else if modified {
 				wss.Hub.PushMsg(data)
 			}
 		}
