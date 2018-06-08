@@ -17,12 +17,10 @@ var wss *api.WsServer = nil
 func getPressReset() error {
 	value := C.get_press_reset()
 	fmt.Println("Get press reset value: ", value)
-	b := make([]byte, 1)
+	b := make([]byte, 2)
 	buf := bytes.NewBuffer(b)
 	binary.Write(buf, binary.LittleEndian, value)
-	if hub, ok := wss.Hub.(PushMsg); ok {
-		hub.PushMsg(buf.Bytes())
-	}
+	wss.Hub.PushMsg(buf.Bytes())
 	return nil
 }
 
