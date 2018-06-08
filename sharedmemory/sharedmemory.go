@@ -22,6 +22,7 @@ const (
 
 func getPressResetIfModified() ([]byte, bool, error) {
 	value := C.get_press_reset()
+	fmt.Println("get value ", value)
 	if old == value {
 		return nil, false, nil
 	}
@@ -29,10 +30,7 @@ func getPressResetIfModified() ([]byte, bool, error) {
 	b := make([]byte, 2)
 	buf := bytes.NewBuffer(b)
 	err := binary.Write(buf, binary.LittleEndian, value)
-	if err!=nil {
-		return nil, false, err
-	}
-	return buf.Bytes(), true, nil
+	return buf.Bytes(), true, err
 }
 
 func watcher() {

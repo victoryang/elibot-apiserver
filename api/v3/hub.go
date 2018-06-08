@@ -26,10 +26,9 @@ type Hub struct {
         registerFunc    func([]byte)   
 }
 
-func (h *Hub) PushMsg(msg []byte) error {
-        fmt.Println("Push messages to all client")
+func (h *Hub) PushMsg(msg []byte) {
+        fmt.Println("Push messages to all client: ", msg)
         h.broadcast <- msg
-        return nil
 }
 
 func (h *Hub) NotificationRegister(f func([]byte)) {
