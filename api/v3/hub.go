@@ -1,5 +1,8 @@
 package v3
 
+import (
+        "fmt"
+)
 type Corporate interface {
         PushMsg([]byte) error 
 }
@@ -23,6 +26,7 @@ type Hub struct {
 func (h *Hub) PushMsg(msg []byte) error {
         fmt.Println("Push messages to all client")
         h.broadcast <- msg
+        return nil
 }
 
 func (h *Hub) Run() {
