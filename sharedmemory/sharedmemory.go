@@ -29,9 +29,9 @@ func getPressResetIfModified() ([]byte, bool, error) {
 	return []byte(res), true, nil
 }
 
-func getCurLineIfModified() ([]byte, bool, error) {
-	value := C.get_cur_line()
-	fmt.Println("get value ", value)
+func getZeroEncodeIfModified() ([]byte, bool, error) {
+	value := C.get_zero_encode()
+	fmt.Println("get zero encode: ", value)
 	/*if old == value {
 		return nil, false, nil
 	}*/
@@ -49,7 +49,7 @@ func watcher() {
 	for {
 		select {
 		case <-watchTicker.C:
-			data, modified, err := getCurLineIfModified()
+			data, modified, err := getZeroEncodeIfModified()
 			if err!=nil {
 				fmt.Println(err)
 			} else if modified {

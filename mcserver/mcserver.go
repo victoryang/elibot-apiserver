@@ -10,6 +10,7 @@ import (
 )
 
 var test = "testGo 0 1"
+var setzeroencode = "setZeroEncode 0 1"
 var end = "\n"
 
 type MCserver struct {
@@ -32,7 +33,7 @@ func OnCommandRecived() (string, error) {
 	if mcserver == nil {
 		return "", errors.New("MCServer Error")
 	}
-	cmd := test + end
+	cmd := setzeroencode + end
 	conn, err := mcserver.ConnPool.Get()
 	if err!=nil {
 		Log.Error("MCServer error: can not get a connection now, try it again later")

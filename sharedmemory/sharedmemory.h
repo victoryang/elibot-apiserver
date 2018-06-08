@@ -4,8 +4,8 @@ int get_press_reset() {
 	return PRESS_RESET;
 }
 
-int32_t get_cur_line() {
-	return GetCurLine();
+int32_t get_zero_encode() {
+	return Get_ZeroEncode(0);
 }
 
 void init_shm() {
