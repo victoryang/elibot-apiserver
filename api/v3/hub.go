@@ -1,7 +1,7 @@
 package v3
 
 type Corporate interface {
-        PushMsg         func([]byte) error
+        PushMsg([]byte) error 
 }
 
 // Hub maintains the set of active clients and broadcasts messages to the
