@@ -10,4 +10,5 @@ int32_t get_zero_encode(const int x) {
 
 void init_shm() {
 	resource_init("/rbctrl/mcserver");
+	init_nvram(NULL);
 }
