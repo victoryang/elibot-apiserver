@@ -6,6 +6,7 @@ package sharedmemory
 // #include<sharedmemory.h>
 import "C"
 import(
+	"bytes"
 	"fmt"
 	"time"
 	"elibot-apiserver/api"
@@ -24,9 +25,7 @@ func getPressResetIfModified() ([]byte, bool, error) {
 	if old == value {
 		return nil, false, nil
 	}
-	var res string
-	fmt.Sprintf(res, value)
-	return []byte{res}, true, nil
+	return ConvertType(value), true, nil
 }
 
 func watcher() {
