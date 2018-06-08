@@ -21,11 +21,11 @@ const (
 func getPressResetIfModified() ([]byte, bool, error) {
 	value := C.get_press_reset()
 	fmt.Println("get value ", value)
-	if old == value {
+	/*if old == value {
 		return nil, false, nil
-	}
+	}*/
 	old = value
-	res := string("Press reset value: ")+uint32(value)
+	res := fmt.Sprint(uint64(value))
 	return []byte(res), true, nil
 }
 
