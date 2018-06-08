@@ -1,5 +1,9 @@
 package v3
 
+type Corporate interface {
+        PushMsg         func([]byte) error
+}
+
 // Hub maintains the set of active clients and broadcasts messages to the
 // clients.
 type Hub struct {
@@ -14,6 +18,11 @@ type Hub struct {
 
         // Unregister requests from clients.
         unregister chan *Client
+}
+
+func (h *Hub) PushMsg(msg []byte) error {
+        fmt.Println("Push messages to all client")
+        h.broadcast <- msg
 }
 
 func (h *Hub) Run() {
