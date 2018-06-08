@@ -39,7 +39,7 @@ func NewWsServer() *WsServer {
                 v3.ServeWs(s.Hub, w, r)
     })
 	s.HttpServer = &http.Server {
-		Addr:			"127.0.0.1:9050",
+		Addr:			":9050",
 		ReadTimeout:    10 * time.Minute,
 		WriteTimeout:   10 * time.Minute,
 		MaxHeaderBytes: 1 << 20,

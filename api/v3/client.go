@@ -132,6 +132,6 @@ func ServeWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeHome(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "connect to websocket server")
+	fmt.Println(w, "connect to websocket server")
 	http.ServeFile(w, r, "home.html")
 }
