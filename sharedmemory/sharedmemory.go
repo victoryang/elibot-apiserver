@@ -24,7 +24,8 @@ func getPressResetIfModified() ([]byte, bool, error) {
 	if old == value {
 		return nil, false, nil
 	}
-	return ConvertType(value), true, nil
+	old = value
+	return ConvertToByteArray(uint32(value)), true, nil
 }
 
 func watcher() {

@@ -7,12 +7,11 @@ import (
 	Log "elibot-apiserver/log"
 )
 
-func ConvertType(value interface{}) []byte{
+func ConvertToByteArray(value interface{}) []byte{
 	var buf []byte
-	value_t := C.size_t(value)
-	switch t := value_t.(type) {
-	case _Ctype_uint:
-		binary.LittleEndian.PutUint32(buf, uint32(value))
+	switch t := value.(type) {
+	case uint32:
+		binary.LittleEndian.PutUint32(buf, value)
 		return buf
 	default:
 		Log.Error("Type not support")
