@@ -13,7 +13,7 @@ func ConvertToByteArray(value interface{}) []byte{
 		binary.LittleEndian.PutUint32(buf, value.(uint32))
 		return buf
 	default:
-		Log.Error("Type not support")
+		Log.Error("Type not support ", t)
 		return nil
 	}
 }
