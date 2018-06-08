@@ -27,8 +27,7 @@ func getPressResetIfModified() ([]byte, bool, error) {
 		return nil, false, nil
 	}
 	old = value
-	b := make([]byte, 2)
-	buf := bytes.NewBuffer(b)
+	buf := new(bytes.Buffer)
 	err := binary.Write(buf, binary.LittleEndian, value)
 	return buf.Bytes(), true, err
 }

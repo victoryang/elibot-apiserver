@@ -2,6 +2,7 @@ package v3
 
 import (
         "fmt"
+        "bytes"
 )
 type Corporate interface {
         PushMsg([]byte) error
