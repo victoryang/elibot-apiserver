@@ -26,14 +26,17 @@ func getPressResetIfModified() ([]byte, bool, error) {
 	if old == value {
 		return nil, false, nil
 	}
-	old = value
-	buf := new(bytes.Buffer)
-	err := binary.Write(buf, binary.LittleEndian, value)
-	return buf.Bytes(), true, err
+	var res string
+	fmt.Sprintf(res, value)
+	return []Bytes{res}, true, err
 }
 
 func watcher() {
 	watchTicker := time.NewTicker(watchPeriod)
+	defer func() {
+		watchTicker.Stop()
+	}
+
 	for {
 		select {
 		case <-watchTicker.C:
