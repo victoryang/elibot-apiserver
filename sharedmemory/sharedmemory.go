@@ -6,9 +6,7 @@ package sharedmemory
 // #include<sharedmemory.h>
 import "C"
 import(
-	"bytes"
 	"fmt"
-	"encoding/binary"
 	"time"
 	"elibot-apiserver/api"
 )
@@ -28,14 +26,14 @@ func getPressResetIfModified() ([]byte, bool, error) {
 	}
 	var res string
 	fmt.Sprintf(res, value)
-	return []Bytes{res}, true, err
+	return []byte{res}, true, nil
 }
 
 func watcher() {
 	watchTicker := time.NewTicker(watchPeriod)
 	defer func() {
 		watchTicker.Stop()
-	}
+	}()
 
 	for {
 		select {
