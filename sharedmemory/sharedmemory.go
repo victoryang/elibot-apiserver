@@ -29,6 +29,17 @@ func getPressResetIfModified() ([]byte, bool, error) {
 	return []byte(res), true, nil
 }
 
+func getCurLineIfModified() ([]byte, bool, error) {
+	value := C.get_cur_line()
+	fmt.Println("get value ", value)
+	/*if old == value {
+		return nil, false, nil
+	}*/
+	old = value
+	res := fmt.Sprint(uint64(value))
+	return []byte(res), true, nil
+}
+
 func watcher() {
 	watchTicker := time.NewTicker(watchPeriod)
 	defer func() {
@@ -38,7 +49,7 @@ func watcher() {
 	for {
 		select {
 		case <-watchTicker.C:
-			data, modified, err := getPressResetIfModified()
+			data, modified, err := getCurLineIfModified()
 			if err!=nil {
 				fmt.Println(err)
 			} else if modified {
