@@ -25,7 +25,8 @@ func getPressResetIfModified() ([]byte, bool, error) {
 		return nil, false, nil
 	}
 	old = value
-	return ConvertToByteArray(uint32(value)), true, nil
+	res := string("Press reset value: ")+uint32(value)
+	return []byte(res), true, nil
 }
 
 func watcher() {
