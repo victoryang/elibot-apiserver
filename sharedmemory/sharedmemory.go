@@ -66,6 +66,7 @@ func handleMsg(msg []byte) {
 func NewAndWatch(s *api.WsServer) {
 	wss = s
 	wss.Hub.NotificationRegister(handleMsg)
+	C.init_shm()
 	go watcher()
 	return
 }

@@ -5,5 +5,9 @@ int get_press_reset() {
 }
 
 int32_t get_cur_line() {
-	return GetCurLine()
+	return GetCurLine();
+}
+
+void init_shm() {
+	resource_init("/rbctrl/");
 }
