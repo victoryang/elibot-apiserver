@@ -20,7 +20,7 @@ const (
 	watchPeriod = time.Second * duration
 )
 
-func getPressReset() []byte, error {
+func getPressReset() ([]byte, error) {
 	value := C.get_press_reset()
 	fmt.Println("Get press reset value: ", value)
 	b := make([]byte, 2)
