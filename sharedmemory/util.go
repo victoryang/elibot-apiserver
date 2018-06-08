@@ -7,9 +7,9 @@ import (
 )
 
 func ConvertToByteArray(value interface{}) []byte{
-	var buf []byte
 	switch t := value.(type) {
 	case uint32:
+		buf := make([]byte, 4)
 		binary.LittleEndian.PutUint32(buf, value.(uint32))
 		return buf
 	default:
