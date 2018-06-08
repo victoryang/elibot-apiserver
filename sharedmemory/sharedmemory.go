@@ -30,7 +30,7 @@ func getPressResetIfModified() ([]byte, bool, error) {
 }
 
 func getZeroEncodeIfModified() ([]byte, bool, error) {
-	value := C.get_zero_encode()
+	value := C.get_zero_encode(0)
 	fmt.Println("get zero encode: ", value)
 	/*if old == value {
 		return nil, false, nil
