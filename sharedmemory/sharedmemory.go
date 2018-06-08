@@ -6,7 +6,6 @@ package sharedmemory
 // #include<sharedmemory.h>
 import "C"
 import(
-	"bytes"
 	"fmt"
 	"time"
 	"elibot-apiserver/api"
