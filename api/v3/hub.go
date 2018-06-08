@@ -4,7 +4,8 @@ import (
         "fmt"
 )
 type Corporate interface {
-        PushMsg([]byte) error 
+        PushMsg([]byte) error
+        NotificationRegister()
 }
 
 // Hub maintains the set of active clients and broadcasts messages to the
@@ -21,12 +22,18 @@ type Hub struct {
 
         // Unregister requests from clients.
         unregister chan *Client
+
+        registerFunc    func([]byte)   
 }
 
 func (h *Hub) PushMsg(msg []byte) error {
         fmt.Println("Push messages to all client")
         h.broadcast <- msg
         return nil
+}
+
+func (h *Hub) NotificationRegister(f func([]byte)) {
+        h.registerFunc = f
 }
 
 func (h *Hub) Run() {

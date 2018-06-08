@@ -24,7 +24,12 @@ func getPressReset() error {
 	return nil
 }
 
+func handleMsg(msg []byte) {
+	fmt.Println(string(msg[:]))
+}
+
 func NewAndWatch(s *api.WsServer) {
 	wss = s
+	wss.Hub.NotificationRegister(handleMsg)
 	return
 }

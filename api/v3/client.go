@@ -66,7 +66,7 @@ func (c *Client) readPump() {
                         break
                 }
                 message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
-                c.hub.broadcast <- message
+                c.hub.registerFunc(msg)
         }
 }
 
@@ -132,6 +132,6 @@ func ServeWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeHome(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(w, "connect to websocket server")
+	fmt.Println("connect to websocket server")
 	http.ServeFile(w, r, "home.html")
 }
