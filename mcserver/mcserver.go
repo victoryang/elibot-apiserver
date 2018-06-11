@@ -42,16 +42,19 @@ func OnCommandRecived(ctx context.Context, cmd string) (string, error) {
 	}
 	defer mcserver.ConnPool.Put(conn)
 
-	select {
-	case <-ctx.Done():
-		return "", errors.New("MCServer: context done")
-	default:
-		if consumeCommandLineIf(conn.(net.Conn)) {
-			return handleCommand(conn.(net.Conn), cmd)
-		} else {
-			return "", errors.New("MCServer error: bad connection")
+	for {
+		select {
+		case <-ctx.Done():
+			return "", errors.New("MCServer: context done")
+		default:
+			if consumeCommandLineIf(conn.(net.Conn)) {
+				return handleCommand(conn.(net.Conn), cmd)
+			} else {
+				return "", errors.New("MCServer error: bad connection")
+			}
 		}
 	}
+	
 }
 
 func (mc *MCserver) Close() {
