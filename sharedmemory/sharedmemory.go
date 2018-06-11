@@ -49,6 +49,7 @@ func watcher(ctx context.Context) {
 		watchTicker.Stop()
 	}()
 
+	DONE:
 	for {
 		select {
 		case <-watchTicker.C:
@@ -59,7 +60,7 @@ func watcher(ctx context.Context) {
 				wss.Hub.PushMsg(data)
 			}
 		case <-ctx.Done():
-			break
+			break DONE
 		}
 	}
 }
