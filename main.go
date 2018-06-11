@@ -30,14 +30,15 @@ func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, ws
 			// stop server
 			sharedmemory.StopWatch()
 
+			wss.Shutdown()
+
 			gs.Shutdown()
-			mcs.Close()
 			
 			s.Shutdown()
 			stopAdminServer()
 
-			wss.Shutdown()
-			
+			mcs.Close()
+
 			os.Exit(0)
 			return
 		}

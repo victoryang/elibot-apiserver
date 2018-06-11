@@ -3,7 +3,6 @@ package mcserver
 import (
 	"errors"
 	"net"
-	"time"
 	"context"
 
 	Log "elibot-apiserver/log"
