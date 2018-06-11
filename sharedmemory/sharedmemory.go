@@ -6,12 +6,14 @@ package sharedmemory
 // #include<sharedmemory.h>
 import "C"
 import(
+	"context"
 	"fmt"
 	"time"
 	"elibot-apiserver/api"
 )
 
 var wss *api.WsServer = nil
+var ctx_shm context.Context
 var old _Ctype_int
 const (
 	duration = 5
@@ -40,7 +42,7 @@ func getZeroEncodeIfModified() ([]byte, bool, error) {
 	return []byte(res), true, nil
 }
 
-func watcher() {
+func watcher(ctx context.Context) {
 	watchTicker := time.NewTicker(watchPeriod)
 	defer func() {
 		watchTicker.Stop()
@@ -55,6 +57,8 @@ func watcher() {
 			} else if modified {
 				wss.Hub.PushMsg(data)
 			}
+		case <-ctx.Done():
+			break
 		}
 	}
 }
@@ -63,10 +67,16 @@ func handleMsg(msg []byte) {
 	fmt.Println(string(msg[:]))
 }
 
+func StopWatch() {
+	ctx_shm.cancel()
+}
+
 func NewAndWatch(s *api.WsServer) {
 	wss = s
 	wss.Hub.NotificationRegister(handleMsg)
 	C.init_shm()
-	go watcher()
+
+	ctx_shm, cancel := context.WithCancel(context.Background())
+	go watcher(ctx)
 	return
 }

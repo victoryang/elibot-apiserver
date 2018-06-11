@@ -28,6 +28,8 @@ func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, ws
 			//reload config file
 		default:
 			// stop server
+			sharedmemory.StopWatch()
+
 			gs.Shutdown()
 			mcs.Close()
 			
