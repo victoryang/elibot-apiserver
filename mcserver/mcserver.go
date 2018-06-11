@@ -44,7 +44,7 @@ func handleCommand(conn net.Conn, command string) (string, error) {
 	return ReadMessage(conn)
 }
 
-func getConnFromPool(ch chan string) interface{} {
+func getConnFromPool(ch chan Response) interface{} {
 	if mcserver == nil {
 		ch <- Response{Result: "", Err: errors.New("MCServer Error")}
 		return nil
@@ -58,7 +58,7 @@ func getConnFromPool(ch chan string) interface{} {
 	return conn
 }
 
-func execute(ctx context.Context, ch chan string, conn interface{}, cmd string) {
+func execute(ctx context.Context, ch chan Response, conn interface{}, cmd string) {
 	select {
 	case <-ctx.Done():
 		return
@@ -67,6 +67,8 @@ func execute(ctx context.Context, ch chan string, conn interface{}, cmd string) 
 			return
 		}
 		defer mcserver.ConnPool.Put(conn)
+		var res string
+		var err error
 		if consumeCommandLineIf(conn.(net.Conn)) {
 			res, err = handleCommand(conn.(net.Conn), cmd)
 		} else {
