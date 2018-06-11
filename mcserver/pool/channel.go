@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"sync"
-	"time"
 )
 
 //PoolConfig
@@ -39,10 +38,9 @@ func NewChannelPool(poolConfig *PoolConfig) (Pool, error) {
 	}
 
 	c := &ChannelPool{
-		conns:       make(chan *idleConn, poolConfig.MaxCap),
+		conns:       make(chan *Conn, poolConfig.MaxCap),
 		factory:     poolConfig.Factory,
 		close:       poolConfig.Close,
-		idleTimeout: poolConfig.IdleTimeout,
 	}
 
 	for i := 0; i < poolConfig.InitialCap; i++ {
@@ -58,7 +56,7 @@ func NewChannelPool(poolConfig *PoolConfig) (Pool, error) {
 }
 
 //getConns
-func (c *ChannelPool) getConns() chan *idleConn {
+func (c *ChannelPool) getConns() chan *Conn {
 	c.mu.Lock()
 	conns := c.conns
 	c.mu.Unlock()
