@@ -30,31 +30,41 @@ func handleCommand(conn net.Conn, command string) (string, error) {
 	return ReadMessage(conn)
 }
 
-func OnCommandRecived(ctx context.Context, cmd string) (string, error) {
+func OnCommandRecived(ctx context.Context, cmd string) (res string, err error) {
 	if mcserver == nil {
 		return "", errors.New("MCServer Error")
 	}
 
-	conn, err := mcserver.ConnPool.Get()
+	var conn interface{}
+	conn, err = mcserver.ConnPool.Get()
 	if err!=nil {
+		res = ""
 		Log.Error("MCServer error: can not get a connection now, try it again later")
-		return "", err
+		return
 	}
 	defer mcserver.ConnPool.Put(conn)
 
+	done := make(chan bool)
+	go func(c chan bool) {
+		if consumeCommandLineIf(conn.(net.Conn)) {
+			res, err =  handleCommand(conn.(net.Conn), cmd)
+		} else {
+			err = errors.New("MCServer error: bad connection")
+			res = ""
+		}
+		c<-true
+	}(done)
+
+	DONE:
 	for {
 		select {
 		case <-ctx.Done():
-			return "", errors.New("MCServer: context done")
-		default:
-			if consumeCommandLineIf(conn.(net.Conn)) {
-				return handleCommand(conn.(net.Conn), cmd)
-			} else {
-				return "", errors.New("MCServer error: bad connection")
-			}
+			err = errors.New("MCServer: context done")
+		case <-done:
+			break DONE:
 		}
 	}
-	
+	return
 }
 
 func (mc *MCserver) Close() {
