@@ -24,7 +24,7 @@ type MCserver struct {
 type Request struct {
 	Command 		string
 	From			string
-	Resp 			chan string
+	Resp 			chan Response
 }
 
 type Response struct {
@@ -83,6 +83,7 @@ func worker(quit chan bool) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
+	var req Request
 	for {
 		select {
 		case req <- mcserver.WorkChan:
