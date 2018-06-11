@@ -86,7 +86,7 @@ func worker(quit chan bool) {
 	var req Request
 	for {
 		select {
-		case req <- mcserver.WorkChan:
+		case req := <- mcserver.WorkChan:
 			conn := getConnFromPool(req.Resp)
 			go execute(ctx, req.Resp, conn, req.Command)
 		case <-quit:
