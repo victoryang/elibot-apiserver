@@ -78,6 +78,6 @@ func NewAndWatch(s *api.WsServer) {
 	C.init_shm()
 
 	ctx_shm, cancel := context.WithCancel(context.Background())
-	go watcher(ctx)
+	go watcher(ctx_shm)
 	return
 }
