@@ -77,7 +77,7 @@ func NewAndWatch(s *api.WsServer) {
 	wss.Hub.NotificationRegister(handleMsg)
 	C.init_shm()
 
-	ctx_shm, cancel := context.WithCancel(context.Background())
+	ctx_shm, cancel = context.WithCancel(context.Background())
 	go watcher(ctx_shm)
 	return
 }
