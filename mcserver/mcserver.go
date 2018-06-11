@@ -120,11 +120,12 @@ func NewMCServer(address string, cap int) *MCserver {
 	}
 
 	workch := make(chan Request)
+	quitch := make(chan bool)
 	mcserver = &MCserver{
 		Address: 	address,
 		ConnPool: 	p,
 		WorkChan:   workch,
-		QuitChan: 	chan bool,
+		QuitChan: 	quitch,
 	}
 	go worker(mcserver.QuitChan)
 	return mcserver
