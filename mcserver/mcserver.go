@@ -47,7 +47,7 @@ func OnCommandRecived(ctx context.Context, cmd string) (res string, err error) {
 	done := make(chan bool)
 	go func(c chan bool) {
 		if consumeCommandLineIf(conn.(net.Conn)) {
-			res, err =  handleCommand(conn.(net.Conn), cmd)
+			res, err = handleCommand(conn.(net.Conn), cmd)
 		} else {
 			err = errors.New("MCServer error: bad connection")
 			res = ""
