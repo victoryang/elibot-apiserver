@@ -9,8 +9,7 @@ import(
 	pb "elibot-apiserver/serverpb"
 )
 
-var test = "testGo 0 1"
-var end = "\n"
+var cmd = "testGo 0 1\n"
 
 type helloserver struct {
 }
@@ -20,7 +19,6 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 		var err error
 		
 		if in.Name == 1 {
-			cmd := test+end
 			res, err = mcserver.OnCommandRecived(ctx, cmd)
 		}
         return &pb.Reply{Message: res}, err

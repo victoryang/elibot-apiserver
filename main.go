@@ -59,14 +59,15 @@ func main() {
 	defer Log.CloseFile()
 	Log.SetOwnFormatter("text")
 
-	startAdminServer(cfg)
-	s := api.NewApiServer(cfg)
-	s.Run()
-	
 	mcs := mcserver.NewMCServer("127.0.0.1:8055", 3)
 	if mcs==nil {
 		Log.Error("Error in connecting to mc server")
 	}
+
+	startAdminServer(cfg)
+	s := api.NewApiServer(cfg)
+	s.Run()
+	
 	gs := api.NewGrpcServer()
 
 	wss := api.NewWsServer()

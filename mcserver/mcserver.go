@@ -30,22 +30,22 @@ func handleCommand(conn net.Conn, command string) (string, error) {
 	return ReadMessage(conn)
 }
 
-func OnCommandRecived(ctx context.Context, cmd string) (res string, err error) {
+func OnCommandRecived(ctx context.Context, command string) (res string, err error) {
 	if mcserver == nil {
 		return "", errors.New("MCServer Error")
 	}
 
-	var conn interface{}
-	conn, err = mcserver.ConnPool.Get()
+	var connection interface{}
+	connection, err = mcserver.ConnPool.Get()
 	if err!=nil {
 		res = ""
 		Log.Error("MCServer error: can not get a connection now, try it again later")
 		return
 	}
-	defer mcserver.ConnPool.Put(conn)
+	defer mcserver.ConnPool.Put(connection)
 
 	done := make(chan bool)
-	go func(c chan bool) {
+	go func(c chan bool, conn interface{}, cmd string) {
 		if consumeCommandLineIf(conn.(net.Conn)) {
 			res, err = handleCommand(conn.(net.Conn), cmd)
 		} else {
@@ -53,7 +53,7 @@ func OnCommandRecived(ctx context.Context, cmd string) (res string, err error) {
 			res = ""
 		}
 		c<-true
-	}(done)
+	}(done, connection, command)
 
 	DONE:
 	for {
@@ -84,8 +84,6 @@ func NewMCServer(address string, cap int) *MCserver {
 		MaxCap:     5,
 		Factory:    factory,
 		Close:      close,
-		//链接最大空闲时间，超过该时间的链接 将会关闭，可避免空闲时链接EOF，自动失效的问题
-		IdleTimeout: 15 * time.Second,
 	}
 
 	p, err := pool.NewChannelPool(poolConfig)
