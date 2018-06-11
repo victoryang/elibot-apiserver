@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net"
 	"context"
+	"sync"
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/mcserver/pool"
@@ -16,9 +17,23 @@ var end = "\n"*/
 type MCserver struct {
 	Address			string
 	ConnPool 		pool.Pool
+	WorkChan		chan Request
+	QuitChan		chan bool
+}
+
+type Request struct {
+	Command 		string
+	From			string
+	Resp 			chan string
+}
+
+type Response struct {
+	Result 			string
+	Err 			error
 }
 
 var mcserver *MCserver = nil
+var wg sync.WaitGroup
 
 func handleCommand(conn net.Conn, command string) (string, error) {
 	err := WriteMessage(conn, command)
@@ -29,46 +44,57 @@ func handleCommand(conn net.Conn, command string) (string, error) {
 	return ReadMessage(conn)
 }
 
-func OnCommandRecived(ctx context.Context, command string) (res string, err error) {
+func getConnFromPool() interface{} {
 	if mcserver == nil {
-		return "", errors.New("MCServer Error")
+		ch <- Response{Result: "", Err: errors.New("MCServer Error")}
 	}
 
-	var connection interface{}
-	connection, err = mcserver.ConnPool.Get()
+	conn, err := mcserver.ConnPool.Get()
 	if err!=nil {
-		res = ""
-		Log.Error("MCServer error: can not get a connection now, try it again later")
-		return
+		ch <- Response{Result: "", Err: errors.New("MCServer error: can not get a connection now, try it again later")}
 	}
-	defer mcserver.ConnPool.Put(connection)
+}
 
-	done := make(chan bool)
-	go func(c chan bool, conn interface{}, cmd string) {
-		if consumeCommandLineIf(conn.(net.Conn)) {
-			res, err = handleCommand(conn.(net.Conn), cmd)
-		} else {
-			err = errors.New("MCServer error: bad connection")
-			res = ""
-		}
-		c<-true
-	}(done, connection, command)
-
-	DONE:
+func execute(ctx context.Context, ch chan string, conn interface{}, cmd string) {
+	Done:
 	for {
 		select {
 		case <-ctx.Done():
-			err = errors.New("MCServer: context done")
-			break DONE
-		case <-done:
-			break DONE
+			break Done
+		case <-job:
+			if conn == nil {
+				return
+			}
+			defer mcserver.ConnPool.Put(conn)
+			if consumeCommandLineIf(conn.(net.Conn)) {
+				res, err = handleCommand(conn.(net.Conn), cmd)
+			} else {
+				err = errors.New("MCServer error: bad connection")
+				res = ""
+			}
+			ch<-Response{Result: res, Err: err}
 		}
 	}
-	return
+}
+
+func worker(quit chan bool) {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	for {
+		select {
+		case req <- mcserver.WorkChan:
+			conn := getConnFromPool()
+			go execute(ctx, req.Resp, conn, req.Command)
+		case <-quit:
+			return
+		}
+	}
 }
 
 func (mc *MCserver) Close() {
 	if mc!=nil {
+		mc.QuitChan<-true
 		mc.ConnPool.Release()
 		mc=nil
 	}
@@ -95,5 +121,6 @@ func NewMCServer(address string, cap int) *MCserver {
 		Address: 	address,
 		ConnPool: 	p,
 	}
+	go worker(mcserver.QuitChan)
 	return mcserver
 }

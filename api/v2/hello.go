@@ -10,6 +10,7 @@ import(
 )
 
 var cmd = "testGo 0 1\n"
+var from = "grpc:hello"
 
 type helloserver struct {
 }
@@ -19,7 +20,11 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 		var err error
 		
 		if in.Name == 1 {
-			res, err = mcserver.OnCommandRecived(ctx, cmd)
+			resp := make(chan mcserver.Response)
+			mcserver.WorkChan<-{Command: cmd, From:from, Resp:resp}
+			r<-resp
+			res = r.Result
+			err = r.Err
 		}
         return &pb.Reply{Message: res}, err
 }
