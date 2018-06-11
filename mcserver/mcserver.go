@@ -32,7 +32,7 @@ type Response struct {
 	Err 			error
 }
 
-var mcserver *MCserver = nil
+var mcs *MCserver = nil
 var wg sync.WaitGroup
 
 func handleCommand(conn net.Conn, command string) (string, error) {
@@ -45,12 +45,12 @@ func handleCommand(conn net.Conn, command string) (string, error) {
 }
 
 func getConnFromPool(ch chan Response) interface{} {
-	if mcserver == nil {
+	if mcs == nil {
 		ch <- Response{Result: "", Err: errors.New("MCServer Error")}
 		return nil
 	}
 
-	conn, err := mcserver.ConnPool.Get()
+	conn, err := mcs.ConnPool.Get()
 	if err!=nil {
 		ch <- Response{Result: "", Err: errors.New("MCServer error: can not get a connection now, try it again later")}
 		return nil
@@ -66,7 +66,7 @@ func execute(ctx context.Context, ch chan Response, conn interface{}, cmd string
 		if conn == nil {
 			return
 		}
-		defer mcserver.ConnPool.Put(conn)
+		defer mcs.ConnPool.Put(conn)
 		var res string
 		var err error
 		if consumeCommandLineIf(conn.(net.Conn)) {
@@ -85,7 +85,7 @@ func worker(quit chan bool) {
 
 	for {
 		select {
-		case req := <- mcserver.WorkChan:
+		case req := <- mcs.WorkChan:
 			conn := getConnFromPool(req.Resp)
 			go execute(ctx, req.Resp, conn, req.Command)
 		case <-quit:
@@ -116,17 +116,17 @@ func NewMCServer(address string, cap int) *MCserver {
 	p, err := pool.NewChannelPool(poolConfig)
 	if err!=nil {
 		Log.Error("MCServer error: ", err)
-		return mcserver
+		return mcs
 	}
 
 	workch := make(chan Request)
 	quitch := make(chan bool)
-	mcserver = &MCserver{
+	mcs = &MCserver{
 		Address: 	address,
 		ConnPool: 	p,
 		WorkChan:   workch,
 		QuitChan: 	quitch,
 	}
-	go worker(mcserver.QuitChan)
-	return mcserver
+	go worker(mcs.QuitChan)
+	return mcs
 }
