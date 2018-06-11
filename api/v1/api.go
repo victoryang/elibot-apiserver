@@ -29,8 +29,8 @@ func test(w http.ResponseWriter, r *http.Request) {
 
 func testSocket(w http.ResponseWriter, r *http.Request) {
 	resp := make(chan mcserver.Response)
-	mcserver.WorkChan<-{Command: "testGo 0 1\n", From:"restapi:testsocket", Resp:resp}
-	r<-resp
+	mcserver.WorkChan<-mcserver.Request{Command: "testGo 0 1\n", From:"restapi:testsocket", Resp:resp}
+	r := <-resp
 	res = r.Result
 	err = r.Err
 	if err!=nil {

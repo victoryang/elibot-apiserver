@@ -21,8 +21,8 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 		
 		if in.Name == 1 {
 			resp := make(chan mcserver.Response)
-			mcserver.WorkChan<-{Command: cmd, From:from, Resp:resp}
-			r<-resp
+			mcserver.WorkChan<-mcserver.Request{Command: cmd, From:from, Resp:resp}
+			r := <-resp
 			res = r.Result
 			err = r.Err
 		}

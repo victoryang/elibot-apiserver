@@ -83,7 +83,6 @@ func worker(quit chan bool) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	var req Request
 	for {
 		select {
 		case req := <- mcserver.WorkChan:
@@ -120,9 +119,12 @@ func NewMCServer(address string, cap int) *MCserver {
 		return mcserver
 	}
 
+	workch := make(chan Request)
 	mcserver = &MCserver{
 		Address: 	address,
 		ConnPool: 	p,
+		WorkChan:   workch,
+		QuitChan: 	chan bool,
 	}
 	go worker(mcserver.QuitChan)
 	return mcserver
