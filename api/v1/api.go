@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"strconv"
 	"encoding/json"
+	"context"
+	"time"
 
 	"github.com/gorilla/mux"
 
@@ -26,7 +28,8 @@ func test(w http.ResponseWriter, r *http.Request) {
 }
 
 func testSocket(w http.ResponseWriter, r *http.Request) {
-	res, err := mcserver.OnCommandRecived()
+	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+	res, err := mcserver.OnCommandRecived(ctx, "testGo 0 1\n")
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())

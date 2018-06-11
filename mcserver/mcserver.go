@@ -10,9 +10,9 @@ import (
 	"elibot-apiserver/mcserver/pool"
 )
 
-var test = "testGo 0 1"
+/*var test = "testGo 0 1"
 var setzeroencode = "setZeroEncode 0 1"
-var end = "\n"
+var end = "\n"*/
 
 type MCserver struct {
 	Address			string

@@ -14,6 +14,7 @@ import(
 
 var wss *api.WsServer = nil
 var ctx_shm context.Context
+var cancel context.CancelFunc
 var old _Ctype_int
 const (
 	duration = 5
@@ -68,7 +69,7 @@ func handleMsg(msg []byte) {
 }
 
 func StopWatch() {
-	ctx_shm.cancel()
+	cancel()
 }
 
 func NewAndWatch(s *api.WsServer) {
