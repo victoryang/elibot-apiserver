@@ -44,36 +44,36 @@ func handleCommand(conn net.Conn, command string) (string, error) {
 	return ReadMessage(conn)
 }
 
-func getConnFromPool() interface{} {
+func getConnFromPool(ch chan string) interface{} {
 	if mcserver == nil {
 		ch <- Response{Result: "", Err: errors.New("MCServer Error")}
+		return nil
 	}
 
 	conn, err := mcserver.ConnPool.Get()
 	if err!=nil {
 		ch <- Response{Result: "", Err: errors.New("MCServer error: can not get a connection now, try it again later")}
+		return nil
 	}
+	return conn
 }
 
 func execute(ctx context.Context, ch chan string, conn interface{}, cmd string) {
-	Done:
-	for {
-		select {
-		case <-ctx.Done():
-			break Done
-		case <-job:
-			if conn == nil {
-				return
-			}
-			defer mcserver.ConnPool.Put(conn)
-			if consumeCommandLineIf(conn.(net.Conn)) {
-				res, err = handleCommand(conn.(net.Conn), cmd)
-			} else {
-				err = errors.New("MCServer error: bad connection")
-				res = ""
-			}
-			ch<-Response{Result: res, Err: err}
+	select {
+	case <-ctx.Done():
+		return
+	default:
+		if conn == nil {
+			return
 		}
+		defer mcserver.ConnPool.Put(conn)
+		if consumeCommandLineIf(conn.(net.Conn)) {
+			res, err = handleCommand(conn.(net.Conn), cmd)
+		} else {
+			err = errors.New("MCServer error: bad connection")
+			res = ""
+		}
+		ch<-Response{Result: res, Err: err}
 	}
 }
 
@@ -84,7 +84,7 @@ func worker(quit chan bool) {
 	for {
 		select {
 		case req <- mcserver.WorkChan:
-			conn := getConnFromPool()
+			conn := getConnFromPool(req.Resp)
 			go execute(ctx, req.Resp, conn, req.Command)
 		case <-quit:
 			return
