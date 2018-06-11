@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net"
 	"time"
+	"context"
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/mcserver/pool"
@@ -29,11 +30,11 @@ func handleCommand(conn net.Conn, command string) (string, error) {
 	return ReadMessage(conn)
 }
 
-func OnCommandRecived() (string, error) {
+func OnCommandRecived(ctx context.Context, cmd string) (string, error) {
 	if mcserver == nil {
 		return "", errors.New("MCServer Error")
 	}
-	cmd := setzeroencode + end
+
 	conn, err := mcserver.ConnPool.Get()
 	if err!=nil {
 		Log.Error("MCServer error: can not get a connection now, try it again later")
@@ -41,10 +42,15 @@ func OnCommandRecived() (string, error) {
 	}
 	defer mcserver.ConnPool.Put(conn)
 
-	if consumeCommandLineIf(conn.(net.Conn)) {
-		return handleCommand(conn.(net.Conn), cmd)
-	} else {
-		return "", errors.New("MCServer error: bad connection")
+	select {
+	case <-ctx.Done():
+		return "", errors.New("MCServer: context done")
+	default:
+		if consumeCommandLineIf(conn.(net.Conn)) {
+			return handleCommand(conn.(net.Conn), cmd)
+		} else {
+			return "", errors.New("MCServer error: bad connection")
+		}
 	}
 }
 
