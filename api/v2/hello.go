@@ -1,7 +1,6 @@
 package v2
 
 import(
-	"time"
 	//Log "elibot-apiserver/log"
 
 	"elibot-apiserver/mcserver"
@@ -20,10 +19,9 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 		var res string = "test Go fail"
 		var err error
 		
-		ctx_m, _ := context.WithCancel(ctx)
 		if in.Name == 1 {
 			cmd := test+end
-			res, err = mcserver.OnCommandRecived(ctx_m, cmd)
+			res, err = mcserver.OnCommandRecived(ctx, cmd)
 		}
         return &pb.Reply{Message: res}, err
 }
