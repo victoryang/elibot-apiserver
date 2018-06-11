@@ -61,7 +61,7 @@ func OnCommandRecived(ctx context.Context, cmd string) (res string, err error) {
 		case <-ctx.Done():
 			err = errors.New("MCServer: context done")
 		case <-done:
-			break DONE:
+			break DONE
 		}
 	}
 	return
