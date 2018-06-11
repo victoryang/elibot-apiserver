@@ -3,6 +3,7 @@ package v2
 import (
 	pb "elibot-apiserver/serverpb"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 // TODO:
@@ -29,5 +30,7 @@ func Server() *grpc.Server {
 
 	/*TODO: Register all servers here*/
 
+	/* Register reflection service on GRPC server*/
+	reflection.Register(s)
 	return s
 }
