@@ -29,6 +29,7 @@ func test(w http.ResponseWriter, r *http.Request) {
 
 func testSocket(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
+	defer cancel()
 	res, err := mcserver.OnCommandRecived(ctx, "testGo 0 1\n")
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
