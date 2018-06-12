@@ -58,8 +58,7 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 	for {
 		select {
 		case <-ctx.Done():
-			err := errors.New("MCserver job cancelled")
-			ch<-Response{Result: "", Err: err}
+			ch<-Response{Result: "", Err: errors.New("MCserver job cancelled")}
 			return
 		default:
 			conn := getConnFromPool(ch)
