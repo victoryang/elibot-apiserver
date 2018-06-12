@@ -15,4 +15,4 @@ void init_shm() {
 	resource_init("/rbctrl/mcserver");
 	init_nvram(NULL);
 }
-#endif
+#endif //SHAREDMEMORY_H
