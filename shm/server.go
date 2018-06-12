@@ -45,6 +45,7 @@ func (s *ShmServer) Watcher() {
 
 func (s *ShmServer) Shutdown() {
 	s.Cancel()
+	Log.Info("sharedmemory server shutting down")
 }
 
 func handleMsg(msg []byte) {
