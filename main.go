@@ -9,13 +9,14 @@ import (
 	"elibot-apiserver/api"
 	"elibot-apiserver/config"
 	"elibot-apiserver/mcserver"
+	"elibot-apiserver/shm"
 )
 
 const (
 	configFile = "/rbctrl/configuration/elibot-server.yaml"
 )
 
-func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer) {
+func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *api.WsServer, shms *shm.ShmServer) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
@@ -27,12 +28,17 @@ func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer) {
 			//reload config file
 		default:
 			// stop server
+			shms.Shutdown()
+
+			wss.Shutdown()
+
 			gs.Shutdown()
-			mcs.Close()
 			
 			s.Shutdown()
 			stopAdminServer()
-			
+
+			mcs.Close()
+
 			os.Exit(0)
 			return
 		}
@@ -54,14 +60,21 @@ func main() {
 	defer Log.CloseFile()
 	Log.SetOwnFormatter("text")
 
-	startAdminServer(cfg)
-	s := api.NewApiServer(cfg)
-	s.Run()
-	
 	mcs := mcserver.NewMCServer("127.0.0.1:8055", 3)
 	if mcs==nil {
 		Log.Error("Error in connecting to mc server")
 	}
+
+	startAdminServer(cfg)
+	s := api.NewApiServer(cfg)
+	s.Run()
+	
 	gs := api.NewGrpcServer()
-	handleSignals(s, mcs, gs)
+
+	wss := api.NewWsServer()
+	wss.Run()
+
+	shms := shm.NewServer(wss)
+	shms.StartToWatch()
+	handleSignals(s, mcs, gs, wss, shms)
 }

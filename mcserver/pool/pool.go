@@ -3,11 +3,11 @@ package pool
 import "errors"
 
 var (
-	//ErrClosed 连接池已经关闭Error
+	//ErrClosed
 	ErrClosed = errors.New("pool is closed")
 )
 
-//Pool 基本方法
+//Pool
 type Pool interface {
 	Get() (interface{}, error)
 
