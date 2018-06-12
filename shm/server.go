@@ -8,6 +8,7 @@ import "C"
 import(
 	"context"
 	"time"
+	"fmt"
 	"elibot-apiserver/api"
 	Log "elibot-apiserver/log"
 )
@@ -25,7 +26,7 @@ type ShmServer struct {
 
 func (s *ShmServer) StartToWatch(ctx context.Context, modified chan []byte) {
 	Log.Info("Shared memory server started...")
-	go func(ctx) {
+	go func(ctx context.Context) {
 		watchTicker := time.NewTicker(watchPeriod)
 		defer func() {
 			watchTicker.Stop()
@@ -37,10 +38,10 @@ func (s *ShmServer) StartToWatch(ctx context.Context, modified chan []byte) {
 			case <-ctx.Done():
 				break DONE
 			case res := <-modified:
-				wss.Hub.PushMsg(data)
+				s.Wss.Hub.PushMsg(res)
 			}
 		}
-	}()
+	}(ctx)
 }
 
 func (s *ShmServer) Shutdown() {
@@ -52,18 +53,16 @@ func handleMsg(msg []byte) {
 }
 
 func init(ctx context.Context) {
-	ctx, cancel = context.WithCancel(context.Background())
 	C.init_shm()
 	hit = make(chan []byte, BUFSIZE)
-	initWatchFuncs(hit)
+	initWatchFuncs()
 	wss.Hub.NotificationRegister(handleMsg)
-	go watcher(ctx, hit)
 	go worker(ctx, hit)
 }
 
 func NewServer(s *api.WsServer) *ShmServer{
-	init()
-	
+	ctx, cancel = context.WithCancel(context.Background())
+	init(ctx)
 	return &ShmServer{
 		Wss: 	s,
 		Ctx: 	ctx,
