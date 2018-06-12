@@ -27,10 +27,10 @@ func test(w http.ResponseWriter, r *http.Request) {
 
 func testSocket(w http.ResponseWriter, r *http.Request) {
 	resp := make(chan mcserver.Response)
-	mcserver.mcserver.WorkChan<-mcserver.Request{Command: "testGo 0 1\n", From:"restapi:testsocket", Resp:resp}
+	mcserver.Mcs.WorkChan<-mcserver.Request{Command: "testGo 0 1\n", From:"restapi:testsocket", Resp:resp}
 	rr := <-resp
-	res = rr.Result
-	err = rr.Err
+	res := rr.Result
+	err := rr.Err
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, err.Error())

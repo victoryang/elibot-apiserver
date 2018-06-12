@@ -32,7 +32,7 @@ type Response struct {
 	Err 			error
 }
 
-var mcs *MCserver = nil
+var Mcs *MCserver = nil
 var wg sync.WaitGroup
 
 func handleCommand(conn net.Conn, command string) (string, error) {
@@ -59,23 +59,28 @@ func getConnFromPool(ch chan Response) interface{} {
 }
 
 func execute(ctx context.Context, ch chan Response, conn interface{}, cmd string) {
-	select {
-	case <-ctx.Done():
-		return
-	default:
-		if conn == nil {
+	for {
+		select {
+		case <-ctx.Done():
+			err := errors.New("MCserver job cancelled")
+			ch<-Response{Result: "", Err: err}
 			return
+		default:
+			conn := getConnFromPool(ch)
+			if conn == nil {
+				return
+			}
+			defer mcs.ConnPool.Put(conn)
+			var res string
+			var err error
+			if consumeCommandLineIf(conn.(net.Conn)) {
+				res, err = handleCommand(conn.(net.Conn), cmd)
+			} else {
+				err = errors.New("MCServer error: bad connection")
+				res = ""
+			}
+			ch<-Response{Result: res, Err: err}
 		}
-		defer mcs.ConnPool.Put(conn)
-		var res string
-		var err error
-		if consumeCommandLineIf(conn.(net.Conn)) {
-			res, err = handleCommand(conn.(net.Conn), cmd)
-		} else {
-			err = errors.New("MCServer error: bad connection")
-			res = ""
-		}
-		ch<-Response{Result: res, Err: err}
 	}
 }
 
@@ -86,7 +91,7 @@ func worker(quit chan bool) {
 	for {
 		select {
 		case req := <- mcs.WorkChan:
-			conn := getConnFromPool(req.Resp)
+			/* pass ctx to all child for graceful shutdown*/
 			go execute(ctx, req.Resp, conn, req.Command)
 		case <-quit:
 			return
@@ -121,12 +126,12 @@ func NewMCServer(address string, cap int) *MCserver {
 
 	workch := make(chan Request)
 	quitch := make(chan bool)
-	mcs = &MCserver{
+	Mcs = &MCserver{
 		Address: 	address,
 		ConnPool: 	p,
 		WorkChan:   workch,
 		QuitChan: 	quitch,
 	}
 	go worker(mcs.QuitChan)
-	return mcs
+	return Mcs
 }
