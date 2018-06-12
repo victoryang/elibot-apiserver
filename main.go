@@ -9,14 +9,14 @@ import (
 	"elibot-apiserver/api"
 	"elibot-apiserver/config"
 	"elibot-apiserver/mcserver"
-	"elibot-apiserver/sharedmemory"
+	"elibot-apiserver/shm"
 )
 
 const (
 	configFile = "/rbctrl/configuration/elibot-server.yaml"
 )
 
-func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *api.WsServer) {
+func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *api.WsServer, shms shm.ShmServer) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
@@ -28,7 +28,7 @@ func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, ws
 			//reload config file
 		default:
 			// stop server
-			sharedmemory.StopWatch()
+			shms.Shutdown()
 
 			wss.Shutdown()
 
@@ -73,6 +73,8 @@ func main() {
 
 	wss := api.NewWsServer()
 	wss.Run()
-	sharedmemory.NewAndWatch(wss)
-	handleSignals(s, mcs, gs, wss)
+
+	shms := shm.NewAndWatch(wss)
+	shms.StartToWatch()
+	handleSignals(s, mcs, gs, wss, shms)
 }

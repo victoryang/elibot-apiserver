@@ -10,6 +10,7 @@ import(
 )
 
 var cmd = "testGo 0 1\n"
+/*var cmd = "setZeroEncode 0 1"*/
 var from = "grpc:hello"
 
 type helloserver struct {

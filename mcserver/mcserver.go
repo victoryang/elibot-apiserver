@@ -10,10 +10,6 @@ import (
 	"elibot-apiserver/mcserver/pool"
 )
 
-/*var test = "testGo 0 1"
-var setzeroencode = "setZeroEncode 0 1"
-var end = "\n"*/
-
 type MCserver struct {
 	Address			string
 	ConnPool 		pool.Pool
@@ -124,13 +120,11 @@ func NewMCServer(address string, cap int) *MCserver {
 		return Mcs
 	}
 
-	workch := make(chan Request)
-	quitch := make(chan bool)
 	Mcs = &MCserver{
 		Address: 	address,
 		ConnPool: 	p,
-		WorkChan:   workch,
-		QuitChan: 	quitch,
+		WorkChan:   make(chan Request),
+		QuitChan: 	make(chan bool),
 	}
 	go worker(Mcs.QuitChan)
 	return Mcs

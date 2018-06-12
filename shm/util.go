@@ -1,4 +1,4 @@
-package sharedmemory
+package shm
 
 import "C"
 import (
