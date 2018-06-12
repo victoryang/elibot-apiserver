@@ -10,7 +10,7 @@ import(
 	"fmt"
 	"time"
 	"sync"
-	"elibot-apiserver/api"
+
 	Log "elibot-apiserver/log"
 )
 
@@ -47,8 +47,8 @@ func getZeroEncodeIfModified(modified chan []byte) []byte {
 	return []byte(res)
 }
 
-func fetchAndCompare(fetch FetchFunc, modified chan []byte, old []byte) {
-	now := fetch()
+func fetchAndCompare(fetch FetchFunc, modified chan []byte, old []byte) []byte{
+	now := fetch(modified)
 	if now != old {
 		modified <- now
 	}
@@ -56,7 +56,7 @@ func fetchAndCompare(fetch FetchFunc, modified chan []byte, old []byte) {
 }
 
 func worker(ctx_base context.Context, modified chan []byte) {
-	var wg sync.WatiGroup
+	var wg sync.WaitGroup
 	for _,f := range watchfuncs {
 		wg.Add(1)
 		defer wg.Done()
@@ -67,13 +67,14 @@ func worker(ctx_base context.Context, modified chan []byte) {
 				watchTicker.Stop()
 			}()
 
-			old := wf()
+			now := wf(modified)
+			modified <- now
 			for {
 				select {
 				case <-ctx.Done():
 					return
 				case <-watchTicker.C:
-					old = fetchAndCompare(wf, modified, old)
+					now = fetchAndCompare(wf, modified, now)
 				}
 			}
 		}(f, ctx_base, modified)

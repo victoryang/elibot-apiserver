@@ -62,7 +62,7 @@ func (s *ShmServer)initServer() {
 
 func NewServer(server *api.WsServer) *ShmServer{
 	s := new(ShmServer)
-	ctx, cancel = context.WithCancel(context.Background())
+	ctx, cancel := context.WithCancel(context.Background())
 	s = &ShmServer{
 		Wss: 	server,
 		Ctx: 	ctx,
