@@ -40,7 +40,7 @@ func (s *ShmServer) StartToWatch(ctx context.Context, modified chan []byte) {
 				wss.Hub.PushMsg(data)
 			}
 		}
-	}
+	}()
 }
 
 func (s *ShmServer) Shutdown() {
