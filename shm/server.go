@@ -57,14 +57,14 @@ func (s *ShmServer)initServer() {
 	hit = make(chan []byte, BUFSIZE)
 	initWatchFuncs()
 	s.Wss.Hub.NotificationRegister(handleMsg)
-	go worker(s.ctx, hit)
+	go worker(s.Ctx, hit)
 }
 
-func NewServer(s *api.WsServer) *ShmServer{
+func NewServer(server *api.WsServer) *ShmServer{
 	s := new(ShmServer)
 	ctx, cancel = context.WithCancel(context.Background())
 	s = &ShmServer{
-		Wss: 	s,
+		Wss: 	server,
 		Ctx: 	ctx,
 		Cancel: cancel,
 	}
