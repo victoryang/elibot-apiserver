@@ -16,7 +16,7 @@ const (
 	configFile = "/rbctrl/configuration/elibot-server.yaml"
 )
 
-func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *api.WsServer, shms shm.ShmServer) {
+func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *api.WsServer, shms *shm.ShmServer) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
@@ -74,7 +74,7 @@ func main() {
 	wss := api.NewWsServer()
 	wss.Run()
 
-	shms := shm.NewAndWatch(wss)
+	shms := shm.NewServer(wss)
 	shms.StartToWatch()
 	handleSignals(s, mcs, gs, wss, shms)
 }
