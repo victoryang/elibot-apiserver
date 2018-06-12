@@ -14,7 +14,7 @@ import(
 
 var hit chan []byte
 const (
-	BUFSIZE = 256
+	BUFSIZE = 1024
 )
 
 type ShmServer struct {
