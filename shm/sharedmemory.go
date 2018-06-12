@@ -10,6 +10,9 @@ import(
 	"fmt"
 	"time"
 	"sync"
+	"strconv"
+	"reflect"
+	"runtime"
 
 	Log "elibot-apiserver/log"
 )
@@ -19,7 +22,7 @@ const (
 	watchPeriod = time.Second * duration
 )
 
-type FetchFunc func(chan []byte)[]byte
+type FetchFunc func()string
 var watchfuncs []FetchFunc
 var ModifyChan chan []byte
 
@@ -33,24 +36,29 @@ func initWatchFuncs() {
 	REGISTERFUNC(getZeroEncodeIfModified)
 }
 
-func getPressResetIfModified(modified chan []byte) []byte {
+func getPressResetIfModified() string {
 	value := C.get_press_reset()
 	fmt.Println("get Press Reset ", value)
-	res := fmt.Sprint(uint64(value))
-	return []byte(res)
+	return fmt.Sprint(uint64(value))
 }
 
-func getZeroEncodeIfModified(modified chan []byte) []byte {
+func getZeroEncodeIfModified() string{
 	value := C.get_zero_encode(0)
 	fmt.Println("get zero encode: ", value)
-	res := fmt.Sprint(uint64(value))
-	return []byte(res)
+	return fmt.Sprint(uint64(value))
 }
 
-func fetchAndCompare(fetch FetchFunc, modified chan []byte, old []byte) []byte{
-	now := fetch(modified)
-	if now != old {
-		modified <- now
+func GetFunctionName(i interface{}) string {
+    return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
+}
+
+func fetchAndCompare(fetch FetchFunc, modified chan []byte, old string) string{
+	now := fetch()
+	now_v := strconv.Atoi(now)
+	old_v := strconv.Atoi(old)
+	if now_v != old_v {
+		funcName := GetFunctionName(fetch)
+		modified <- []byte(funcName+now)
 	}
 	return now
 }
@@ -68,7 +76,7 @@ func worker(ctx_base context.Context, modified chan []byte) {
 			}()
 
 			now := wf(modified)
-			modified <- now
+			modified <- []byte(now)
 			for {
 				select {
 				case <-ctx.Done():
