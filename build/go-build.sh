@@ -21,6 +21,4 @@ sed -i '/shms.StartToWatch()/d' main.go
 sed -i 's/handleSignals(s, mcs, gs, wss, shms)/handleSignals(s, mcs, gs, wss)/g' main.go
 sed -i 's/, shms \*shm.ShmServer//g' main.go
 
-go build -o elibot-server ${API_V1}/*.go ${API_V2}/*.go ${API_V3}/*.go ${API}/*.go ${CONFIG}/*.go \ 
-							${DB}/*.go ${LOG}/*.go ${MCSERVER}/*.go ${MIDDLEWARE}/*.go ${SERVERPB}/*.go ${SQLITEDB}/*.go \
-							${VENDOR}/*.go
+go build -o elibot-server ${API_V1}/*.go ${API_V2}/*.go ${API_V3}/*.go ${API}/*.go ${CONFIG}/*.go ${DB}/*.go ${LOG}/*.go ${MCSERVER}/*.go ${MIDDLEWARE}/*.go ${SERVERPB}/*.go ${SQLITEDB}/*.go ${VENDOR}/*.go
