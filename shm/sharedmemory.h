@@ -1,3 +1,6 @@
+#ifndef SHAREDMEMORY_H
+#define SHAREDMEMORY_H
+
 #include "share/resource.h"
 
 int get_press_reset() {
@@ -12,3 +15,4 @@ void init_shm() {
 	resource_init("/rbctrl/mcserver");
 	init_nvram(NULL);
 }
+#endif
