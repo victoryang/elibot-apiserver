@@ -52,20 +52,22 @@ func handleMsg(msg []byte) {
 	fmt.Println(string(msg[:]))
 }
 
-func init(ctx context.Context) {
+func (s *ShmServer)initServer() {
 	C.init_shm()
 	hit = make(chan []byte, BUFSIZE)
 	initWatchFuncs()
-	wss.Hub.NotificationRegister(handleMsg)
-	go worker(ctx, hit)
+	s.Wss.Hub.NotificationRegister(handleMsg)
+	go worker(s.ctx, hit)
 }
 
 func NewServer(s *api.WsServer) *ShmServer{
+	s := new(ShmServer)
 	ctx, cancel = context.WithCancel(context.Background())
-	init(ctx)
-	return &ShmServer{
+	s = &ShmServer{
 		Wss: 	s,
 		Ctx: 	ctx,
 		Cancel: cancel,
 	}
+	s.initServer()
+	return s
 }
