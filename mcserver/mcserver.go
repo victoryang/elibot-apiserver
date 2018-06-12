@@ -45,12 +45,12 @@ func handleCommand(conn net.Conn, command string) (string, error) {
 }
 
 func getConnFromPool(ch chan Response) interface{} {
-	if mcs == nil {
+	if Mcs == nil {
 		ch <- Response{Result: "", Err: errors.New("MCServer Error")}
 		return nil
 	}
 
-	conn, err := mcs.ConnPool.Get()
+	conn, err := Mcs.ConnPool.Get()
 	if err!=nil {
 		ch <- Response{Result: "", Err: errors.New("MCServer error: can not get a connection now, try it again later")}
 		return nil
@@ -58,7 +58,7 @@ func getConnFromPool(ch chan Response) interface{} {
 	return conn
 }
 
-func execute(ctx context.Context, ch chan Response, conn interface{}, cmd string) {
+func execute(ctx context.Context, ch chan Response, cmd string) {
 	for {
 		select {
 		case <-ctx.Done():
@@ -70,7 +70,7 @@ func execute(ctx context.Context, ch chan Response, conn interface{}, cmd string
 			if conn == nil {
 				return
 			}
-			defer mcs.ConnPool.Put(conn)
+			defer Mcs.ConnPool.Put(conn)
 			var res string
 			var err error
 			if consumeCommandLineIf(conn.(net.Conn)) {
@@ -90,9 +90,9 @@ func worker(quit chan bool) {
 
 	for {
 		select {
-		case req := <- mcs.WorkChan:
+		case req := <- Mcs.WorkChan:
 			/* pass ctx to all child for graceful shutdown*/
-			go execute(ctx, req.Resp, conn, req.Command)
+			go execute(ctx, req.Resp, req.Command)
 		case <-quit:
 			return
 		}
@@ -121,7 +121,7 @@ func NewMCServer(address string, cap int) *MCserver {
 	p, err := pool.NewChannelPool(poolConfig)
 	if err!=nil {
 		Log.Error("MCServer error: ", err)
-		return mcs
+		return Mcs
 	}
 
 	workch := make(chan Request)
@@ -132,6 +132,6 @@ func NewMCServer(address string, cap int) *MCserver {
 		WorkChan:   workch,
 		QuitChan: 	quitch,
 	}
-	go worker(mcs.QuitChan)
+	go worker(Mcs.QuitChan)
 	return Mcs
 }
