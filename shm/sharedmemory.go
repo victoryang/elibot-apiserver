@@ -10,7 +10,6 @@ import(
 	"fmt"
 	"time"
 	"sync"
-	"strconv"
 	"reflect"
 	"runtime"
 
@@ -54,9 +53,7 @@ func GetFunctionName(i interface{}) string {
 
 func fetchAndCompare(fetch FetchFunc, modified chan []byte, old string) string{
 	now := fetch()
-	now_v := strconv.Atoi(now)
-	old_v := strconv.Atoi(old)
-	if now_v != old_v {
+	if now != old {
 		funcName := GetFunctionName(fetch)
 		modified <- []byte(funcName+now)
 	}
@@ -75,7 +72,7 @@ func worker(ctx_base context.Context, modified chan []byte) {
 				watchTicker.Stop()
 			}()
 
-			now := wf(modified)
+			now := wf()
 			modified <- []byte(now)
 			for {
 				select {
