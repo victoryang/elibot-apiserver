@@ -37,7 +37,7 @@ func (s *ShmServer) Watcher() {
 		select {
 		case <-s.Ctx.Done():
 			break DONE
-		case res := <-modified:
+		case res := <-s.Hit:
 			s.Wss.Hub.PushMsg(res)
 		}
 	}
