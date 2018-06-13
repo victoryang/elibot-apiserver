@@ -23,7 +23,7 @@ const (
 
 type FetchFunc func()string
 type CheckFunc func()[]byte
-var watchfuncs [FetchFunc]CheckFunc
+var watchfuncs map[FetchFunc]CheckFunc
 var ModifyChan chan []byte
 
 func REGISTERFUNC(f FetchFunc, c CheckFunc) {
@@ -31,7 +31,7 @@ func REGISTERFUNC(f FetchFunc, c CheckFunc) {
 }
 
 func initWatchFuncs() {
-	watchfuncs = make([FetchFunc]CheckFunc, 0)
+	watchfuncs = make(map[FetchFunc]CheckFunc)
 	REGISTERFUNC(testwatch, testcheck)
 	REGISTERFUNC(watchNV, checkNV)
 }
