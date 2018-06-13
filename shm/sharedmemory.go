@@ -23,17 +23,21 @@ const (
 
 type FetchFunc func()string
 type CheckFunc func()[]byte
-var watchfuncs map[FetchFunc]CheckFunc
+var watchfuncs map[string]FetchFunc
+var checkfuncs map[string]CheckFunc
 var ModifyChan chan []byte
 
-func REGISTERFUNC(f FetchFunc, c CheckFunc) {
-	watchfuncs[f] = c
+func REGISTERFUNC(k string, f FetchFunc, c CheckFunc) {
+	watchfuncs[k] = f
+	checkfuncs[k] = c
 }
 
 func initWatchFuncs() {
-	watchfuncs = make(map[FetchFunc]CheckFunc)
-	REGISTERFUNC(testwatch, testcheck)
-	REGISTERFUNC(watchNV, checkNV)
+	watchfuncs = make([]FetchFunc, 0)
+	checkfuncs = make([]CheckFunc, 0)
+
+	REGISTERFUNC("test", testwatch, testcheck)
+	REGISTERFUNC("NV", watchNV, checkNV)
 }
 
 func testcheck() []byte {
@@ -65,21 +69,21 @@ func GetFunctionName(i interface{}) string {
     return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
 }
 
-func fetchAndCompare(fetch FetchFunc, cf CheckFunc, modified chan []byte, old string) string{
+func fetchAndCompare(key string, fetch FetchFunc, modified chan []byte, old string) string{
 	now := fetch()
 	if now != old {
-		modified <- cf()
+		modified <- checkfuncs[key]()
 	}
 	return now
 }
 
 func worker(ctx_base context.Context, modified chan []byte) {
 	var wg sync.WaitGroup
-	for f,c := range watchfuncs {
+	for k,f := range watchfuncs {
 		wg.Add(1)
 		defer wg.Done()
 
-		go func(wf FetchFunc, cf CheckFunc, ctx context.Context, modified chan []byte){
+		go func(key string, wf FetchFunc, ctx context.Context, modified chan []byte){
 			watchTicker := time.NewTicker(watchPeriod)
 			defer func() {
 				watchTicker.Stop()
@@ -92,10 +96,10 @@ func worker(ctx_base context.Context, modified chan []byte) {
 				case <-ctx.Done():
 					return
 				case <-watchTicker.C:
-					now = fetchAndCompare(wf, cf, modified, now)
+					now = fetchAndCompare(key, wf, modified, now)
 				}
 			}
-		}(f, c, ctx_base, modified)
+		}(k, f, ctx_base, modified)
 	}
 	wg.Wait()
 	Log.Info("quit for some reason")
