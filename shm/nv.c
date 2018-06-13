@@ -1,3 +1,4 @@
+#include "share/resource.h"
 
 char* get_main_file() {
 	return GetMainfile();

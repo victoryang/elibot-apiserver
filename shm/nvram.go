@@ -4,6 +4,7 @@ package shm
 // #cgo LDFLAGS: -lshare
 // #include<stdlib.h>
 // #include<sharedmemory.h>
+// #include<nv.h>
 import "C"
 import (
 	"fmt"
@@ -23,7 +24,7 @@ type NvRam struct {
 	Origin				[]float64
 }
 
-func getAxisCount() {
+func getAxisCount() int32 {
 	return int32(C.get_axis_count());
 }
 
@@ -31,11 +32,11 @@ func checkNV() []byte {
 	return []byte("checkNV")
 }
 
-func getNV() *NVRam{
-	return &NVRam{
+func getNV() *NvRam{
+	return &NvRam{
 		ProjectName: 		C.get_main_file(),
 		Sys_technics:		int32(C.get_main_file()),
-		CurCoordinate:		int32(C.int32_t get_cur_coordinate()),
+		CurCoordinate:		int32(C.get_cur_coordinate()),
 	}
 }
 

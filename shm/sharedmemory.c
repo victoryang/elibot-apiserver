@@ -1,6 +1,5 @@
 #include "share/resource.h"
 #include "crc.h"
-#include "nv.h"
 
 uint32_t crc = 0xFFFFFFFF;
 
