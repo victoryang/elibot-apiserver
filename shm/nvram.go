@@ -8,6 +8,7 @@ package shm
 import "C"
 import (
 	"fmt"
+	"unsafe"
 )
 
 type NvRam struct {
@@ -33,11 +34,8 @@ func checkNV() []byte {
 }
 
 func getNV() *NvRam{
-	projectname := C.CString(C.get_main_file())
-	defer C.free(unsafe.Pointer(projectname))
-
 	return &NvRam{
-		ProjectName: 		projectname,
+		ProjectName: 		C.GoString(C.get_main_file()),
 		CurCoordinate:		int32(C.get_cur_coordinate()),
 	}
 }

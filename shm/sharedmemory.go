@@ -48,7 +48,7 @@ func GetFunctionName(i interface{}) string {
 func fetchAndCompare(key string, modified chan []byte, old string) string{
 	now := watchfuncs[key]()
 	if now != old {
-		modified <- byte[now]
+		modified <- []byte(now)
 	}
 	return now
 }
