@@ -8,39 +8,45 @@ package shm
 import "C"
 import (
 	"fmt"
-	"unsafe"
+	"encoding/json"
 )
 
 type NvRam struct {
-	ProjectName			string
-	Sys_technics		int32
-	CurCoordinate		int32
-	ManualSpeedRate		int32
-	CycleMode			int32
-	ToolNum				int32
-	UserNum				int32
-	Zero_encode			[]int32
-	System_period		float64
-	System_ctrl_mode	int32
-	Origin				[]float64
+	ProjectName			string 		`json:"projectname,omitempty"`
+	Sys_technics		int32		`json:"sys_technics,omitempty"`	
+	CurCoordinate		int32		`json:"curcoordinate,omitempty"`
+	ManualSpeedRate		int32		`json:"manualspeedRate,omitempty"`
+	CycleMode			int32		`json:"cyclemode,omitempty"`
+	ToolNum				int32		`json:"toolnum,omitempty"`
+	UserNum				int32		`json:"usernum,omitempty"`
+	Zero_encode			[]int32		`json:"zero_encode,omitempty"`
+	System_period		float64		`json:"system_period,omitempty"`
+	System_ctrl_mode	int32		`json:"system_ctrl_mode,omitempty"`
+	Origin				[]float64	`json:"origin,omitempty"`
 }
 
 func getAxisCount() int32 {
 	return int32(C.get_axis_count());
 }
 
-func checkNV() []byte {
-	return []byte("checkNV")
+func getMainFile() string {
+	return C.GoString(C.get_main_file())
 }
 
-func getNV() *NvRam{
-	return &NvRam{
-		ProjectName: 		C.GoString(C.get_main_file()),
-		CurCoordinate:		int32(C.get_cur_coordinate()),
+func getCurCoordinate() int32{
+	return int32(C.get_cur_coordinate())
+}
+
+func getNV() []byte{
+	nvram := NvRam{
+		ProjectName: 		getMainFile(),
+		CurCoordinate:		getCurCoordinate(),
 	}
+	b, _ := json.Marshal(nvram)
+	return b
 }
 
-func watchNV() string {
+func watchNV() ([]byte, string) {
 	value := C.watch_nv()
-	return fmt.Sprint(uint64(value))
+	return getNV(), fmt.Sprint(uint64(value))
 }

@@ -21,7 +21,7 @@ const (
 	watchPeriod = time.Second * duration
 )
 
-type FetchFunc func()string
+type FetchFunc func()([]byte,string)
 var watchfuncs map[string]FetchFunc
 
 func REGISTERFUNC(k string, f FetchFunc) {
@@ -31,7 +31,7 @@ func REGISTERFUNC(k string, f FetchFunc) {
 func initWatchFuncs() {
 	watchfuncs = make(map[string]FetchFunc)
 
-	REGISTERFUNC("test", testwatch)
+	//REGISTERFUNC("test", testwatch)
 	REGISTERFUNC("NV", watchNV)
 }
 
@@ -46,9 +46,9 @@ func GetFunctionName(i interface{}) string {
 }
 
 func fetchAndCompare(key string, modified chan []byte, old string) string{
-	now := watchfuncs[key]()
+	res, now := watchfuncs[key]()
 	if now != old {
-		modified <- []byte(now)
+		modified <- res
 	}
 	return now
 }

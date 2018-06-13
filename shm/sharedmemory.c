@@ -2,6 +2,7 @@
 #include "crc.h"
 
 uint32_t crc = 0xFFFFFFFF;
+struct nvram_data_s *nvram_data;
 
 int watch_test() {
 	return PRESS_RESET;
@@ -16,7 +17,7 @@ int get_axis_count (){
 }
 
 int watch_nv() { 
-	int c = crc32(crc, (unsigned char *)(void *)t4, sizeof(struct test));
+	int c = crc32(crc, (unsigned char *)(void *)nvram_data, sizeof(struct nvram_data_s));
 	return c;
 }
 
