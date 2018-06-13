@@ -33,9 +33,11 @@ func checkNV() []byte {
 }
 
 func getNV() *NvRam{
+	projectname := C.CString(C.get_main_file())
+	defer C.free(unsafe.Pointer(projectname))
+
 	return &NvRam{
-		ProjectName: 		C.get_main_file(),
-		Sys_technics:		int32(C.get_main_file()),
+		ProjectName: 		projectname,
 		CurCoordinate:		int32(C.get_cur_coordinate()),
 	}
 }
