@@ -33,8 +33,8 @@ func REGISTERFUNC(k string, f FetchFunc, c CheckFunc) {
 }
 
 func initWatchFuncs() {
-	watchfuncs = make([]FetchFunc, 0)
-	checkfuncs = make([]CheckFunc, 0)
+	watchfuncs = make(map[string]FetchFunc)
+	checkfuncs = make(map[string]CheckFunc)
 
 	REGISTERFUNC("test", testwatch, testcheck)
 	REGISTERFUNC("NV", watchNV, checkNV)
