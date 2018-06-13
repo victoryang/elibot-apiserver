@@ -1,7 +1,7 @@
 #include "share/resource.h"
 #include "crc.h"
 
-int get_press_reset() {
+int watch_test() {
 	return PRESS_RESET;
 }
 
@@ -9,8 +9,8 @@ int32_t get_zero_encode(const int x) {
 	return Get_ZeroEncode(x);
 }
 
-void GetAll() {
-
+unsigned long watch_nv_hash() {
+	return NV_DATA_MAGIC;
 }
 
 void init_shm() {

@@ -22,22 +22,27 @@ const (
 )
 
 type FetchFunc func()string
-var watchfuncs []FetchFunc
+type CheckFunc func()[]byte
+var watchfuncs [FetchFunc]CheckFunc
 var ModifyChan chan []byte
 
-func REGISTERFUNC(f FetchFunc) {
-	watchfuncs = append(watchfuncs, f)
+func REGISTERFUNC(f FetchFunc, c CheckFunc) {
+	watchfuncs[f] = c
 }
 
 func initWatchFuncs() {
-	watchfuncs = make([]FetchFunc, 0)
-	REGISTERFUNC(getPressResetIfModified)
-	REGISTERFUNC(getZeroEncodeIfModified)
+	watchfuncs = make([FetchFunc]CheckFunc, 0)
+	REGISTERFUNC(testwatch, testcheck)
+	REGISTERFUNC(watchNV, checkNV)
 }
 
-func getPressResetIfModified() string {
-	value := C.get_press_reset()
-	fmt.Println("get Press Reset ", value)
+func testcheck() []byte {
+	return []byte("testcheck")
+}
+
+func testwatch() string {
+	value := C.watch_test()
+	fmt.Println("watch test ", value)
 	return fmt.Sprint(uint64(value))
 }
 
@@ -47,26 +52,34 @@ func getZeroEncodeIfModified() string{
 	return fmt.Sprint(uint64(value))
 }
 
+func checkNV() []byte {
+	return []byte("checkNV")
+}
+
+func watchNV() string {
+	value := C.watch_nv_hash()
+	return fmt.Sprint(uint64(value))
+}
+
 func GetFunctionName(i interface{}) string {
     return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
 }
 
-func fetchAndCompare(fetch FetchFunc, modified chan []byte, old string) string{
+func fetchAndCompare(fetch FetchFunc, cf CheckFunc, modified chan []byte, old string) string{
 	now := fetch()
 	if now != old {
-		funcName := GetFunctionName(fetch)
-		modified <- []byte(funcName+now)
+		modified <- cf()
 	}
 	return now
 }
 
 func worker(ctx_base context.Context, modified chan []byte) {
 	var wg sync.WaitGroup
-	for _,f := range watchfuncs {
+	for f,c := range watchfuncs {
 		wg.Add(1)
 		defer wg.Done()
 
-		go func(wf FetchFunc, ctx context.Context, modified chan []byte){
+		go func(wf FetchFunc, cf CheckFunc, ctx context.Context, modified chan []byte){
 			watchTicker := time.NewTicker(watchPeriod)
 			defer func() {
 				watchTicker.Stop()
@@ -79,10 +92,10 @@ func worker(ctx_base context.Context, modified chan []byte) {
 				case <-ctx.Done():
 					return
 				case <-watchTicker.C:
-					now = fetchAndCompare(wf, modified, now)
+					now = fetchAndCompare(wf, cf, modified, now)
 				}
 			}
-		}(f, ctx_base, modified)
+		}(f, c, ctx_base, modified)
 	}
 	wg.Wait()
 	Log.Info("quit for some reason")
