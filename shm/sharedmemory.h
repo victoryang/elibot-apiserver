@@ -1,7 +1,5 @@
 #ifndef SHAREDMEMORY_H
 #define SHAREDMEMORY_H
-#include "share/resource.h"
-#include "crc.h"
 
 int get_press_reset();
 

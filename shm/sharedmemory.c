@@ -1,3 +1,6 @@
+#include "share/resource.h"
+#include "crc.h"
+
 int get_press_reset() {
 	return PRESS_RESET;
 }
