@@ -9,7 +9,8 @@ int32_t get_zero_encode(const int x) {
 	return Get_ZeroEncode(x);
 }
 
-unsigned long watch_nv_hash() {
+unsigned long watch_nv() {
+	nvram_data 
 	return NV_DATA_MAGIC;
 }
 

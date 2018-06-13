@@ -49,21 +49,6 @@ func testwatch() string {
 	return fmt.Sprint(uint64(value))
 }
 
-func getZeroEncodeIfModified() string{
-	value := C.get_zero_encode(0)
-	fmt.Println("get zero encode: ", value)
-	return fmt.Sprint(uint64(value))
-}
-
-func checkNV() []byte {
-	return []byte("checkNV")
-}
-
-func watchNV() string {
-	value := C.watch_nv_hash()
-	return fmt.Sprint(uint64(value))
-}
-
 func GetFunctionName(i interface{}) string {
     return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
 }
