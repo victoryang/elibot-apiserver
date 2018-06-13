@@ -22,25 +22,17 @@ const (
 )
 
 type FetchFunc func()string
-type CheckFunc func()[]byte
 var watchfuncs map[string]FetchFunc
-var checkfuncs map[string]CheckFunc
 
-func REGISTERFUNC(k string, f FetchFunc, c CheckFunc) {
+func REGISTERFUNC(k string, f FetchFunc) {
 	watchfuncs[k] = f
-	checkfuncs[k] = c
 }
 
 func initWatchFuncs() {
 	watchfuncs = make(map[string]FetchFunc)
-	checkfuncs = make(map[string]CheckFunc)
 
-	REGISTERFUNC("test", testwatch, testcheck)
-	REGISTERFUNC("NV", watchNV, checkNV)
-}
-
-func testcheck() []byte {
-	return []byte("testcheck")
+	REGISTERFUNC("test", testwatch)
+	REGISTERFUNC("NV", watchNV)
 }
 
 func testwatch() string {
@@ -56,7 +48,7 @@ func GetFunctionName(i interface{}) string {
 func fetchAndCompare(key string, modified chan []byte, old string) string{
 	now := watchfuncs[key]()
 	if now != old {
-		modified <- checkfuncs[key]()
+		modified <- byte[now]
 	}
 	return now
 }
