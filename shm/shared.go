@@ -18,7 +18,7 @@ type SharedResource struct {
 
 var SharedResourcePool = sync.Pool{
 	New: func() interface{} {
-		return new(bytes.Buffer)
+		return bytes.NewBuffer(make([]byte, 0, bufferSize))
 	},
 }
 var crc_shared_resource int = 0

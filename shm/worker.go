@@ -17,6 +17,8 @@ import(
 const (
 	duration = 5
 	watchPeriod = time.Second * duration
+
+	bufferSize = 1024
 )
 
 type WatchFunc func(chan []byte)

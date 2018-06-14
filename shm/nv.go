@@ -28,7 +28,7 @@ type NvRam struct {
 
 var NVRamPool = sync.Pool{
 	New: func() interface{} {
-		return new(bytes.Buffer)
+		return bytes.NewBuffer(make([]byte, 0, bufferSize))
 	},
 }
 var crc_nv int = 0
