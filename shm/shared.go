@@ -24,37 +24,56 @@ var SharedResourcePool = sync.Pool{
 var crc_shared_resource int = 0
 
 func getResourceAndCompare() []byte{
+	mutex.Lock()
+	defer mutex.Unlock()
+
 	resource := SharedResource{
 		Test:		1,
 	}
-	buf := SharedResourcePool.Get().(*bytes.Buffer)
-	old := buf.Bytes()
+
+	var crc int
 	now, err := json.Marshal(resource)
 	if err!=nil {
-		if old!=nil {
-			return old
+		crc = 0
+	}
+	crc = int(crc32.ChecksumIEEE(now))
+
+	buf := SharedResourcePool.Get().(*bytes.Buffer)
+	if buf == nil {
+		if crc == 0 {
+			return []byte("")
 		} else {
-			return nil
-		}
-	}
-	crc_now := int(crc32.ChecksumIEEE(now))
-	if crc_now != crc_shared_resource {
-		buf.Reset()
-		_, err := buf.Write(now)
-		if err != nil {
 			crc_shared_resource = 0
-			return nil
 		}
-		buf.Reset()
-		SharedResourcePool.Put(buf)
-		crc_shared_resource = crc_now
-		return now
 	}
-	return nil
+
+	cache := buf.Bytes()
+	if crc == crc_shared_resource {
+		SharedResourcePool.Put(buf)
+		return nil
+	}
+
+	buf.Reset()
+	_, err := buf.Write(now)
+	if err != nil {
+		crc_shared_resource = 0
+		SharedResourcePool = sync.Pool{
+			New: func() interface{} {
+				return bytes.NewBuffer(make([]byte, 0, bufferSize*2))
+			},
+		}
+		return []byte("")
+	}
+
+	crc_shared_resource = crc
+	SharedResourcePool.Put(buf)
+	return now
 }
 
 func watchSharedResource(modified chan []byte) {
-	modified <- getResourceAndCompare()
+	if res := getResourceAndCompare(); res != nil {
+		modified <- res
+	}
 }
 
 func InitSharedResource() {

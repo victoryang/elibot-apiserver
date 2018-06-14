@@ -32,6 +32,7 @@ var NVRamPool = sync.Pool{
 	},
 }
 var crc_nv int = 0
+var mutex sync.Mutex
 
 func getAxisCount() int32 {
 	return int32(C.get_axis_count());
@@ -55,40 +56,58 @@ func getZeroEncode() []int32 {
 }
 
 func getNVAndCompare() []byte{
+	mutex.Lock()
+	defer mutex.Unlock()
+
 	nvram := NvRam{
 		ProjectName: 		getMainFile(),
 		CurCoordinate:		getCurCoordinate(),
 		Zero_encode:		getZeroEncode(),
 	}
 
-	buf := NVRamPool.Get().(*bytes.Buffer)
-	old := buf.Bytes()
+	var crc int
 	now, err := json.Marshal(nvram)
 	if err!=nil {
-		if old!=nil {
-			return old
-		} else {
-			return nil
-		}
+		crc = 0
 	}
-	crc_now := int(crc32.ChecksumIEEE(now))
-	if crc_now != crc_nv {
-		buf.Reset()
-		_, err := buf.Write(now)
-		if err != nil {
-			crc_nv = 0
-			return nil
-		}
+	crc = int(crc32.ChecksumIEEE(now))
 
-		NVRamPool.Put(buf)
-		crc_nv = crc_now
-		return now
+	buf := NVRamPool.Get().(*bytes.Buffer)
+	if buf == nil {
+		if crc == 0 {
+			return []byte("")
+		} else {
+			crc_nv = 0
+		}
 	}
-	return nil
+
+	cache := buf.Bytes()
+	if crc == crc_nv {
+		NVRamPool.Put(buf)
+		return nil
+	}
+
+	buf.Reset()
+	_, err := buf.Write(now)
+	if err != nil {
+		crc_nv = 0
+		NVRamPool = sync.Pool{
+			New: func() interface{} {
+				return bytes.NewBuffer(make([]byte, 0, bufferSize*2))
+			},
+		}
+		return []byte("")
+	}
+
+	crc_nv = crc
+	NVRamPool.Put(buf)
+	return now
 }
 
 func watchNV(modified chan []byte) {
-	modified <- getNVAndCompare()
+	if res := getNVAndCompare(); res!=nil {
+		modified <- res
+	}
 }
 
 func InitNVRam() {

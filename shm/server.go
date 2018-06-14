@@ -33,9 +33,7 @@ func sender(ctx context.Context, ws *api.WsServer, hit chan []byte) {
 		case <-ctx.Done():
 			break DONE
 		case res := <-hit:
-			if res != nil {
-				ws.Hub.PushMsg(res)
-			}
+			ws.Hub.PushMsg(res)
 		}
 	}
 }
