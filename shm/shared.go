@@ -55,7 +55,7 @@ func getResourceAndCompare() (res []byte){
  		res = []byte("")
  	} else {
  		if crc == crc_shared_resource {
- 			return nil
+ 			res = nil
  		} else {
  			crc_shared_resource = crc
  			res = now

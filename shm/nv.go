@@ -90,7 +90,7 @@ func getNVAndCompare() []byte{
  		res = []byte("")
  	} else {
  		if crc == crc_nv {
- 			return nil
+ 			res = nil
  		} else {
  			crc_nv = crc
  			res = now
