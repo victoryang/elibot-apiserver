@@ -57,7 +57,7 @@ func getZeroEncode() []int32 {
 	return r
 }
 
-func getNVAndCompare() []byte{
+func getNVAndCompare() (res []byte){
 	mutex.Lock()
 	defer mutex.Unlock()
 
@@ -84,13 +84,13 @@ func getNVAndCompare() []byte{
 		cache = buf.Bytes()
 	}
  	
- 	var res []byte
  	if crc == 0 {
  		crc_nv = 0 
  		res = []byte("")
  	} else {
  		if crc == crc_nv {
  			res = nil
+ 			return
  		} else {
  			crc_nv = crc
  			res = now
@@ -114,7 +114,7 @@ func getNVAndCompare() []byte{
 	}(cache)
 	
 	NVRamPool.Put(buf)
-	return res
+	return
 }
 
 func watchNV(modified chan []byte) {
