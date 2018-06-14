@@ -84,7 +84,7 @@ func getNVAndCompare() (res []byte){
 	}
  	
  	if crc == 0 {
- 		res = []byte{""}
+ 		res = []byte("")
  	} else {
  		res = now
  	}
@@ -96,7 +96,7 @@ func getNVAndCompare() (res []byte){
 			Log.Error("buf write error: ", e)
 
 			buf := make([]byte, 0, bufferSize*2)
-			buf.Write(c)
+			buf = c[:]
 			NVRamPool = sync.Pool{
 				New: func() interface{} {
 					return bytes.NewBuffer(buf)

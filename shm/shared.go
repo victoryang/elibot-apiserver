@@ -50,17 +50,10 @@ func getResourceAndCompare() (res []byte){
 	}
 
 	if crc == 0 {
- 		res = []byte{""}
+ 		res = []byte("")
  	} else {
  		res = now
  	}
-
-	cache := buf.Bytes()
-	if crc == crc_shared_resource {
-		SharedResourcePool.Put(buf)
-		res = nil
-		return
-	}
 
 	buf.Reset()
 	buf.Write(res)
@@ -69,7 +62,7 @@ func getResourceAndCompare() (res []byte){
 			Log.Error("buf write error: ", e)
 
 			buf := make([]byte, 0, bufferSize*2)
-			buf.Write(c)
+			buf = c[:]
 			SharedResourcePool = sync.Pool{
 				New: func() interface{} {
 					return bytes.NewBuffer(buf)
