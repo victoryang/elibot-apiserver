@@ -79,6 +79,7 @@ func getNVAndCompare() (res []byte){
 	buf := NVRamPool.Get().(*bytes.Buffer)
 	if buf == nil {
 		buf = bytes.NewBuffer(make([]byte, 0, bufferSize))
+		crc_nv = 0
 	} else {
 		cache = buf.Bytes()
 	}
@@ -86,7 +87,11 @@ func getNVAndCompare() (res []byte){
  	if crc == 0 {
  		res = []byte("")
  	} else {
- 		res = now
+ 		if crc == crc_nv {
+ 			return nil
+ 		} else {
+ 			res = now
+ 		}
  	}
  
  	buf.Reset()
@@ -105,6 +110,7 @@ func getNVAndCompare() (res []byte){
 		}
 	}(cache)
 
+	crc_nv = crc
 	NVRamPool.Put(buf)
 	return
 }
