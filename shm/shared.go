@@ -10,6 +10,8 @@ import (
 	"sync"
 	"encoding/json"
 	"hash/crc32"
+
+	Log "elibot-apiserver/log"
 )
 
 type SharedResource struct {
