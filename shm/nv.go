@@ -46,7 +46,7 @@ func getCurCoordinate() int32{
 }
 
 func getZeroEncode() []int32 {
-	num := int(getAxisCount())
+	num := int32(getAxisCount())
 	r := make([]int32, 0)
 	for i:=0; i<num; i++ {
 		r = append(r, int32(C.get_zero_encode(int32(i))))
