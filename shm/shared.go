@@ -23,7 +23,7 @@ var SharedResourcePool = sync.Pool{
 }
 var crc_shared_resource int = 0
 
-func getResourceAndCompare() []byte{
+func getResourceAndCompare() (res []byte){
 	mutex.Lock()
 	defer mutex.Unlock()
 
@@ -37,11 +37,13 @@ func getResourceAndCompare() []byte{
 		crc = 0
 	}
 	crc = int(crc32.ChecksumIEEE(now))
+	res = now
 
 	buf := SharedResourcePool.Get().(*bytes.Buffer)
 	if buf == nil {
 		if crc == 0 {
-			return []byte("")
+			res = []byte("")
+			return
 		} else {
 			crc_shared_resource = 0
 		}
@@ -50,24 +52,29 @@ func getResourceAndCompare() []byte{
 	cache := buf.Bytes()
 	if crc == crc_shared_resource {
 		SharedResourcePool.Put(buf)
-		return nil
+		res = nil
+		return
 	}
 
 	buf.Reset()
-	_, err = buf.Write(now)
-	if err != nil {
-		crc_shared_resource = 0
-		SharedResourcePool = sync.Pool{
-			New: func() interface{} {
-				return bytes.NewBuffer(make([]byte, 0, bufferSize*2))
-			},
-		}
-		return []byte("")
-	}
-
 	crc_shared_resource = crc
+	buf.Write(now)
+	defer func(c []byte) {
+		if e := recover(); e!=nil {
+			Log.Error("buf write error: ", e)
+			crc_shared_resource = 0
+			SharedResourcePool = sync.Pool{
+				New: func() interface{} {
+					return bytes.NewBuffer(make([]byte, 0, bufferSize*2))
+				},
+			}
+			buf.Write(c)
+			res = c
+		}
+	}(cache)
+
 	SharedResourcePool.Put(buf)
-	return now
+	return
 }
 
 func watchSharedResource(modified chan []byte) {

@@ -55,7 +55,7 @@ func getZeroEncode() []int32 {
 	return r
 }
 
-func getNVAndCompare() []byte{
+func getNVAndCompare() (res []byte){
 	mutex.Lock()
 	defer mutex.Unlock()
 
@@ -71,11 +71,13 @@ func getNVAndCompare() []byte{
 		crc = 0
 	}
 	crc = int(crc32.ChecksumIEEE(now))
+	res = now
 
 	buf := NVRamPool.Get().(*bytes.Buffer)
 	if buf == nil {
 		if crc == 0 {
-			return []byte("")
+			res = []byte("")
+			return
 		} else {
 			crc_nv = 0
 		}
@@ -84,24 +86,29 @@ func getNVAndCompare() []byte{
 	cache := buf.Bytes()
 	if crc == crc_nv {
 		NVRamPool.Put(buf)
-		return nil
+		res = nil
+		return
 	}
 
 	buf.Reset()
-	_, err = buf.Write(now)
-	if err != nil {
-		crc_nv = 0
-		NVRamPool = sync.Pool{
-			New: func() interface{} {
-				return bytes.NewBuffer(make([]byte, 0, bufferSize*2))
-			},
-		}
-		return []byte("")
-	}
-
 	crc_nv = crc
+	buf.Write(now)
+	defer func(c []byte) {
+		if e := recover(); e!=nil {
+			Log.Error("buf write error: ", e)
+			crc_nv = 0
+			NVRamPool = sync.Pool{
+				New: func() interface{} {
+					return bytes.NewBuffer(make([]byte, 0, bufferSize*2))
+				},
+			}
+			buf.Write(c)
+			res = c
+		}
+	}(cache)
+
 	NVRamPool.Put(buf)
-	return now
+	return
 }
 
 func watchNV(modified chan []byte) {
