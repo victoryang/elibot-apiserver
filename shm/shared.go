@@ -2,8 +2,8 @@ package shm
 
 // #cgo CFLAGS: -I/root/mcserver/include/
 // #cgo LDFLAGS: -lshare
-// #include<stdlib.h>
-// #include <include/shared.h>
+// #include <stdlib.h>
+// #include <shared.h>
 import "C"
 import (
 	"bytes"

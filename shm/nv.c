@@ -3,7 +3,7 @@
 #define NV_AXIS_COUNT AXIS_COUNT
 
 int get_axis_count() {
-	return NV_AXIS_COUNT
+	return NV_AXIS_COUNT;
 }
 
 char* get_main_file() {
