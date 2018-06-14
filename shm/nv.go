@@ -49,7 +49,7 @@ func getZeroEncode() []int32 {
 	num := int(getAxisCount())
 	r := make([]int32, 0)
 	for i:=0; i<num; i++ {
-		r = append(r, int32(C.get_zero_encode(int32(i))))
+		r = append(r, int32(C.get_zero_encode(C.int(i))))
 	}
 	return r
 }
@@ -58,6 +58,7 @@ func getNVAndCompare() []byte{
 	nvram := NvRam{
 		ProjectName: 		getMainFile(),
 		CurCoordinate:		getCurCoordinate(),
+		Zero_encode:		getZeroEncode(),
 	}
 
 	buf := NVRamPool.Get().(*bytes.Buffer)
