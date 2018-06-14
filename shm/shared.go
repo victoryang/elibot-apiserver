@@ -23,10 +23,9 @@ var SharedResourcePool = sync.Pool{
 }
 var crc_shared_resource int = 0
 
-func getAndCompare() []byte{
+func getResourceAndCompare() []byte{
 	resource := SharedResource{
-		ProjectName: 		getMainFile(),
-		CurCoordinate:		getCurCoordinate(),
+		Test:		1,
 	}
 	buf := SharedResourcePool.Get().(*bytes.Buffer)
 	old := buf.Bytes()
@@ -41,6 +40,12 @@ func getAndCompare() []byte{
 	crc_now := int(crc32.ChecksumIEEE(now))
 	if crc_now != crc_shared_resource {
 		buf.Reset()
+		_, err := buf.Write(now)
+		if err != nil {
+			crc_shared_resource = 0
+			return nil
+		}
+		buf.Reset()
 		SharedResourcePool.Put(buf.Write(now))
 		crc_shared_resource = crc_now
 		return now
@@ -49,7 +54,7 @@ func getAndCompare() []byte{
 }
 
 func watchSharedResource(modified chan []byte) {
-	modified <- getAndCompare()
+	modified <- getResourceAndCompare()
 }
 
 func InitSharedResource() {

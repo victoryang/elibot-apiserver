@@ -46,7 +46,7 @@ func getCurCoordinate() int32{
 }
 
 func getZeroEncode() []int32 {
-	num := getAxisCount()
+	num := int(getAxisCount())
 	r := make([]int32, 0)
 	for i:=0; i<num; i++ {
 		r = append(r, int32(C.get_zero_encode(i)))
@@ -54,7 +54,7 @@ func getZeroEncode() []int32 {
 	return r
 }
 
-func getAndCompare() []byte{
+func getNVAndCompare() []byte{
 	nvram := NvRam{
 		ProjectName: 		getMainFile(),
 		CurCoordinate:		getCurCoordinate(),
@@ -73,7 +73,13 @@ func getAndCompare() []byte{
 	crc_now := int(crc32.ChecksumIEEE(now))
 	if crc_now != crc_nv {
 		buf.Reset()
-		NVRamPool.Put(buf.Write(now))
+		_, err := buf.Write(now)
+		if err != nil {
+			crc_nv = 0
+			return nil
+		}
+
+		NVRamPool.Put(buf.Bytes())
 		crc_nv = crc_now
 		return now
 	}
@@ -81,7 +87,7 @@ func getAndCompare() []byte{
 }
 
 func watchNV(modified chan []byte) {
-	modified <- getAndCompare()
+	modified <- getNVAndCompare()
 }
 
 func InitNVRam() {
