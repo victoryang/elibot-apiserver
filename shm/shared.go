@@ -6,45 +6,51 @@ package shm
 // #include "include/shared.h"
 import "C"
 import (
+	"bytes"
 	"fmt"
 	"sync"
 	"encoding/json"
+	"hash/crc32"
 )
 
 type SharedResource struct {
-	
+	Test 	int 		`json:"test,omitempty"`
 }
 
-var NVRamPool = sync.Pool{
+var SharedResourcePool = sync.Pool{
 	New: func() interface{} {
-		return new(SharedResource)
+		return new(bytes.Buffer)
 	}
 }
+var crc_old int = 0
 
-func getAxisCount() int32 {
-	return int32(C.get_axis_count());
-}
-
-func getMainFile() string {
-	return C.GoString(C.get_main_file())
-}
-
-func getCurCoordinate() int32{
-	return int32(C.get_cur_coordinate())
-}
-
-func getNV() []byte{
-	nvram := NvRam{
+func getAndCompare() []byte{
+	resource := SharedResource{
 		ProjectName: 		getMainFile(),
 		CurCoordinate:		getCurCoordinate(),
 	}
-	b, _ := json.Marshal(nvram)
-	return b
+	buf := SharedResourcePool.Get().(*bytes.Buffer)
+	old := buf.Bytes()
+	now, err := json.Marshal(resource)
+	if err!=nil {
+		if old!=nil {
+			return old
+		} else {
+			return nil
+		}
+	}
+	crc_now := int(crc32.ChecksumIEEE(now))
+	if crc_now != crc_old {
+		buf.Reset()
+		SharedResourcePool.Put(buf.Write(now))
+		crc_old = crc_now
+		return now
+	}
+	return nil
 }
 
-func watchSharedResource() ([]byte, string) {
-	value := C.watch_nv()
-	return getNV(), fmt.Sprint(uint64(value))
+func watchSharedResource(modified chan []byte) {
+	modified <- getAndCompare()
 }
 
 func InitSharedResource() {

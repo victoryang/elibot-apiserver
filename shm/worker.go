@@ -21,57 +21,47 @@ const (
 	watchPeriod = time.Second * duration
 )
 
-type FetchFunc func()([]byte,string)
-var watchfuncs map[string]FetchFunc
+type WatchFunc func(chan []byte)
+var watchfuncs map[string]WatchFunc
 
-func REGISTERFUNC(k string, f FetchFunc) {
+func REGISTERFUNC(k string, f WatchFunc) {
 	watchfuncs[k] = f
 }
 
 func initWatchFuncs() {
-	watchfuncs = make(map[string]FetchFunc)
+	watchfuncs = make(map[string]WatchFunc)
 
-	//REGISTERFUNC("test", testwatch)
+	REGISTERFUNC("test", testwatch)
+	REGISTERFUNC("sharedResource", watchSharedResource)
 	REGISTERFUNC("NV", watchNV)
 }
 
-func testwatch() string {
+func testwatch(modified chan []byte) {
 	value := C.watch_test()
-	fmt.Println("watch test ", value)
-	return fmt.Sprint(uint64(value))
-}
-
-func fetchAndCompare(key string, modified chan []byte, old string) string{
-	res, now := watchfuncs[key]()
-	if now != old {
-		modified <- res
-	}
-	return now
+	modified<-[]byte(fmt.Println("watch test ", value))
 }
 
 func worker(ctx_base context.Context, modified chan []byte) {
 	var wg sync.WaitGroup
-	for k,_ := range watchfuncs {
+	for _,f := range watchfuncs {
 		wg.Add(1)
 		defer wg.Done()
 
-		go func(key string, ctx context.Context, modified chan []byte){
+		go func(watchfunc WatchFunc, ctx context.Context, modified chan []byte){
 			watchTicker := time.NewTicker(watchPeriod)
 			defer func() {
 				watchTicker.Stop()
 			}()
 
-			res, now := watchfuncs[key]()
-			modified <- res
 			for {
 				select {
 				case <-ctx.Done():
 					return
 				case <-watchTicker.C:
-					now = fetchAndCompare(key, modified, now)
+					watchfunc(modified)
 				}
 			}
-		}(k, ctx_base, modified)
+		}(f, ctx_base, modified)
 	}
 	wg.Wait()
 	Log.Info("quit for some reason")

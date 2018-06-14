@@ -6,9 +6,11 @@ package shm
 // #include "include/nv.h"
 import "C"
 import (
+	"bytes"
 	"fmt"
 	"sync"
 	"encoding/json"
+	"hash/crc32"
 )
 
 type NvRam struct {
@@ -27,9 +29,10 @@ type NvRam struct {
 
 var NVRamPool = sync.Pool{
 	New: func() interface{} {
-		return new(NvRam)
+		return new(bytes.Buffer)
 	}
 }
+var crc_old int = 0
 
 func getAxisCount() int32 {
 	return int32(C.get_axis_count());
@@ -43,18 +46,43 @@ func getCurCoordinate() int32{
 	return int32(C.get_cur_coordinate())
 }
 
-func getNV() []byte{
+func getZeroEncode() []int32 {
+	num := getAxisCount()
+	r := make([]int32, 0)
+	for i=0; i<num; i++ {
+		r = append(r, C.get_zero_encode(i))
+	}
+	return r
+}
+
+func getAndCompare() []byte{
 	nvram := NvRam{
 		ProjectName: 		getMainFile(),
 		CurCoordinate:		getCurCoordinate(),
 	}
-	b, _ := json.Marshal(nvram)
-	return b
+
+	buf := NVRamPool.Get().(*bytes.Buffer)
+	old := buf.Bytes()
+	now, err := json.Marshal(nvram)
+	if err!=nil {
+		if old!=nil {
+			return old
+		} else {
+			return nil
+		}
+	}
+	crc_now := int(crc32.ChecksumIEEE(now))
+	if crc_now != crc_old {
+		buf.Reset()
+		NVRamPool.Put(buf.Write(now))
+		crc_old = crc_now
+		return now
+	}
+	return nil
 }
 
-func watchNV() ([]byte, string) {
-	value := C.watch_nv()
-	return getNV(), fmt.Sprint(uint64(value))
+func watchNV(modified chan []byte) {
+	modified <- getAndCompare()
 }
 
 func InitNVRam() {
