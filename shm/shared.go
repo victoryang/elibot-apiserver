@@ -37,19 +37,23 @@ func getResourceAndCompare() (res []byte){
 	now, err := json.Marshal(resource)
 	if err!=nil {
 		crc = 0
+	} else {
+		crc = int(crc32.ChecksumIEEE(now))
 	}
-	crc = int(crc32.ChecksumIEEE(now))
-	res = now
 
+	var cache []byte
 	buf := SharedResourcePool.Get().(*bytes.Buffer)
 	if buf == nil {
-		if crc == 0 {
-			res = []byte("")
-			return
-		} else {
-			crc_shared_resource = 0
-		}
+		buf = bytes.NewBuffer(make([]byte, 0, bufferSize))
+	} else {
+		cache = buf.Bytes()
 	}
+
+	if crc == 0 {
+ 		res = []byte{""}
+ 	} else {
+ 		res = now
+ 	}
 
 	cache := buf.Bytes()
 	if crc == crc_shared_resource {
@@ -59,19 +63,18 @@ func getResourceAndCompare() (res []byte){
 	}
 
 	buf.Reset()
-	crc_shared_resource = crc
-	buf.Write(now)
+	buf.Write(res)
 	defer func(c []byte) {
 		if e := recover(); e!=nil {
 			Log.Error("buf write error: ", e)
-			crc_shared_resource = 0
+
+			buf := make([]byte, 0, bufferSize*2)
+			buf.Write(c)
 			SharedResourcePool = sync.Pool{
 				New: func() interface{} {
-					return bytes.NewBuffer(make([]byte, 0, bufferSize*2))
+					return bytes.NewBuffer(buf)
 				},
 			}
-			buf.Write(c)
-			res = c
 		}
 	}(cache)
 
