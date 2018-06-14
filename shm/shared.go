@@ -54,7 +54,7 @@ func getResourceAndCompare() []byte{
 	}
 
 	buf.Reset()
-	_, err := buf.Write(now)
+	_, err = buf.Write(now)
 	if err != nil {
 		crc_shared_resource = 0
 		SharedResourcePool = sync.Pool{

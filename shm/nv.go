@@ -88,7 +88,7 @@ func getNVAndCompare() []byte{
 	}
 
 	buf.Reset()
-	_, err := buf.Write(now)
+	_, err = buf.Write(now)
 	if err != nil {
 		crc_nv = 0
 		NVRamPool = sync.Pool{
