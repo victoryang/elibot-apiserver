@@ -7,7 +7,7 @@ package shm
 import "C"
 import(
 	"context"
-	"fmt"
+	"strconv"
 	"time"
 	"sync"
 
@@ -36,7 +36,7 @@ func initWatchFuncs() {
 
 func testwatch(modified chan []byte) {
 	value := C.watch_test()
-	modified<-[]byte(fmt.Println("watch test ", value))
+	modified<-[]byte(string("watch test ")+strconv.Itoa(int(value)))
 }
 
 func worker(ctx_base context.Context, modified chan []byte) {
