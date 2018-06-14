@@ -46,7 +46,7 @@ func getResourceAndCompare() []byte{
 			return nil
 		}
 		buf.Reset()
-		SharedResourcePool.Put(buf.Bytes())
+		SharedResourcePool.Put(buf)
 		crc_shared_resource = crc_now
 		return now
 	}

@@ -80,7 +80,7 @@ func getNVAndCompare() []byte{
 			return nil
 		}
 
-		NVRamPool.Put(buf.Bytes())
+		NVRamPool.Put(buf)
 		crc_nv = crc_now
 		return now
 	}
