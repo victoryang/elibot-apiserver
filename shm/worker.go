@@ -2,8 +2,8 @@ package shm
 
 // #cgo CFLAGS: -I/root/mcserver/include/
 // #cgo LDFLAGS: -lshare
-// #include<stdlib.h>
-// #include "include/workeresource.h"
+// #include <stdlib.h>
+// #include <include/workeresource.h>
 import "C"
 import(
 	"context"

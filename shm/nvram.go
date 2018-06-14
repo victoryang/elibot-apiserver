@@ -3,7 +3,7 @@ package shm
 // #cgo CFLAGS: -I/root/mcserver/include/
 // #cgo LDFLAGS: -lshare
 // #include <stdlib.h>
-// #include "include/nv.h"
+// #include <include/nv.h>
 import "C"
 import (
 	"bytes"
