@@ -51,11 +51,13 @@ func getResourceAndCompare() (res []byte){
 	}
 
 	if crc == 0 {
+		crc_shared_resource = 0
  		res = []byte("")
  	} else {
  		if crc == crc_shared_resource {
  			return nil
  		} else {
+ 			crc_shared_resource = crc
  			res = now
  		}
  	}
@@ -76,7 +78,6 @@ func getResourceAndCompare() (res []byte){
 		}
 	}(cache)
 
-	crc_shared_resource = crc
 	SharedResourcePool.Put(buf)
 	return
 }

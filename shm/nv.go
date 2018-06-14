@@ -85,11 +85,13 @@ func getNVAndCompare() (res []byte){
 	}
  	
  	if crc == 0 {
+ 		crc_nv = 0 
  		res = []byte("")
  	} else {
  		if crc == crc_nv {
  			return nil
  		} else {
+ 			crc_nv = crc
  			res = now
  		}
  	}
@@ -109,8 +111,7 @@ func getNVAndCompare() (res []byte){
 			}
 		}
 	}(cache)
-
-	crc_nv = crc
+	
 	NVRamPool.Put(buf)
 	return
 }
