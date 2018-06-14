@@ -1,19 +1,19 @@
 #include "share/resource.h"
 #include "crc.h"
 
-uint32_t crc = 0xFFFFFFFF;
 struct nvram_data_s *nvram_data;
+uint32_t crc = 0xFFFFFFFF;
 
-int watch_test() {
-	return PRESS_RESET;
+char* get_main_file() {
+	return GetMainfile();
 }
 
 int32_t get_zero_encode(const int x) {
 	return Get_ZeroEncode(x);
 }
 
-int get_axis_count (){
-	return AXIS_COUNT;
+int32_t get_cur_coordinate() {
+	return GetCurCoordinate();
 }
 
 int watch_nv() { 
@@ -21,8 +21,7 @@ int watch_nv() {
 	return c;
 }
 
-void init_shm() {
-	resource_init("/rbctrl/mcserver");
+void init_nv_ram() {
 	init_nvram(NULL);
 	crc32_init();
 }

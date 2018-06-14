@@ -2,12 +2,12 @@ package shm
 
 // #cgo CFLAGS: -I/root/mcserver/include/
 // #cgo LDFLAGS: -lshare
-// #include<stdlib.h>
-// #include<sharedmemory.h>
-// #include<nv.h>
+// #include <stdlib.h>
+// #include "include/nv.h"
 import "C"
 import (
 	"fmt"
+	"sync"
 	"encoding/json"
 )
 
@@ -23,6 +23,12 @@ type NvRam struct {
 	System_period		float64		`json:"system_period,omitempty"`
 	System_ctrl_mode	int32		`json:"system_ctrl_mode,omitempty"`
 	Origin				[]float64	`json:"origin,omitempty"`
+}
+
+var NVRamPool = sync.Pool{
+	New: func() interface{} {
+		return new(NvRam)
+	}
 }
 
 func getAxisCount() int32 {
@@ -49,4 +55,8 @@ func getNV() []byte{
 func watchNV() ([]byte, string) {
 	value := C.watch_nv()
 	return getNV(), fmt.Sprint(uint64(value))
+}
+
+func InitNVRam() {
+	C.init_nv_ram()
 }

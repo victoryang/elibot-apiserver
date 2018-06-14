@@ -3,7 +3,7 @@ package shm
 // #cgo CFLAGS: -I/root/mcserver/include/
 // #cgo LDFLAGS: -lshare
 // #include<stdlib.h>
-// #include<sharedmemory.h>
+// #include "include/workeresource.h"
 import "C"
 import(
 	"context"
@@ -41,10 +41,6 @@ func testwatch() string {
 	return fmt.Sprint(uint64(value))
 }
 
-func GetFunctionName(i interface{}) string {
-    return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
-}
-
 func fetchAndCompare(key string, modified chan []byte, old string) string{
 	res, now := watchfuncs[key]()
 	if now != old {
@@ -65,8 +61,8 @@ func worker(ctx_base context.Context, modified chan []byte) {
 				watchTicker.Stop()
 			}()
 
-			now := watchfuncs[key]()
-			modified <- []byte(now)
+			res, now := watchfuncs[key]()
+			modified <- res
 			for {
 				select {
 				case <-ctx.Done():
@@ -79,4 +75,10 @@ func worker(ctx_base context.Context, modified chan []byte) {
 	}
 	wg.Wait()
 	Log.Info("quit for some reason")
+}
+
+func initWorkerResource() {
+	C.init_worker_resource()
+	InitSharedResource()
+	InitNVRam()
 }
