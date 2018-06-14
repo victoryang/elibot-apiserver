@@ -7,7 +7,6 @@ package shm
 import "C"
 import (
 	"bytes"
-	"fmt"
 	"sync"
 	"encoding/json"
 	"hash/crc32"
@@ -32,7 +31,7 @@ var NVRamPool = sync.Pool{
 		return new(bytes.Buffer)
 	},
 }
-var crc_old int = 0
+var crc_nv int = 0
 
 func getAxisCount() int32 {
 	return int32(C.get_axis_count());
@@ -49,8 +48,8 @@ func getCurCoordinate() int32{
 func getZeroEncode() []int32 {
 	num := getAxisCount()
 	r := make([]int32, 0)
-	for i=0; i<num; i++ {
-		r = append(r, C.get_zero_encode(i))
+	for i:=0; i<num; i++ {
+		r = append(r, int32(C.get_zero_encode(i)))
 	}
 	return r
 }
@@ -72,10 +71,10 @@ func getAndCompare() []byte{
 		}
 	}
 	crc_now := int(crc32.ChecksumIEEE(now))
-	if crc_now != crc_old {
+	if crc_now != crc_nv {
 		buf.Reset()
 		NVRamPool.Put(buf.Write(now))
-		crc_old = crc_now
+		crc_nv = crc_now
 		return now
 	}
 	return nil

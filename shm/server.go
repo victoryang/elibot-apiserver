@@ -20,7 +20,7 @@ type ShmServer struct {
 	Cancel 		context.CancelFunc
 }
 
-func sender(ws *api.WsServer, hit chan []byte) {
+func sender(ctx context.Context, ws *api.WsServer, hit chan []byte) {
 	Log.Info("Shared memory server started...")
 	watchTicker := time.NewTicker(watchPeriod)
 	defer func() {
@@ -30,7 +30,7 @@ func sender(ws *api.WsServer, hit chan []byte) {
 	DONE:
 	for {
 		select {
-		case <-s.Ctx.Done():
+		case <-ctx.Done():
 			break DONE
 		case res := <-hit:
 			ws.Hub.PushMsg(res)
@@ -49,7 +49,7 @@ func handleMsg(msg []byte) {
 
 func (s *ShmServer) StartToWatch() {
 	go worker(s.Ctx, s.Hit)
-	go sender(s.Wss, s.Hit)
+	go sender(s.Ctx, s.Wss, s.Hit)
 }
 
 func NewServer(server *api.WsServer) *ShmServer{

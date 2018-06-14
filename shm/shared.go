@@ -7,7 +7,6 @@ package shm
 import "C"
 import (
 	"bytes"
-	"fmt"
 	"sync"
 	"encoding/json"
 	"hash/crc32"
@@ -22,7 +21,7 @@ var SharedResourcePool = sync.Pool{
 		return new(bytes.Buffer)
 	},
 }
-var crc_old int = 0
+var crc_shared_resource int = 0
 
 func getAndCompare() []byte{
 	resource := SharedResource{
@@ -40,10 +39,10 @@ func getAndCompare() []byte{
 		}
 	}
 	crc_now := int(crc32.ChecksumIEEE(now))
-	if crc_now != crc_old {
+	if crc_now != crc_shared_resource {
 		buf.Reset()
 		SharedResourcePool.Put(buf.Write(now))
-		crc_old = crc_now
+		crc_shared_resource = crc_now
 		return now
 	}
 	return nil
