@@ -37,7 +37,7 @@ func (m *BackupSqlMapper) RegisterSqlMapperForQueryAll() error{
 }
 
 func (m *BackupSqlMapper) RegisterSqlMapper(mode int) error {
-	Log.Print("RegisterSqlMapper in BackupSqlMapper | mode: ", mode)
+	Log.Debug("RegisterSqlMapper in BackupSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		return m.RegisterSqlMapperForQueryAll()

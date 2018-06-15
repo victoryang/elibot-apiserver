@@ -32,7 +32,7 @@ func (m *ArcSqlMapper) GetID() string {
 }
 
 func (m *ArcSqlMapper) RegisterSqlMapper(mode int) error {
-	Log.Print("RegisterSqlMapper in ArcSqlMapper | mode: ", mode)
+	Log.Debug("RegisterSqlMapper in ArcSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_ARC_GET_ALL_PARAMS

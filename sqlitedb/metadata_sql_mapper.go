@@ -32,7 +32,7 @@ func (m *MetadataSqlMapper) GetID() string {
 }
 
 func (m *MetadataSqlMapper) RegisterSqlMapper(mode int) error {
-	Log.Print("RegisterSqlMapper in MetadataSqlMapper | mode: ", mode)
+	Log.Debug("RegisterSqlMapper in MetadataSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_METADATA_GET_ALL

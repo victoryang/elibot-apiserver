@@ -61,18 +61,17 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 		default:
 			conn := getConnFromPool(ch)
 			if conn == nil {
+				ch <- Response{Result: "", Err: errors.New("can not get connection from pool")}
 				return
 			}
 			defer Mcs.ConnPool.Put(conn)
-			var res string
-			var err error
+
 			if consumeCommandLineIf(conn.(net.Conn)) {
-				res, err = handleCommand(conn.(net.Conn), cmd)
+				res, err := handleCommand(conn.(net.Conn), cmd)
+				ch <- Response{Result: res, Err: err}
 			} else {
-				err = errors.New("MCServer error: bad connection")
-				res = ""
+				ch <- Response{Result: "", Err: errors.New("MCServer error: bad connection")}
 			}
-			ch<-Response{Result: res, Err: err}
 		}
 	}
 }
@@ -97,6 +96,7 @@ func (mc *MCserver) Close() {
 		mc.QuitChan<-true
 		mc.ConnPool.Release()
 		mc=nil
+		Log.Debug("MCServer closed")
 	}
 } 
 
