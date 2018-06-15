@@ -9,6 +9,6 @@ int32_t get_zero_encode(const int x);
 
 int32_t get_cur_coordinate();
 
-void init_nv_ram();
+int init_nv_ram();
 
 #endif //NV_H

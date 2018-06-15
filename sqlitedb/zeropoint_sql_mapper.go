@@ -32,7 +32,7 @@ func (m *ZeroPointSqlMapper) GetID() string {
 }
 
 func (m *ZeroPointSqlMapper) RegisterSqlMapper(mode int) error {
-	Log.Print("RegisterSqlMapper in ZeroPointSqlMapper | mode: ", mode)
+	Log.Debug("RegisterSqlMapper in ZeroPointSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_ZEROPOINT_GET_ALL

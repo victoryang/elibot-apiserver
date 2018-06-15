@@ -32,7 +32,7 @@ func (m *InterferenceSqlMapper) GetID() string {
 }
 
 func (m *InterferenceSqlMapper) RegisterSqlMapper(mode int) error {
-	Log.Print("RegisterSqlMapper in InterferenceSqlMapper | mode: ", mode)
+	Log.Debug("RegisterSqlMapper in InterferenceSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_INTERFERENCE_GET_ALL

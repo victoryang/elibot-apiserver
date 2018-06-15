@@ -32,7 +32,7 @@ func (m *RefSqlMapper) GetID() string {
 }
 
 func (m *RefSqlMapper) RegisterSqlMapper(mode int) error {
-	Log.Print("RegisterSqlMapper in RefSqlMapper | mode: ", mode)
+	Log.Debug("RegisterSqlMapper in RefSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_REF_GET_ALL:
 		m.Id = C.ELIBOT_REF_GET_ALL

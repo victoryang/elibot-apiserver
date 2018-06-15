@@ -15,6 +15,7 @@ import (
 
 const (
 	configFile = "/rbctrl/configuration/elibot-server.yaml"
+	mcserverAddress = "127.0.0.1:8055"
 )
 
 const (
@@ -23,8 +24,8 @@ const (
 	ERR_START_MCSERVER
 	ERR_START_APISERVER
 	ERR_START_GRPCSERVER
-	ERR_START_SHMSERVER
 	ERR_START_WSSERVER
+	ERR_START_SHMSERVER
 )
 
 func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *api.WsServer, shms *shm.ShmServer) {
@@ -60,7 +61,7 @@ func LoadConfig() *config.GlobalConfiguration{
 	cfg, err := config.LoadFile(configFile) 
 	if err!=nil {
 		Log.Error("Parse configure file error: ", err)
-		Log.Error("set default configuration")
+		Log.Error("set to default configuration")
 		cfg = config.DefaultGlobalConfiguration
 	}
 
@@ -69,6 +70,7 @@ func LoadConfig() *config.GlobalConfiguration{
 
 func ConfigServerLog(cfg *config.GlobalConfiguration) error {
 	if err := Log.OpenFile(cfg.ServerLogsFile); err!=nil {
+		Log.Error("Configure server log error: ", err)
 		return err
 	}
 
@@ -89,7 +91,7 @@ func main() {
 	}
 	defer Log.CloseFile()
 
-	mcs := mcserver.NewMCServer("127.0.0.1:8055", 3)
+	mcs := mcserver.NewMCServer(mcserverAddress, 3)
 	if mcs==nil {
 		Log.Error("Error in connecting to mc server")
 		os.Exit(ERR_START_MCSERVER)
@@ -101,16 +103,20 @@ func main() {
 	s := api.NewApiServer(cfg)
 	s.Run()
 	
-	gs := api.NewGrpcServer()
+	gs := api.NewGrpcServer(cfg.Grpc)
 	if gs == nil {
 		Log.Error("Failed to start grpc server")
-		exit(ERR_START_GRPCSERVER)
+		os.Exit(ERR_START_GRPCSERVER)
 	}
 
-	wss := api.NewWsServer()
+	wss := api.NewWsServer(cfg.Websocket)
 	wss.Run()
 
-	shms := shm.NewServer(wss)
+	shms,err := shm.NewServer(wss)
+	if err!=nil {
+		Log.Error(err.Error())
+		os.Exit(ERR_START_SHMSERVER)
+	}
 	shms.StartToWatch()
 	handleSignals(s, mcs, gs, wss, shms)
 }

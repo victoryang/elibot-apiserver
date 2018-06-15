@@ -6,6 +6,7 @@ import (
 	"context"
 
 	Log "elibot-apiserver/log"
+	"elibot-apiserver/config"
 	"elibot-apiserver/api/v3"
 )
 
@@ -15,7 +16,7 @@ type WsServer struct {
 }
 
 func (s *WsServer) Run() {
-	Log.Print("websocket server listening...")
+	Log.Debug("websocket server listening...")
 	go s.HttpServer.ListenAndServe()
 }
 
@@ -26,10 +27,10 @@ func (s *WsServer) Shutdown() {
     // Doesn't block if no connections, but will otherwise wait
     // until the timeout deadline.
     s.HttpServer.Shutdown(ctx)
-    Log.Print("websocket server shuting down...")
+    Log.Debug("websocket server shuting down...")
 }
 
-func NewWsServer() *WsServer {
+func NewWsServer(c cfg.WebsocketEntryPoint) *WsServer {
 	s := new(WsServer)
 	
 	s.Hub = v3.NewHub()
@@ -39,7 +40,7 @@ func NewWsServer() *WsServer {
                 v3.ServeWs(s.Hub, w, r)
     })
 	s.HttpServer = &http.Server {
-		Addr:			":9050",
+		Addr:			c.ListenAddress,
 		ReadTimeout:    10 * time.Minute,
 		WriteTimeout:   10 * time.Minute,
 		MaxHeaderBytes: 1 << 20,

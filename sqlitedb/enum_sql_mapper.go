@@ -32,7 +32,7 @@ func (m *EnumSqlMapper) GetID() string {
 }
 
 func (m *EnumSqlMapper) RegisterSqlMapper(mode int) error {
-	Log.Print("RegisterSqlMapper in EnumSqlMapper | mode: ", mode)
+	Log.Debug("RegisterSqlMapper in EnumSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_ENUM_GET_ALL

@@ -32,7 +32,7 @@ func (m *BookProgramSqlMapper) GetID() string {
 }
 
 func (m *BookProgramSqlMapper) RegisterSqlMapper(mode int) error {
-	Log.Print("RegisterSqlMapper in BookProgramSqlMapper | mode: ", mode)
+	Log.Debug("RegisterSqlMapper in BookProgramSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_BOOKPROGRAM_GET_ALL

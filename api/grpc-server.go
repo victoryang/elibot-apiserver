@@ -4,13 +4,10 @@ import (
 	"net"
 
 	Log "elibot-apiserver/log"
+	"elibot-apiserver/config"
 
 	v2rpc "elibot-apiserver/api/v2"
 	"google.golang.org/grpc"
-)
-
-const (
-	port = 9500
 )
 
 type GrpcServer struct {
@@ -20,6 +17,7 @@ type GrpcServer struct {
 func (s *GrpcServer)Shutdown() {
 	shutdownNow := func() {
 		// close grpc.Server; cancels all active RPCs
+		Log.Debug("Grpc server: shutting down...")
 		s.grpc.Stop()
 	}
 
@@ -43,14 +41,16 @@ func (s *GrpcServer)Shutdown() {
 	}
 }
 
-func NewGrpcServer() (*GrpcServer){
-	lis, err := net.Listen("tcp", ":2500")
+func NewGrpcServer(c *config.GrpcEntryPoint) (*GrpcServer){
+	lis, err := net.Listen("tcp", c.ListenAddress)
     if err != nil {
             Log.Error("failed to listen: %v", err)
             return nil
     }
     gs := v2rpc.Server()
     go gs.Serve(lis)
+
+    Log.Debug("Grpc server started...")
 
     return &GrpcServer{grpc: gs}
 }

@@ -42,7 +42,7 @@ func testSocket(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllArc(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all Arc")
+	Log.Debug("starting get all Arc")
 	res, err := db.Get_ALL_Arc()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -56,7 +56,7 @@ func getAllArc(w http.ResponseWriter, r *http.Request) {
 }
 
 func getArcParams(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get Arc parameters")
+	Log.Debug("starting get Arc parameters")
 	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
 
@@ -76,7 +76,7 @@ func getArcParams(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all bookprograms")
+	Log.Debug("starting get all bookprograms")
 	res, err := db.Get_All_Bookprograms()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -90,7 +90,7 @@ func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllEnum(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all Enum")
+	Log.Debug("starting get all Enum")
 	res, err := db.Get_ALL_Enum()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -104,7 +104,7 @@ func getAllEnum(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all Extaxis")
+	Log.Debug("starting get all Extaxis")
 	res, err := db.Get_ALL_Extaxis()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -118,7 +118,7 @@ func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllInterference(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all Interference")
+	Log.Debug("starting get all Interference")
 	res, err := db.Get_All_Interference()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -132,7 +132,7 @@ func getAllInterference(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllIO(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all IO")
+	Log.Debug("starting get all IO")
 	res, err := db.Get_All_IO()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -146,7 +146,7 @@ func getAllIO(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllMetadata(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all Metadata")
+	Log.Debug("starting get all Metadata")
 	vars := mux.Vars(r)
 
 	queries := make(map[string]interface{})
@@ -164,7 +164,7 @@ func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 }
 
 func getParams(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all Parameter")
+	Log.Debug("starting get all Parameter")
 	res, err := db.Get_Params()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -178,7 +178,7 @@ func getParams(w http.ResponseWriter, r *http.Request) {
 }
 
 func getParameterById(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all Parameter")
+	Log.Debug("starting get all Parameter")
 	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
 	queries["md_id"] = vars["md_id"]
@@ -196,7 +196,7 @@ func getParameterById(w http.ResponseWriter, r *http.Request) {
 }
 
 func parameterbygroup(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all Parameter")
+	Log.Debug("starting get all Parameter")
 	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
 	queries["group"] = vars["group"]
@@ -213,7 +213,7 @@ func parameterbygroup(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllRef(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all Ref")
+	Log.Debug("starting get all Ref")
 	res, err := db.Get_All_Ref()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -227,7 +227,7 @@ func getAllRef(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllToolframe(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all toolframe")
+	Log.Debug("starting get all toolframe")
 	res, err := db.Get_ALL_Toolframe()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -241,7 +241,7 @@ func getAllToolframe(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllUserframe(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all userframe")
+	Log.Debug("starting get all userframe")
 	res, err := db.Get_ALL_Userframe()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -255,7 +255,7 @@ func getAllUserframe(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting get all zeropoints")
+	Log.Debug("starting get all zeropoints")
 	res, err := db.Get_All_Zeropoints()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -269,7 +269,7 @@ func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
 }
 
 func DBBackup(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting DB Backup")
+	Log.Debug("starting DB Backup")
 	err := db.DBBackup()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -283,7 +283,7 @@ func DBBackup(w http.ResponseWriter, r *http.Request) {
 }
 
 func DBList(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting DB List")
+	Log.Debug("starting DB List")
 	files, err := db.DBList()
 	if err!=nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -298,7 +298,7 @@ func DBList(w http.ResponseWriter, r *http.Request) {
 }
 
 func DBDel(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting DB Deletion")
+	Log.Debug("starting DB Deletion")
 	vars := mux.Vars(r)
 	err := db.DBDel(vars["name"])
 	if err!=nil {
@@ -313,7 +313,7 @@ func DBDel(w http.ResponseWriter, r *http.Request) {
 }
 
 func DBRestore(w http.ResponseWriter, r *http.Request) {
-	Log.Info("starting DB Restore")
+	Log.Debug("starting DB Restore")
 	vars := mux.Vars(r)
 	err := db.DBRestore(vars["name"])
 	if err!=nil {

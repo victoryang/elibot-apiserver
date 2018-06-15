@@ -7,6 +7,7 @@ package shm
 import "C"
 import(
 	"context"
+	"error"
 	"strconv"
 	"time"
 	"sync"
@@ -62,11 +63,20 @@ func worker(ctx_base context.Context, modified chan []byte) {
 		}(f, ctx_base, modified)
 	}
 	wg.Wait()
-	Log.Info("quit for some reason")
+	Log.Debug("quit for some reason")
 }
 
-func initWorkerResource() {
+func initWorkerResource() error {
 	C.init_worker_resource()
-	InitSharedResource()
-	InitNVRam()
+	res := InitSharedResource()
+	if res != 0 {
+		errMsg := string("failed to init shared resource, return value:") + strconv.Itoa(int(value))
+		return error.New(errMsg)
+	}
+	res = InitNVRam()
+	if res != 0 {
+		errMsg := string("failed to init NV ram, return value:") + strconv.Itoa(int(value))
+		return error.New(errMsg)
+	}
+	return nil
 }

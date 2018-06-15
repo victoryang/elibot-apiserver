@@ -18,6 +18,6 @@ int32_t get_cur_coordinate() {
 	return GetCurCoordinate();
 }
 
-void init_nv_ram() {
-	init_nvram(NULL);
+int init_nv_ram() {
+	return init_nvram(NULL);
 }

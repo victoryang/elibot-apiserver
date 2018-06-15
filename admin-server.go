@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"elibot-apiserver/config"
+	Log "elibot-apiserver/log"
 
 	"github.com/gorilla/mux"
 )
@@ -62,9 +63,9 @@ func startAdminServer(c *config.AdminSever) {
 		// Configure TLS if certs are available.
 		err := adminServer.ListenAndServe()
 		if err!= nil {
-			fmt.Println ("Admin server error.")
+			Log.Error("Admin server error.")
 		}
-		fmt.Println ("Admin server running...")
+		Log.Info("Admin server running...")
 	}()
 }
 

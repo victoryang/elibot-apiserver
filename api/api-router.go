@@ -10,6 +10,6 @@ import (
 )
 
 func RegisterAPIRouter(r *mux.Router) http.Handler {
-	Log.Info("Register V1 api...")
+	Log.Debug("Register V1 api...")
 	return v1.RegisterV1(r)
 }

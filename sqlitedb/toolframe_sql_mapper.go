@@ -32,7 +32,7 @@ func (m *ToolframeSqlMapper) GetID() string {
 }
 
 func (m *ToolframeSqlMapper) RegisterSqlMapper(mode int) error {
-	Log.Print("RegisterSqlMapper in ToolframeSqlMapper | mode: ", mode)
+	Log.Debug("RegisterSqlMapper in ToolframeSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_COMMON_GET_ALL_TOOLFRAMES
