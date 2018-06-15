@@ -30,7 +30,7 @@ func (s *WsServer) Shutdown() {
     Log.Debug("websocket server shuting down...")
 }
 
-func NewWsServer(c cfg.WebsocketEntryPoint) *WsServer {
+func NewWsServer(c *config.WebsocketEntryPoint) *WsServer {
 	s := new(WsServer)
 	
 	s.Hub = v3.NewHub()
