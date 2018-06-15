@@ -47,6 +47,7 @@ func NewGrpcServer() (*GrpcServer){
 	lis, err := net.Listen("tcp", ":2500")
     if err != nil {
             Log.Error("failed to listen: %v", err)
+            return nil
     }
     gs := v2rpc.Server()
     go gs.Serve(lis)

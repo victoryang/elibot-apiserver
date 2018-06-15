@@ -8,7 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"elibot-apiserver/db"
+	db "elibot-apiserver/dbproxy"
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/mcserver"
 )
@@ -39,10 +39,6 @@ func testSocket(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, res)
 	return
-}
-
-func SetupDB(dbname string, backuppath string) {
-	db.DBsetup(dbname, backuppath)
 }
 
 func getAllArc(w http.ResponseWriter, r *http.Request) {

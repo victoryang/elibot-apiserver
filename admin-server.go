@@ -47,8 +47,8 @@ func configureAdminHandler() http.Handler {
 	return RegisterHandlers(r, handlerFns...)
 }
 
-func startAdminServer(c *config.Config) {
-	serverAddress := c.Admin.ListenAddress
+func startAdminServer(c *config.AdminSever) {
+	serverAddress := c.ListenAddress
 	adminServer := &http.Server{
 		Addr: 			serverAddress,
 		// Adding timeout of 10 minutes for unresponsive client connections.
@@ -62,9 +62,9 @@ func startAdminServer(c *config.Config) {
 		// Configure TLS if certs are available.
 		err := adminServer.ListenAndServe()
 		if err!= nil {
-			fmt.Println ("API server error.")
+			fmt.Println ("Admin server error.")
 		}
-		fmt.Println ("API server running...")
+		fmt.Println ("Admin server running...")
 	}()
 }
 

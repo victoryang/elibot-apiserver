@@ -13,181 +13,76 @@ var (
 		Level:			4,
 	}
 
-	DefaultSqliteDB = &SqliteDB {
-		Path:			"/rbctrl/db/",
-		FileName:		"elibotDB.db",
+	DefaultHttpEntryPoint = &HttpEntryPoint {
+		ListenAddress:			"0.0.0.0:9000",
 	}
 
-	DefaultBackup = &BackUp {
-		Dir:			"backups/",
+	DefaultGrpcEntryPoint = &GrpcEntryPoint {
+		ListenAddress:			"0.0.0.0:9500",
+	}
+
+	DefaultWebsocketEntryPoint = &WebsocketEntryPoint {
+		ListenAddress:			"0.0.0.0:9050",
+	}
+
+	DefaultDatabase = &Database {
+		FileName:		"/rbctrl/db/elibotDB.db",
+		BackupDir:		"/rbctrl/db/backups/",
 	}
 
 	DefaultAdmin = &AdminSever {
 		ListenAddress:			"0.0.0.0:9090",
 	}
 
-	DefaultConfig = &Config{
-		RootDir:				"/rbctrl/",
-		AccessLogsFile:			"apiserver/log/access.Log",
-		ElibotLogsFile:			"apiserver/log/server.Log",
-		EntryPoints:			[]string{"http"},
-		ListenAddress:			"0.0.0.0:9000",
-		Sqlite:					DefaultSqliteDB,
-		Backup:					DefaultBackup,
-		Admin:					DefaultAdmin,
+	DefaultGlobalConfiguration = &GlobalConfiguration{
+		AccessLogsFile:			"/rbctrl/apiserver/log/access.Log",
+		ServerLogsFile:			"/rbctrl/apiserver/log/server.Log",
+		Debug:					DefaultDebug,
+
+		HttpEntryPoint:			DefaultHttpEntryPoint,
+		GrpcEntryPoint: 		DefaultGrpcEntryPoint,
+		WebsocketEntryPoint:	DefaultWebsocketEntryPoint,
+
+		Databases:		DefaultDatabase,
+		Admin:			DefaultAdmin,
 	}
 )
-
-type BackUp struct {
-	Dir 				string		`yaml:"dir,omitempty"`
-}
-
-func (b *BackUp) UnmarshalYAML(unmarshal func(interface{}) error) error {
-	type plain BackUp
-	if err := unmarshal((*plain)(b)); err != nil {
-		return err
-	}
-	if b.Dir == "" {
-		b.Dir = DefaultBackup.Dir
-	}
-	return nil
-}
-
-type SqliteDB struct {
-	Path 				string		`yaml:"path,omitempty"`
-	FileName 			string		`yaml:"name,omitempty"`
-}
-
-func (s *SqliteDB) UnmarshalYAML(unmarshal func(interface{}) error) error {
-	type plain SqliteDB
-	if err := unmarshal((*plain)(s)); err != nil {
-		return err
-	}
-	if s.Path == "" {
-		s.Path = DefaultSqliteDB.Path
-	}
-
-	if s.FileName == "" {
-		s.FileName = DefaultSqliteDB.FileName
-	}
-	return nil
-}
 
 type DEBUG struct {
 	Enable			bool			`yaml:"enable,omitempty"`
 	Level			int 			`yaml:"level,omitempty"`
 }
 
-func (d *DEBUG) UnmarshalYAML(unmarshal func(interface{}) error) error {
-	type plain DEBUG
-	if err := unmarshal((*plain)(d)); err != nil {
-		return err
-	}
+type HttpEntryPoint struct {
+	ListenAddress	string			`yaml:"address,omitempty"`
+}
 
-	if d.Enable == true {
-		d.Level = 5
-	} else {
-		d.Level = DefaultDebug.Level
-	}
-	Log.SetLevelInt(d.Level)
-	return nil
+type GrpcEntryPoint struct {
+	ListenAddress	string			`yaml:"address,omitempty"`
+}
+
+type WebsocketEntryPoint struct {
+	ListenAddress	string			`yaml:"address,omitempty"`
+}
+
+type Database struct {
+	FileName:		string			`yaml:"filename,omitempty"`
+	BackupDir:		string			`yaml:"backupdir,omitempty"`
 }
 
 type AdminSever struct {
 	ListenAddress		string		`yaml:"admin_address,omitempty"`
 }
 
-func (a *AdminSever) UnmarshalYAML(unmarshal func(interface{}) error) error {
-	type plain AdminSever
-	if err := unmarshal((*plain)(a)); err != nil {
-		return err
-	}
+type GlobalConfiguration struct {
+	AccessLogsFile		string					`yaml:"accesslog,omitempty"`
+	ServerLogsFile		string					`yaml:"serverlog,omitempty"`
+	Debug				DEBUG					`yaml:"debug,omitempty"`
 
-	if a.ListenAddress == "" {
-		a.ListenAddress = DefaultAdmin.ListenAddress
-	}
-	return nil
-}
+	Http 				HttpEntryPoint 				`yaml:"http,omitempty`
+	Grpc 				GrpcEntryPoint 				`yaml:"grpc,omitempty`
+	Websocket 			WebsocketEntryPoint 		`yaml:"websocket,omitempty`
 
-
-type Config struct {
-	RootDir				string		`yaml:"rootdir,omitempty"`
-	AccessLogsFile		string		`yaml:"accessLog,omitempty"`
-	Debug				DEBUG		`yaml:"debug,omitempty"`
-	ElibotLogsFile		string		`yaml:"serverLog,omitempty"`
-	EntryPoints			[]string	`yaml:"entrypoints,omitempty"`
-	ListenAddress		string		`yaml:"server_address,omitempty"`
-
-	Sqlite				*SqliteDB	`yaml:"sqlite,omitempty"`
-	Backup				*BackUp 	`yaml:"backup,omitempty"`
-	Admin 				*AdminSever `yaml:"admin,omitempty"`
-}
-
-// Load parses the YAML input s into a Config.
-func Load(s string) (*Config, error) {
-	cfg := &Config{}
-
-	err := yaml.UnmarshalStrict([]byte(s), cfg)
-	if err != nil {
-		return nil, err
-	}
-	return cfg, nil
-}
-
-func LoadFile(filename string) (*Config, error) {
-	content, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return nil, err
-	}
-	var cfg *Config
-	cfg, err = Load(string(content))
-	if err != nil {
-		Log.Error("parsing YAML file ", filename, ": ", err)
-		return nil, err
-	}
-	return cfg, nil
-}
-
-// UnmarshalYAML implements the yaml.Unmarshaler interface.
-func (c *Config) UnmarshalYAML(unmarshal func(interface{}) error) error {
-	// We want to set c to the defaults and then overwrite it with the input.
-	// To make unmarshal fill the plain data struct rather than calling UnmarshalYAML
-	// again, we have to hide it using a type indirection.
-	type plain Config
-	if err := unmarshal((*plain)(c)); err != nil {
-		return err
-	}
-
-	if c.RootDir == "" {
-		c.RootDir = DefaultConfig.RootDir
-	}
-
-	if c.AccessLogsFile == "" {
-		c.AccessLogsFile = DefaultConfig.AccessLogsFile
-	}
-
-	if c.ElibotLogsFile == "" {
-		c.ElibotLogsFile = DefaultConfig.ElibotLogsFile
-	}
-
-	if c.EntryPoints == nil {
-		c.EntryPoints = DefaultConfig.EntryPoints
-	}
-
-	if c.ListenAddress == "" {
-		c.ListenAddress = DefaultConfig.ListenAddress
-	}
-
-	if c.Sqlite == nil {
-		c.Sqlite = DefaultSqliteDB
-	}
-
-	if c.Backup == nil {
-		c.Backup = DefaultBackup
-	}
-
-	if c.Admin == nil {
-		c.Admin = DefaultAdmin
-	}
-	return nil
+	Databases			*Database				`yaml:"databases,omitempty"`
+	Admin 				*AdminSever 			`yaml:"admin,omitempty"`
 }

@@ -6,7 +6,7 @@ import (
 	"context"
 
 	Log "elibot-apiserver/log"
-
+	"elibot-apiserver/api/v1"
 	"elibot-apiserver/middleware"
 	"elibot-apiserver/middleware/accesslog"
 	"elibot-apiserver/config"
@@ -27,8 +27,6 @@ type ServerEntryPoint struct {
 type Server struct {
 	EntryPoint      	ServerEntryPoint
 	AccessLog			AccessLogMiddleware
-	DBDir				string
-	DBBackup			string
 }
 
 func (s *Server) Run() {
@@ -71,10 +69,7 @@ func (s *Server) configServerHandler() http.Handler {
 func NewApiServer(c *config.Config) *Server {
 	s := new(Server)
 	
-	s.AccessLog.File = c.RootDir + c.AccessLogsFile
-	s.DBDir = c.Sqlite.Path + c.Sqlite.FileName
-	s.DBBackup = c.Sqlite.Path + c.Backup.Dir
-	SetupDB(s.DBDir, s.DBBackup)
+	s.AccessLog.File = c.AccessLogsFile
 	s.EntryPoint.httpServer = &http.Server {
 		Addr:			c.ListenAddress,
 		ReadTimeout:    10 * time.Minute,
