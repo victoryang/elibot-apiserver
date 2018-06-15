@@ -28,6 +28,8 @@ const (
 	ERR_START_SHMSERVER
 )
 
+var debug_mode bool
+
 func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *api.WsServer, shms *shm.ShmServer) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
