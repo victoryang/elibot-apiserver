@@ -89,6 +89,6 @@ func watchSharedResource(modified chan []byte) {
 	}
 }
 
-func InitSharedResource() {
-	C.init_shared_resource()
+func InitSharedResource() int {
+	return int(C.init_shared_resource())
 }

@@ -32,7 +32,7 @@ func (m *IoSqlMapper) GetID() string {
 }
 
 func (m *IoSqlMapper) RegisterSqlMapper(mode int) error {
-	Log.Print("RegisterSqlMapper in IoSqlMapper | mode: ", mode)
+	Log.Debug("RegisterSqlMapper in IoSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_IO_GET_VALID_IOS_BY_GROUP

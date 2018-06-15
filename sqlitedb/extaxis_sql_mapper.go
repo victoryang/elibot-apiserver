@@ -32,7 +32,7 @@ func (m *ExtaxisSqlMapper) GetID() string {
 }
 
 func (m *ExtaxisSqlMapper) RegisterSqlMapper(mode int) error {
-	Log.Print("RegisterSqlMapper in ExtaxisSqlMapper | mode: ", mode)
+	Log.Debug("RegisterSqlMapper in ExtaxisSqlMapper | mode: ", mode)
 	switch mode {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_EXTAXIS_GET_ALL

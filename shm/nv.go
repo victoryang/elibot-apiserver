@@ -123,6 +123,6 @@ func watchNV(modified chan []byte) {
 	}
 }
 
-func InitNVRam() {
-	C.init_nv_ram()
+func InitNVRam() int {
+	return int(C.init_nv_ram())
 }
