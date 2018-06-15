@@ -8,6 +8,7 @@ import (
 
 const (
     CMDLINE = "mcserver>"
+    BUFSIZE = 128
 )
 
 func parse(s string) string {
@@ -31,7 +32,7 @@ func WriteMessage(conn net.Conn, command string) error {
 }
 
 func ReadMessage(conn net.Conn) (string, error){
-    buf := make([]byte, 1024)
+    buf := make([]byte, BUFSIZE)
     n , err := conn.Read(buf)
     if err != nil {
         fmt.Println("Error to read message because of ", err)

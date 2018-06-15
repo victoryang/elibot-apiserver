@@ -1,10 +1,5 @@
 package shm
 
-// #cgo CFLAGS: -I/root/mcserver/include/
-// #cgo LDFLAGS: -lshare
-// #include<stdlib.h>
-// #include<sharedmemory.h>
-import "C"
 import(
 	"context"
 	"time"
@@ -15,7 +10,7 @@ import(
 
 var hit chan []byte
 const (
-	BUFSIZE = 1024
+	BufferSize = 1024
 )
 
 type ShmServer struct {
@@ -25,7 +20,7 @@ type ShmServer struct {
 	Cancel 		context.CancelFunc
 }
 
-func (s *ShmServer) Watcher() {
+func sender(ctx context.Context, ws *api.WsServer, hit chan []byte) {
 	Log.Info("Shared memory server started...")
 	watchTicker := time.NewTicker(watchPeriod)
 	defer func() {
@@ -35,10 +30,10 @@ func (s *ShmServer) Watcher() {
 	DONE:
 	for {
 		select {
-		case <-s.Ctx.Done():
+		case <-ctx.Done():
 			break DONE
-		case res := <-s.Hit:
-			s.Wss.Hub.PushMsg(res)
+		case res := <-hit:
+			ws.Hub.PushMsg(res)
 		}
 	}
 }
@@ -54,7 +49,7 @@ func handleMsg(msg []byte) {
 
 func (s *ShmServer) StartToWatch() {
 	go worker(s.Ctx, s.Hit)
-	go s.Watcher()
+	go sender(s.Ctx, s.Wss, s.Hit)
 }
 
 func NewServer(server *api.WsServer) *ShmServer{
@@ -62,11 +57,11 @@ func NewServer(server *api.WsServer) *ShmServer{
 	ctx, cancel := context.WithCancel(context.Background())
 	s = &ShmServer{
 		Wss: 	server,
-		Hit:	make(chan []byte, BUFSIZE),
+		Hit:	make(chan []byte, BufferSize),
 		Ctx: 	ctx,
 		Cancel: cancel,
 	}
-	C.init_shm()
+	initWorkerResource()
 	initWatchFuncs()
 	server.Hub.NotificationRegister(handleMsg)
 	return s

@@ -4,7 +4,6 @@ import (
 	"errors"
 	"net"
 	"context"
-	"sync"
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/mcserver/pool"
@@ -29,7 +28,6 @@ type Response struct {
 }
 
 var Mcs *MCserver = nil
-var wg sync.WaitGroup
 
 func handleCommand(conn net.Conn, command string) (string, error) {
 	err := WriteMessage(conn, command)
