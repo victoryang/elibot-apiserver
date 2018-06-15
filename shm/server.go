@@ -10,7 +10,7 @@ import(
 
 var hit chan []byte
 const (
-	BUFSIZE = 1024
+	BufferSize = 1024
 )
 
 type ShmServer struct {
@@ -57,7 +57,7 @@ func NewServer(server *api.WsServer) *ShmServer{
 	ctx, cancel := context.WithCancel(context.Background())
 	s = &ShmServer{
 		Wss: 	server,
-		Hit:	make(chan []byte, BUFSIZE),
+		Hit:	make(chan []byte, BufferSize),
 		Ctx: 	ctx,
 		Cancel: cancel,
 	}

@@ -20,7 +20,7 @@ type SharedResource struct {
 
 var SharedResourcePool = sync.Pool{
 	New: func() interface{} {
-		return bytes.NewBuffer(make([]byte, 0, bufferSize))
+		return bytes.NewBuffer(make([]byte, 0, BufferSize))
 	},
 }
 var crc_shared_resource int = 0
@@ -44,7 +44,7 @@ func getResourceAndCompare() (res []byte){
 	var cache []byte
 	buf := SharedResourcePool.Get().(*bytes.Buffer)
 	if buf == nil {
-		buf = bytes.NewBuffer(make([]byte, 0, bufferSize))
+		buf = bytes.NewBuffer(make([]byte, 0, BufferSize))
 		crc_shared_resource = 0
 	} else {
 		cache = buf.Bytes()
@@ -69,7 +69,7 @@ func getResourceAndCompare() (res []byte){
 		if e := recover(); e!=nil {
 			Log.Error("buf write error: ", e)
 
-			buf := make([]byte, 0, bufferSize*2)
+			buf := make([]byte, 0, BufferSize*2)
 			buf = c[:]
 			SharedResourcePool = sync.Pool{
 				New: func() interface{} {

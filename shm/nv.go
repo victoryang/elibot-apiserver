@@ -30,7 +30,7 @@ type NvRam struct {
 
 var NVRamPool = sync.Pool{
 	New: func() interface{} {
-		return bytes.NewBuffer(make([]byte, 0, bufferSize))
+		return bytes.NewBuffer(make([]byte, 0, BufferSize))
 	},
 }
 var crc_nv int = 0
@@ -78,7 +78,7 @@ func getNVAndCompare() (res []byte){
 	var cache []byte
 	buf := NVRamPool.Get().(*bytes.Buffer)
 	if buf == nil {
-		buf = bytes.NewBuffer(make([]byte, 0, bufferSize))
+		buf = bytes.NewBuffer(make([]byte, 0, BufferSize))
 		crc_nv = 0
 	} else {
 		cache = buf.Bytes()
@@ -103,7 +103,7 @@ func getNVAndCompare() (res []byte){
 		if e := recover(); e!=nil {
 			Log.Error("buf write error: ", e)
 
-			buf := make([]byte, 0, bufferSize*2)
+			buf := make([]byte, 0, BufferSize*2)
 			buf = c[:]
 			NVRamPool = sync.Pool{
 				New: func() interface{} {
