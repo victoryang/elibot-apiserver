@@ -3,6 +3,7 @@ package config
 import (
 	"io/ioutil"
 	"gopkg.in/yaml.v2"
+	Log "elibot-apiserver/log"
 )
 
 func (d *DEBUG) UnmarshalYAML(unmarshal func(interface{}) error) error {
@@ -57,7 +58,7 @@ func (w *WebsocketEntryPoint) UnmarshalYAML(unmarshal func(interface{}) error) e
 }
 
 func (d *Database) UnmarshalYAML(unmarshal func(interface{}) error) error {
-	type plain DefaultDatabase
+	type plain Database
 	if err := unmarshal((*plain)(d)); err != nil {
 		return err
 	}

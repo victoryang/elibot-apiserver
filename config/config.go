@@ -35,9 +35,9 @@ var (
 		ServerLogsFile:			"/rbctrl/apiserver/log/server.Log",
 		Debug:					DefaultDebug,
 
-		HttpEntryPoint:			DefaultHttpEntryPoint,
-		GrpcEntryPoint: 		DefaultGrpcEntryPoint,
-		WebsocketEntryPoint:	DefaultWebsocketEntryPoint,
+		Http:			DefaultHttpEntryPoint,
+		Grpc: 			DefaultGrpcEntryPoint,
+		Websocket:		DefaultWebsocketEntryPoint,
 
 		Databases:		DefaultDatabase,
 		Admin:			DefaultAdmin,
