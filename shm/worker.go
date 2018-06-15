@@ -7,7 +7,7 @@ package shm
 import "C"
 import(
 	"context"
-	"error"
+	"errors"
 	"strconv"
 	"time"
 	"sync"
@@ -71,12 +71,12 @@ func initWorkerResource() error {
 	res := InitSharedResource()
 	if res != 0 {
 		errMsg := string("failed to init shared resource, return value:") + strconv.Itoa(int(value))
-		return error.New(errMsg)
+		return errors.New(errMsg)
 	}
 	res = InitNVRam()
 	if res != 0 {
 		errMsg := string("failed to init NV ram, return value:") + strconv.Itoa(int(value))
-		return error.New(errMsg)
+		return errors.New(errMsg)
 	}
 	return nil
 }
