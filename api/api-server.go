@@ -6,7 +6,6 @@ import (
 	"context"
 
 	Log "elibot-apiserver/log"
-	"elibot-apiserver/api/v1"
 	"elibot-apiserver/middleware"
 	"elibot-apiserver/middleware/accesslog"
 	"elibot-apiserver/config"
@@ -66,7 +65,7 @@ func (s *Server) configServerHandler() http.Handler {
 	return n
 }
 
-func NewApiServer(c *config.Config) *Server {
+func NewApiServer(c *config.GlobalConfiguration) *Server {
 	s := new(Server)
 	
 	s.AccessLog.File = c.AccessLogsFile

@@ -56,7 +56,7 @@ func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, ws
 	}
 }
 
-func LoadConfig() *config.Config{
+func LoadConfig() *config.GlobalConfiguration{
 	cfg, err := config.LoadFile(configFile) 
 	if err!=nil {
 		Log.Error("Parse configure file error: ", err)
@@ -67,7 +67,7 @@ func LoadConfig() *config.Config{
 	return cfg
 }
 
-func ConfigServerLog(cfg *config.Config) error {
+func ConfigServerLog(cfg *config.GlobalConfiguration) error {
 	err = Log.OpenFile(cfg.ServerLogsFile)
 	if err!=nil {
 		return err
@@ -76,7 +76,7 @@ func ConfigServerLog(cfg *config.Config) error {
 	return nil
 }
 
-func SetUpDatabase(cfg *config.Config) {
+func SetUpDatabase(cfg *config.GlobalConfiguration) {
 	db := cfg.Databases
 	dbproxy.DBsetup(db.FileName, db.BackupDir)
 }
