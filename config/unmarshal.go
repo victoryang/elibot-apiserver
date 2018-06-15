@@ -1,6 +1,7 @@
 package config
 
 import (
+	"io/ioutil"
 	"gopkg.in/yaml.v2"
 )
 
@@ -122,9 +123,9 @@ func (g *GlobalConfiguration) UnmarshalYAML(unmarshal func(interface{}) error) e
 	return nil
 }
 
-// Load parses the YAML input s into a Config.
-func Load(s string) (*Config, error) {
-	cfg := &Config{}
+// Load parses the YAML input s into a GlobalConfiguration.
+func Load(s string) (*GlobalConfiguration, error) {
+	cfg := &GlobalConfiguration{}
 
 	err := yaml.UnmarshalStrict([]byte(s), cfg)
 	if err != nil {
@@ -133,15 +134,14 @@ func Load(s string) (*Config, error) {
 	return cfg, nil
 }
 
-func LoadFile(filename string) (*Config, error) {
+func LoadFile(filename string) (*GlobalConfiguration, error) {
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
-	var cfg *Config
+	var cfg *GlobalConfiguration
 	cfg, err = Load(string(content))
 	if err != nil {
-		Log.Error("parsing YAML file ", filename, ": ", err)
 		return nil, err
 	}
 	return cfg, nil

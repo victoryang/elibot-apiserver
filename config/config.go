@@ -1,10 +1,6 @@
 package config
 
 import (
-	"io/ioutil"
-
-	Log "elibot-apiserver/log"
-	"gopkg.in/yaml.v2"
 )
 
 var (
@@ -66,8 +62,8 @@ type WebsocketEntryPoint struct {
 }
 
 type Database struct {
-	FileName:		string			`yaml:"filename,omitempty"`
-	BackupDir:		string			`yaml:"backupdir,omitempty"`
+	FileName		string			`yaml:"filename,omitempty"`
+	BackupDir		string			`yaml:"backupdir,omitempty"`
 }
 
 type AdminSever struct {
@@ -77,11 +73,11 @@ type AdminSever struct {
 type GlobalConfiguration struct {
 	AccessLogsFile		string					`yaml:"accesslog,omitempty"`
 	ServerLogsFile		string					`yaml:"serverlog,omitempty"`
-	Debug				DEBUG					`yaml:"debug,omitempty"`
+	Debug				*DEBUG					`yaml:"debug,omitempty"`
 
-	Http 				HttpEntryPoint 				`yaml:"http,omitempty`
-	Grpc 				GrpcEntryPoint 				`yaml:"grpc,omitempty`
-	Websocket 			WebsocketEntryPoint 		`yaml:"websocket,omitempty`
+	Http 				*HttpEntryPoint 				`yaml:"http,omitempty`
+	Grpc 				*GrpcEntryPoint 				`yaml:"grpc,omitempty`
+	Websocket 			*WebsocketEntryPoint 		`yaml:"websocket,omitempty`
 
 	Databases			*Database				`yaml:"databases,omitempty"`
 	Admin 				*AdminSever 			`yaml:"admin,omitempty"`
