@@ -70,7 +70,7 @@ func NewApiServer(c *config.GlobalConfiguration) *Server {
 	
 	s.AccessLog.File = c.AccessLogsFile
 	s.EntryPoint.httpServer = &http.Server {
-		Addr:			c.ListenAddress,
+		Addr:			c.Http.ListenAddress,
 		ReadTimeout:    10 * time.Minute,
 		WriteTimeout:   10 * time.Minute,
 		Handler:        s.configServerHandler(),

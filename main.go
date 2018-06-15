@@ -68,10 +68,10 @@ func LoadConfig() *config.GlobalConfiguration{
 }
 
 func ConfigServerLog(cfg *config.GlobalConfiguration) error {
-	err = Log.OpenFile(cfg.ServerLogsFile)
-	if err!=nil {
+	if err := Log.OpenFile(cfg.ServerLogsFile); err!=nil {
 		return err
 	}
+
 	Log.SetOwnFormatter("text")
 	return nil
 }
@@ -85,14 +85,14 @@ func main() {
 	cfg := LoadConfig()
 	
 	if err := ConfigServerLog(cfg); err!=nil {
-		return ERR_OPEN_LOG_FILE_FAIL
+		os.Exit(ERR_OPEN_LOG_FILE_FAIL)
 	}
 	defer Log.CloseFile()
 
 	mcs := mcserver.NewMCServer("127.0.0.1:8055", 3)
 	if mcs==nil {
 		Log.Error("Error in connecting to mc server")
-		return ERR_START_MCSERVER
+		os.Exit(ERR_START_MCSERVER)
 	}
 
 	startAdminServer(cfg.Admin)
@@ -104,7 +104,7 @@ func main() {
 	gs := api.NewGrpcServer()
 	if gs == nil {
 		Log.Error("Failed to start grpc server")
-		return ERR_START_GRPCSERVER
+		exit(ERR_START_GRPCSERVER)
 	}
 
 	wss := api.NewWsServer()
