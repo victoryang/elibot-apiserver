@@ -63,11 +63,11 @@ func (d *Database) UnmarshalYAML(unmarshal func(interface{}) error) error {
 		return err
 	}
 	if d.FileName == "" {
-		s.FileName = DefaultDatabase.FileName
+		d.FileName = DefaultDatabase.FileName
 	}
 
 	if d.BackupDir == "" {
-		s.BackupDir = DefaultDatabase.BackupDir
+		d.BackupDir = DefaultDatabase.BackupDir
 	}
 	return nil
 }
@@ -102,16 +102,16 @@ func (g *GlobalConfiguration) UnmarshalYAML(unmarshal func(interface{}) error) e
 		g.Debug = DefaultGlobalConfiguration.Debug
 	}
 
-	if g.HttpEntryPoint == nil {
-		g.HttpEntryPoint = DefaultGlobalConfiguration.HttpEntryPoint
+	if g.Http == nil {
+		g.Http = DefaultGlobalConfiguration.Http
 	}
 
-	if g.GrpcEntryPoint == nil {
-		g.GrpcEntryPoint = DefaultGlobalConfiguration.GrpcEntryPoint
+	if g.Grpc == nil {
+		g.Grpc = DefaultGlobalConfiguration.Grpc
 	}
 
-	if g.WebsocketEntryPoint == nil {
-		g.WebsocketEntryPoint = DefaultGlobalConfiguration.WebsocketEntryPoint
+	if g.Websocket == nil {
+		g.Websocket = DefaultGlobalConfiguration.Websocket
 	}
 
 	if g.Databases == nil {
