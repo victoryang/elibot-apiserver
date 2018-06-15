@@ -70,12 +70,12 @@ func initWorkerResource() error {
 	C.init_worker_resource()
 	res := InitSharedResource()
 	if res != 0 {
-		errMsg := string("failed to init shared resource, return value:") + strconv.Itoa(int(value))
+		errMsg := string("failed to init shared resource, return value:") + strconv.Itoa(int(res))
 		return errors.New(errMsg)
 	}
 	res = InitNVRam()
 	if res != 0 {
-		errMsg := string("failed to init NV ram, return value:") + strconv.Itoa(int(value))
+		errMsg := string("failed to init NV ram, return value:") + strconv.Itoa(int(res))
 		return errors.New(errMsg)
 	}
 	return nil
