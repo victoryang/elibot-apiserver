@@ -82,7 +82,7 @@ func ConfigServerLog(cfg *config.GlobalConfiguration) error {
 
 func SetUpDatabase(cfg *config.GlobalConfiguration) {
 	db := cfg.Databases
-	dbproxy.DBsetup(db.FileName, db.BackupDir)
+	dbproxy.DBSetup(db.FileName, db.BackupDir)
 }
 
 func main() {

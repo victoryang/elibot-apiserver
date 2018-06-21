@@ -5,6 +5,7 @@ import (
 	"time"
 	"context"
 
+	apiv1 "elibot-apiserver/api/v1"
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/middleware"
 	"elibot-apiserver/middleware/accesslog"
@@ -59,7 +60,7 @@ func (s *Server) configServerHandler() http.Handler {
 		n.Use(s.AccessLog.Logger)
 	}
 	
-	n.UseHandler(RegisterAPIRouter(r))
+	n.UseHandler(apiv1.RegisterAPIRouter(r))
 	
 	// Register all routers.
 	return n
