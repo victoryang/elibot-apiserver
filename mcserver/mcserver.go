@@ -65,7 +65,7 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 	defer func() {
 		close(ch)
 		Mcs.ConnPool.Put(conn)
-	}
+	}()
 
 	select {
 	case <-ctx.Done():
