@@ -1,8 +1,6 @@
 package v1
 
 import (
-	"context"
-	"time"
 	"net/http"
 	"fmt"
 	"errors"
@@ -27,7 +25,7 @@ func testSocket(w http.ResponseWriter, r *http.Request) {
 	cmd := "testGo 0 1\n"
 	from := "restapi:testsocket"
 	rCh := make(chan mcserver.Response)
-	mcs.Exec(ctx, cmd, from, rCh)
+	mcs.Exec(cmd, from, rCh)
 	rr := <- rCh
 	res := rr.Result
 	err := rr.Err

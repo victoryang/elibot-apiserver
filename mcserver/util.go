@@ -50,3 +50,11 @@ func consumeCommandLineIf (conn net.Conn) bool {
 
 	return false
 }
+
+func SafeSendResponseToChannel(ch chan Response, resp Response) {
+    if _, ok := <- ch; ok {
+        ch <- resp
+    } else {
+        Log.Error("Client closed response channel... drop it")
+    }
+}

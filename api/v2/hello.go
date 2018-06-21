@@ -17,21 +17,25 @@ type helloserver struct {
 }
 
 func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, error) {
-		var res string = "test Go fail"
-		var err error
 		var mcs *mcserver.MCserver 
 		if mcs = mcserver.GetMcServer(); mcs == nil {
 			return nil, errors.New("mcserver is not available right now")
 		}
 		
-		rCh := make(chan mcserver.Response)
-		if in.Name == 1 {
-			mcs.Exec(ctx, cmd, from, rCh)
-			r := <- rCh
-			res = r.Result
-			err = r.Err
+		select {
+		case <-ctx.Done():
+			return nil, errors.New("test Go cancelled")
+		default:
+			rCh := make(chan mcserver.Response)
+			defer close(rCh)
+
+			var r mcserver.Response
+			if in.Name == 1 {
+				mcs.Exec(cmd, from, rCh)
+				r = <- rCh
+			}
+			return &pb.Reply{Message: r.Result}, r.Err
 		}
-        return &pb.Reply{Message: res}, err
 }
 
 func NewHelloServer() *helloserver {

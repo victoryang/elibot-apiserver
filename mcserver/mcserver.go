@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net"
 	"context"
+	"time"
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/mcserver/pool"
@@ -42,41 +43,41 @@ func handleCommand(conn net.Conn, command string) (string, error) {
 	return ReadMessage(conn)
 }
 
-func getConnFromPool(ch chan Response) interface{} {
+func getConnFromPool() (interface{}, Response) {
 	if Mcs == nil {
-		ch <- Response{Result: "", Err: errors.New("MCServer Error")}
-		return nil
+		return nil, Response{Result: "", Err: errors.New("MCServer Error")}
 	}
 
 	conn, err := Mcs.ConnPool.Get()
 	if err!=nil {
-		ch <- Response{Result: "", Err: errors.New("MCServer error: can not get a connection now, try it again later")}
-		return nil
+		return nil, Response{Result: "", Err: errors.New("MCServer error: can not get a connection now, try it again later")}
 	}
-	return conn
+	return conn, Response{}
 }
 
 func execute(ctx context.Context, ch chan Response, cmd string) {
-	conn := getConnFromPool(ch)
+	conn, resp := getConnFromPool()
 	if conn == nil {
-		ch <- Response{Result: "", Err: errors.New("can not get connection from pool right now")}
+		SafeSendResponseToChannel(ch, resp)
 		return
 	}
 	defer func() {
-		close(ch)
+		if _, ok := <- ch; ok {
+	        close(ch)
+	    }
 		Mcs.ConnPool.Put(conn)
 	}()
 
 	select {
 	case <-ctx.Done():
-		ch<-Response{Result: "", Err: errors.New("MCserver job cancelled")}
+		SafeSendResponseToChannel(ch, Response{Result: "", Err: errors.New("MCserver job cancelled")})
 		return
 	default:
 		if consumeCommandLineIf(conn.(net.Conn)) {
 			res, err := handleCommand(conn.(net.Conn), cmd)
-			ch <- Response{Result: res, Err: err}
+			SafeSendResponseToChannel(ch, Response{Result: res, Err: err})
 		} else {
-			ch <- Response{Result: "", Err: errors.New("MCServer error: bad connection")}
+			SafeSendResponseToChannel(ch, Response{Result: "", Err: errors.New("MCServer error: bad connection")})
 		}
 	}
 }
@@ -89,7 +90,7 @@ func worker(ctx context.Context) {
 
 		case req := <- Mcs.WorkChan:
 			/* pass ctx to all child for graceful shutdown*/
-			ctx_job, cancel := context.WithTimeout(ctx, MaxJobExecDuration * time.MilliSecond)
+			ctx_job, cancel := context.WithTimeout(ctx, MaxJobExecDuration * time.Millisecond)
 			defer cancel()
 			go execute(ctx_job, req.RespCh, req.Command)
 		}
@@ -106,7 +107,7 @@ func (mc *MCserver) Close() {
 	}
 } 
 
-func (mc *MCserver) Exec(ctx context.Context, cmd string, from string, rch chan Response) {
+func (mc *MCserver) Exec(cmd string, from string, rch chan Response) {
 	Log.Debug("MCserver exec ", cmd, " from ", from)
 	mc.WorkChan <- Request{
 		Command: cmd, 
