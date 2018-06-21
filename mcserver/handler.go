@@ -48,7 +48,9 @@ func (h *Handler) HandleCommand(command string) (string, error) {
 		return "", err
 	}
 
-	return ReadMessage(h.conn)
+	var res string
+	res, err = ReadMessage(h.conn)
+	return res, err
 }
 
 func NewHandler(c interface{}) *Handler{
