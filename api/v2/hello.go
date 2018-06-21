@@ -20,7 +20,7 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 		var res string = "test Go fail"
 		var err error
 		var mcs *mcserver.MCserver 
-		if mcs = mcserver.GetMcServer(); msc == nil {
+		if mcs = mcserver.GetMcServer(); mcs == nil {
 			return nil, errors.New("mcserver is not available right now")
 		}
 		

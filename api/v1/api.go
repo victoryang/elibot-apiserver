@@ -24,7 +24,7 @@ func test(w http.ResponseWriter, r *http.Request) {
 
 func testSocket(w http.ResponseWriter, r *http.Request) {
 	var mcs *mcserver.MCserver
-	if mcs = mcserver.GetMcServer(); msc == nil {
+	if mcs = mcserver.GetMcServer(); mcs == nil {
 		WriteInternalServerErrorResponse(w, errors.New("mcserver is not available right now"))
 		return
 	}
