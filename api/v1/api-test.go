@@ -8,6 +8,10 @@ import (
 	"elibot-apiserver/mcserver"
 )
 
+func hello(w http.ResponseWriter, r *http.Request) {
+	WriteSuccessResponse(w, "Welcome to elibot\n")
+}
+
 func test(w http.ResponseWriter, r *http.Request) {
 	WriteSuccessResponse(w, "echo\n")
 }

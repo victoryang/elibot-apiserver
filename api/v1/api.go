@@ -10,10 +10,6 @@ import (
 	Log "elibot-apiserver/log"
 )
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	WriteSuccessResponse(w, "Welcome to elibot\n")
-}
-
 func getAllArc(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Arc")
 	res, err := db.Get_ALL_Arc()
