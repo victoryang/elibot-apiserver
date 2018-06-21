@@ -23,29 +23,20 @@ func (s *GrpcServer)Shutdown() {
 		s.grpc.Stop()
 	}
 
-	ch := make(chan struct{})
 	ctx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
 	defer cancel()
 
 	go func() {
-		defer close(ch)
 		// close listeners to stop accepting new connections,
 		// will block on any existing transports
 		select {
 		case <-ctx.Done():
+			shutdownNow()
 			return
 		default:
 			s.grpc.GracefulStop()
 		}
 	}()
-
-	// wait until all pending RPCs are finished
-	select {
-	case <-ch:
-		// took too long, manually close open transports
-		// e.g. watch streams
-		shutdownNow()
-	}
 }
 
 func NewGrpcServer(c *config.GrpcEntryPoint) (*GrpcServer){

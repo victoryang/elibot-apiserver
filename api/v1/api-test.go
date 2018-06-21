@@ -24,9 +24,8 @@ func testSocket(w http.ResponseWriter, r *http.Request) {
 	}
 	cmd := "testGo 0 1\n"
 	from := "restapi:testsocket"
-	resp := make(chan mcserver.Response)
-	go mcs.Exec(cmd, from, resp)
-	rr := <-resp
+	ctx, _ := context.Timeout(context.Background(), 100*time.Millisecond)
+	rr := mcs.Exec(ctx, cmd, from)
 	res := rr.Result
 	err := rr.Err
 	if err!=nil {

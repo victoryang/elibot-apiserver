@@ -25,9 +25,7 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 		}
 		
 		if in.Name == 1 {
-			resp := make(chan mcserver.Response)
-			mcs.Exec(cmd, from, resp)
-			r := <-resp
+			r := mcs.Exec(ctx, cmd, from)
 			res = r.Result
 			err = r.Err
 		}

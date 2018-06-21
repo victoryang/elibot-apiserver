@@ -98,12 +98,19 @@ func (mc *MCserver) Close() {
 	}
 } 
 
-func (mc *MCserver) Exec(cmd string, from string, rch chan Response) {
+func (mc *MCserver) Exec(ctx context.Context, cmd string, from string) Response {
 	Log.Debug("MCserver exec ", cmd, " from ", from)
+	rch := make(chan Response)
 	mc.WorkChan<-Request{
 		Command: cmd, 
 		From: from, 
 		RespCh: rch,
+	}
+	select {
+	case <-ctx.Done():
+		return Response{"", errors.New("times out")}
+	case rsp := <-rch:
+		return rsp
 	}
 }
 
