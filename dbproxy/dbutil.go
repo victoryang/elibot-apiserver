@@ -24,10 +24,6 @@ func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (
     } else {
         res, err = sql.Db_query_with_params(sm.GetID(), DBName, vars)
     }
-    if err!=nil {
-        Log.Error("query fails: ", err)
-        return
-    }
 
     Log.Debug(res)
     Log.Print("get_all_metadatas OK")

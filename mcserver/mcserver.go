@@ -99,6 +99,7 @@ func (mc *MCserver) Close() {
 } 
 
 func (mc *MCserver) Exec(cmd string, from string, rch chan Response) {
+	Log.Debug("MCserver exec ", cmd, "from ", from)
 	mc.WorkChan<-Request{
 		Command: cmd, 
 		From: from, 
