@@ -3,6 +3,7 @@ package v1
 import (
 	"net/http"
 	"fmt"
+	"errors"
 	"strconv"
 	"encoding/json"
 
@@ -14,28 +15,23 @@ import (
 )
 
 func hello(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Welcome to elibot\n")
-	return
+	WriteSuccessResponse(w, "Welcome to elibot\n")
 }
 
 func test(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusInternalServerError)
-	fmt.Fprintf(w, "echo\n")
-	return
+	WriteSuccessResponse(w, "echo\n")
 }
 
 func testSocket(w http.ResponseWriter, r *http.Request) {
 	var mcs *mcserver.MCserver
 	if mcs = mcserver.GetMcServer(); msc == nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, "mcserver is not available right now")
+		WriteInternalServerErrorResponse(w, errors.New("mcserver is not available right now"))
 		return
 	}
 	cmd := "testGo 0 1\n"
 	from := "restapi:testsocket"
 	resp := make(chan mcserver.Response)
-	mcs.Exec(cmd, from, resp)
+	go mcs.Exec(cmd, from, resp)
 	rr := <-resp
 	res := rr.Result
 	err := rr.Err
@@ -44,23 +40,18 @@ func testSocket(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, err.Error())
 	}
 	
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getAllArc(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Arc")
 	res, err := db.Get_ALL_Arc()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getArcParams(w http.ResponseWriter, r *http.Request) {
@@ -73,84 +64,66 @@ func getArcParams(w http.ResponseWriter, r *http.Request) {
 	queries["group"] = vars["group"]
 	res, err := db.Get_Arc_Params(queries)
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all bookprograms")
 	res, err := db.Get_All_Bookprograms()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getAllEnum(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Enum")
 	res, err := db.Get_ALL_Enum()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Extaxis")
 	res, err := db.Get_ALL_Extaxis()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getAllInterference(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Interference")
 	res, err := db.Get_All_Interference()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getAllIO(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all IO")
 	res, err := db.Get_All_IO()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getAllMetadata(w http.ResponseWriter, r *http.Request) {
@@ -161,28 +134,22 @@ func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 	queries["lang"] = vars["lang"]
 	res, err := db.Get_All_Metadata(queries)
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getParams(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Parameter")
 	res, err := db.Get_Params()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getParameterById(w http.ResponseWriter, r *http.Request) {
@@ -193,14 +160,11 @@ func getParameterById(w http.ResponseWriter, r *http.Request) {
 
 	res, err := db.Get_Parameter_By_Id(queries)
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func parameterbygroup(w http.ResponseWriter, r *http.Request) {
@@ -210,99 +174,78 @@ func parameterbygroup(w http.ResponseWriter, r *http.Request) {
 	queries["group"] = vars["group"]
 	res, err := db.Get_Parameter_By_Group(queries)
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getAllRef(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Ref")
 	res, err := db.Get_All_Ref()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getAllToolframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all toolframe")
 	res, err := db.Get_ALL_Toolframe()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getAllUserframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all userframe")
 	res, err := db.Get_ALL_Userframe()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all zeropoints")
 	res, err := db.Get_All_Zeropoints()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, res)
-	return
+	WriteSuccessResponse(w, res)
 }
 
 func DBBackup(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting DB Backup")
 	err := db.DBBackup()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "succeed in backup\n")
-	return
+	WriteSuccessResponse(w, "succeed in backup\n")
 }
 
 func DBList(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting DB List")
 	files, err := db.DBList()
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
 	res, _ := json.Marshal(files)
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, string(res))
-	return
+	WriteSuccessResponse(w, string(res))
 }
 
 func DBDel(w http.ResponseWriter, r *http.Request) {
@@ -310,14 +253,11 @@ func DBDel(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	err := db.DBDel(vars["name"])
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "db detelted\n")
-	return
+	WriteSuccessResponse(w, "db detelted\n")
 }
 
 func DBRestore(w http.ResponseWriter, r *http.Request) {
@@ -325,14 +265,11 @@ func DBRestore(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	err := db.DBRestore(vars["name"])
 	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "succeed in restore\n")
-	return
+	WriteSuccessResponse(w, "succeed in restore\n")
 }
 
 func RegisterV1(r *mux.Router) http.Handler {
