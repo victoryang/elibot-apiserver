@@ -2,9 +2,7 @@ package v1
 
 import (
 	"net/http"
-	"fmt"
 	"strconv"
-	"encoding/json"
 
 	"github.com/gorilla/mux"
 

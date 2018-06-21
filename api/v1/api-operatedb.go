@@ -2,8 +2,6 @@ package v1
 
 import (
 	"net/http"
-	"fmt"
-	"errors"
 	"encoding/json"
 
 	db "elibot-apiserver/dbproxy"
