@@ -24,8 +24,10 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 			return nil, errors.New("mcserver is not available right now")
 		}
 		
+		rCh := make(chan mcserver.Response)
 		if in.Name == 1 {
-			r := mcs.Exec(ctx, cmd, from)
+			mcs.Exec(ctx, cmd, from, rCh)
+			r := <- rCh
 			res = r.Result
 			err = r.Err
 		}

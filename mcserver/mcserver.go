@@ -29,6 +29,9 @@ type Response struct {
 }
 
 var Mcs *MCserver = nil
+const (
+	MaxJobExecDuration = 200
+)
 
 func handleCommand(conn net.Conn, command string) (string, error) {
 	err := WriteMessage(conn, command)
@@ -54,18 +57,21 @@ func getConnFromPool(ch chan Response) interface{} {
 }
 
 func execute(ctx context.Context, ch chan Response, cmd string) {
+	conn := getConnFromPool(ch)
+	if conn == nil {
+		ch <- Response{Result: "", Err: errors.New("can not get connection from pool right now")}
+		return
+	}
+	defer func() {
+		close(ch)
+		Mcs.ConnPool.Put(conn)
+	}
+
 	select {
 	case <-ctx.Done():
 		ch<-Response{Result: "", Err: errors.New("MCserver job cancelled")}
 		return
 	default:
-		conn := getConnFromPool(ch)
-		if conn == nil {
-			ch <- Response{Result: "", Err: errors.New("can not get connection from pool")}
-			return
-		}
-		defer Mcs.ConnPool.Put(conn)
-
 		if consumeCommandLineIf(conn.(net.Conn)) {
 			res, err := handleCommand(conn.(net.Conn), cmd)
 			ch <- Response{Result: res, Err: err}
@@ -76,15 +82,16 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 }
 
 func worker(ctx context.Context) {
-	ctx_derived, _ := context.WithCancel(context.Background())
-
 	for {
 		select {
-		case req := <- Mcs.WorkChan:
-			/* pass ctx to all child for graceful shutdown*/
-			go execute(ctx_derived, req.RespCh, req.Command)
 		case <-ctx.Done():
 			return
+
+		case req := <- Mcs.WorkChan:
+			/* pass ctx to all child for graceful shutdown*/
+			ctx_job, cancel := context.WithTimeout(ctx, MaxJobExecDuration * time.MilliSecond)
+			defer cancel()
+			go execute(ctx_job, req.RespCh, req.Command)
 		}
 	}
 }
@@ -92,25 +99,19 @@ func worker(ctx context.Context) {
 func (mc *MCserver) Close() {
 	if mc!=nil {
 		mc.Cancel()
+		close(mc.WorkChan)
 		mc.ConnPool.Release()
 		mc=nil
 		Log.Debug("MCServer closed")
 	}
 } 
 
-func (mc *MCserver) Exec(ctx context.Context, cmd string, from string) Response {
+func (mc *MCserver) Exec(ctx context.Context, cmd string, from string, rch chan Response) {
 	Log.Debug("MCserver exec ", cmd, " from ", from)
-	rch := make(chan Response)
-	mc.WorkChan<-Request{
+	mc.WorkChan <- Request{
 		Command: cmd, 
 		From: from, 
 		RespCh: rch,
-	}
-	select {
-	case <-ctx.Done():
-		return Response{"", errors.New("times out")}
-	case rsp := <-rch:
-		return rsp
 	}
 }
 
@@ -139,7 +140,7 @@ func NewMCServer(address string, cap int) *MCserver {
 	Mcs = &MCserver{
 		Address: 	address,
 		ConnPool: 	p,
-		WorkChan:   make(chan Request, 1),
+		WorkChan:   make(chan Request, 3),
 		Ctx: 		ctx,
 		Cancel:		cancel,
 	}
