@@ -34,15 +34,6 @@ const (
 	MaxJobExecDuration = 200
 )
 
-func handleCommand(conn net.Conn, command string) (string, error) {
-	err := WriteMessage(conn, command)
-	if err!=nil {
-		return "", err
-	}
-
-	return ReadMessage(conn)
-}
-
 func getConnFromPool() (interface{}, Response) {
 	if Mcs == nil {
 		return nil, Response{Result: "", Err: errors.New("MCServer Error")}
@@ -74,12 +65,9 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 		SafeSendResponseToChannel(ch, Response{Result: "", Err: errors.New("MCserver job cancelled")})
 		return
 	default:
-		if consumeCommandLineIf(conn.(net.Conn)) {
-			res, err := handleCommand(conn.(net.Conn), cmd)
-			SafeSendResponseToChannel(ch, Response{Result: res, Err: err})
-		} else {
-			SafeSendResponseToChannel(ch, Response{Result: "", Err: errors.New("MCServer error: bad connection")})
-		}
+		handler := NewHandler(conn)
+		res, err := handler.HandleCommand(conn.(net.Conn), cmd)
+		SafeSendResponseToChannel(ch, Response{Result: res, Err: err})
 	}
 }
 
