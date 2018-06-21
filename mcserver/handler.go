@@ -2,6 +2,7 @@ package mcserver
 
 import (
 	"net"
+	"bufio"
 
     Log "elibot-apiserver/log"
 )
@@ -25,8 +26,10 @@ func WriteMessage(conn net.Conn, command string) error {
 }
 
 func ReadMessage(conn net.Conn) (string, error){
-    buf := make([]byte, BUFSIZE)
-    n , err := conn.Read(buf)
+	reader := bufio.NewReader(conn)
+	buf, _, err := reader.Readline()
+    /*buf := make([]byte, BUFSIZE)
+    n , err := conn.Read(buf)*/
     if err != nil {
         Log.Error("Error to read message because of ", err)
         return "", err
