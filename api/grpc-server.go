@@ -3,6 +3,7 @@ package api
 import (
 	"net"
 	"context"
+	"time"
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/config"
@@ -23,7 +24,7 @@ func (s *GrpcServer)Shutdown() {
 	}
 
 	ch := make(chan struct{})
-	ctx, cancel := context.WithTimeout(5 * time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
 	defer cancel()
 
 	go func() {
@@ -31,7 +32,7 @@ func (s *GrpcServer)Shutdown() {
 		// close listeners to stop accepting new connections,
 		// will block on any existing transports
 		select {
-		case ctx.Done():
+		case <-ctx.Done():
 			return
 		default:
 			s.grpc.GracefulStop()
