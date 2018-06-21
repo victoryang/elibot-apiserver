@@ -1,8 +1,6 @@
 package mcserver
 
 import (
-    "strings"
-
     Log "elibot-apiserver/log"
 )
 

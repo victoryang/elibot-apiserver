@@ -34,7 +34,7 @@ func ReadMessage(conn net.Conn) (string, error){
     return string(buf[:n]), nil
 }
 
-func CleanupBeforeSendCommand (conn net.Conn) {
+func CleanupBeforeSendCommand (conn net.Conn) (string, error) {
     return ReadMessage(conn)
 }
 

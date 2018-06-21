@@ -66,7 +66,7 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 		return
 	default:
 		handler := NewHandler(conn)
-		res, err := handler.HandleCommand(conn.(net.Conn), cmd)
+		res, err := handler.HandleCommand(cmd)
 		SafeSendResponseToChannel(ch, Response{Result: res, Err: err})
 	}
 }
