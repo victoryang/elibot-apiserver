@@ -9,7 +9,7 @@ import (
 
 const (
     CMDLINE = "mcserver>"
-    BUFSIZE = 128
+    BUFSIZE = 255
 )
 
 type Handler struct {
@@ -27,14 +27,14 @@ func WriteMessage(conn net.Conn, command string) error {
 
 func ReadMessage(conn net.Conn) (string, error){
 	reader := bufio.NewReader(conn)
-	buf, _, err := reader.Readline()
+	buf, _, err := reader.ReadLine()
     /*buf := make([]byte, BUFSIZE)
     n , err := conn.Read(buf)*/
     if err != nil {
         Log.Error("Error to read message because of ", err)
         return "", err
     }
-    return string(buf[:n]), nil
+    return string(buf[:]), nil
 }
 
 func CleanupBeforeSendCommand (conn net.Conn) (string, error) {
