@@ -50,12 +50,13 @@ func getConnFromPool() (interface{}, Response) {
 
 	conn, err := Mcs.ConnPool.Get()
 	if err!=nil {
-		return nil, Response{Result: "", Err: errors.New("MCServer error: can not get a connection now, try it again later")}
+		return nil, Response{Result: "", Err: err}
 	}
 	return conn, Response{}
 }
 
 func execute(ctx context.Context, ch chan Response, cmd string) {
+	Log.Debug("MCServer executing new command...")
 	conn, resp := getConnFromPool()
 	if conn == nil {
 		SafeSendResponseToChannel(ch, resp)
@@ -141,7 +142,7 @@ func NewMCServer(address string, cap int) *MCserver {
 	Mcs = &MCserver{
 		Address: 	address,
 		ConnPool: 	p,
-		WorkChan:   make(chan Request, 3),
+		WorkChan:   make(chan Request),
 		Ctx: 		ctx,
 		Cancel:		cancel,
 	}

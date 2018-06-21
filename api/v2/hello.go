@@ -31,7 +31,7 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 
 			var r mcserver.Response
 			if in.Name == 1 {
-				mcs.Exec(cmd, from, rCh)
+				go mcs.Exec(cmd, from, rCh)
 				r = <- rCh
 			}
 			return &pb.Reply{Message: r.Result}, r.Err
