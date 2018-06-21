@@ -2,6 +2,7 @@ package api
 
 import (
 	"net"
+	"context"
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/config"
@@ -22,11 +23,19 @@ func (s *GrpcServer)Shutdown() {
 	}
 
 	ch := make(chan struct{})
+	ctx, cancel := context.WithTimeout(5 * time.Second)
+	defer cancel()
+
 	go func() {
 		defer close(ch)
 		// close listeners to stop accepting new connections,
 		// will block on any existing transports
-		s.grpc.GracefulStop()
+		select {
+		case ctx.Done():
+			return
+		default:
+			s.grpc.GracefulStop()
+		}
 	}()
 
 	// wait until all pending RPCs are finished
@@ -35,9 +44,6 @@ func (s *GrpcServer)Shutdown() {
 		// took too long, manually close open transports
 		// e.g. watch streams
 		shutdownNow()
-
-		// concurrent GracefulStop should be interrupted
-		<-ch
 	}
 }
 
@@ -47,7 +53,7 @@ func NewGrpcServer(c *config.GrpcEntryPoint) (*GrpcServer){
             Log.Error("failed to listen: %v", err)
             return nil
     }
-    gs := v2rpc.Server()
+    gs := v2rpc.Server(c)
     go gs.Serve(lis)
 
     Log.Debug("Grpc server started...")

@@ -99,7 +99,7 @@ func (mc *MCserver) Close() {
 } 
 
 func (mc *MCserver) Exec(cmd string, from string, rch chan Response) {
-	Log.Debug("MCserver exec ", cmd, "from ", from)
+	Log.Debug("MCserver exec ", cmd, " from ", from)
 	mc.WorkChan<-Request{
 		Command: cmd, 
 		From: from, 
@@ -132,7 +132,7 @@ func NewMCServer(address string, cap int) *MCserver {
 	Mcs = &MCserver{
 		Address: 	address,
 		ConnPool: 	p,
-		WorkChan:   make(chan Request),
+		WorkChan:   make(chan Request, 1),
 		Ctx: 		ctx,
 		Cancel:		cancel,
 	}
