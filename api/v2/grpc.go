@@ -1,7 +1,6 @@
 package v2
 
 import (
-	"time"
 	"elibot-apiserver/config"
 
 	pb "elibot-apiserver/serverpb"
@@ -28,7 +27,7 @@ func setGrpcOptions(c *config.GrpcEntryPoint) []grpc.ServerOption {
 
 func Server(c *config.GrpcEntryPoint) *grpc.Server {
 	opts := setGrpcOptions(c)
-	s := grpc.NewServer(opts)
+	s := grpc.NewServer(opts...)
 
 	/* An hello example*/
 	pb.RegisterGreeterServer(s, NewHelloServer())
