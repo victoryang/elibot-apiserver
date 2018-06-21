@@ -13,7 +13,8 @@ type MCserver struct {
 	Address			string
 	ConnPool 		pool.Pool
 	WorkChan		chan Request
-	QuitChan		chan bool
+	Ctx 			context.Context
+	Cancel 			context.CancelFunc
 }
 
 type Request struct {
@@ -74,16 +75,15 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 	}
 }
 
-func worker(quit chan bool) {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+func worker(ctx context.Context) {
+	ctx_derived, _ := context.WithCancel(context.Background())
 
 	for {
 		select {
 		case req := <- Mcs.WorkChan:
 			/* pass ctx to all child for graceful shutdown*/
-			go execute(ctx, req.RespCh, req.Command)
-		case <-quit:
+			go execute(ctx_derived, req.RespCh, req.Command)
+		case <-ctx.Done():
 			return
 		}
 	}
@@ -91,7 +91,7 @@ func worker(quit chan bool) {
 
 func (mc *MCserver) Close() {
 	if mc!=nil {
-		mc.QuitChan<-true
+		mc.Cancel()
 		mc.ConnPool.Release()
 		mc=nil
 		Log.Debug("MCServer closed")
@@ -128,12 +128,14 @@ func NewMCServer(address string, cap int) *MCserver {
 		return Mcs
 	}
 
+	ctx, cancel := context.WithCancel(context.Background())
 	Mcs = &MCserver{
 		Address: 	address,
 		ConnPool: 	p,
 		WorkChan:   make(chan Request),
-		QuitChan: 	make(chan bool),
+		Ctx: 		ctx,
+		Cancel:		cancel,
 	}
-	go worker(Mcs.QuitChan)
+	go worker(Mcs.Ctx)
 	return Mcs
 }
