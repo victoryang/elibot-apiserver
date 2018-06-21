@@ -19,7 +19,7 @@ type MCserver struct {
 type Request struct {
 	Command 		string
 	From			string
-	Resp 			chan Response
+	RespCh 			chan Response
 }
 
 type Response struct {
@@ -53,25 +53,23 @@ func getConnFromPool(ch chan Response) interface{} {
 }
 
 func execute(ctx context.Context, ch chan Response, cmd string) {
-	for {
-		select {
-		case <-ctx.Done():
-			ch<-Response{Result: "", Err: errors.New("MCserver job cancelled")}
+	select {
+	case <-ctx.Done():
+		ch<-Response{Result: "", Err: errors.New("MCserver job cancelled")}
+		return
+	default:
+		conn := getConnFromPool(ch)
+		if conn == nil {
+			ch <- Response{Result: "", Err: errors.New("can not get connection from pool")}
 			return
-		default:
-			conn := getConnFromPool(ch)
-			if conn == nil {
-				ch <- Response{Result: "", Err: errors.New("can not get connection from pool")}
-				return
-			}
-			defer Mcs.ConnPool.Put(conn)
+		}
+		defer Mcs.ConnPool.Put(conn)
 
-			if consumeCommandLineIf(conn.(net.Conn)) {
-				res, err := handleCommand(conn.(net.Conn), cmd)
-				ch <- Response{Result: res, Err: err}
-			} else {
-				ch <- Response{Result: "", Err: errors.New("MCServer error: bad connection")}
-			}
+		if consumeCommandLineIf(conn.(net.Conn)) {
+			res, err := handleCommand(conn.(net.Conn), cmd)
+			ch <- Response{Result: res, Err: err}
+		} else {
+			ch <- Response{Result: "", Err: errors.New("MCServer error: bad connection")}
 		}
 	}
 }
@@ -84,7 +82,7 @@ func worker(quit chan bool) {
 		select {
 		case req := <- Mcs.WorkChan:
 			/* pass ctx to all child for graceful shutdown*/
-			go execute(ctx, req.Resp, req.Command)
+			go execute(ctx, req.RespCh, req.Command)
 		case <-quit:
 			return
 		}
@@ -99,6 +97,18 @@ func (mc *MCserver) Close() {
 		Log.Debug("MCServer closed")
 	}
 } 
+
+func (mc *MCserver) Exec(cmd string, from string, rch chan Response) {
+	mc.WorkChan<-Request{
+		Command: cmd, 
+		From: from, 
+		RespCh: rch,
+	}
+}
+
+func GetMcServer() *MCserver {
+	return Mcs
+}
 
 func NewMCServer(address string, cap int) *MCserver {
 	factory := func() (interface{}, error){return net.Dial("tcp", address)}

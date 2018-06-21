@@ -26,8 +26,16 @@ func test(w http.ResponseWriter, r *http.Request) {
 }
 
 func testSocket(w http.ResponseWriter, r *http.Request) {
+	var mcs *mcserver.MCserver
+	if mcs = mcserver.GetMcServer(); msc == nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "mcserver is not available right now")
+		return
+	}
+	cmd := "testGo 0 1\n"
+	from := "restapi:testsocket"
 	resp := make(chan mcserver.Response)
-	mcserver.Mcs.WorkChan<-mcserver.Request{Command: "testGo 0 1\n", From:"restapi:testsocket", Resp:resp}
+	mcs.Exec(cmd, from, resp)
 	rr := <-resp
 	res := rr.Result
 	err := rr.Err
