@@ -5,7 +5,7 @@ import (
 	"time"
 	"context"
 
-    Log "elibot-apiserver/log"
+    //Log "elibot-apiserver/log"
 )
 
 const (
@@ -21,8 +21,8 @@ type Handler struct {
 	conn 		net.Conn
 }
 
-func (h *Handler)HandleCommand(ctx context.Context, conn net.Conn, command string) (string, error) {
-	if _, err := read(h.conn); err!=nil {
+func (h *Handler)HandleCommand(ctx context.Context, command string) (string, error) {
+	if _, err := readline(h.conn); err!=nil {
 		return "", err
 	}
 
