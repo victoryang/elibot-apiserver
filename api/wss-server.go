@@ -2,7 +2,7 @@ package api
 
 import (
 	"crypto/tls"
-	"crypto/x509"
+	//"crypto/x509"
 	"net/http"
 	"time"
 	"context"
@@ -41,7 +41,7 @@ func (s *WsTLSServer) PushBytes(msg []byte) {
 	s.hub.Broadcast(msg)
 }
 
-func NewWsServer(c *config.WebsocketEntryPoint) *WsTLSServer {
+func NewWssServer(c *config.WebsocketEntryPoint) *WsTLSServer {
 	s := new(WsTLSServer)
 
 	s.hub = v3.NewHub()
