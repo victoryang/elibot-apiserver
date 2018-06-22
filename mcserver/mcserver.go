@@ -31,7 +31,7 @@ type Response struct {
 
 var Mcs *MCserver = nil
 const (
-	MaxJobExecDuration = 200
+	MaxJobExecDuration = 5 * time.Second
 )
 
 func getConnFromPool() (interface{}, Response) {
@@ -61,19 +61,18 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 		Mcs.ConnPool.Put(conn)
 	}()
 
-	ctx_t, cancel := context.WithTimeout(ctx, MaxJobExecDuration * time.Millisecond)
-	defer cancel()
-	
-	go func() {
-		handler := NewHandler(conn)
-		res, err := handler.HandleCommand(cmd)
-		SafeSendResponseToChannel(ch, Response{Result: res, Err: err})
-	}()
+	/*ctx_t, cancel := context.WithTimeout(ctx, MaxJobExecDuration)
+	defer cancel()*/
 
 	select {
 	case <-ctx_t.Done():
+		Log.Debug("job cancelled")
 		SafeSendResponseToChannel(ch, Response{Result: "", Err: errors.New("MCserver job cancelled")})
 		return
+	default:
+		handler := NewHandler(conn)
+		res, err := handler.HandleCommand(cmd)
+		SafeSendResponseToChannel(ch, Response{Result: res, Err: err})
 	}
 }
 
