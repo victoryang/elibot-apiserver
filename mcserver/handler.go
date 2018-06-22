@@ -17,25 +17,15 @@ const (
 	timeoutDuration = 1*time.Second
 )
 
-type Handler struct {
-	conn 		net.Conn
-}
-
-func (h *Handler)HandleCommand(ctx context.Context, command string) (string, error) {
-	err := writeline(h.conn, command)
+func HandleCommand(conn net.Conn, command string) (string, error) {
+	err := writeline(conn, command)
 	if err!=nil {
 		return "", err
 	}
 
-	res, err := readline(h.conn)
+	res, err := readline(conn)
 	if err!=nil {
 		return "", err
 	}
 	return parse(res), nil
-}
-
-func NewHandler(c net.Conn) *Handler {
-	return &Handler {
-		conn: 	c,
-	}
 }
