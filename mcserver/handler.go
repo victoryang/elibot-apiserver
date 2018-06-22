@@ -22,10 +22,6 @@ type Handler struct {
 }
 
 func (h *Handler)HandleCommand(ctx context.Context, command string) (string, error) {
-	if _, err := readline(h.conn); err!=nil {
-		return "", err
-	}
-
 	err := writeline(h.conn, command)
 	if err!=nil {
 		return "", err
