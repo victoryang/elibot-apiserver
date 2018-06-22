@@ -35,6 +35,7 @@ const (
 )
 
 func getConnFromPool() (interface{}, Response) {
+	Log.Debug("MCServer get a connection from pool...")
 	if Mcs == nil {
 		return nil, Response{Result: "", Err: errors.New("MCServer Error")}
 	}
@@ -57,6 +58,7 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 		if _, ok := <- ch; ok {
 	        close(ch)
 	    }
+	    Log.Debug("MCServer put a connection back to pool...")
 		Mcs.ConnPool.Put(conn)
 	}()
 

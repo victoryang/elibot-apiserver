@@ -2,7 +2,6 @@ package mcserver
 
 import (
 	"net"
-	"bufio"
 
     Log "elibot-apiserver/log"
 )
@@ -26,34 +25,30 @@ func WriteMessage(conn net.Conn, command string) error {
 }
 
 func ReadMessage(conn net.Conn) (string, error){
-	reader := bufio.NewReader(conn)
-	buf, _, err := reader.ReadLine()
-    /*buf := make([]byte, BUFSIZE)
-    n , err := conn.Read(buf)*/
+    buf := make([]byte, BUFSIZE)
+    n , err := conn.Read(buf)
     if err != nil {
         Log.Error("Error to read message because of ", err)
         return "", err
     }
-    return string(buf[:]), nil
+    return string(buf[:n]), nil
 }
 
 func CleanupBeforeSendCommand (conn net.Conn) (string, error) {
-    return ReadMessage(conn)
+    return read(conn)
 }
 
 func (h *Handler) HandleCommand(command string) (string, error) {
-	if _, err := CleanupBeforeSendCommand(h.conn); err!=nil {
+	if _, err := read(h.conn); err!=nil {
 		return "", err
 	}
 
-	err := WriteMessage(h.conn, command)
+	err := writeline(h.conn, command)
 	if err!=nil {
 		return "", err
 	}
 
-	var res string
-	res, err = ReadMessage(h.conn)
-	return res, err
+	return readline(h.conn) 
 }
 
 func NewHandler(c interface{}) *Handler{
