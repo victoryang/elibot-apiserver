@@ -58,18 +58,22 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 		if _, ok := <- ch; ok {
 	        close(ch)
 	    }
-	    Log.Debug("MCServer put a connection back to pool...")
 		Mcs.ConnPool.Put(conn)
 	}()
 
-	select {
-	case <-ctx.Done():
-		SafeSendResponseToChannel(ch, Response{Result: "", Err: errors.New("MCserver job cancelled")})
-		return
-	default:
+	ctx_t, cancel := context.WithTimeout(ctx, MaxJobExecDuration * time.Millisecond)
+	defer cancel()
+	
+	go func() {
 		handler := NewHandler(conn)
 		res, err := handler.HandleCommand(cmd)
 		SafeSendResponseToChannel(ch, Response{Result: res, Err: err})
+	}()
+
+	select {
+	case <-ctx_t.Done():
+		SafeSendResponseToChannel(ch, Response{Result: "", Err: errors.New("MCserver job cancelled")})
+		return
 	}
 }
 
@@ -80,10 +84,7 @@ func worker(ctx context.Context) {
 			return
 
 		case req := <- Mcs.WorkChan:
-			/* pass ctx to all child for graceful shutdown*/
-			ctx_job, cancel := context.WithTimeout(ctx, MaxJobExecDuration * time.Millisecond)
-			defer cancel()
-			go execute(ctx_job, req.RespCh, req.Command)
+			go execute(ctx, req.RespCh, req.Command)
 		}
 	}
 }

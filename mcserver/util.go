@@ -16,13 +16,14 @@ func writeline(conn net.Conn, cmd string) error {
     return nil
 }
 
-func readline(conn net.Conn) string {
-    scanner := bufio.NewScanner(conn)
-    if scanner.Scan() {
+func readline(conn net.Conn) (string, error) {
+    reader := bufio.NewReader(conn)
+    res , err := reader.ReadString('\n')
+    /*if scanner.Scan() {
         Log.Debug("read from conn: ", scanner.Text())
         return scanner.Text()
-    }
-    return ""
+    }*/
+    return res, err
 }
 
 func read(conn net.Conn) (string, error) {
