@@ -3,7 +3,6 @@ package mcserver
 import (
 	"net"
 	"time"
-	"context"
 
     //Log "elibot-apiserver/log"
 )
@@ -17,7 +16,7 @@ const (
 	timeoutDuration = 5*time.Second
 )
 
-func freeConn(c net.conn) {
+func freeConn(c net.Conn) {
 	c.Close()
 	c = nil
 }
