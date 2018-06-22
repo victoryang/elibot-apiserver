@@ -1,2 +1,2 @@
-entrypoints: ["https"]
-#server_address: {host_ip}:9000
+debug:
+  enable: true
