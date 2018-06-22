@@ -7,6 +7,7 @@ import (
     Log "elibot-apiserver/log"
 )
 
+/* Important: should call flush() to send buffer to network*/
 func writeline(conn net.Conn, cmd string) error {
     writer := bufio.NewWriter(conn)
     _, err := writer.WriteString(cmd)
@@ -14,20 +15,42 @@ func writeline(conn net.Conn, cmd string) error {
         Log.Error("Error to send message because of ", err.Error())
         return err
     }
+
+    Log.Debug("writeline to conn: ", cmd)
+    return writer.Flush()
+}
+
+func originalwrite(conn net.Conn, command string) error {
+    _, e := conn.Write([]byte(command))
+    if e != nil {
+        Log.Error("Error to send message because of ", e.Error())
+        return e
+    }
     return nil
+}
+
+func originalread(conn net.Conn) (string, error){
+    buf := make([]byte, BUFSIZE)
+    n , err := conn.Read(buf)
+    if err != nil {
+        Log.Error("Error to read message because of ", err)
+        return "", err
+    }
+    return string(buf[:n]), nil
 }
 
 func readline(conn net.Conn) (string, error) {
     reader := bufio.NewReader(conn)
-    res , err := reader.ReadString('\n')
-    /*if scanner.Scan() {
-        Log.Debug("read from conn: ", scanner.Text())
-        return scanner.Text()
-    }*/
-    return res, err
+    res, err := reader.ReadString('\n')
+    if err != nil {
+        Log.Error("Error to send message because of ", err.Error())
+        return "", err
+    }
+    Log.Debug("readline from conn: ", res)
+    return res, nil
 }
 
-func read(conn net.Conn) (string, error) {
+func readall(conn net.Conn) (string, error) {
     buf := make([]byte, BUFSIZE)
     reader := bufio.NewReader(conn)
     n, err := reader.Read(buf)

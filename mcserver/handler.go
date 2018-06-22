@@ -3,6 +3,7 @@ package mcserver
 import (
 	"net"
 	"time"
+	"context"
 
     Log "elibot-apiserver/log"
 )
@@ -20,34 +21,21 @@ type Handler struct {
 	conn 		net.Conn
 }
 
-func WriteMessage(conn net.Conn, command string) error {
-    _, e := conn.Write([]byte(command))
-    if e != nil {
-        Log.Error("Error to send message because of ", e.Error())
-        return e
-    }
-    return nil
-}
-
-func ReadMessage(conn net.Conn) (string, error){
-    buf := make([]byte, BUFSIZE)
-    n , err := conn.Read(buf)
-    if err != nil {
-        Log.Error("Error to read message because of ", err)
-        return "", err
-    }
-    return string(buf[:n]), nil
-}
-
-func HandleCommand(ctx context.Context, conn net.Conn, command string) (string, error) {
-	if _, err := read(conn); err!=nil {
+func (h *Handler)HandleCommand(ctx context.Context, conn net.Conn, command string) (string, error) {
+	if _, err := read(h.conn); err!=nil {
 		return "", err
 	}
 
-	err := writeline(conn, command)
+	err := writeline(h.conn, command)
 	if err!=nil {
 		return "", err
 	}
 
-	return readline(conn)
+	return readline(h.conn)
+}
+
+func NewHandler(c net.Conn) *Handler {
+	return &Handler {
+		conn: 	c,
+	}
 }

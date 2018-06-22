@@ -63,7 +63,8 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 		SafeSendResponseToChannel(ch, Response{Result: "", Err: errors.New("MCserver job cancelled")})
 		return
 	default:
-		res, err := HandleCommand(ctx, conn.(net.Conn), cmd)
+		handler := NewHandler(conn.(net.Conn))
+		res, err := handler.HandleCommand(ctx, cmd)
 		SafeSendResponseToChannel(ch, Response{Result: res, Err: err})
 	}
 }
