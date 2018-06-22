@@ -3,9 +3,25 @@ package mcserver
 import (
     "net"
     "bufio"
+    "strings"
 
     Log "elibot-apiserver/log"
 )
+
+func parse(s string) string {
+    return strings.Trim(s, CMDLINE)
+}
+
+func parse1(s string) string {
+    var res string
+    ss := strings.Split(s, "\n")
+    for _, v := range ss {
+        if v != CMDLINE {
+            res+=v
+        }
+    }
+    return res
+}
 
 /* Important: should call flush() to send buffer to network*/
 func writeline(conn net.Conn, cmd string) error {
