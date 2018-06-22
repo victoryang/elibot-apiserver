@@ -13,7 +13,8 @@ type MCserver struct {
 	Address			string
 	ConnPool 		pool.Pool
 	WorkChan		chan Request
-	QuitChan		chan bool
+	Ctx 			context.Context
+	Cancel 			context.CancelFunc
 }
 
 type Request struct {
@@ -29,69 +30,60 @@ type Response struct {
 
 var Mcs *MCserver = nil
 
-func handleCommand(conn net.Conn, command string) (string, error) {
-	err := WriteMessage(conn, command)
-	if err!=nil {
-		return "", err
-	}
-
-	return ReadMessage(conn)
-}
-
-func getConnFromPool(ch chan Response) interface{} {
+func getConnFromPool() (interface{}, Response) {
+	Log.Debug("MCServer get a connection from pool...")
 	if Mcs == nil {
-		ch <- Response{Result: "", Err: errors.New("MCServer Error")}
-		return nil
+		return nil, Response{Result: "", Err: errors.New("MCServer Error")}
 	}
 
 	conn, err := Mcs.ConnPool.Get()
 	if err!=nil {
-		ch <- Response{Result: "", Err: errors.New("MCServer error: can not get a connection now, try it again later")}
-		return nil
+		return nil, Response{Result: "", Err: err}
 	}
-	return conn
+	return conn, Response{}
 }
 
 func execute(ctx context.Context, ch chan Response, cmd string) {
+	Log.Debug("MCServer executing new command...")
+	conn, resp := getConnFromPool()
+	if conn == nil {
+		SafeSendResponseToChannel(ch, resp)
+		return
+	}
+	defer func() {
+		if _, ok := <- ch; ok {
+	        close(ch)
+	    }
+		Mcs.ConnPool.Put(conn)
+	}()
+
 	select {
 	case <-ctx.Done():
-		ch<-Response{Result: "", Err: errors.New("MCserver job cancelled")}
+		Log.Debug("job cancelled")
+		SafeSendResponseToChannel(ch, Response{Result: "", Err: errors.New("MCserver job cancelled")})
 		return
 	default:
-		conn := getConnFromPool(ch)
-		if conn == nil {
-			ch <- Response{Result: "", Err: errors.New("can not get connection from pool")}
-			return
-		}
-		defer Mcs.ConnPool.Put(conn)
-
-		if consumeCommandLineIf(conn.(net.Conn)) {
-			res, err := handleCommand(conn.(net.Conn), cmd)
-			ch <- Response{Result: res, Err: err}
-		} else {
-			ch <- Response{Result: "", Err: errors.New("MCServer error: bad connection")}
-		}
+		res, err := HandleCommand(conn.(net.Conn), cmd)
+		SafeSendResponseToChannel(ch, Response{Result: res, Err: err})
 	}
 }
 
-func worker(quit chan bool) {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
+func worker(ctx context.Context) {
 	for {
 		select {
-		case req := <- Mcs.WorkChan:
-			/* pass ctx to all child for graceful shutdown*/
-			go execute(ctx, req.RespCh, req.Command)
-		case <-quit:
+		case <-ctx.Done():
 			return
+
+		case req := <- Mcs.WorkChan:
+			go execute(ctx, req.RespCh, req.Command)
 		}
 	}
 }
 
 func (mc *MCserver) Close() {
 	if mc!=nil {
-		mc.QuitChan<-true
+		mc.Cancel()
+		close(mc.WorkChan)
 		mc.ConnPool.Release()
 		mc=nil
 		Log.Debug("MCServer closed")
@@ -99,7 +91,8 @@ func (mc *MCserver) Close() {
 } 
 
 func (mc *MCserver) Exec(cmd string, from string, rch chan Response) {
-	mc.WorkChan<-Request{
+	Log.Debug("MCserver exec ", cmd, " from ", from)
+	mc.WorkChan <- Request{
 		Command: cmd, 
 		From: from, 
 		RespCh: rch,
@@ -127,12 +120,14 @@ func NewMCServer(address string, cap int) *MCserver {
 		return Mcs
 	}
 
+	ctx, cancel := context.WithCancel(context.Background())
 	Mcs = &MCserver{
 		Address: 	address,
 		ConnPool: 	p,
 		WorkChan:   make(chan Request),
-		QuitChan: 	make(chan bool),
+		Ctx: 		ctx,
+		Cancel:		cancel,
 	}
-	go worker(Mcs.QuitChan)
+	go worker(Mcs.Ctx)
 	return Mcs
 }

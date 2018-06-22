@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
   // localhost at port 50051). We indicate that the channel isn't authenticated
   // (use of InsecureChannelCredentials()).
   GreeterClient greeter(grpc::CreateChannel(
-      "localhost:2500", grpc::InsecureChannelCredentials()));
+      "localhost:9500", grpc::InsecureChannelCredentials()));
 
   ::google::protobuf::int32 i = 1;
   std::string reply = greeter.SayHello(i);
