@@ -134,5 +134,5 @@ func ServeWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 
 func ServeHome(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("connect to websocket server")
-	http.ServeFile(w, r, "home.html")
+	http.ServeFile(w, r, "assets/index.html")
 }

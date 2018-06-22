@@ -27,8 +27,7 @@ type Hub struct {
         registerFunc    func([]byte)   
 }
 
-func (h *Hub) PushMsg(msg []byte) {
-        fmt.Println("Push messages to all client: ", msg)
+func (h *Hub) Broadcast (msg []byte) {
         msg = bytes.TrimSpace(bytes.Replace(msg, newline, space, -1))
         h.broadcast <- msg
 }
