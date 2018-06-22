@@ -35,6 +35,10 @@ func (s *WsServer) PushBytes(msg []byte) {
 	s.hub.Broadcast(msg)
 }
 
+func (s *WsServer) NotificationRegister(f func([]byte)) {
+	s.hub.NotificationRegister(f)
+}
+
 func NewWsServer(c *config.WebsocketEntryPoint) *WsServer {
 	s := new(WsServer)
 	

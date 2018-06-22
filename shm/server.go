@@ -68,6 +68,6 @@ func NewServer(server *api.WsServer) (*ShmServer, error){
 		return nil, err
 	}
 	initWatchFuncs()
-	server.Hub.NotificationRegister(handleMsg)
+	server.NotificationRegister(handleMsg)
 	return s, nil
 }
