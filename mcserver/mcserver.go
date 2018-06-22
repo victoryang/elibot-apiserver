@@ -4,7 +4,6 @@ import (
 	"errors"
 	"net"
 	"context"
-	"time"
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/mcserver/pool"
@@ -30,9 +29,6 @@ type Response struct {
 }
 
 var Mcs *MCserver = nil
-const (
-	MaxJobExecDuration = 5 * time.Second
-)
 
 func getConnFromPool() (interface{}, Response) {
 	Log.Debug("MCServer get a connection from pool...")
@@ -61,17 +57,13 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 		Mcs.ConnPool.Put(conn)
 	}()
 
-	/*ctx_t, cancel := context.WithTimeout(ctx, MaxJobExecDuration)
-	defer cancel()*/
-
 	select {
-	case <-ctx_t.Done():
+	case <-ctx.Done():
 		Log.Debug("job cancelled")
 		SafeSendResponseToChannel(ch, Response{Result: "", Err: errors.New("MCserver job cancelled")})
 		return
 	default:
-		handler := NewHandler(conn)
-		res, err := handler.HandleCommand(cmd)
+		res, err := HandleCommand(ctx, conn.(net.Conn), cmd)
 		SafeSendResponseToChannel(ch, Response{Result: res, Err: err})
 	}
 }

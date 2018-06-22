@@ -2,6 +2,7 @@ package mcserver
 
 import (
 	"net"
+	"time"
 
     Log "elibot-apiserver/log"
 )
@@ -9,6 +10,10 @@ import (
 const (
     CMDLINE = "mcserver>"
     BUFSIZE = 255
+)
+
+const (
+	timeoutDuration = 1*time.Second
 )
 
 type Handler struct {
@@ -34,25 +39,15 @@ func ReadMessage(conn net.Conn) (string, error){
     return string(buf[:n]), nil
 }
 
-func CleanupBeforeSendCommand (conn net.Conn) (string, error) {
-    return read(conn)
-}
-
-func (h *Handler) HandleCommand(command string) (string, error) {
-	if _, err := read(h.conn); err!=nil {
+func HandleCommand(ctx context.Context, conn net.Conn, command string) (string, error) {
+	if _, err := read(conn); err!=nil {
 		return "", err
 	}
 
-	err := writeline(h.conn, command)
+	err := writeline(conn, command)
 	if err!=nil {
 		return "", err
 	}
 
-	return readline(h.conn)
-}
-
-func NewHandler(c interface{}) *Handler{
-	return &Handler{
-		conn: 	c.(net.Conn),
-	}
+	return readline(conn)
 }
