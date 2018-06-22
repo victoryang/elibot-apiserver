@@ -19,6 +19,7 @@ func writeline(conn net.Conn, cmd string) error {
 func readline(conn net.Conn) string {
     scanner := bufio.NewScanner(conn)
     if scanner.Scan() {
+        Log.Debug("read from conn: ", scanner.Text())
         return scanner.Text()
     }
     return ""
@@ -32,6 +33,7 @@ func read(conn net.Conn) (string, error) {
         Log.Error("Error to read message because of ", err)
         return "", err
     }
+    Log.Debug("read from conn: ", string(buf[:n]))
     return string(buf[:n]), nil
 }
 
