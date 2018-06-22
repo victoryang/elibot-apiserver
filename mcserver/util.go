@@ -1,6 +1,7 @@
 package mcserver
 
 import (
+    "net"
     "bufio"
     Log "elibot-apiserver/log"
 )
@@ -8,9 +9,9 @@ import (
 func writeline(conn net.Conn, cmd string) error {
     writer := bufio.NewWriter(conn)
     _, err := writer.WriteString(cmd)
-    if e != nil {
-        Log.Error("Error to send message because of ", e.Error())
-        return e
+    if err != nil {
+        Log.Error("Error to send message because of ", err.Error())
+        return err
     }
     return nil
 }
@@ -25,7 +26,7 @@ func readline(conn net.Conn) string {
 
 func read(conn net.Conn) (string, error) {
     buf := make([]byte, BUFSIZE)
-    reader := bufio.NewReader()
+    reader := bufio.NewReader(conn)
     n, err := reader.Read(buf)
     if err != nil {
         Log.Error("Error to read message because of ", err)

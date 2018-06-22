@@ -48,7 +48,7 @@ func (h *Handler) HandleCommand(command string) (string, error) {
 		return "", err
 	}
 
-	return readline(h.conn) 
+	return readline(h.conn), nil
 }
 
 func NewHandler(c interface{}) *Handler{
