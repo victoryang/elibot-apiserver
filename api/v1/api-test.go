@@ -29,6 +29,8 @@ func testSocket(w http.ResponseWriter, r *http.Request) {
 	defer close(rCh)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+	
 	go mcs.Exec(cmd, from, rCh)
 
 	select {

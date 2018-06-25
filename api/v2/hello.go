@@ -27,6 +27,8 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 		defer close(rCh)
 
 		c, cancel := context.WithTimeout(ctx, 3*time.Second)
+		defer cancel()
+		
 		if in.Name == 1 {
 			go mcs.Exec(cmd, from, rCh)
 		} else {
