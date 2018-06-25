@@ -22,10 +22,6 @@ type ShmServer struct {
 
 func sender(ctx context.Context, ws *api.WsServer, hit chan []byte) {
 	Log.Print("Shared memory server started...")
-	watchTicker := time.NewTicker(watchPeriod)
-	defer func() {
-		watchTicker.Stop()
-	}()
 
 	DONE:
 	for {

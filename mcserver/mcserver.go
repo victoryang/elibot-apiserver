@@ -51,9 +51,6 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 		return
 	}
 	defer func() {
-		if _, ok := <- ch; ok {
-	        close(ch)
-	    }
 		Mcs.ConnPool.Put(conn)
 	}()
 
