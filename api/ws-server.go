@@ -45,7 +45,7 @@ func NewWsServer(c *config.WebsocketEntryPoint) *WsServer {
 	s.hub = v3.NewHub()
     go s.hub.Run()
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-                v3.ServeHome(w, r, c.IndexFile)
+                v3.ServeHome(c.IndexFile, w, r)
     })
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
                 v3.ServeWs(s.hub, w, r)

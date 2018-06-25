@@ -19,7 +19,7 @@ var (
 
 	DefaultWebsocketEntryPoint = &WebsocketEntryPoint {
 		ListenAddress:			"0.0.0.0:9050",
-		IndexFile:				"/rbctrl/apiserver/assets/index.html"
+		IndexFile:				"/rbctrl/apiserver/assets/index.html",
 	}
 
 	DefaultDatabase = &Database {
