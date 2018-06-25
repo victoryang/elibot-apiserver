@@ -31,7 +31,7 @@ func (s *WsServer) Shutdown() {
 }
 
 func (s *WsServer) PushBytes(msg []byte) {
-	Log.Print("Push messages to all client: ", msg)
+	Log.Debug("Push messages to all client: ", msg)
 	s.hub.Broadcast(msg)
 }
 
@@ -44,7 +44,9 @@ func NewWsServer(c *config.WebsocketEntryPoint) *WsServer {
 	
 	s.hub = v3.NewHub()
     go s.hub.Run()
-	http.HandleFunc("/", v3.ServeHome)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+                v3.ServeHome(w, r, c.IndexFile)
+    })
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
                 v3.ServeWs(s.hub, w, r)
     })

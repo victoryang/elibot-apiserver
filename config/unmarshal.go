@@ -54,6 +54,10 @@ func (w *WebsocketEntryPoint) UnmarshalYAML(unmarshal func(interface{}) error) e
 	if w.ListenAddress == "" {
 		w.ListenAddress = DefaultWebsocketEntryPoint.ListenAddress
 	}
+
+	if w.IndexFile == "" {
+		w.IndexFile = DefaultWebsocketEntryPoint.IndexFile
+	}
 	return nil
 }
 

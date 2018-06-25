@@ -19,6 +19,7 @@ var (
 
 	DefaultWebsocketEntryPoint = &WebsocketEntryPoint {
 		ListenAddress:			"0.0.0.0:9050",
+		IndexFile:				"/rbctrl/apiserver/assets/index.html"
 	}
 
 	DefaultDatabase = &Database {
@@ -59,6 +60,7 @@ type GrpcEntryPoint struct {
 
 type WebsocketEntryPoint struct {
 	ListenAddress	string			`yaml:"address,omitempty"`
+	IndexFile		string			`yaml:"index,omitempty"`
 }
 
 type Database struct {

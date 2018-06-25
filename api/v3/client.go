@@ -132,7 +132,7 @@ func ServeWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
         go client.readPump()
 }
 
-func ServeHome(w http.ResponseWriter, r *http.Request) {
+func ServeHome(w http.ResponseWriter, r *http.Request, index string) {
 	fmt.Println("connect to websocket server")
-	http.ServeFile(w, r, "assets/index.html")
+	http.ServeFile(w, r, index)
 }
