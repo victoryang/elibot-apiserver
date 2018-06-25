@@ -21,7 +21,7 @@ type ShmServer struct {
 }
 
 func sender(ctx context.Context, ws *api.WsServer, hit chan []byte) {
-	Log.Debug("Shared memory server started...")
+	Log.Print("Shared memory server started...")
 	watchTicker := time.NewTicker(watchPeriod)
 	defer func() {
 		watchTicker.Stop()
@@ -42,7 +42,7 @@ func sender(ctx context.Context, ws *api.WsServer, hit chan []byte) {
 
 func (s *ShmServer) Shutdown() {
 	s.Cancel()
-	Log.Debug("sharedmemory server shutting down")
+	Log.Print("sharedmemory server shutting down")
 }
 
 func handleMsg(msg []byte) {

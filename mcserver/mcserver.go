@@ -86,7 +86,7 @@ func (mc *MCserver) Close() {
 		mc.Cancel()
 		mc.ConnPool.Release()
 		mc=nil
-		Log.Debug("MCServer closed")
+		Log.Print("MCServer closed")
 	}
 } 
 
@@ -128,6 +128,7 @@ func NewMCServer(address string, cap int) *MCserver {
 		Ctx: 		ctx,
 		Cancel:		cancel,
 	}
+	Log.Print("MCServer started")
 	go worker(Mcs.Ctx)
 	return Mcs
 }

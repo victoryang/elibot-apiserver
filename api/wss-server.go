@@ -22,7 +22,7 @@ type WsTLSServer struct {
 }
 
 func (s *WsTLSServer) Run() {
-	Log.Debug("websocket server listening...")
+	Log.Print("websocket server listening...")
 	go s.httpServer.ListenAndServeTLS("yourdomain.com.crt", "yourdomain.com.key")
 }
 
@@ -33,7 +33,7 @@ func (s *WsTLSServer) Shutdown() {
     // Doesn't block if no connections, but will otherwise wait
     // until the timeout deadline.
     s.httpServer.Shutdown(ctx)
-    Log.Debug("websocket server shuting down...")
+    Log.Print("websocket server shuting down...")
 }
 
 func (s *WsTLSServer) PushBytes(msg []byte) {

@@ -27,11 +27,11 @@ func (s *WsServer) Shutdown() {
     // Doesn't block if no connections, but will otherwise wait
     // until the timeout deadline.
     s.httpServer.Shutdown(ctx)
-    Log.Debug("websocket server shuting down...")
+    Log.Print("websocket server shuting down...")
 }
 
 func (s *WsServer) PushBytes(msg []byte) {
-	Log.Debug("Push messages to all client: ", msg)
+	Log.Print("Push messages to all client: ", msg)
 	s.hub.Broadcast(msg)
 }
 
