@@ -82,8 +82,8 @@ func worker(ctx context.Context) {
 
 func (mc *MCserver) Close() {
 	if mc!=nil {
-		mc.Cancel()
 		close(mc.WorkChan)
+		mc.Cancel()
 		mc.ConnPool.Release()
 		mc=nil
 		Log.Debug("MCServer closed")

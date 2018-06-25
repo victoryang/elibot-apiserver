@@ -44,9 +44,9 @@ func worker(ctx_base context.Context, modified chan []byte) {
 	var wg sync.WaitGroup
 	for _,f := range watchfuncs {
 		wg.Add(1)
-		defer wg.Done()
-
+		
 		go func(watchfunc WatchFunc, ctx context.Context, modified chan []byte){
+			defer wg.Done()
 			watchTicker := time.NewTicker(watchPeriod)
 			defer func() {
 				watchTicker.Stop()
@@ -63,7 +63,7 @@ func worker(ctx_base context.Context, modified chan []byte) {
 		}(f, ctx_base, modified)
 	}
 	wg.Wait()
-	Log.Debug("quit for some reason")
+	Log.Debug("Shared memory:  workers quit")
 }
 
 func initWorkerResource() error {

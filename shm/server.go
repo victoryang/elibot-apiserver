@@ -33,7 +33,9 @@ func sender(ctx context.Context, ws *api.WsServer, hit chan []byte) {
 		case <-ctx.Done():
 			break DONE
 		case res := <-hit:
-			ws.Hub.PushMsg(res)
+			if ws != nil {
+				ws.PushBytes(res)
+			}
 		}
 	}
 }
@@ -66,6 +68,6 @@ func NewServer(server *api.WsServer) (*ShmServer, error){
 		return nil, err
 	}
 	initWatchFuncs()
-	server.Hub.NotificationRegister(handleMsg)
+	server.NotificationRegister(handleMsg)
 	return s, nil
 }
