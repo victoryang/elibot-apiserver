@@ -25,14 +25,19 @@ func testSocket(w http.ResponseWriter, r *http.Request) {
 	cmd := "testGo 0 1\n"
 	from := "restapi:testsocket"
 	rCh := make(chan mcserver.Response)
+	defer close(rCh)
+
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	go mcs.Exec(cmd, from, rCh)
-	rr := <- rCh
-	res := rr.Result
-	err := rr.Err
-	if err!=nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, err.Error())
+
+	select {
+	case <-ctx.Done():
+		WriteInternalServerErrorResponse(w, ctx.Err())
+	case r := <- rCh:
+		if r.Err != nil {
+			WriteInternalServerErrorResponse(w, r.Err)
+		} else {
+			WriteSuccessResponse(w, r.Result)
+		}
 	}
-	
-	WriteSuccessResponse(w, res)
 }

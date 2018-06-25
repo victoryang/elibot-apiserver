@@ -22,18 +22,20 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 			return nil, errors.New("mcserver is not available right now")
 		}
 		
-		select {
-		case <-ctx.Done():
-			return nil, errors.New("test Go cancelled")
-		default:
-			rCh := make(chan mcserver.Response)
-			defer close(rCh)
+		rCh := make(chan mcserver.Response)
+		defer close(rCh)
 
-			var r mcserver.Response
-			if in.Name == 1 {
-				go mcs.Exec(cmd, from, rCh)
-				r = <- rCh
-			}
+		c, cancel := context.WithTimeout(ctx, 3*time.Second)
+		if in.Name == 1 {
+			go mcs.Exec(cmd, from, rCh)
+		} else {
+			return &pb.Reply{Message: "test fail"}, errors.New("request name not 1")
+		}
+
+		select {
+		case <-c.Done():
+			return nil, c.Err()
+		case r := <- rCh:
 			return &pb.Reply{Message: r.Result}, r.Err
 		}
 }
