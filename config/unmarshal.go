@@ -88,6 +88,58 @@ func (a *AdminSever) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	return nil
 }
 
+func (s *Signature) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain Signature
+	if err := unmarshal((*plain)(s)); err != nil {
+		return err
+	}
+
+	if s.AccessKey == "" {
+		s.AccessKey = DefaultSignature.AccessKey
+	}
+
+	if s.SecretKey == "" {
+		s.SecretKey = DefaultSignature.SecretKey
+	}
+	return nil
+}
+
+func (c *Certificate) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain Certificate
+	if err := unmarshal((*plain)(c)); err != nil {
+		return err
+	}
+
+	if c.Path == "" {
+		c.Path = DefaultCertificate.Path
+	}
+
+	if c.Certfile == "" {
+		c.Certfile = DefaultCertificate.Certfile
+	}
+
+	if c.Keyfile == "" {
+		c.Keyfile = DefaultCertificate.Keyfile
+	}
+	return nil
+}
+
+func (s *Security) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain Security
+	if err := unmarshal((*plain)(s)); err != nil {
+		return err
+	}
+
+	if s.SSLCert == "" {
+		s.SSLCert = DefaultCertificate.SSLCert
+	}
+
+	if s.Sign = "" {
+		s.Sign = DefaultSignature
+	}
+	return nil
+}
+
 func (g *GlobalConfiguration) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	type plain GlobalConfiguration
 	if err := unmarshal((*plain)(g)); err != nil {
@@ -124,6 +176,10 @@ func (g *GlobalConfiguration) UnmarshalYAML(unmarshal func(interface{}) error) e
 
 	if g.Admin == nil {
 		g.Admin = DefaultGlobalConfiguration.Admin
+	}
+
+	if g.Secure == nil {
+		g.Secure = DefaultGlobalConfiguration.Secure
 	}
 	return nil
 }

@@ -31,6 +31,22 @@ var (
 		ListenAddress:			"0.0.0.0:9090",
 	}
 
+	DefaultSignature = &Signature {
+		AccessKey:		"",
+		SecretKey:		"",
+	}
+
+	DefaultCertificate = &Certificate {
+		Path:			"/rbctrl/apiserver/certificate/",
+		Certfile:		"server.crt",
+		Keyfile:		"server.key",
+	}
+
+	DefaultSecurity = &Security {
+		SSLCert:			DefaultCertificate,
+		Sign:				DefaultSignature,
+	}
+
 	DefaultGlobalConfiguration = &GlobalConfiguration{
 		AccessLogsFile:			"/rbctrl/apiserver/log/access.Log",
 		ServerLogsFile:			"/rbctrl/apiserver/log/server.Log",
@@ -42,6 +58,7 @@ var (
 
 		Databases:		DefaultDatabase,
 		Admin:			DefaultAdmin,
+		Secure:			DefaultSecurity,
 	}
 )
 
@@ -72,6 +89,22 @@ type AdminSever struct {
 	ListenAddress		string		`yaml:"admin_address,omitempty"`
 }
 
+type Signature struct {
+	AccessKey			string 		`yaml:"accesskey,omitempty"`
+	SecretKey 			string		`yaml:"secretkey,omitempty"`
+}
+
+type Certificate struct {
+	Path				string		`yaml:"path,omitempty"`
+	Certfile            string 		`yaml:"certfile,omitempty"`
+	Keyfile             string 		`yaml:"keyfile,omitempty"`
+}
+
+type Security struct {
+	SSLCert				*Certificate 	`yaml:"cert,omitempty"`
+	Sign 				*Signature		`yaml:"signature,omitempty"`
+}
+
 type GlobalConfiguration struct {
 	AccessLogsFile		string					`yaml:"accesslog,omitempty"`
 	ServerLogsFile		string					`yaml:"serverlog,omitempty"`
@@ -83,4 +116,5 @@ type GlobalConfiguration struct {
 
 	Databases			*Database				`yaml:"databases,omitempty"`
 	Admin 				*AdminSever 			`yaml:"admin,omitempty"`
+	Secure 				*Security				`yaml:security,omitempty`
 }

@@ -7,6 +7,7 @@ import (
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/api"
+	"elibot-apiserver/auth"
 	"elibot-apiserver/dbproxy"
 	"elibot-apiserver/config"
 	"elibot-apiserver/mcserver"
@@ -27,8 +28,6 @@ const (
 	ERR_START_WSSERVER
 	ERR_START_SHMSERVER
 )
-
-var debug_mode bool
 
 func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *api.WsServer, shms *shm.ShmServer) {
 	signal.Ignore()
@@ -93,6 +92,8 @@ func main() {
 	}
 	defer Log.CloseFile()
 
+	auth.Init(cfg.Secure)
+
 	mcs := mcserver.NewMCServer(mcserverAddress, 3)
 	if mcs==nil {
 		Log.Error("Error in connecting to mc server")
@@ -102,6 +103,7 @@ func main() {
 	startAdminServer(cfg.Admin)
 
 	SetUpDatabase(cfg)
+
 	s := api.NewApiServer(cfg)
 	s.Run()
 	
