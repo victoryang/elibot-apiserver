@@ -38,8 +38,8 @@ var (
 
 	DefaultCertificate = &Certificate {
 		Path:			"/rbctrl/apiserver/certificate/",
-		Certfile:		"server.crt",
-		Keyfile:		"server.key",
+		Certfile:		"server/server-cert.pem",
+		Keyfile:		"server/server-key.pem",
 	}
 
 	DefaultSecurity = &Security {
