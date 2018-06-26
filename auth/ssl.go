@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"crypto/tls"
+	//"crypto/tls"
 	"elibot-apiserver/config"
 )
 
@@ -13,11 +13,11 @@ type SSL struct {
 	KeyFile 		string
 }
 
-func GetCert() {
+func GetCert() string {
 	return ssl.CertFile
 }
 
-func GetKey() {
+func GetKey() string {
 	return ssl.KeyFile
 }
 

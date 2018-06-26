@@ -15,7 +15,9 @@ func setGrpcOptions(c *config.GrpcEntryPoint) []grpc.ServerOption {
 	var opts []grpc.ServerOption
 	/*opts = append(opts, grpc.CustomCodec(&codec{}))*/
 	if auth.IsSSL() {
-		opts = append(opts, grpc.Creds(NewServerTLSFromFile(auth.GetCert(), auth.GetKey()))
+		if cred, err := credentials.NewServerTLSFromFile(auth.GetCert(), auth.GetKey()); err==nil {
+			opts = append(opts, grpc.Creds(cred))
+		}
 	}
 	/*opts = append(opts, grpc.UnaryInterceptor(newUnaryInterceptor(s)))
 	opts = append(opts, grpc.StreamInterceptor(newStreamInterceptor(s)))

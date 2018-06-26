@@ -130,11 +130,11 @@ func (s *Security) UnmarshalYAML(unmarshal func(interface{}) error) error {
 		return err
 	}
 
-	if s.SSLCert == "" {
-		s.SSLCert = DefaultCertificate.SSLCert
+	if s.SSLCert == nil {
+		s.SSLCert = DefaultCertificate
 	}
 
-	if s.Sign = "" {
+	if s.Sign == nil {
 		s.Sign = DefaultSignature
 	}
 	return nil
