@@ -111,7 +111,7 @@ jmCry0kFqJRGaq5NjYXrqqtQxJfWKLmZG6gev43iTwSdDzxvCcfh
 -----END RSA PRIVATE KEY-----)";
 
   GreeterClient greeter(grpc::CreateChannel(
-      "localhost:9500", grpc::SslCredentials(grpc::SslCredentialsOptions{"", cert, key})));
+      "localhost:9500", grpc::SslCredentials(grpc::SslCredentialsOptions{"", key, cert})));
 
   ::google::protobuf::int32 i = 1;
   std::string reply = greeter.SayHello(i);
