@@ -16,7 +16,7 @@ type WsServer struct {
 }
 
 func (s *WsServer) Run() {
-	Log.Debug("websocket server listening...")
+	Log.Print("websocket server listening...")
 	go s.httpServer.ListenAndServe()
 }
 
