@@ -54,6 +54,8 @@ func setGrpcOptions(c *config.GrpcEntryPoint) []grpc.ServerOption {
 		}*/
 		if option, err := LoadSelfSignedCert(); err==nil {
 			opts = append(opts, option)
+		} else {
+			Log.Debug("grpc ssl load cert fails: ", err)
 		}
 	}
 	/*opts = append(opts, grpc.UnaryInterceptor(newUnaryInterceptor(s)))
