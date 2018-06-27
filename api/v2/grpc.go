@@ -19,23 +19,23 @@ func LoadSelfSignedCert() (grpc.ServerOption, error){
 	 // Load the certificates from disk
     certificate, err := tls.LoadX509KeyPair(auth.GetCert(), auth.GetKey())
     if err != nil {
-        return nil, errors.New("could not load server key pair: %s", err)
+        return nil, err
     }
 
     // Create a certificate pool from the certificate authority
     certPool := x509.NewCertPool()
     ca, err := ioutil.ReadFile("/rbctrl/apiserver/certificate/ca/ca-cert.pem")
     if err != nil {
-        return nil, errors.New("could not read ca certificate: %s", err)
+        return nil, err
     }
 
     // Append the client certificates from the CA
     if ok := certPool.AppendCertsFromPEM(ca); !ok {
-        return errors.New("failed to append client certs")
+        return nil, errors.New("failed to append client certs")
     }
 
     // Create the TLS credentials
-    creds := credentials.NewTLS(&tls.Config{
+    cred := credentials.NewTLS(&tls.Config{
     	ClientAuth:   tls.RequireAndVerifyClientCert,
     	Certificates: []tls.Certificate{certificate},
     	ClientCAs:    certPool,
@@ -52,8 +52,8 @@ func setGrpcOptions(c *config.GrpcEntryPoint) []grpc.ServerOption {
 		/*if cred, err := credentials.NewServerTLSFromFile(auth.GetCert(), auth.GetKey()); err==nil {
 			opts = append(opts, grpc.Creds(cred))
 		}*/
-		if cred, err := LoadSelfSignedCert(); err==nil {
-			opts = append(opts, grpc.Creds(cred))
+		if option, err := LoadSelfSignedCert(); err==nil {
+			opts = append(opts, option)
 		}
 	}
 	/*opts = append(opts, grpc.UnaryInterceptor(newUnaryInterceptor(s)))
