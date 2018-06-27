@@ -4,6 +4,7 @@ import (
 	"elibot-apiserver/config"
 	"elibot-apiserver/auth"
 
+	Log "elibot-apiserver/log"
 	pb "elibot-apiserver/serverpb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -15,6 +16,7 @@ func setGrpcOptions(c *config.GrpcEntryPoint) []grpc.ServerOption {
 	var opts []grpc.ServerOption
 	/*opts = append(opts, grpc.CustomCodec(&codec{}))*/
 	if auth.IsSSL() {
+		Log.Debug("grpc: ssl enabled")
 		if cred, err := credentials.NewServerTLSFromFile(auth.GetCert(), auth.GetKey()); err==nil {
 			opts = append(opts, grpc.Creds(cred))
 		}
