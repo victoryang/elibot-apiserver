@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
       "localhost:9500", grpc::CompositeChannelCredentials(
         grpc::SslCredentials(grpc::SslCredentialsOptions()),
         grpc::ServiceAccountJWTAccessCredentials(key))));*/
-  grpc::string ca = R"(-----BEGIN CERTIFICATE-----
+  /*grpc::string ca = R"(-----BEGIN CERTIFICATE-----
 MIICJzCCAZACCQColNzq5zLL5DANBgkqhkiG9w0BAQsFADBYMQswCQYDVQQGEwJB
 VTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0
 cyBQdHkgTHRkMREwDwYDVQQDDAhlbGlib3RDQTAeFw0xODA2MjYwOTIzNTlaFw0y
@@ -76,18 +76,18 @@ dzzRLQr4TGhvck+UXLnfW+9fav6LB2ceMoqJ
 -----END CERTIFICATE-----)";
 
   grpc::string cert = R"(-----BEGIN CERTIFICATE-----
-MIICLDCCAZUCCQClijA1AAawYjANBgkqhkiG9w0BAQsFADBYMQswCQYDVQQGEwJB
+MIICLDCCAZUCCQClijA1AAawYzANBgkqhkiG9w0BAQsFADBYMQswCQYDVQQGEwJB
 VTETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0
-cyBQdHkgTHRkMREwDwYDVQQDDAhlbGlib3RDQTAeFw0xODA2MjcwNjA5MDVaFw0y
-ODA2MjQwNjA5MDVaMF0xCzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRl
+cyBQdHkgTHRkMREwDwYDVQQDDAhlbGlib3RDQTAeFw0xODA2MjcwNjE5NTlaFw0y
+ODA2MjQwNjE5NTlaMF0xCzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRl
 MSEwHwYDVQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQxFjAUBgNVBAMMDWlt
 eDZkbHdpc2VobWkwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMqCAvJTq+mC
 JC1uFFQPJVjg7kjKoPRq5Uke8YYlEQpvHr5stfFvVNsfN0+mhfHtoVyu59/4H87I
 Z9/1Lc+JvbIGroi6G86+MNe6mbt7GIxhgUAia/2/EE0yk3en3cJ4yCTEvip3lTzy
 NfmgVWoA4bAc8b+jALdssk1mYQdCmB1ZAgMBAAEwDQYJKoZIhvcNAQELBQADgYEA
-Gfn4N4jfKHx39PJWtNBpmSB7hzAgSFfNb5IWk0GIV29JBWvAcnrRQII43ixwjphe
-I8Kor16zpa4NHkD+ppXpl0zGQ0s/0SEhHnhHOurEosRbb/359SCasWr+2pzAebit
-PRBB5AdV1QQM/HWVplJg7Ihojel+YSy8Yxsg897+7G0=
+rMHoULV/9G18kn42/NFNDjKyfg+PRnMjMve8xkzNOt5g1kUZfyyhT2zAhUSoSBeH
+PAJGzYFCiJ7XRon4KBhX/Ymr2WXaDFY4V7eYyn4SH13/luGrdrrH+VQ7lFnRyVyo
+7tjKXzh6WcH5EX2gMpQiyAOiYh8+6NxZkTS4pweW1sM=
 -----END CERTIFICATE-----)";
 
   grpc::string key = R"(-----BEGIN RSA PRIVATE KEY-----
@@ -104,10 +104,23 @@ aibo1q/pCNrK1+3+a1e/gMHS2CG+8Saw3/NzHBb4JTBNZ7wwGnw3vxh3VSECQQDS
 NMC/JQmMI5P/kcZwjMwWLTt7jxr3uZfPIcF3RwA4gumkQ/fuwMWMXFWAWsUzdcgv
 PABvG5oiXDcTOOdSPbJJAkBse1cZj4YsRvMn4yvj5aVWDkUX32w7JtXixMXnINe2
 nOytiKm1pO2p4ID467mDUzla7C+RZD2DbmUAEgdn1cc8
------END RSA PRIVATE KEY-----)";
+-----END RSA PRIVATE KEY-----)";*/
+
+  auto contents = [](const std::string& filename) -> std::string {
+        std::ifstream fh(filename);
+        std::stringstream buffer;
+        buffer << fh.rdbuf();
+        fh.close();
+        return buffer.str();
+  };
+
+  auto ssl_options = grpc::SslCredentialsOptions();
+  ssl_options.pem_cert_chain = contents("/rbctrl/apiserver/certificate/client/client-cert.pem");
+  ssl_options.pem_private_key = contents("/rbctrl/apiserver/certificate/client/client-key.pem");
+  ssl_options.pem_root_certs = contents("/rbctrl/apiserver/certificate/ca/ca-cert.pem");
 
   GreeterClient greeter(grpc::CreateChannel(
-      "localhost:9500", grpc::SslCredentials(grpc::SslCredentialsOptions{ca, key, cert})));
+      "localhost:9500", grpc::SslCredentials(ssl_options)));
 
   ::google::protobuf::int32 i = 1;
   std::string reply = greeter.SayHello(i);

@@ -1,7 +1,6 @@
 package auth
 
 import (
-	//"crypto/tls"
 	"elibot-apiserver/config"
 )
 
