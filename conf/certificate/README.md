@@ -25,3 +25,10 @@ openssl x509 -req -in server/server-req.csr -out server/server-cert.pem -signkey
 openssl genrsa -out client/client-key.pem 1024
 openssl req -new -out client/client-req.csr -key client/client-key.pem
 openssl x509 -req -in client/client-req.csr -out client/client-cert.pem -signkey client/client-key.pem -CA ca/ca-cert.pem -CAkey ca/ca-key.pem -CAcreateserial -days 3650
+
+
+# to verify generated cert files with ca
+openssl verify -CAfile ca/ca-cert.pem client/client-cert.pem
+
+# to verify the server with specific client pem and ca pem
+ openssl s_client -connect 192.168.1.217:9500 -tls1 -cert client/client-cert.pem -key client/client-key.pem -CAfile ca/ca-cert.pem

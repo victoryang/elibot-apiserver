@@ -32,4 +32,4 @@ hello_client: hello.pb.o hello.grpc.pb.o hello_client.o
 	$(PROTOC) -I $(PROTOS_PATH) --cpp_out=. $<
 
 clean:
-	rm -f *.o *.pb.cc *.pb.h hello_client
+	rm -f *.o *.pb.cc *.pb.h hello_client secure_hello_client
