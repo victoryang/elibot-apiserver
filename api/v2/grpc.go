@@ -2,6 +2,9 @@ package v2
 
 import (
 	"crypto/tls"
+	"crypto/x509"
+	"errors"
+	"io/ioutil"
 	"elibot-apiserver/config"
 	"elibot-apiserver/auth"
 
@@ -12,18 +15,18 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-func LoadSelfSignedCert() (*credentials.ServerOption, error){
+func LoadSelfSignedCert() (grpc.ServerOption, error){
 	 // Load the certificates from disk
     certificate, err := tls.LoadX509KeyPair(auth.GetCert(), auth.GetKey())
     if err != nil {
-        return nil, fmt.Errorf("could not load server key pair: %s", err)
+        return nil, errors.New("could not load server key pair: %s", err)
     }
 
     // Create a certificate pool from the certificate authority
     certPool := x509.NewCertPool()
     ca, err := ioutil.ReadFile("/rbctrl/apiserver/certificate/ca/ca-cert.pem")
     if err != nil {
-        return nil, fmt.Errorf("could not read ca certificate: %s", err)
+        return nil, errors.New("could not read ca certificate: %s", err)
     }
 
     // Append the client certificates from the CA
@@ -37,7 +40,7 @@ func LoadSelfSignedCert() (*credentials.ServerOption, error){
     	Certificates: []tls.Certificate{certificate},
     	ClientCAs:    certPool,
     })
-    return creds, nil
+    return grpc.Creds(cred), nil
 }
 
 // set grpc options for optimization
