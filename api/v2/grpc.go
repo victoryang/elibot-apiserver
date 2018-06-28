@@ -1,17 +1,12 @@
 package v2
 
 import (
-	"crypto/tls"
-	"crypto/x509"
-	"errors"
-	"io/ioutil"
 	"elibot-apiserver/config"
 	"elibot-apiserver/auth"
 
 	Log "elibot-apiserver/log"
 	pb "elibot-apiserver/serverpb"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/reflection"
 )
 

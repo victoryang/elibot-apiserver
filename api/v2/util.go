@@ -40,5 +40,9 @@ func LoadSelfSignedCert() (grpc.ServerOption, error){
 }
 
 func LoadCert() (grpc.ServerOption, error) {
-    return credentials.NewServerTLSFromFile(auth.GetCert(), auth.GetKey())
+    cred, err := credentials.NewServerTLSFromFile(auth.GetCert(), auth.GetKey())
+    if err!=nil {
+        return nil, err
+    }
+    return grpc.Creds(cred), nil
 }
