@@ -6,5 +6,5 @@ import (
 
 func Init(c *config.Security) {
 	SSLInit(c.SSLCert)
-	JwtTokenInit(c.Sign)
+	JwtTokenInit(c.Jwt)
 }

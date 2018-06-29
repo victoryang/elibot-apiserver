@@ -32,7 +32,7 @@ func IsSSL() bool {
 func SSLInit(c *config.Certificate) {
 	ssl = new(SSL)
 
-	ss.CaCert = c.Path + c.CaCert
+	ssl.CaCert = c.Path + c.CaCert
 	ssl.CertFile = c.Path + c.Certfile
 	ssl.KeyFile = c.Path + c.Keyfile
 
