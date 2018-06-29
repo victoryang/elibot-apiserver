@@ -16,7 +16,7 @@ type WsServer struct {
 }
 
 func (s *WsServer) Run() {
-	Log.Debug("websocket server listening...")
+	Log.Print("websocket server listening...")
 	go s.httpServer.ListenAndServe()
 }
 
@@ -27,7 +27,7 @@ func (s *WsServer) Shutdown() {
     // Doesn't block if no connections, but will otherwise wait
     // until the timeout deadline.
     s.httpServer.Shutdown(ctx)
-    Log.Debug("websocket server shuting down...")
+    Log.Print("websocket server shuting down...")
 }
 
 func (s *WsServer) PushBytes(msg []byte) {
@@ -44,7 +44,9 @@ func NewWsServer(c *config.WebsocketEntryPoint) *WsServer {
 	
 	s.hub = v3.NewHub()
     go s.hub.Run()
-	http.HandleFunc("/", v3.ServeHome)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+                v3.ServeHome(c.IndexFile, w, r)
+    })
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
                 v3.ServeWs(s.hub, w, r)
     })

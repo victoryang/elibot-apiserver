@@ -120,7 +120,7 @@ func (c *Client) writePump() {
 func ServeWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
         conn, err := upgrader.Upgrade(w, r, nil)
         if err != nil {
-                Log.Println(err)
+                Log.Error(err)
                 return
         }
         client := &Client{hub: hub, conn: conn, send: make(chan []byte, 256)}
@@ -132,7 +132,7 @@ func ServeWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
         go client.readPump()
 }
 
-func ServeHome(w http.ResponseWriter, r *http.Request) {
+func ServeHome(index string, w http.ResponseWriter, r *http.Request) {
 	fmt.Println("connect to websocket server")
-	http.ServeFile(w, r, "assets/index.html")
+	http.ServeFile(w, r, index)
 }

@@ -2,7 +2,9 @@ package v2
 
 import (
 	"elibot-apiserver/config"
+	"elibot-apiserver/auth"
 
+	Log "elibot-apiserver/log"
 	pb "elibot-apiserver/serverpb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -12,9 +14,18 @@ import (
 func setGrpcOptions(c *config.GrpcEntryPoint) []grpc.ServerOption {
 	var opts []grpc.ServerOption
 	/*opts = append(opts, grpc.CustomCodec(&codec{}))*/
-	/*if tls != nil {
-		opts = append(opts, grpc.Creds(credentials.NewTLS(tls)))
-	}*/
+	if auth.IsSSL() {
+		Log.Debug("grpc: ssl enabled")
+		if option, err := LoadSelfSignedCert(); err==nil {
+			opts = append(opts, option)
+		} else {
+			Log.Debug("grpc ssl load cert fails: ", err)
+			Log.Debug("grpc set unsecure")
+		}
+	} else {
+		Log.Debug("grpc ssl disabled")
+	}
+
 	/*opts = append(opts, grpc.UnaryInterceptor(newUnaryInterceptor(s)))
 	opts = append(opts, grpc.StreamInterceptor(newStreamInterceptor(s)))
 	// default 4MB
@@ -27,6 +38,7 @@ func setGrpcOptions(c *config.GrpcEntryPoint) []grpc.ServerOption {
 
 func Server(c *config.GrpcEntryPoint) *grpc.Server {
 	opts := setGrpcOptions(c)
+
 	s := grpc.NewServer(opts...)
 
 	/* An hello example*/

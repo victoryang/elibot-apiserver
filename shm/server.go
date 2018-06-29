@@ -2,7 +2,6 @@ package shm
 
 import(
 	"context"
-	"time"
 	"fmt"
 	"elibot-apiserver/api"
 	Log "elibot-apiserver/log"
@@ -21,11 +20,7 @@ type ShmServer struct {
 }
 
 func sender(ctx context.Context, ws *api.WsServer, hit chan []byte) {
-	Log.Debug("Shared memory server started...")
-	watchTicker := time.NewTicker(watchPeriod)
-	defer func() {
-		watchTicker.Stop()
-	}()
+	Log.Print("Shared memory server started...")
 
 	DONE:
 	for {
@@ -42,7 +37,7 @@ func sender(ctx context.Context, ws *api.WsServer, hit chan []byte) {
 
 func (s *ShmServer) Shutdown() {
 	s.Cancel()
-	Log.Debug("sharedmemory server shutting down")
+	Log.Print("sharedmemory server shutting down")
 }
 
 func handleMsg(msg []byte) {

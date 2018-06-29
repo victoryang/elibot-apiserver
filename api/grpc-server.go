@@ -19,7 +19,7 @@ type GrpcServer struct {
 func (s *GrpcServer)Shutdown() {
 	shutdownNow := func() {
 		// close grpc.Server; cancels all active RPCs
-		Log.Debug("Grpc server: shutting down...")
+		Log.Print("Grpc server: shutting down...")
 		s.grpc.Stop()
 	}
 
@@ -48,7 +48,7 @@ func NewGrpcServer(c *config.GrpcEntryPoint) (*GrpcServer){
     gs := v2rpc.Server(c)
     go gs.Serve(lis)
 
-    Log.Debug("Grpc server started...")
+    Log.Print("Grpc server started...")
 
     return &GrpcServer{grpc: gs}
 }

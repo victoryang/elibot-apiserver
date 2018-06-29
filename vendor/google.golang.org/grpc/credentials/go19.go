@@ -1,8 +1,8 @@
-// +build go1.8
+// +build go1.9,!appengine
 
 /*
  *
- * Copyright 2017 gRPC authors.
+ * Copyright 2018 gRPC authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,18 +21,15 @@
 package credentials
 
 import (
-	"crypto/tls"
+	"errors"
+	"syscall"
 )
 
-// cloneTLSConfig returns a shallow clone of the exported
-// fields of cfg, ignoring the unexported sync.Once, which
-// contains a mutex and must not be copied.
-//
-// If cfg is nil, a new zero tls.Config is returned.
-func cloneTLSConfig(cfg *tls.Config) *tls.Config {
-	if cfg == nil {
-		return &tls.Config{}
+// implements the syscall.Conn interface
+func (c tlsConn) SyscallConn() (syscall.RawConn, error) {
+	conn, ok := c.rawConn.(syscall.Conn)
+	if !ok {
+		return nil, errors.New("RawConn does not implement syscall.Conn")
 	}
-
-	return cfg.Clone()
+	return conn.SyscallConn()
 }

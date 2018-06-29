@@ -54,6 +54,10 @@ func (w *WebsocketEntryPoint) UnmarshalYAML(unmarshal func(interface{}) error) e
 	if w.ListenAddress == "" {
 		w.ListenAddress = DefaultWebsocketEntryPoint.ListenAddress
 	}
+
+	if w.IndexFile == "" {
+		w.IndexFile = DefaultWebsocketEntryPoint.IndexFile
+	}
 	return nil
 }
 
@@ -80,6 +84,62 @@ func (a *AdminSever) UnmarshalYAML(unmarshal func(interface{}) error) error {
 
 	if a.ListenAddress == "" {
 		a.ListenAddress = DefaultAdmin.ListenAddress
+	}
+	return nil
+}
+
+func (j *JwtToken) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain JwtToken
+	if err := unmarshal((*plain)(j)); err != nil {
+		return err
+	}
+
+	if j.PrivateKey == "" {
+		j.PrivateKey = DefaultJwtToken.PrivateKey
+	}
+
+	if j.Signature == "" {
+		j.Signature = DefaultJwtToken.Signature
+	}
+	return nil
+}
+
+func (c *Certificate) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain Certificate
+	if err := unmarshal((*plain)(c)); err != nil {
+		return err
+	}
+
+	if c.Path == "" {
+		c.Path = DefaultCertificate.Path
+	}
+
+	if c.CaCert == "" {
+		c.CaCert = DefaultCertificate.CaCert
+	}
+	
+	if c.Certfile == "" {
+		c.Certfile = DefaultCertificate.Certfile
+	}
+
+	if c.Keyfile == "" {
+		c.Keyfile = DefaultCertificate.Keyfile
+	}
+	return nil
+}
+
+func (s *Security) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain Security
+	if err := unmarshal((*plain)(s)); err != nil {
+		return err
+	}
+
+	if s.SSLCert == nil {
+		s.SSLCert = DefaultSecurity.SSLCert
+	}
+
+	if s.Jwt == nil {
+		s.Jwt = DefaultSecurity.Jwt
 	}
 	return nil
 }
@@ -120,6 +180,10 @@ func (g *GlobalConfiguration) UnmarshalYAML(unmarshal func(interface{}) error) e
 
 	if g.Admin == nil {
 		g.Admin = DefaultGlobalConfiguration.Admin
+	}
+
+	if g.Secure == nil {
+		g.Secure = DefaultGlobalConfiguration.Secure
 	}
 	return nil
 }

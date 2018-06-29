@@ -19,6 +19,7 @@ var (
 
 	DefaultWebsocketEntryPoint = &WebsocketEntryPoint {
 		ListenAddress:			"0.0.0.0:9050",
+		IndexFile:				"/rbctrl/apiserver/assets/index.html",
 	}
 
 	DefaultDatabase = &Database {
@@ -28,6 +29,23 @@ var (
 
 	DefaultAdmin = &AdminSever {
 		ListenAddress:			"0.0.0.0:9090",
+	}
+
+	DefaultJwtToken = &JwtToken {
+		PrivateKey:		"",
+		Signature:		"",
+	}
+
+	DefaultCertificate = &Certificate {
+		Path:			"/rbctrl/apiserver/certificate/",
+		CaCert:			"ca/ca-cert.pem",
+		Certfile:		"server/server-cert.pem",
+		Keyfile:		"server/server-key.pem",
+	}
+
+	DefaultSecurity = &Security {
+		SSLCert:			DefaultCertificate,
+		Jwt:				DefaultJwtToken,
 	}
 
 	DefaultGlobalConfiguration = &GlobalConfiguration{
@@ -41,6 +59,7 @@ var (
 
 		Databases:		DefaultDatabase,
 		Admin:			DefaultAdmin,
+		Secure:			DefaultSecurity,
 	}
 )
 
@@ -59,6 +78,7 @@ type GrpcEntryPoint struct {
 
 type WebsocketEntryPoint struct {
 	ListenAddress	string			`yaml:"address,omitempty"`
+	IndexFile		string			`yaml:"index,omitempty"`
 }
 
 type Database struct {
@@ -68,6 +88,23 @@ type Database struct {
 
 type AdminSever struct {
 	ListenAddress		string		`yaml:"admin_address,omitempty"`
+}
+
+type JwtToken struct {
+	PrivateKey			string 		`yaml:"privateKey,omitempty"`
+	Signature 			string		`yaml:"signature,omitempty"`
+}
+
+type Certificate struct {
+	Path				string		`yaml:"path,omitempty"`
+	CaCert				string 		`yaml:"cacert,omitempty"`
+	Certfile            string 		`yaml:"certfile,omitempty"`
+	Keyfile             string 		`yaml:"keyfile,omitempty"`
+}
+
+type Security struct {
+	SSLCert				*Certificate 	`yaml:"cert,omitempty"`
+	Jwt 				*JwtToken		`yaml:"jwt,omitempty"`
 }
 
 type GlobalConfiguration struct {
@@ -81,4 +118,5 @@ type GlobalConfiguration struct {
 
 	Databases			*Database				`yaml:"databases,omitempty"`
 	Admin 				*AdminSever 			`yaml:"admin,omitempty"`
+	Secure 				*Security				`yaml:security,omitempty`
 }
