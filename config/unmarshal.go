@@ -135,11 +135,11 @@ func (s *Security) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	}
 
 	if s.SSLCert == nil {
-		s.SSLCert = DefaultCertificate.SSLCert
+		s.SSLCert = DefaultSecurity.SSLCert
 	}
 
 	if s.Jwt == nil {
-		s.Jwt = DefaultCertificate.Jwt
+		s.Jwt = DefaultSecurity.Jwt
 	}
 	return nil
 }
