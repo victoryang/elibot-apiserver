@@ -31,13 +31,14 @@ var (
 		ListenAddress:			"0.0.0.0:9090",
 	}
 
-	DefaultSignature = &Signature {
-		AccessKey:		"",
-		SecretKey:		"",
+	DefaultJwtToken = &JwtToken {
+		PrivateKey:		"",
+		Signature:		"",
 	}
 
 	DefaultCertificate = &Certificate {
 		Path:			"/rbctrl/apiserver/certificate/",
+		CaCert:			"ca/ca-cert.pem",
 		Certfile:		"server/server-cert.pem",
 		Keyfile:		"server/server-key.pem",
 	}
@@ -89,20 +90,21 @@ type AdminSever struct {
 	ListenAddress		string		`yaml:"admin_address,omitempty"`
 }
 
-type Signature struct {
-	AccessKey			string 		`yaml:"accesskey,omitempty"`
-	SecretKey 			string		`yaml:"secretkey,omitempty"`
+type JwtToken struct {
+	PrivateKey			string 		`yaml:"privateKey,omitempty"`
+	Signature 			string		`yaml:"signature,omitempty"`
 }
 
 type Certificate struct {
 	Path				string		`yaml:"path,omitempty"`
+	CaCert				string 		`yaml:"cacert,omitempty"`
 	Certfile            string 		`yaml:"certfile,omitempty"`
 	Keyfile             string 		`yaml:"keyfile,omitempty"`
 }
 
 type Security struct {
 	SSLCert				*Certificate 	`yaml:"cert,omitempty"`
-	Sign 				*Signature		`yaml:"signature,omitempty"`
+	Jwt 				*JwtToken		`yaml:"jwt,omitempty"`
 }
 
 type GlobalConfiguration struct {

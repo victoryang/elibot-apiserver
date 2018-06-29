@@ -4,12 +4,17 @@ import (
 	"elibot-apiserver/config"
 )
 
-var ssl *SSL
+var ssl *SSL = nil
 var SSLEnable bool = false
 
 type SSL struct {
+	CaCert			string
 	CertFile 		string
 	KeyFile 		string
+}
+
+func GetCaCert() string {
+	return ssl.CaCert
 }
 
 func GetCert() string {
@@ -27,6 +32,7 @@ func IsSSL() bool {
 func SSLInit(c *config.Certificate) {
 	ssl = new(SSL)
 
+	ss.CaCert = c.Path + c.CaCert
 	ssl.CertFile = c.Path + c.Certfile
 	ssl.KeyFile = c.Path + c.Keyfile
 

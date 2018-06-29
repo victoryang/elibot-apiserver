@@ -88,18 +88,18 @@ func (a *AdminSever) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	return nil
 }
 
-func (s *Signature) UnmarshalYAML(unmarshal func(interface{}) error) error {
-	type plain Signature
-	if err := unmarshal((*plain)(s)); err != nil {
+func (j *JwtToken) UnmarshalYAML(unmarshal func(interface{}) error) error {
+	type plain JwtToken
+	if err := unmarshal((*plain)(j)); err != nil {
 		return err
 	}
 
-	if s.AccessKey == "" {
-		s.AccessKey = DefaultSignature.AccessKey
+	if j.PrivateKey == "" {
+		j.PrivateKey = DefaultJwtToken.PrivateKey
 	}
 
-	if s.SecretKey == "" {
-		s.SecretKey = DefaultSignature.SecretKey
+	if j.Signature == "" {
+		j.Signature = DefaultJwtToken.Signature
 	}
 	return nil
 }
@@ -114,6 +114,10 @@ func (c *Certificate) UnmarshalYAML(unmarshal func(interface{}) error) error {
 		c.Path = DefaultCertificate.Path
 	}
 
+	if c.CaCert == "" {
+		c.CaCert = DefaultCertificate.CaCert
+	}
+	
 	if c.Certfile == "" {
 		c.Certfile = DefaultCertificate.Certfile
 	}

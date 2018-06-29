@@ -20,7 +20,7 @@ func LoadSelfSignedCert() (grpc.ServerOption, error){
 
     // Create a certificate pool from the certificate authority
     certPool := x509.NewCertPool()
-    ca, err := ioutil.ReadFile("/rbctrl/apiserver/certificate/ca/ca-cert.pem")
+    ca, err := ioutil.ReadFile(auth.GetCaCert())
     if err != nil {
         return nil, err
     }

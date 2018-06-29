@@ -1,3 +1,4 @@
+#!/bin/sh
 # self-signing for creating CA
 # create private key
 openssl genrsa -out ca/ca-key.pem 1024
