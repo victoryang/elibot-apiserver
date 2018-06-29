@@ -36,7 +36,7 @@ func SSLInit(c *config.Certificate) {
 	ssl.CertFile = c.Path + c.Certfile
 	ssl.KeyFile = c.Path + c.Keyfile
 
-	if FileExists(ssl.CertFile) && FileExists(ssl.KeyFile) {
+	if FileExists(ssl.CertFile) && FileExists(ssl.KeyFile) && FileExists(ssl.CaCert) {
 		SSLEnable =  true
 	}
 

@@ -30,4 +30,7 @@ openssl x509 -req -in client/client-req.csr -out client/client-cert.pem -signkey
 openssl verify -CAfile ca/ca-cert.pem client/client-cert.pem
 
 # to verify the server with specific client pem and ca pem
- openssl s_client -connect 192.168.1.217:9500 -tls1 -cert client/client-cert.pem -key client/client-key.pem -CAfile ca/ca-cert.pem
+openssl s_client -connect 192.168.1.217:9500 -tls1 -cert client/client-cert.pem -key client/client-key.pem -CAfile ca/ca-cert.pem
+
+# generating tools
+git clone https://github.com/square/certstrap

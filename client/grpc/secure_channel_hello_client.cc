@@ -108,6 +108,13 @@ PABvG5oiXDcTOOdSPbJJAkBse1cZj4YsRvMn4yvj5aVWDkUX32w7JtXixMXnINe2
 nOytiKm1pO2p4ID467mDUzla7C+RZD2DbmUAEgdn1cc8
 -----END RSA PRIVATE KEY-----)";*/
 
+  if (argc < 2) {
+    std::cout << "Please enter the hostname" << std::endl;
+    exit(-1);
+  }
+  grpc::string hostname(argv[1]);
+  grpc::string address = hostname + grpc::string(":9500");
+
   auto contents = [](const std::string& filename) -> std::string {
         std::ifstream fh(filename);
         std::stringstream buffer;
@@ -122,7 +129,7 @@ nOytiKm1pO2p4ID467mDUzla7C+RZD2DbmUAEgdn1cc8
   ssl_options.pem_root_certs = contents("/rbctrl/apiserver/certificate/ca/ca-cert.pem");
 
   GreeterClient greeter(grpc::CreateChannel(
-      "localhost:9500", grpc::SslCredentials(ssl_options)));
+      address, grpc::SslCredentials(ssl_options)));
 
   ::google::protobuf::int32 i = 1;
   std::string reply = greeter.SayHello(i);

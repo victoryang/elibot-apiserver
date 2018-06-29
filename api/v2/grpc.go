@@ -22,6 +22,8 @@ func setGrpcOptions(c *config.GrpcEntryPoint) []grpc.ServerOption {
 			Log.Debug("grpc ssl load cert fails: ", err)
 			Log.Debug("grpc set unsecure")
 		}
+	} else {
+		Log.Debug("grpc ssl disabled")
 	}
 
 	/*opts = append(opts, grpc.UnaryInterceptor(newUnaryInterceptor(s)))
