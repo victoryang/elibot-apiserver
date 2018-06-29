@@ -45,7 +45,7 @@ var (
 
 	DefaultSecurity = &Security {
 		SSLCert:			DefaultCertificate,
-		Sign:				DefaultSignature,
+		Jwt:				DefaultJwtToken,
 	}
 
 	DefaultGlobalConfiguration = &GlobalConfiguration{
