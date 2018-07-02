@@ -18,8 +18,7 @@ type helloserver struct {
 }
 
 func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, error) {
-		var mcs *mcserver.MCserver 
-		if mcs = mcserver.GetMcServer(); mcs == nil {
+		if McServer == nil {
 			return nil, errors.New("mcserver is not available right now")
 		}
 		
@@ -30,7 +29,7 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 		defer cancel()
 		
 		if in.Name == 1 {
-			go mcs.Exec(cmd, from, rCh)
+			go McServer.Exec(cmd, from, rCh)
 		} else {
 			return &pb.Reply{Message: "test fail"}, errors.New("request name not 1")
 		}

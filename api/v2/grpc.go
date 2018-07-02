@@ -10,6 +10,12 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
+var McServer *mcserver.MCserver = nil
+
+func InitMcServer() {
+	McServer = mcserver.GetMcServer()
+}
+
 // set grpc options for optimization
 func setGrpcOptions(c *config.GrpcEntryPoint) []grpc.ServerOption {
 	var opts []grpc.ServerOption
@@ -41,6 +47,7 @@ func Server(c *config.GrpcEntryPoint) *grpc.Server {
 
 	s := grpc.NewServer(opts...)
 
+	InitMcServer()
 	/* An hello example*/
 	pb.RegisterGreeterServer(s, NewHelloServer())
 
