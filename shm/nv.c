@@ -11,7 +11,7 @@ char* get_main_file() {
 }
 
 int32_t get_sys_technics() {
-	return getTechnics()
+	return getTechnics();
 }
 
 int32_t get_cur_coordinate() {
