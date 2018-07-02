@@ -146,7 +146,7 @@ type DISTSENSERINFOR struct {
 }
 
 type TrackParameter struct {
-
+	
 }
 
 type SharedResource struct {
