@@ -53,7 +53,6 @@ func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, ws
 			mcs.Close()
 
 			os.Exit(0)
-			return
 		}
 	}
 }
