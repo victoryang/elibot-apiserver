@@ -6,6 +6,8 @@ import (
 
 	Log "elibot-apiserver/log"
 	pb "elibot-apiserver/serverpb"
+	"elibot-apiserver/mcserver"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
