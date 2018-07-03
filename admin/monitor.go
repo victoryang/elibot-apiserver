@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"net/http"
 	"sync"
 )
 
@@ -63,8 +62,8 @@ func (m *Monitor) work() {
 		select {
 			case <-m.backendsCh:
 				cancel()
-				go m.kickoff()
-			case stat := <- statCh:
+				ctx, cancel = context.WithCancel(m.ctx)
+				go m.kickoff(ctx)
 
 			case <-m.ctx.Done():
 				return
@@ -97,7 +96,7 @@ func (m *Monitor) StopMonitor() {
 func NewMonitor() *Monitor {
 	m := new(Monitor)
 
-	m.backend = make(map[string]*Backend)
+	m.backends = make(map[string]*Backend)
 	m.registerCh = make(chan RegisterReq, 1)
 
 	DefaultBackendConfig := NewBackendConfig(Options{Interval: DefaultInterval}, "127.0.0.1:9000/health", DefaultRequestTimeout)

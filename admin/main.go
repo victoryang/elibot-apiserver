@@ -81,6 +81,10 @@ func (m *Monitor) getBackends(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, res)
 }
 
+func serveLogin(w http.ResponseWriter, r *http.Request) {
+	
+}
+
 func configureHandler(m *Monitor) http.Handler {
 	r := mux.NewRouter()
 	r.HandleFunc("/login", serveLogin).Methods("GET").Queries("username", "{username}","pass", "{pass}")
@@ -95,7 +99,7 @@ func configureHandler(m *Monitor) http.Handler {
 	apiRouter := r.PathPrefix("/").Subrouter()
 	apiRouter.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("static/"))))
 
-	return RegisterHandlers(r, handlerFns...)
+	return r
 }
 
 func startAdminServer() *Server{
