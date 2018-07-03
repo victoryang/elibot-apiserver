@@ -13,8 +13,8 @@ func hello(w http.ResponseWriter, r *http.Request) {
 	WriteSuccessResponse(w, "Welcome to elibot\n")
 }
 
-func test(w http.ResponseWriter, r *http.Request) {
-	WriteSuccessResponse(w, "echo\n")
+func handleHealth(w http.ResponseWriter, r *http.Request) {
+	WriteSuccessResponse(w, "echo OK\n")
 }
 
 func testSocket(w http.ResponseWriter, r *http.Request) {

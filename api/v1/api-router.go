@@ -10,7 +10,7 @@ import (
 
 func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/", hello).Methods("GET")
-	r.HandleFunc("/v1/test", test).Methods("GET")
+	r.HandleFunc("/health", handleHealth).Methods("GET")
 	r.HandleFunc("/v1/testSocket", testSocket).Methods("GET")
 
 	r.HandleFunc("/v1/arc", getAllArc).Methods("GET")
