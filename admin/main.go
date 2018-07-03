@@ -71,7 +71,6 @@ func (m *Monitor) getBackendMetrics(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Monitor) getBackends(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
 	var res []string
 	for key, _ := range m.backends {
 		res = append(res, key)
@@ -82,7 +81,7 @@ func (m *Monitor) getBackends(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveLogin(w http.ResponseWriter, r *http.Request) {
-	
+
 }
 
 func configureHandler(m *Monitor) http.Handler {
