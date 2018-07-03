@@ -47,7 +47,7 @@ func (m *Monitor) registerbackend(w http.ResponseWriter, r *http.Request) {
 
 	b := NewBackendConfig(Options{Interval: DefaultInterval}, url, DefaultRequestTimeout)
 
-	registerCh<-RegisterReq{name, b}
+	m.registerCh<-RegisterReq{name, b}
 }
 
 func (m *Monitor) unregisterbackend(w http.ResponseWriter, r *http.Request) {
@@ -113,7 +113,7 @@ func startAdminServer() *Server{
 	// Configure TLS if certs are available.
 	go func() {
 		fmt.Println("Admin server running...")
-		adminServer.ListenAndServe()
+		s.admin.ListenAndServe()
 	}()
 
 	return s

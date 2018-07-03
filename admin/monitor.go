@@ -14,7 +14,7 @@ const (
 
 type RegisterReq struct {
 	name		string
-	config 		BackendConfig
+	config 		*BackendConfig
 }
 
 type Monitor struct {
@@ -26,7 +26,7 @@ type Monitor struct {
 	backendsCh		chan bool
 }
 
-func (m *Monitor) RegisterBackend(name string, b Backend) {
+func (m *Monitor) RegisterBackend(name string, b *Backend) {
 	m.backends[name] = b
 }
 
@@ -41,7 +41,7 @@ func (m *Monitor) GetStats(name string) [][]byte {
 	return nil
 }
 
-func kickoff(ctx context.Context) {
+func (m *Monitor) kickoff(ctx context.Context) {
 	var wg sync.WaitGroup
 	for _, backend := range m.backends {
 		wg.Add(1)
@@ -58,12 +58,12 @@ func (m *Monitor) work() {
 	ctx, cancel := context.WithCancel(m.ctx)
 	defer cancel()
 
-	go kickoff(ctx)
+	go m.kickoff(ctx)
 	for {
 		select {
 			case <-m.backendsCh:
 				cancel()
-				go kickoff()
+				go m.kickoff()
 			case stat := <- statCh:
 
 			case <-m.ctx.Done():
@@ -87,7 +87,7 @@ func (m *Monitor) Register(){
 	}
 }
 
-func (m *Monitor) StopMonitor(w http.ResponseWriter, r *http.Request) {
+func (m *Monitor) StopMonitor() {
 	close(m.registerCh)
 	close(m.unregisterCh)
 	close(m.backendsCh)
@@ -97,7 +97,7 @@ func (m *Monitor) StopMonitor(w http.ResponseWriter, r *http.Request) {
 func NewMonitor() *Monitor {
 	m := new(Monitor)
 
-	m.backend = make(map[string]Backend)
+	m.backend = make(map[string]*Backend)
 	m.registerCh = make(chan RegisterReq, 1)
 
 	DefaultBackendConfig := NewBackendConfig(Options{Interval: DefaultInterval}, "127.0.0.1:9000/health", DefaultRequestTimeout)

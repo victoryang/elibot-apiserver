@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"context"
 	"net/http"
 	"time"
 )
@@ -31,7 +32,7 @@ type Collector struct {
 
 type Backend struct {
 	config 			*BackendConfig
-	collectors		[]Collector
+	collectors		[]*Collector
 	status 			bool
 	err				error
 	metrics			[][]byte
@@ -49,12 +50,16 @@ func (b *Backend) addHeadersAndHost(req *http.Request) *http.Request {
 	return req
 }
 
-func NewBackendConfig(options Options, serverurl string, d int) *BackendConfig {
+func NewBackendConfig(options Options, serverurl string, d time.Duration) *BackendConfig {
 	return &BackendConfig {
 			Options:        options,
 			url:			serverurl,
 			requestTimeout: d,
 		}
+}
+
+func NewDefaultCollectors() []*Collector{
+	return nil
 }
 
 // NewBackend Instantiate a new Backend
