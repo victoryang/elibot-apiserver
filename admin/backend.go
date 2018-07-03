@@ -14,7 +14,7 @@ const (
 type Options struct {
 	Headers   		map[string]string
 	Hostname 		string
-	Jar 			CookieJar
+	Jar 			http.CookieJar
 	Transport 		http.RoundTripper
 	Interval  		time.Duration
 }
@@ -23,6 +23,10 @@ type BackendConfig struct {
 	Options
 	url 		   	string
 	requestTimeout 	time.Duration
+}
+
+type Collector struct {
+
 }
 
 type Backend struct {
@@ -49,12 +53,12 @@ func NewBackendConfig(options Options, serverurl string, d int) *BackendConfig {
 	return &BackendConfig {
 			Options:        options,
 			url:			serverurl,
-			requestTimeout: d * time.Second,
+			requestTimeout: d,
 		}
 }
 
 // NewBackend Instantiate a new Backend
-func NewBackend(config BackendConfig) *Backend {
+func NewBackend(config *BackendConfig) *Backend {
 	return &Backend{
 		config: 		config,
 		collectors:		NewDefaultCollectors(),
@@ -65,7 +69,7 @@ func NewBackend(config BackendConfig) *Backend {
 
 // checkHealth returns a nil error in case it was successful and otherwise
 // a non-nil error with a meaningful description why the health check failed.
-func checkHealth(backend *Backend) error {
+func checkHealth(backend *Backend) {
 	req, err := http.NewRequest(http.MethodGet, backend.config.url + HealthPath, nil)
 	if err != nil {
 		backend.err = fmt.Errorf("failed to create HTTP request: %s", err)
@@ -75,9 +79,9 @@ func checkHealth(backend *Backend) error {
 	req = backend.addHeadersAndHost(req)
 
 	client := http.Client{
-		Timeout:    backend.config.requestTimeout,
+		Timeout:    backend.config.requestTimeout * time.Second,
 		Transport:  backend.config.Options.Transport,
-		Jar:		backend.config.Options.Jar
+		Jar:		backend.config.Options.Jar,
 	}
 
 	resp, err := client.Do(req)
@@ -91,13 +95,15 @@ func checkHealth(backend *Backend) error {
 	if resp.StatusCode < http.StatusOK || resp.StatusCode >= http.StatusBadRequest {
 		backend.err = fmt.Errorf("received error status code: %v", resp.StatusCode)
 		backend.status = false
+		return
 	}
 
 	backend.status = true
+	return
 }
 
-func (b *backend) startcheckHealth(ctx) {
-	ticker := time.NewTicker(b.config.Options.Interval)
+func (b *Backend) startcheckHealth(ctx context.Context) {
+	ticker := time.NewTicker(b.config.Options.Interval*time.Second)
 	defer ticker.Stop()
 
 	for {

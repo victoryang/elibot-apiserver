@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 	"sync"
-	"github.com/gorilla/mux"
 )
 
 const (
@@ -18,7 +17,7 @@ type RegisterReq struct {
 	config 		BackendConfig
 }
 
-type Monitor sturct {
+type Monitor struct {
 	backends		map[string]*Backend
 	ctx 			context.Context
 	cancel 			context.CancelFunc
@@ -31,7 +30,7 @@ func (m *Monitor) RegisterBackend(name string, b Backend) {
 	m.backends[name] = b
 }
 
-func (m *Monitor) UnRegisterBackend(name) {
+func (m *Monitor) UnRegisterBackend(name string) {
 	delete(m.backends, name)
 }
 

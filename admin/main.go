@@ -5,6 +5,8 @@ import(
 	"fmt"
 	"time"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/gorilla/mux"
 )
@@ -43,7 +45,7 @@ func (m *Monitor) registerbackend(w http.ResponseWriter, r *http.Request) {
 	name := vars["name"]
 	url := vars["url"]
 
-	b = NewBackendConfig(Options{Interval: DefaultInterval}, url, DefaultRequestTimeout)
+	b := NewBackendConfig(Options{Interval: DefaultInterval}, url, DefaultRequestTimeout)
 
 	registerCh<-RegisterReq{name, b}
 }
@@ -98,8 +100,8 @@ func configureHandler(m *Monitor) http.Handler {
 
 func startAdminServer() *Server{
 	s := new(Server)
-	s.monitor := NewMonitor()
-	s.admin := &http.Server{
+	s.monitor = NewMonitor()
+	s.admin = &http.Server{
 		Addr: 			":9600",
 		// Adding timeout of 10 minutes for unresponsive client connections.
 		ReadTimeout:    10 * time.Minute,
