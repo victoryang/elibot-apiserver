@@ -146,7 +146,108 @@ type DISTSENSERINFOR struct {
 }
 
 type TrackParameter struct {
-	
+	Mode 			int
+	Encodertype		int
+	IOtype			int
+	PreAdj			float64
+	Time 			float64
+	EffStaPoint		float64
+	EffEndPoint		float64
+	DirectionX 		float64
+	DirectionY 		float64
+	DirectionZ 		float64
+	CheckRange		float64
+	StaSprDis 		float64
+	WorkSpa 		float64
+	StopDis			float64
+	Speed 			float64
+	SpeedAdj		int
+	Readcount		float64
+	TimeComp		float64
+	EncoderAcount	float64
+	EncoderBcount	float64
+	Checkcount		float64
+	CurEncoder		float64
+	ScaleFactor		float64
+
+	JointA 			[]float64
+	JointB			[]float64
+	JointC			[]float64
+	Type 			int
+	BeltWidth		float64
+	JointStar		[]float64
+	JointTarget		[]float64
+}
+
+type VisionTrackData struct {
+	IP 					string
+	TrackFileNum		int
+	Port 				int
+	VisionSysmId		int
+	TrackMode			int
+	Trigger				int
+	CommuContentSign	int
+	WorkAreaCoinSing	int
+	RobAxis				int
+	CommuTimeout		float64
+	TriggerInterval		float64
+	OverlapDist			float64
+	ObstacleHeight		float64
+	ObjectHeight		float64
+	ScaleFactor			float64
+	PixelRatioX			float64
+	PixelRatioY			float64
+	VisionEncoVal		int
+	RobEncoVal			int
+	LowLimitVal			int
+	UpLimitVal			int
+}
+
+type UDPCONNECTINFIOR struct {
+	Isenable			uint8
+	Islast				uint8
+}
+
+type StructBookFile struct {
+	Enable 			uint8
+	Num 			uint8
+	BookProgName	[]string
+}
+
+type ExtAxisData struct {
+	CoordAxis		uint8
+	IfTeached 		[]uint8
+	Dirct 			[]uint8
+	CoordEnable		[]uint8
+	CaliSuccess		[]uint8
+	ExtJoint		[][][]float64
+	ExtAxisMax		[][][]float64
+}
+
+type WeavingInfor struct {
+	Mode 			int
+	Type 			int
+	Amplitude		float64
+	Vertical		float64
+	Horizontal		float64
+	Frequency		float64
+	Angle 			float64
+	Direct 			int
+	Stoptime		[]float64
+	Note			string
+	Useable			uint8
+}
+
+type WeavingPara struct {
+	Enable 			uint8
+	TechNum			int
+	refp			[][]float64
+	WeaveInfor		[]WeavingInfor
+}
+
+type TechStampParas_T struct {
+	IRobI 			[]int
+	DRobP 			[][]float64
 }
 
 type SharedResource struct {
@@ -189,6 +290,12 @@ type SharedResource struct {
 	PositiveVar			[]float64
 	DistSenser			DISTSENSERINFOR
 	Trackpara			TrackParameter
+	Vitrackpara			VisionTrackData
+	UdpInfor			UDPCONNECTINFIOR
+	BookfileInfor		StructBookFile
+	ExtAxisDATA			ExtAxisData
+	WeaveData			WeavingPara
+	StampParas			TechStampParas_T
 }
 
 var SharedResourcePool = sync.Pool{
