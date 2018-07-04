@@ -54,6 +54,7 @@ func Server(c *config.GrpcEntryPoint) *grpc.Server {
 	pb.RegisterGreeterServer(s, NewHelloServer())
 
 	/*TODO: Register all servers here*/
+	pb.RegisterExtAxisServer(s, NewExtAxisServer())
 
 	/* Register reflection service on GRPC server*/
 	reflection.Register(s)

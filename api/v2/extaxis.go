@@ -13,7 +13,7 @@ import(
 var Tag = "grpc:ExtAxis"
 
 const (
-	cmd = "goto_extaxispos 0 0"
+	cmd = "goto_extaxispos "
 )
 
 type ExtAxis struct {
@@ -27,14 +27,11 @@ func (e *ExtAxis) GotoExtaxisPos (ctx context.Context, in *pb.Req) (*pb.Reply, e
 		rCh := make(chan mcserver.Response)
 		defer close(rCh)
 
-		c, cancel := context.WithTimeout(ctx, 3*time.Second)
+		c, cancel := context.WithTimeout(ctx, 1*time.Second)
 		defer cancel()
 		
-		if in.Name == 1 {
-			go McServer.Exec(cmd, Tag, rCh)
-		} else {
-			return &pb.Reply{Message: "test fail"}, errors.New("request name not 1")
-		}
+		command := cmd + strconv.Itoa(in.axis) + " " + strconv.Itoa(in.num)
+		go McServer.Exec(command, Tag, rCh)
 
 		select {
 		case <-c.Done():
