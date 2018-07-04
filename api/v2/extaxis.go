@@ -4,6 +4,7 @@ import(
 	//Log "elibot-apiserver/log"
 	"errors"
 	"time"
+	"strconv"
 	"elibot-apiserver/mcserver"
 
 	"golang.org/x/net/context"
@@ -30,14 +31,14 @@ func (e *ExtAxis) GotoExtaxisPos (ctx context.Context, in *pb.Req) (*pb.Reply, e
 		c, cancel := context.WithTimeout(ctx, 1*time.Second)
 		defer cancel()
 		
-		command := cmd + strconv.Itoa(in.axis) + " " + strconv.Itoa(in.num)
+		command := cmd + strconv.Itoa(int(in.Axis)) + " " + strconv.Itoa(int(in.Num))
 		go McServer.Exec(command, Tag, rCh)
 
 		select {
 		case <-c.Done():
 			return nil, c.Err()
 		case r := <- rCh:
-			return &pb.Reply{Message: r.Result}, r.Err
+			return &pb.Reply{Res: r.Result}, r.Err
 		}
 }
 

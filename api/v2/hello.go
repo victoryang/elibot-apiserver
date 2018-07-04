@@ -7,10 +7,10 @@ import(
 	"elibot-apiserver/mcserver"
 
 	"golang.org/x/net/context"
-	pb "elibot-apiserver/serverpb"
+	pb "elibot-apiserver/serverpb/hello"
 )
 
-var cmd = "testGo 0 1\n"
+var test_cmd = "testGo 0 1\n"
 /*var cmd = "setZeroEncode 0 1"*/
 var from = "grpc:hello"
 
@@ -29,7 +29,7 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 		defer cancel()
 		
 		if in.Name == 1 {
-			go McServer.Exec(cmd, from, rCh)
+			go McServer.Exec(test_cmd, from, rCh)
 		} else {
 			return &pb.Reply{Message: "test fail"}, errors.New("request name not 1")
 		}

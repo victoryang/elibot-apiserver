@@ -5,6 +5,7 @@ import (
 	"elibot-apiserver/auth"
 
 	Log "elibot-apiserver/log"
+	hello "elibot-apiserver/serverpb/hello"
 	pb "elibot-apiserver/serverpb"
 	"elibot-apiserver/mcserver"
 
@@ -51,7 +52,7 @@ func Server(c *config.GrpcEntryPoint) *grpc.Server {
 
 	InitMcServer()
 	/* An hello example*/
-	pb.RegisterGreeterServer(s, NewHelloServer())
+	hello.RegisterGreeterServer(s, NewHelloServer())
 
 	/*TODO: Register all servers here*/
 	pb.RegisterExtAxisServer(s, NewExtAxisServer())

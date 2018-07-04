@@ -43,7 +43,7 @@ public:
 
 private:
 	std::unique_ptr<ExtAxis::Stub> stub_;
-}
+};
 
 int main(int argc, char** argv) {
   // Instantiate the client. It requires a channel, out of which the actual RPCs
