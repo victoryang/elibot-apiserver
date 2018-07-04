@@ -9,14 +9,14 @@ using grpc::Status;
 
 using rpc::Req;
 using rpc::Reply;
-using rpc::ExtAxis；
+using rpc::ExtAxis;
 
 class GrpcClient {
 public:
 	GrpcClient(std::shared_ptr<Channel> channel)
 		: stub_(ExtAxis::NewStub(channel)) {}
 
-	std::string GotoExtaxisPos(::google::protobuf::int32& axis, ::google::protobuf::int32& j) {
+	std::string GotoExtaxisPos(::google::protobuf::int32& axis, ::google::protobuf::int32& num) {
 		Req request;
 	    request.set_axis(axis);
 	    request.set_num(num);
@@ -29,11 +29,11 @@ public:
 	    ClientContext context;
 
 	    // The actual RPC.
-	    Status status = stub_->SayHello(&context, request, &reply);
+	    Status status = stub_->GotoExtaxisPos(&context, request, &reply);
 
 	    // Act upon its status.
 	    if (status.ok()) {
-	      return reply.message();
+	      return reply.res();
 	    } else {
 	      std::cout << status.error_code() << ": " << status.error_message()
 	                << std::endl;
