@@ -149,7 +149,7 @@ func RegisterAPIv2(r *mux.Router) http.Handler {
 
 	repositoryapi := robotapi.PathPrefix("/repository").Subrouter()
 	repositoryapi.HandleFunc("/arc", setArc).Methods("PUT")
-	repositoryapi.HandleFunc("/param", setParam).Methods("PUT")
+	repositoryapi.HandleFunc("/param", setParam).Methods("PUT").Queries("md_id", "{md_id}", "index", "{index}")
 	repositoryapi.HandleFunc("/toolframe", setToolframe).Methods("PUT")
 	repositoryapi.HandleFunc("/zeropoint", setZeropoint).Methods("PUT")
 

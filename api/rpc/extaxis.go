@@ -31,7 +31,7 @@ func (e *ExtAxis) GotoExtaxisPos (ctx context.Context, in *pb.Req) (*pb.Reply, e
 		c, cancel := context.WithTimeout(ctx, 3*time.Second)
 		defer cancel()
 		
-		command := cmd + strconv.Itoa(int(in.Axis)) + " " + strconv.Itoa(int(in.Num))
+		command := cmd + strconv.Itoa(int(in.Axis)) + " " + strconv.Itoa(int(in.Num)) + "\n"
 		go McServer.Exec(command, Tag, rCh)
 
 		select {
