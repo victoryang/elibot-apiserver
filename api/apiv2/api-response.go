@@ -1,4 +1,4 @@
-package apiv1
+package apiv2
 
 import (
 	"net/http"

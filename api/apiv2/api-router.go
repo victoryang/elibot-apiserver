@@ -9,6 +9,8 @@ import (
 )
 
 func RegisterAPIv2(r *mux.Router) http.Handler {
+	Log.Debug("Register V2 api...")
+
 	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/health", handleHealth).Methods("GET")
 

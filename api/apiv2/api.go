@@ -3,11 +3,14 @@ package apiv2
 import (
 	"net/http"
 	"io/ioutil"
-	"fmt"
+	"errors"
+	"context"
+	"time"
 
 	"github.com/gorilla/mux"
 
 	Log "elibot-apiserver/log"
+	"elibot-apiserver/mcserver"
 )
 
 const (
@@ -22,14 +25,14 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	vars := mux.Var(r)
+	vars := mux.Vars(r)
 	md_id := vars["md_id"] + Space
 	index := vars["index"] + CommandEnd
 
 	body, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err.Error())
+		WriteInternalServerErrorResponse(w, err)
 		return
 	}
 	value := string(body) + Space
