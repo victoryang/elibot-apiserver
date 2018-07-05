@@ -5,7 +5,7 @@ import (
 	"time"
 	"context"
 
-	apiv1 "elibot-apiserver/api/v1"
+	"elibot-apiserver/api/apiv1"
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/middleware"
 	"elibot-apiserver/middleware/accesslog"

@@ -8,7 +8,7 @@ import (
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/config"
 
-	v2rpc "elibot-apiserver/api/v2"
+	"elibot-apiserver/api/rpc"
 	"google.golang.org/grpc"
 )
 
@@ -45,7 +45,7 @@ func NewGrpcServer(c *config.GrpcEntryPoint) (*GrpcServer){
             Log.Error("failed to listen: %v", err)
             return nil
     }
-    gs := v2rpc.Server(c)
+    gs := rpc.Server(c)
     go gs.Serve(lis)
 
     Log.Print("Grpc server started...")

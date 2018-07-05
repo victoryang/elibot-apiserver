@@ -7,12 +7,12 @@ import (
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/config"
-	"elibot-apiserver/api/v3"
+	"elibot-apiserver/api/websocket"
 )
 
 type WsServer struct {
 	httpServer 		*http.Server
-	hub 			*v3.Hub
+	hub 			*websocket.Hub
 }
 
 func (s *WsServer) Run() {
@@ -42,13 +42,13 @@ func (s *WsServer) NotificationRegister(f func([]byte)) {
 func NewWsServer(c *config.WebsocketEntryPoint) *WsServer {
 	s := new(WsServer)
 	
-	s.hub = v3.NewHub()
+	s.hub = websocket.NewHub()
     go s.hub.Run()
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-                v3.ServeHome(c.IndexFile, w, r)
+                websocket.ServeHome(c.IndexFile, w, r)
     })
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-                v3.ServeWs(s.hub, w, r)
+                websocket.ServeWs(s.hub, w, r)
     })
 	s.httpServer = &http.Server {
 		Addr:			c.ListenAddress,

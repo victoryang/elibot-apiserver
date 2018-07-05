@@ -1,4 +1,4 @@
-package v2
+package rpc
 
 import(
 	//Log "elibot-apiserver/log"
@@ -28,7 +28,7 @@ func (e *ExtAxis) GotoExtaxisPos (ctx context.Context, in *pb.Req) (*pb.Reply, e
 		rCh := make(chan mcserver.Response)
 		defer close(rCh)
 
-		c, cancel := context.WithTimeout(ctx, 1*time.Second)
+		c, cancel := context.WithTimeout(ctx, 3*time.Second)
 		defer cancel()
 		
 		command := cmd + strconv.Itoa(int(in.Axis)) + " " + strconv.Itoa(int(in.Num))
