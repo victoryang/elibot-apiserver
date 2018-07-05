@@ -61,7 +61,7 @@ func (s *Server) configServerHandler() http.Handler {
 	}
 	
 	n.UseHandler(apiv1.RegisterAPIv1(r))
-	
+	apiv2.RegisterAPIv2(r)
 	// Register all routers.
 	return n
 }

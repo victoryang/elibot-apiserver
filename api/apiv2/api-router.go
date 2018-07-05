@@ -1,18 +1,17 @@
 package apiv2
 
 import (
-	"net/http"
 
 	Log "elibot-apiserver/log"
 
 	"github.com/gorilla/mux"
 )
 
-func RegisterAPIv2(r *mux.Router) http.Handler {
+func RegisterAPIv2(r *mux.Router) {
 	Log.Debug("Register V2 api...")
 
-	r.HandleFunc("/", hello).Methods("GET")
-	r.HandleFunc("/health", handleHealth).Methods("GET")
+	r.HandleFunc("/v2", hello).Methods("GET")
+	r.HandleFunc("/healthv2", handleHealth).Methods("GET")
 
 	r.HandleFunc("/v2/aio", getAIO).Methods("GET")
 	r.HandleFunc("/v2/aio", setAIO).Methods("PUT")
@@ -155,5 +154,5 @@ func RegisterAPIv2(r *mux.Router) http.Handler {
 	repositoryapi.HandleFunc("/toolframe", setToolframe).Methods("PUT")
 	repositoryapi.HandleFunc("/zeropoint", setZeropoint).Methods("PUT")
 
-	return r
+	return
 }

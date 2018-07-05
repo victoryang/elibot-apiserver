@@ -6,6 +6,7 @@ import (
 	"errors"
 	"context"
 	"time"
+	"encoding/json"
 
 	"github.com/gorilla/mux"
 
@@ -17,6 +18,10 @@ const (
 	CommandEnd = "\n"
 	Space = " "
 )
+
+type Body struct {
+	Data 		int 		`json:"data,omitempty"`
+}
 
 func setParam(w http.ResponseWriter, r *http.Request) {
 	var mcs *mcserver.MCserver
@@ -35,7 +40,12 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 		WriteInternalServerErrorResponse(w, err)
 		return
 	}
-	value := string(body) + Space
+	var b Body
+	if err := json.Unmarshal(body, &b); err!=nil {
+		WriteInternalServerErrorResponse(w, err)
+		return
+	}
+	value := strconv.Itoa(b.Data) + Space
 
 	cmd := "setParam " + md_id + value + index
 	tag := "restapi:apiv2"
