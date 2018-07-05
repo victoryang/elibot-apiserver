@@ -60,7 +60,7 @@ func (s *Server) configServerHandler() http.Handler {
 		n.Use(s.AccessLog.Logger)
 	}
 	
-	n.UseHandler(apiv1.RegisterAPIRouter(r))
+	n.UseHandler(apiv1.RegisterAPIv1(r))
 	
 	// Register all routers.
 	return n

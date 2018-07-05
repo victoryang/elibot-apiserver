@@ -8,7 +8,9 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func RegisterV1(r *mux.Router) http.Handler {
+func RegisterAPIv1(r *mux.Router) http.Handler {
+	Log.Debug("Register V1 api...")
+
 	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/health", handleHealth).Methods("GET")
 	r.HandleFunc("/v1/testSocket", testSocket).Methods("GET")
@@ -35,9 +37,4 @@ func RegisterV1(r *mux.Router) http.Handler {
 	r.HandleFunc("/v1/db/backup", DBDel).Methods("DELETE").Queries("name", "{name}")
 	r.HandleFunc("/v1/db/restore", DBRestore).Methods("POST").Queries("name", "{name}")
 	return r
-}
-
-func RegisterAPIRouter(r *mux.Router) http.Handler {
-	Log.Debug("Register V1 api...")
-	return RegisterV1(r)
 }
