@@ -39,10 +39,10 @@ func RegisterAPIv2(r *mux.Router) {
 	extdeviceapi.HandleFunc("/distsenserdata", setDistSenserdata).Methods("PUT")
 	extdeviceapi.HandleFunc("/distsenserdata", saveDistSenserdata).Methods("POST")
 	extdeviceapi.HandleFunc("/vision/enable", enableVision).Methods("GET")
-	extdeviceapi.HandleFunc("/vision/disable", disableVision).Methods("GET")
+	extdeviceapi.HandleFunc("/vision/disable", disableVision).Methods("GET")*/
 
 	robotapi := r.PathPrefix("/v2/robot").Subrouter()
-	arcweldingapi := robotapi.PathPrefix("/arcwelding").Subrouter()
+	/*arcweldingapi := robotapi.PathPrefix("/arcwelding").Subrouter()
 	arcweldingapi.HandleFunc("/arcen", setArcEn).Methods("PUT")
 	arcweldingapi.HandleFunc("/diandong", setDiandong).Methods("PUT")
 	arcweldingapi.HandleFunc("/songqi", setSongqi).Methods("PUT")
@@ -82,10 +82,10 @@ func RegisterAPIv2(r *mux.Router) {
 	executeapi.HandleFunc("/jo2pose", joint2pose).Methods("POST")
 	executeapi.HandleFunc("/servodisable", servoDisable).Methods("PUT")
 	executeapi.HandleFunc("/technics", setTechnics).Methods("PUT")
-	executeapi.HandleFunc("/help", gethelp).Methods("GET")*/
+	executeapi.HandleFunc("/help", gethelp).Methods("GET")
 
 	extaxisapi := robotapi.PathPrefix("/extaxis").Subrouter()
-	/*extaxisapi.HandleFunc("/", setExtAxis).Methods("PUT")
+	extaxisapi.HandleFunc("/", setExtAxis).Methods("PUT")
 	extaxisapi.HandleFunc("/", setExtAxis).Methods("DELETE")
 	extaxisapi.HandleFunc("/cooperate", setExtAxisCooperate).Methods("PUT")
 	extaxisapi.HandleFunc("/gotopos", gotoExtAxisPos).Methods("POST")
