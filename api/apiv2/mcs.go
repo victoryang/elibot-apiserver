@@ -27,6 +27,9 @@ func ConcatCommand(cmd string, vars ...string) string {
 	var command string
 	command += cmd
 	for _, v := range vars {
+		if v == "" {
+			continue
+		}
 		command += space
 		command += v
 	}
@@ -34,7 +37,7 @@ func ConcatCommand(cmd string, vars ...string) string {
 	return command
 }
 
-func ParseBodyToJson(r *http.Request, des interface{}) error {
+func ParseBodyToObject(r *http.Request, des interface{}) error {
 	body, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 	if err!=nil {
