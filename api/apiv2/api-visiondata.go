@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	Tag = "apiv2:robot:visiondata"
+	TagVisionData = "apiv2:robot:visiondata"
 
 	cmdSetVisionCraftNum = "set_visioncraftnum"
 	cmdSetVisionDataNote = "set_visiondatanote"
@@ -28,7 +28,7 @@ func setVisionCraftNum(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("set_visioncraftnum ", d.Value)
 	cmd := ConcatCommand(cmdSetVisionCraftNum, d.Value)
-	SendToMCServerWithTimeout(w, r, cmd, Tag)
+	SendToMCServerWithTimeout(w, r, cmd, TagVisionData)
 }
 
 func setVisionDataNote(w http.ResponseWriter, r *http.Request) {
@@ -39,6 +39,6 @@ func setVisionDataNote(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("set_visiondatanote ", n.Value)
-	cmd := ConcatCommand(cmdSetVisionDataNote, n.Value)
-	SendToMCServerWithTimeout(w, r, cmd, Tag)
+	cmd := ConcatCommand(cmdSetVisionDataNote, n.Value...)
+	SendToMCServerWithTimeout(w, r, cmd, TagVisionData)
 }

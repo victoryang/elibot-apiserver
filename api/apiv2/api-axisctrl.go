@@ -2,7 +2,6 @@ package apiv2
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 
@@ -10,7 +9,7 @@ import (
 )
 
 const (
-	Tag = "apiv2:robot:axisctrl"
+	TagAxisCtrl = "apiv2:robot:axisctrl"
 
 	cmdDynamicMode = "dynamicMode"
 	cmdTestSlotIO = "test_slotIO"
@@ -31,7 +30,7 @@ func setDynamicMode(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("dynamicMode ", d.Value)
 	cmd := ConcatCommand(cmdDynamicMode, d.Value)
-	SendToMCServerWithTimeout(w, r, cmd, Tag)
+	SendToMCServerWithTimeout(w, r, cmd, TagAxisCtrl)
 }
 
 func testSlotIO (w http.ResponseWriter, r *http.Request){
@@ -46,12 +45,12 @@ func testSlotIO (w http.ResponseWriter, r *http.Request){
 
 	Log.Debug("test_slotIO ", slotnum, d.Value)
 	cmd := ConcatCommand(cmdTestSlotIO, slotnum, d.Value)
-	SendToMCServerWithTimeout(w, r, cmd, Tag)
+	SendToMCServerWithTimeout(w, r, cmd, TagAxisCtrl)
 }
 
 func getEncode (w http.ResponseWriter, r *http.Request){
 	Log.Debug("getEncode")
-	SendToMCServerWithTimeout(w, r, cmdGetEncode, Tag)
+	SendToMCServerWithTimeout(w, r, cmdGetEncode, TagAxisCtrl)
 }
 
 func setZeroEncode (w http.ResponseWriter, r *http.Request){
@@ -60,7 +59,7 @@ func setZeroEncode (w http.ResponseWriter, r *http.Request){
 
 	Log.Debug("setZeroEncode ", axis)
 	cmd := ConcatCommand(cmdSetZeroEncode, axis)
-	SendToMCServerWithTimeout(w, r, cmd, Tag)
+	SendToMCServerWithTimeout(w, r, cmd, TagAxisCtrl)
 }
 
 func setServoStatus (w http.ResponseWriter, r *http.Request){
@@ -72,7 +71,7 @@ func setServoStatus (w http.ResponseWriter, r *http.Request){
 
 	Log.Debug("servo ", d.Value)
 	cmd := ConcatCommand(cmdSetServoStatus, d.Value)
-	SendToMCServerWithTimeout(w, r, cmd, Tag)
+	SendToMCServerWithTimeout(w, r, cmd, TagAxisCtrl)
 }
 
 func getAxisInput (w http.ResponseWriter, r *http.Request){
@@ -82,7 +81,7 @@ func getAxisInput (w http.ResponseWriter, r *http.Request){
 
 	Log.Debug("get_axis_input ", channel, io_num)
 	cmd := ConcatCommand(cmdGetAxisInput, channel, io_num)
-	SendToMCServerWithTimeout(w, r, cmd, Tag)
+	SendToMCServerWithTimeout(w, r, cmd, TagAxisCtrl)
 }
 
 func setAxisOnput (w http.ResponseWriter, r *http.Request){
@@ -98,7 +97,7 @@ func setAxisOnput (w http.ResponseWriter, r *http.Request){
 
 	Log.Debug("set_axis_output ", channel, io_num, d.Value)
 	cmd := ConcatCommand(cmdSetAxisOnput, channel, io_num, d.Value)
-	SendToMCServerWithTimeout(w, r, cmd, Tag)
+	SendToMCServerWithTimeout(w, r, cmd, TagAxisCtrl)
 }
 
 func setDragteach (w http.ResponseWriter, r *http.Request){
@@ -110,7 +109,7 @@ func setDragteach (w http.ResponseWriter, r *http.Request){
 
 	Log.Debug("drag_teach ", d.Value)
 	cmd := ConcatCommand(cmdDragTeach, d.Value)
-	SendToMCServerWithTimeout(w, r, cmd, Tag)
+	SendToMCServerWithTimeout(w, r, cmd, TagAxisCtrl)
 }
 
 /*func getEncoder (w http.ResponseWriter, r *http.Request){
@@ -122,5 +121,5 @@ func setDragteach (w http.ResponseWriter, r *http.Request){
 
 	Log.Debug("drag_teach ", d.Value)
 	cmd := ConcatCommand(cmdDragTeach, d.Value)
-	SendToMCServerWithTimeout(w, r, cmd, Tag)
+	SendToMCServerWithTimeout(w, r, cmd, TagAxisCtrl)
 }*/
