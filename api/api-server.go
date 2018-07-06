@@ -6,6 +6,7 @@ import (
 	"context"
 
 	"elibot-apiserver/api/apiv1"
+	"elibot-apiserver/api/apiv2"
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/middleware"
 	"elibot-apiserver/middleware/accesslog"

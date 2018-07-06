@@ -32,7 +32,7 @@ func ConcatCommand(cmd string, vars ...string) string {
 	return command
 }
 
-func ParseBodyToJson(r *http.Request, des interface{}) err {
+func ParseBodyToJson(r *http.Request, des interface{}) error {
 	body, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 	if err!=nil {

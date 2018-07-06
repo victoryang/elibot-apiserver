@@ -13,7 +13,7 @@ func RegisterAPIv2(r *mux.Router) {
 	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/health", handleHealth).Methods("GET")
 
-	r.HandleFunc("/v2/aio", getAIO).Methods("GET")
+	/*r.HandleFunc("/v2/aio", getAIO).Methods("GET")
 	r.HandleFunc("/v2/aio", setAIO).Methods("PUT")
 	r.HandleFunc("/v2/aiodouble", getAIOdouble).Methods("GET")
 	r.HandleFunc("/v2/aiodouble", setAIOdouble).Methods("PUT")
@@ -82,10 +82,10 @@ func RegisterAPIv2(r *mux.Router) {
 	executeapi.HandleFunc("/jo2pose", joint2pose).Methods("POST")
 	executeapi.HandleFunc("/servodisable", servoDisable).Methods("PUT")
 	executeapi.HandleFunc("/technics", setTechnics).Methods("PUT")
-	executeapi.HandleFunc("/help", gethelp).Methods("GET")
+	executeapi.HandleFunc("/help", gethelp).Methods("GET")*/
 
 	extaxisapi := robotapi.PathPrefix("/extaxis").Subrouter()
-	extaxisapi.HandleFunc("/", setExtAxis).Methods("PUT")
+	/*extaxisapi.HandleFunc("/", setExtAxis).Methods("PUT")
 	extaxisapi.HandleFunc("/", setExtAxis).Methods("DELETE")
 	extaxisapi.HandleFunc("/cooperate", setExtAxisCooperate).Methods("PUT")
 	extaxisapi.HandleFunc("/gotopos", gotoExtAxisPos).Methods("POST")
@@ -146,13 +146,13 @@ func RegisterAPIv2(r *mux.Router) {
 	axisctrlapi.HandleFunc("/axisinput", getAxisinput).Methods("GET")
 	axisctrlapi.HandleFunc("/axisinput", setAxisinput).Methods("PUT")
 	axisctrlapi.HandleFunc("/dragteach", setDragteach).Methods("PUT")
-	axisctrlapi.HandleFunc("/encoder", getEncoder).Methods("GET")
+	axisctrlapi.HandleFunc("/encoder", getEncoder).Methods("GET")*/
 
 	repositoryapi := robotapi.PathPrefix("/repository").Subrouter()
 	repositoryapi.HandleFunc("/arc", setArc).Methods("PUT")
 	repositoryapi.HandleFunc("/param", setParam).Methods("PUT").Queries("md_id", "{md_id}", "index", "{index}")
-	repositoryapi.HandleFunc("/toolframe", setToolframe).Methods("PUT")
-	repositoryapi.HandleFunc("/zeropoint", setZeropoint).Methods("PUT")
+	//repositoryapi.HandleFunc("/toolframe", setToolframe).Methods("PUT")
+	//repositoryapi.HandleFunc("/zeropoint", setZeropoint).Methods("PUT")
 
 	return
 }

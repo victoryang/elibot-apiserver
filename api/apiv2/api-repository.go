@@ -1,12 +1,12 @@
-package apis
+package apiv2
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 
 	Log "elibot-apiserver/log"
-	"elibot-apiserver/mcserver"
 )
 
 const (
@@ -33,6 +33,7 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 	}
 	value := strconv.Itoa(p.Value)
 
+	Log.Debug("set param ", md_id, value, index)
 	cmd := ConcatCommand("setParam", md_id, value, index)
-	SendToMCServerWithTimeout(w, r, cmd, tag)
+	SendToMCServerWithTimeout(w, r, cmd, Tag)
 }
