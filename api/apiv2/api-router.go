@@ -119,25 +119,29 @@ func RegisterAPIv2(r *mux.Router) {
 	trackdataapi.HandleFunc("/calipoint", setCaliPoint).Methods("PUT")
 	trackdataapi.HandleFunc("/", setTrackdata).Methods("PUT")
 	trackdataapi.HandleFunc("/", saveTrackdata).Methods("POST")
-	trackdataapi.HandleFunc("/trackencode", getTrackEncode).Methods("GET")
+	trackdataapi.HandleFunc("/trackencode", getTrackEncode).Methods("GET")*/
 
 	userframeapi := robotapi.PathPrefix("/userframe").Subrouter()
 	userframeapi.HandleFunc("/", setUserFrame).Methods("PUT")
-	userframeapi.HandleFunc("/userpos", setUserPos).Methods("PUT")
-	userframeapi.HandleFunc("/userpos", gotoUserPos).Methods("POST")
-	userframeapi.HandleFunc("/usernum", setUserNum).Methods("PUT")
-	userframeapi.HandleFunc("/usernote", setUserNote).Methods("PUT")*/
+	userframeapi.HandleFunc("/userpos", setUserPos).Methods("PUT").Queries("pos_no", "{pos_no}")
+	userframeapi.HandleFunc("/userpos", goToUserPos).Methods("POST").Queries("pos_no", "{pos_no}")
+	userframeapi.HandleFunc("/usernum", setUserNum).Methods("PUT").Queries("num", "{num}")
+	//userframeapi.HandleFunc("/usernote", setUserNote).Methods("PUT")
 
 	visiondataapi := robotapi.PathPrefix("/visiondata").Subrouter()
 	visiondataapi.HandleFunc("/craftnum", setVisionCraftNum).Methods("PUT")
 	visiondataapi.HandleFunc("/note", setVisionDataNote).Methods("PUT")
-	/*visiondataapi.HandleFunc("/", getVisiondata).Methods("GET")
-	visiondataapi.HandleFunc("/", setVisiondata).Methods("PUT")
-	visiondataapi.HandleFunc("/currentencoval", getCurrentEncoVal).Methods("GET")
-	visiondataapi.HandleFunc("/visionencoval", getVisionEncoVal).Methods("GET")
-	visiondataapi.HandleFunc("/robencoval", getRobEncoVal).Methods("GET")
-	visiondataapi.HandleFunc("/lowlimitval", getVisionLowLimitVal).Methods("GET")
-	visiondataapi.HandleFunc("/uplimitval", getUpLimitVal).Methods("GET")*/
+	visiondataapi.HandleFunc("/", setVisionData).Methods("PUT").Queries("property", "{property}", "context", "{context}")
+	visiondataapi.HandleFunc("/", saveVisionData).Methods("POST")
+	visiondataapi.HandleFunc("/camera", triggerCamera).Methods("POST")
+	visiondataapi.HandleFunc("/visionencoval", recordVisionEncoVal).Methods("POST")
+	visiondataapi.HandleFunc("/visualcalibration", setVisualCalibration).Methods("GET")
+	visiondataapi.HandleFunc("/robencoval", recordRobEncoVal).Methods("POST")
+	visiondataapi.HandleFunc("/robotpoint", recordRobotPoint).Methods("POST")
+	visiondataapi.HandleFunc("/visualpoint", recordVisualPoint).Methods("POST")
+	visiondataapi.HandleFunc("/photo", takePhoto).Methods("POST")
+	visiondataapi.HandleFunc("/datarefresh", dataReresh).Methods("POST")
+	visiondataapi.HandleFunc("/gotopoint", goToPoint).Methods("POST")
 
 	axisctrlapi := robotapi.PathPrefix("/axisctrl").Subrouter()
 	axisctrlapi.HandleFunc("/dynamicMode", setDynamicMode).Methods("PUT")
@@ -148,15 +152,14 @@ func RegisterAPIv2(r *mux.Router) {
 	axisctrlapi.HandleFunc("/axisinput", getAxisInput).Methods("GET").Queries("channel", "{channel}", "io_num", "{io_num}")
 	axisctrlapi.HandleFunc("/axisonput", setAxisOnput).Methods("PUT").Queries("channel", "{channel}", "io_num", "{io_num}")
 	axisctrlapi.HandleFunc("/dragteach", setDragteach).Methods("PUT")
-	//axisctrlapi.HandleFunc("/encoder", getEncoder).Methods("GET")
 
 	repositoryapi := robotapi.PathPrefix("/repository").Subrouter()
-	repositoryapi.HandleFunc("/arcparam", setArcParam).Methods("PUT").Queries("md_id", "{md_id}", "file_no", "{file_no}", "index", "{index}")
-	repositoryapi.HandleFunc("/interference", setInterference).Methods("PUT").Queries("md_id", "{md_id}", "no", "{no}", "index", "{index}")
-	repositoryapi.HandleFunc("/param", setParam).Methods("PUT").Queries("md_id", "{md_id}", "index", "{index}")
-	repositoryapi.HandleFunc("/toolframe", setToolFrame).Methods("PUT").Queries("md_id", "{md_id}", "index", "{index}", "index1", "{index1}", "index2", "{index2}")
+	repositoryapi.HandleFunc("/arcparam", setArcParam).Methods("PUT").Queries("md_id", "{md_id}", "file_no", "{file_no}")
+	repositoryapi.HandleFunc("/interference", setInterference).Methods("PUT").Queries("md_id", "{md_id}", "no", "{no}")
+	repositoryapi.HandleFunc("/param", setParam).Methods("PUT").Queries("md_id", "{md_id}")
+	repositoryapi.HandleFunc("/toolframe", setToolFrame).Methods("PUT").Queries("md_id", "{md_id}")
 	repositoryapi.HandleFunc("/userframe", setUserFrame).Methods("PUT").Queries("md_id", "{md_id}", "userNo", "{userNo}")
-	repositoryapi.HandleFunc("/zeropoint", setZeroPoint).Methods("PUT").Queries("md_id", "{md_id}", "index", "{index}")
+	repositoryapi.HandleFunc("/zeropoint", setZeroPoint).Methods("PUT").Queries("md_id", "{md_id}")
 
 	return
 }

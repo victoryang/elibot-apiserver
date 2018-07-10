@@ -22,7 +22,7 @@ const (
 )
 
 func setDynamicMode(w http.ResponseWriter, r *http.Request) {
-	d := &Default{}
+	d := &RequestData{}
 	if err := ParseBodyToObject(r, &d); err!=nil {
 		WriteInternalServerErrorResponse(w, err)
 		return
@@ -37,7 +37,7 @@ func testSlotIO (w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	slotnum := vars["slotnum"]
 
-	d := &Default{}
+	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
 		WriteInternalServerErrorResponse(w, err)
 		return
@@ -63,7 +63,7 @@ func setZeroEncode (w http.ResponseWriter, r *http.Request){
 }
 
 func setServoStatus (w http.ResponseWriter, r *http.Request){
-	d := &Default{}
+	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
 		WriteInternalServerErrorResponse(w, err)
 		return
@@ -89,7 +89,7 @@ func setAxisOnput (w http.ResponseWriter, r *http.Request){
 	channel := vars["channel"]
 	io_num := vars["io_num"]
 
-	d := &Default{}
+	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
 		WriteInternalServerErrorResponse(w, err)
 		return
@@ -101,7 +101,7 @@ func setAxisOnput (w http.ResponseWriter, r *http.Request){
 }
 
 func setDragteach (w http.ResponseWriter, r *http.Request){
-	d := &Default{}
+	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
 		WriteInternalServerErrorResponse(w, err)
 		return
