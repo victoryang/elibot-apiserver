@@ -2,6 +2,7 @@ package apiv2
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/gorilla/mux"
 
@@ -15,6 +16,7 @@ const (
 	cmdSetUserPos = "set_userpos"
 	cmdGoToUserPos = "goto_userpos"
 	cmdSetUserNum= "set_usernum"
+	cmdSetUserNote = "set_usernote"
 )
 
 func set_UserFrame(w http.ResponseWriter, r *http.Request) {
@@ -49,11 +51,14 @@ func setUserNum(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, r, cmd, TagUserFrame)
 }
 
-/*func setUserNote(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	num := vars["num"]
-
-	Log.Debug("set_usernum ",num)
-	cmd := ConcatCommand(cmdSetUserNum, num)
+func setUserNote(w http.ResponseWriter, r *http.Request) {
+	d := &RequestData{}
+	if err := ParseBodyToObject(r, d); err!=nil {
+		WriteInternalServerErrorResponse(w, err)
+		return
+	}
+	notes := strings.Join(d.Note, " ")
+	Log.Debug("set_usernote ", notes)
+	cmd := ConcatCommand(cmdSetUserNote, notes)
 	SendToMCServerWithTimeout(w, r, cmd, TagUserFrame)
-}*/
+}

@@ -107,26 +107,33 @@ func RegisterAPIv2(r *mux.Router) {
 	multipleSinapi := robotapi.PathPrefix("/multipleSin").Subrouter()
 	multipleSinapi.HandleFunc("/mulsinx", mulsinx).Methods("PUT")
 	multipleSinapi.HandleFunc("/sinpos", setMovxJoint).Methods("PUT")
-	multipleSinapi.HandleFunc("/sinpos", gotoSinpos).Methods("GET")
+	multipleSinapi.HandleFunc("/sinpos", gotoSinpos).Methods("GET")*/
 
 	robotapi.HandleFunc("/parameters", setParameters).Methods("PUT")
 
 	robcalibrateapi := robotapi.PathPrefix("/robcalibrate").Subrouter()
-	robcalibrateapi.HandleFunc("/autocalczero", setAutoCalcZero).Methods("PUT")
+	robcalibrateapi.HandleFunc("/autocalczero", setAutoCalcZero).Methods("PUT").Queries("filename", "{filename}")
 	robcalibrateapi.HandleFunc("/autorunzero", setAutoRunZero).Methods("PUT")
 
 	trackdataapi := robotapi.PathPrefix("/trackdata").Subrouter()
-	trackdataapi.HandleFunc("/calipoint", setCaliPoint).Methods("PUT")
-	trackdataapi.HandleFunc("/", setTrackdata).Methods("PUT")
+	trackdataapi.HandleFunc("/craftnum", setTrackCraftNum).Methods("PUT").Queries("num", "{num}")
+	trackdataapi.HandleFunc("/note", setTrackdataNote).Methods("PUT")
+	trackdataapi.HandleFunc("/", setTrackdata).Methods("PUT").Queries("property", "{property}", "context", "{context}")
 	trackdataapi.HandleFunc("/", saveTrackdata).Methods("POST")
-	trackdataapi.HandleFunc("/trackencode", getTrackEncode).Methods("GET")*/
+	trackdataapi.HandleFunc("/calibration", startCalibration).Methods("POST").Queries("trigger", "{trigger}")
+	trackdataapi.HandleFunc("/pointa", recordPointA).Methods("POST")
+	trackdataapi.HandleFunc("/pointb", recordPointB).Methods("POST")
+	trackdataapi.HandleFunc("/pointc", recordPointC).Methods("POST")
+	trackdataapi.HandleFunc("/referencepoint", recordReferencePoint).Methods("POST")
+	trackdataapi.HandleFunc("/gotoReferPos", gotoReferPos).Methods("POST")
+	trackdataapi.HandleFunc("/calibrationrsult", getCalibrationRsult).Methods("GET")
 
 	userframeapi := robotapi.PathPrefix("/userframe").Subrouter()
 	userframeapi.HandleFunc("/", setUserFrame).Methods("PUT")
 	userframeapi.HandleFunc("/userpos", setUserPos).Methods("PUT").Queries("pos_no", "{pos_no}")
 	userframeapi.HandleFunc("/userpos", goToUserPos).Methods("POST").Queries("pos_no", "{pos_no}")
 	userframeapi.HandleFunc("/usernum", setUserNum).Methods("PUT").Queries("num", "{num}")
-	//userframeapi.HandleFunc("/usernote", setUserNote).Methods("PUT")
+	userframeapi.HandleFunc("/usernote", setUserNote).Methods("PUT")
 
 	visiondataapi := robotapi.PathPrefix("/visiondata").Subrouter()
 	visiondataapi.HandleFunc("/craftnum", setVisionCraftNum).Methods("PUT")

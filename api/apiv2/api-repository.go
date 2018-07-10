@@ -25,6 +25,7 @@ type RequestData struct {
 	Index 		string 		`json:"index,omitempty"`
 	Indexes		[]string 	`json:"indexes,omitempty"`
 	Value 		string 		`json:"value,omitempty"`
+	Note		[]string    `json:"note,omitempty`
 }
 
 func setArcParam(w http.ResponseWriter, r *http.Request) {
