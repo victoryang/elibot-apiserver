@@ -11,7 +11,7 @@ import (
 const (
 	TagUserFrame = "apiv2:robot:userframe"
 
-	cmdSetUserFrame = "set_userframe"
+	cmd_SetUserFrame = "set_userframe"
 	cmdSetUserPos = "set_userpos"
 	cmdGoToUserPos = "goto_userpos"
 	cmdSetUserNum= "set_usernum"
@@ -19,7 +19,7 @@ const (
 
 func setUserFrame(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("set_userframe ")
-	SendToMCServerWithTimeout(w, r, cmdSetUserFrame, TagUserFrame)
+	SendToMCServerWithTimeout(w, r, cmd_SetUserFrame, TagUserFrame)
 }
 
 func setUserPos(w http.ResponseWriter, r *http.Request) {
