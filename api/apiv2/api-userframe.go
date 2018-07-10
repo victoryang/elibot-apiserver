@@ -17,7 +17,7 @@ const (
 	cmdSetUserNum= "set_usernum"
 )
 
-func setUserFrame(w http.ResponseWriter, r *http.Request) {
+func set_UserFrame(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("set_userframe ")
 	SendToMCServerWithTimeout(w, r, cmd_SetUserFrame, TagUserFrame)
 }

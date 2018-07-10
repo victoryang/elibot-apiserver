@@ -22,8 +22,8 @@ const (
 )
 
 type RequestData struct {
-	Index 		int 		`json:"index,omitempty"`
-	Indexes		[]int 		`json:"indexes,omitempty"`
+	Index 		string 		`json:"index,omitempty"`
+	Indexes		[]string 	`json:"indexes,omitempty"`
 	Value 		string 		`json:"value,omitempty"`
 }
 
