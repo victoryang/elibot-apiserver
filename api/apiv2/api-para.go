@@ -3,13 +3,13 @@ package apiv2
 import (
 	"net/http"
 
-	"github.com/gorilla/mux"
+	//"github.com/gorilla/mux"
 
 	Log "elibot-apiserver/log"
 )
 
 const (
-	TagRepository = "apiv2:robot:parameter"
+	TagParameter = "apiv2:robot:parameter"
 
 	cmdSetParameters = "para"
 )
@@ -23,5 +23,5 @@ func setParameters(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("para ", d.Index, d.Value)
 	cmd := ConcatCommand(cmdSetParameters, d.Index, d.Value)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	SendToMCServerWithTimeout(w, r, cmd, TagParameter)
 }
