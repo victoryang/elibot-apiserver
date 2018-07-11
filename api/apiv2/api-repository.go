@@ -2,8 +2,6 @@ package apiv2
 
 import (
 	"net/http"
-	"strings"
-	"errors"
 
 	"github.com/gorilla/mux"
 
