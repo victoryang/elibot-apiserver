@@ -7,9 +7,12 @@ import (
 
 // swagger:response Response
 type ResponseTemplate struct {
-	// response template
-	// Required: true
+	// response body
+	// in: body
 	Body struct {
+		// returned message
+		//
+		// Required: true
 		Msg 		string
 	}
 }
