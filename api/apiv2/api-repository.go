@@ -25,14 +25,12 @@ const (
 //
 // 		Consumes:
 //		- application/json
-//		- RequestData
+//		- Request
 //		Produces:
 //		- application/json
 //		Schemes: http
 //		Responses:
-//			default: ResponseTemplate
-//			200: Success
-//			500: InternalServerError
+//			default: Response
 //
 func setArcParam(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -56,14 +54,12 @@ func setArcParam(w http.ResponseWriter, r *http.Request) {
 //
 // 		Consumes:
 //		- application/json
-//		- RequestData
+//		- Request
 //		Produces:
 //		- application/json
 //		Schemes: http
 //		Responses:
-//			default: ResponseTemplate
-//			200: Success
-//			500: InternalServerError
+//			default: Response
 //
 func setInterference(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -87,14 +83,12 @@ func setInterference(w http.ResponseWriter, r *http.Request) {
 //
 // 		Consumes:
 //		- application/json
-//		- RequestData
+//		- Request
 //		Produces:
 //		- application/json
 //		Schemes: http
 //		Responses:
-//			default: ResponseTemplate
-//			200: Success
-//			500: InternalServerError
+//			default: Response
 //
 func setParam(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -117,14 +111,12 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 //
 // 		Consumes:
 //		- application/json
-//		- RequestData
+//		- Request
 //		Produces:
 //		- application/json
 //		Schemes: http
 //		Responses:
-//			default: ResponseTemplate
-//			200: Success
-//			500: InternalServerError
+//			default: Response
 //
 func setToolFrame(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -149,14 +141,12 @@ func setToolFrame(w http.ResponseWriter, r *http.Request) {
 //
 // 		Consumes:
 //		- application/json
-//		- RequestData
+//		- Request
 //		Produces:
 //		- application/json
 //		Schemes: http
 //		Responses:
-//			default: ResponseTemplate
-//			200: Success
-//			500: InternalServerError
+//			default: Response
 //
 func setUserFrame(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -180,14 +170,12 @@ func setUserFrame(w http.ResponseWriter, r *http.Request) {
 //
 // 		Consumes:
 //		- application/json
-//		- RequestData
+//		- Request
 //		Produces:
 //		- application/json
 //		Schemes: http
 //		Responses:
-//			default: ResponseTemplate
-//			200: Success
-//			500: InternalServerError
+//			default: Response
 //
 func setZeroPoint(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)

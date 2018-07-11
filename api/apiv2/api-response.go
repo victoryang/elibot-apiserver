@@ -5,19 +5,7 @@ import (
 	"encoding/json"
 )
 
-// swagger:response Response
-type ResponseTemplate struct {
-	// response body
-	// in: body
-	Body struct {
-		// returned message
-		//
-		// Required: true
-		Msg 		string
-	}
-}
-
-// real response struct
+// Real Response
 type Response struct {
 	Msg 		string			`json:"msg"`
 }
