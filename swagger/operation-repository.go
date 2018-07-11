@@ -61,7 +61,7 @@ package swagger
 // parameters:
 // - "name": "request"
 //   "in": "body"
-//	 "description": "request body"
+//   "description": "request body"
 //   "schema": {
 //      "$ref": "#/parameters/Request"
 //    }
@@ -85,7 +85,7 @@ package swagger
 // parameters:
 // - "name": "request"
 //   "in": "body"
-//	 "description": "request body"
+//   "description": "request body"
 //   "schema": {
 //      "$ref": "#/parameters/Request"
 //    }
@@ -109,7 +109,7 @@ package swagger
 // parameters:
 // - "name": "request"
 //   "in": "body"
-//	 "description": "request body"
+//   "description": "request body"
 //   "schema": {
 //      "$ref": "#/parameters/Request"
 //    }
@@ -133,7 +133,7 @@ package swagger
 // parameters:
 // - "name": "request"
 //   "in": "body"
-//	 "description": "request body"
+//   "description": "request body"
 //   "schema": {
 //      "$ref": "#/parameters/Request"
 //    }
