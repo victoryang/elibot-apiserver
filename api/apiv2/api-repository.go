@@ -30,9 +30,9 @@ const (
 //		- application/json
 //		Schemes: http
 //		Responses:
-//			default: Response
+//			default: ResponseTemplate
 //			200: Success
-//			500: Some Internal Server Error
+//			500: InternalServerError
 //
 func setArcParam(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -61,9 +61,9 @@ func setArcParam(w http.ResponseWriter, r *http.Request) {
 //		- application/json
 //		Schemes: http
 //		Responses:
-//			default: Response
+//			default: ResponseTemplate
 //			200: Success
-//			500: Some Internal Server Error
+//			500: InternalServerError
 //
 func setInterference(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -92,9 +92,9 @@ func setInterference(w http.ResponseWriter, r *http.Request) {
 //		- application/json
 //		Schemes: http
 //		Responses:
-//			default: Response
+//			default: ResponseTemplate
 //			200: Success
-//			500: Some Internal Server Error
+//			500: InternalServerError
 //
 func setParam(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -122,9 +122,9 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 //		- application/json
 //		Schemes: http
 //		Responses:
-//			default: Response
+//			default: ResponseTemplate
 //			200: Success
-//			500: Some Internal Server Error
+//			500: InternalServerError
 //
 func setToolFrame(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -154,9 +154,9 @@ func setToolFrame(w http.ResponseWriter, r *http.Request) {
 //		- application/json
 //		Schemes: http
 //		Responses:
-//			default: Response
+//			default: ResponseTemplate
 //			200: Success
-//			500: Some Internal Server Error
+//			500: InternalServerError
 //
 func setUserFrame(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
@@ -185,9 +185,9 @@ func setUserFrame(w http.ResponseWriter, r *http.Request) {
 //		- application/json
 //		Schemes: http
 //		Responses:
-//			default: Response
+//			default: ResponseTemplate
 //			200: Success
-//			500: Some Internal Server Error
+//			500: InternalServerError
 //
 func setZeroPoint(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)

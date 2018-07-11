@@ -4,11 +4,18 @@ import (
 	"net/http"
 	"encoding/json"
 )
-// A general response for apis
+
 // swagger:response Response
-type Response struct {
-	// response message
+type ResponseTemplate struct {
+	// response template
 	// Required: true
+	Body struct {
+		Msg 		string
+	}
+}
+
+// real response struct
+type Response struct {
 	Msg 		string			`json:"msg"`
 }
 
