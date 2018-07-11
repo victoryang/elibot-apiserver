@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 )
 
-// Real Response
 type Response struct {
 	Msg 		string			`json:"msg"`
 }

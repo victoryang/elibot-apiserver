@@ -1,6 +1,6 @@
-package apiv2
+package swagger
 
-// swagger:model Request
+// swagger:parameters Request
 type RequestTemplate struct {
 	// setting index for data
 	Index 		string 		`json:"index,omitempty"`
@@ -15,7 +15,7 @@ type RequestTemplate struct {
 }
 
 // swagger:response Response
-type ResponseTemplate struct {
+type Response struct {
 	// response body
 	// in: body
 	Body struct {
