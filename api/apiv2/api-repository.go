@@ -21,13 +21,21 @@ const (
 	cmdSetZeroPoint = "setZeroPoint"
 )
 
-type RequestData struct {
-	Index 		string 		`json:"index,omitempty"`
-	Indexes		[]string 	`json:"indexes,omitempty"`
-	Value 		string 		`json:"value,omitempty"`
-	Note		[]string    `json:"note,omitempty`
-}
-
+// swagger:route PUT /v2/robot/repository/arcparam/{file_no}/{md_id} setArcParam
+// Origin: setArcParam [md_id] [value] [file_no] [index]
+// This allows to set arcparam with some parameters
+//
+// 		Consumes:
+//		- application/json
+//		- RequestData
+//		Produces:
+//		- application/json
+//		Schemes: http
+//		Responses:
+//			default: Response
+//			200: Success
+//			500: Some Internal Server Error
+//
 func setArcParam(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]
@@ -39,11 +47,26 @@ func setArcParam(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setArcParam ", md_id, d.Value, d.Index)
+	Log.Debug("setArcParam ", md_id, d.Value, file_no, d.Index)
 	cmd := ConcatCommand(cmdSetArcParam, md_id, d.Value, file_no, d.Index)
 	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
 }
 
+// swagger:route PUT /v2/robot/repository/interference/{no}/{md_id} setInterference
+// Origin: setInterference [md_id] [value] [no] [index]
+// This allows to set interference with some parameters
+//
+// 		Consumes:
+//		- application/json
+//		- RequestData
+//		Produces:
+//		- application/json
+//		Schemes: http
+//		Responses:
+//			default: Response
+//			200: Success
+//			500: Some Internal Server Error
+//
 func setInterference(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]
@@ -60,6 +83,21 @@ func setInterference(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
 }
 
+// swagger:route PUT /v2/robot/repository/params/{md_id} setParam
+// Origin: setParam [md_id] [value] [index]
+// This allows to set param with some parameters
+//
+// 		Consumes:
+//		- application/json
+//		- RequestData
+//		Produces:
+//		- application/json
+//		Schemes: http
+//		Responses:
+//			default: Response
+//			200: Success
+//			500: Some Internal Server Error
+//
 func setParam(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]
@@ -75,30 +113,57 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
 }
 
+// swagger:route PUT /v2/robot/repository/toolframes/{md_id} setToolFrame
+// Origin: setToolFrame [md_id] [value] [tool_no] [pos_no|index] [index]
+// This allows to set toolframe with some parameters
+//
+// 		Consumes:
+//		- application/json
+//		- RequestData
+//		Produces:
+//		- application/json
+//		Schemes: http
+//		Responses:
+//			default: Response
+//			200: Success
+//			500: Some Internal Server Error
+//
 func setToolFrame(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]
+	tool_no := vars["tool_no"]
+	pos_no := vars["pos_no"]
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
 		WriteInternalServerErrorResponse(w, err)
 		return
 	}
-	if len(d.Indexes) < 2 {
-		WriteInternalServerErrorResponse(w, errors.New("need more indexes"))
-		return
-	}
-	indexes := strings.Join(d.Indexes, " ")
 
-	Log.Debug("setToolFrame ", md_id, d.Value, indexes)
-	cmd := ConcatCommand(cmdSetToolFrame, md_id, d.Value, indexes)
+	Log.Debug("setToolFrame ", md_id, d.Value, tool_no, pos_no, d.Index)
+	cmd := ConcatCommand(cmdSetToolFrame, md_id, d.Value, tool_no, pos_no, d.Index)
 	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
 }
 
+// swagger:route PUT /v2/robot/repository/userframe/{userno}/{md_id} setUserFrame
+// Origin: setUserFrame [md_id] [value] [userNo]
+// This allows to set userframe with some parameters
+//
+// 		Consumes:
+//		- application/json
+//		- RequestData
+//		Produces:
+//		- application/json
+//		Schemes: http
+//		Responses:
+//			default: Response
+//			200: Success
+//			500: Some Internal Server Error
+//
 func setUserFrame(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]
-	userNo := vars["userNo"]
+	userno := vars["userno"]
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
@@ -106,11 +171,26 @@ func setUserFrame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setUserFrame ", md_id, d.Value, userNo)
-	cmd := ConcatCommand(cmdSetUserFrame, md_id, d.Value, userNo)
+	Log.Debug("setUserFrame ", md_id, d.Value, userno)
+	cmd := ConcatCommand(cmdSetUserFrame, md_id, d.Value, userno)
 	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
 }
 
+// swagger:route PUT /v2/robot/repository/zeropoint/{md_id} setZeroPoint
+// Origin: setZeroPoint [md_id] [value] [index]
+// This allows to set zeropoint with some parameters
+//
+// 		Consumes:
+//		- application/json
+//		- RequestData
+//		Produces:
+//		- application/json
+//		Schemes: http
+//		Responses:
+//			default: Response
+//			200: Success
+//			500: Some Internal Server Error
+//
 func setZeroPoint(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]

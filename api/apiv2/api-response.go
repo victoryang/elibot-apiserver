@@ -2,17 +2,19 @@ package apiv2
 
 import (
 	"net/http"
-	//"fmt"
 	"encoding/json"
 )
-
+// A general response for apis
+// swagger:response Response
 type Response struct {
-	Res 		string			`json:"res"`
+	// response message
+	// Required: true
+	Msg 		string			`json:"msg"`
 }
 
-func ToJson(res string) {
+func ToJson(msg string) []byte {
 	response := Response{
-		Res:	res,
+		Msg:	msg,
 	}
 	r, _ := json.Marshal(response)
 	return r
@@ -22,6 +24,12 @@ func ToJson(res string) {
 func WriteSuccessResponse(w http.ResponseWriter, res string) {
 	r := ToJson(res)
 	w.WriteHeader(http.StatusOK)
+	w.Write(r)
+}
+
+func WriteBadRequestResponse(w http.ResponseWriter, err error) {
+	r := ToJson(err.Error())
+	w.WriteHeader(http.StatusBadRequest)
 	w.Write(r)
 }
 

@@ -161,12 +161,12 @@ func RegisterAPIv2(r *mux.Router) {
 	axisctrlapi.HandleFunc("/dragteach", setDragteach).Methods("PUT")
 
 	repositoryapi := robotapi.PathPrefix("/repository").Subrouter()
-	repositoryapi.HandleFunc("/arcparam", setArcParam).Methods("PUT").Queries("md_id", "{md_id}", "file_no", "{file_no}")
-	repositoryapi.HandleFunc("/interference", setInterference).Methods("PUT").Queries("md_id", "{md_id}", "no", "{no}")
-	repositoryapi.HandleFunc("/param", setParam).Methods("PUT").Queries("md_id", "{md_id}")
-	repositoryapi.HandleFunc("/toolframe", setToolFrame).Methods("PUT").Queries("md_id", "{md_id}")
-	repositoryapi.HandleFunc("/userframe", setUserFrame).Methods("PUT").Queries("md_id", "{md_id}", "userNo", "{userNo}")
-	repositoryapi.HandleFunc("/zeropoint", setZeroPoint).Methods("PUT").Queries("md_id", "{md_id}")
+	repositoryapi.HandleFunc("/arcparam/{file_no}/{md_id}", setArcParam).Methods("PUT")
+	repositoryapi.HandleFunc("/interference/{no}/{md_id}", setInterference).Methods("PUT")
+	repositoryapi.HandleFunc("/params/{md_id}", setParam).Methods("PUT")
+	repositoryapi.HandleFunc("/toolframes/{tool_no}/{md_id}/pos/{pos_no}", setToolFrame).Methods("PUT")
+	repositoryapi.HandleFunc("/userframe/{userno}/{md_id}", setUserFrame).Methods("PUT")
+	repositoryapi.HandleFunc("/zeropoint/{md_id}", setZeroPoint).Methods("PUT")
 
 	return
 }
