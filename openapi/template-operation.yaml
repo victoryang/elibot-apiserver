@@ -1,0 +1,138 @@
+paths:
+  /v2/robot/repository/arcparam/{file_no}/{md_id}:
+    put:
+      tags:
+      - setArcParam
+      description: setArcParam [md_id] [value] [file_no] [index]
+      operationId: setArcParam
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: request
+        in: body
+        description: request body structure
+        required: true
+        schema:
+          $ref: '#/definitions/RequestBody1'
+      responses:
+        default:
+          description: All responses will return a message to indicate the result
+          schema:
+            $ref: '#/definitions/ResponseBody'
+
+  /v2/robot/repository/interference/{no}/{md_id}:
+    put:
+      tags:
+      - setInterference
+      description: setInterference [md_id] [value] [no] [index]
+      operationId: setInterference
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: request
+        in: body
+        description: request body structure
+        required: true
+        schema:
+          $ref: '#/definitions/RequestBody1'
+      responses:
+        default:
+          description: All responses will return a message to indicate the result
+          schema:
+            $ref: '#/definitions/ResponseBody'
+
+  /v2/robot/repository/params/{md_id}:
+    put:
+      tags:
+      - setParam
+      description: setParam [md_id] [value] [index]
+      operationId: setParam
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: request
+        in: body
+        description: request body structure
+        required: true
+        schema:
+          $ref: '#/definitions/RequestBody1'
+      responses:
+        default:
+          description: All responses will return a message to indicate the result
+          schema:
+            $ref: '#/definitions/ResponseBody'
+
+  /v2/robot/repository/toolframes/{tool_no}/{md_id}/pos/{pos_no}:
+    put:
+      tags:
+      - setToolFrame
+      description: setToolFrame [md_id] [value] [tool_no] [pos_no|index] [index]
+      operationId: setToolFrame
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: request
+        in: body
+        description: request body structure
+        required: true
+        schema:
+          $ref: '#/definitions/RequestBody1'
+      responses:
+        default:
+          description: All responses will return a message to indicate the result
+          schema:
+            $ref: '#/definitions/ResponseBody'
+
+  /v2/robot/repository/userframe/{userno}/{md_id}:
+    put:
+      tags:
+      - setUserFrame
+      description: setUserFrame [md_id] [value] [userNo]
+      operationId: setUserFrame
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: request
+        in: body
+        description: request body structure
+        required: true
+        schema:
+          $ref: '#/definitions/RequestBody2'
+      responses:
+        default:
+          description: All responses will return a message to indicate the result
+          schema:
+            $ref: '#/definitions/ResponseBody'
+
+  /v2/robot/repository/zeropoint/{md_id}:
+    put:
+      tags:
+      - setZeroPoint
+      description: setZeroPoint [md_id] [value] [index]
+      operationId: setZeroPoint
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: request
+        in: body
+        description: request body structure
+        required: true
+        schema:
+          $ref: '#/definitions/RequestBody1'
+      responses:
+        default:
+          description: All responses will return a message to indicate the result
+          schema:
+            $ref: '#/definitions/ResponseBody'

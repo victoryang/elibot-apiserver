@@ -1,0 +1,14 @@
+swagger: '2.0'
+info: 
+  title: openapi for elibot api-server
+  version: 0.1.0
+host: http://192.168.1.253:9000
+basePath: /
+schemes:
+  - http
+  - https
+# defined in each operation files
+paths:
+
+# defined in definitions.yaml
+definitions:
