@@ -152,9 +152,9 @@ func RegisterAPIv2(r *mux.Router) {
 
 	axisctrlapi := robotapi.PathPrefix("/axisctrl").Subrouter()
 	axisctrlapi.HandleFunc("/dynamicMode", setDynamicMode).Methods("PUT")
-	axisctrlapi.HandleFunc("/slotio", testSlotIO).Methods("PUT").Queries("slotnum", "{slotnum}")
+	axisctrlapi.HandleFunc("/slotio/{slotnum}", testSlotIO)
 	axisctrlapi.HandleFunc("/encode", getEncode).Methods("GET")
-	axisctrlapi.HandleFunc("/zeroencode", setZeroEncode).Methods("PUT").Queries("axis", "{axis}")
+	axisctrlapi.HandleFunc("/zeroencode/{axis}", setZeroEncode).Methods("PUT")
 	axisctrlapi.HandleFunc("/servo", setServoStatus).Methods("PUT")
 	axisctrlapi.HandleFunc("/axisinput", getAxisInput).Methods("GET").Queries("channel", "{channel}", "io_num", "{io_num}")
 	axisctrlapi.HandleFunc("/axisonput", setAxisOnput).Methods("PUT").Queries("channel", "{channel}", "io_num", "{io_num}")
