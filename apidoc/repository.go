@@ -16,9 +16,9 @@
 *			"Content-Type": "application/json;charset=utf-8"
 *		}
 *
-* @apiParam (test param1) {string} file_no  URL Param: file to set
-* @apiParam (test param1) {string} md_id    URL Param: metadata id
-* @apiParam (test param1) {object} data     Body Content: json: type data struct {
+* @apiParam (params) {string} file_no  URL Param: file to set
+* @apiParam (params) {string} md_id    URL Param: metadata id
+* @apiParam (params) {object} data     Body Content: json: type data struct {
 *																	index  		string
 *																	value 		string 
 *								 								}
