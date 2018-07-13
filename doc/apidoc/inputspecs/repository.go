@@ -18,10 +18,8 @@
 *
 * @apiParam (params) {string} file_no  URL Param: file to set
 * @apiParam (params) {string} md_id    URL Param: metadata id
-* @apiParam (params) {object} data     Body Content: json: type data struct {
-*																	index  		string
-*																	value 		string 
-*								 								}
+* @apiParam (params) {string} index    Body Content: index
+* @apiParam (params) {string} value    Body Content: value
 *
 * @apiParamExample {json} Request-Body (example):
 * 		{

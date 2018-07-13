@@ -310,7 +310,7 @@ func getResourceAndCompare() (res []byte){
 	defer mutex.Unlock()
 
 	resource := SharedResource{
-		Test:		1,
+		//Test:		1,
 	}
 
 	var crc int

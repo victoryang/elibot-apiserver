@@ -1,0 +1,6 @@
+[submodule "thirdparty/apidoc"]
+	path = thirdparty/apidoc
+	url = https://github.com/apidoc/apidoc.git
+[submodule "apidoc"]
+	path = apidoc
+	url = https://github.com/apidoc/apidoc.git
