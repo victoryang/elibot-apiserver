@@ -6,6 +6,6 @@ import (
 	"github.com/rs/cors"
 )
 
-func NewCorsHandler() http.Handler {
-	return cors.AllowAll().Handler()
+func NewCorsHandler(h http.Handler) http.Handler {
+	return cors.AllowAll().Handler(h)
 }
