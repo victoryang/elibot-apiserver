@@ -59,7 +59,7 @@ func readline(conn net.Conn) (string, error) {
     reader := bufio.NewReader(conn)
     res, err := reader.ReadString('\n')
     if err != nil {
-        Log.Error("Error to send message because of: ", err.Error())
+        Log.Error("Error to read message because of: ", err.Error())
         return "", err
     }
     Log.Debug("readline from conn: ", res)
