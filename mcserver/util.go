@@ -23,6 +23,7 @@ func parse1(s string) string {
     return res
 }
 
+/* Deprecated*/
 /* Important: should call flush() to send buffer to network*/
 func writeline(conn net.Conn, cmd string) error {
     writer := bufio.NewWriter(conn)
@@ -36,7 +37,7 @@ func writeline(conn net.Conn, cmd string) error {
     return writer.Flush()
 }
 
-func originalwrite(conn net.Conn, command string) error {
+func writeConn (conn net.Conn, command string) error {
     _, e := conn.Write([]byte(command))
     if e != nil {
         Log.Error("Error to send message because of: ", e.Error())
@@ -45,7 +46,7 @@ func originalwrite(conn net.Conn, command string) error {
     return nil
 }
 
-func originalread(conn net.Conn) (string, error){
+func readConn (conn net.Conn) (string, error){
     buf := make([]byte, BUFSIZE)
     n , err := conn.Read(buf)
     if err != nil {
@@ -55,6 +56,7 @@ func originalread(conn net.Conn) (string, error){
     return string(buf[:n]), nil
 }
 
+/* Deprecated*/
 func readline(conn net.Conn) (string, error) {
     reader := bufio.NewReader(conn)
     res, err := reader.ReadString('\n')
