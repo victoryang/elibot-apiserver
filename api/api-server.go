@@ -61,7 +61,7 @@ func (s *Server) configServerHandler() http.Handler {
 		n.Use(s.AccessLog.Logger)
 	}
 	
-	n.UseHandler(middleware.NewCorsHandler())
+	n.Use(middleware.NewCorsHandler())
 
 	n.UseHandler(apiv1.RegisterAPIv1(r))
 	apiv2.RegisterAPIv2(r)
