@@ -54,7 +54,7 @@ func setUserNum(w http.ResponseWriter, r *http.Request) {
 func setUserNote(w http.ResponseWriter, r *http.Request) {
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 		return
 	}
 	notes := strings.Join(d.Note, " ")

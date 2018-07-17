@@ -33,7 +33,7 @@ type Note struct {
 func setVisionCraftNum(w http.ResponseWriter, r *http.Request) {
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -45,7 +45,7 @@ func setVisionCraftNum(w http.ResponseWriter, r *http.Request) {
 func setVisionDataNote(w http.ResponseWriter, r *http.Request) {
 	n := &Note{}
 	if err := ParseBodyToObject(r, n); err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -61,7 +61,7 @@ func setVisionData(w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 		return
 	}
 

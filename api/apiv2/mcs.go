@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 
 	"elibot-apiserver/mcserver"
+	Log "elibot-apiserver/log"
 )
 
 const (
@@ -41,10 +42,12 @@ func ParseBodyToObject(r *http.Request, des interface{}) error {
 	body, err := ioutil.ReadAll(r.Body)
 	defer r.Body.Close()
 	if err!=nil {
+		Log.Error("Parse fails: ", err)
 		return err
 	}
 
 	if err := json.Unmarshal(body, des); err!=nil {
+		Log.Error("Parse fails: ", err)
 		return err
 	}
 	return nil
@@ -52,7 +55,8 @@ func ParseBodyToObject(r *http.Request, des interface{}) error {
 
 func SendToMCServerWithTimeout(w http.ResponseWriter, r *http.Request, cmd string, tag string) {
 	if mcs = mcserver.GetMcServer(); mcs == nil {
-		WriteInternalServerErrorResponse(w, errors.New("mcserver is not available right now"))
+		Log.Error("mcserver is not available right now")
+		WriteInternalServerErrorResponse(w, ERRMCSEVERNOTAVAILABLE)
 		return
 	}
 
@@ -66,10 +70,12 @@ func SendToMCServerWithTimeout(w http.ResponseWriter, r *http.Request, cmd strin
 
 	select {
 	case <-ctx.Done():
-		WriteInternalServerErrorResponse(w, ctx.Err())
+		Log.Debug("Request to mcserver times out or cancelled: ", ctx.Err())
+		WriteInternalServerErrorResponse(w, ERRREQUESTTIMEOUT)
 	case r := <- rCh:
 		if r.Err != nil {
-			WriteInternalServerErrorResponse(w, r.Err)
+			Log.Debug("Request to mcserver fails, due to: ", r.Err)
+			WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
 		} else {
 			WriteSuccessResponse(w, r.Result)
 		}

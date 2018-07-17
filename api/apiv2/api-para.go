@@ -17,7 +17,7 @@ const (
 func setParameters(w http.ResponseWriter, r *http.Request) {
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 		return
 	}
 

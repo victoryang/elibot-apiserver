@@ -37,7 +37,7 @@ func setTrackCraftNum(w http.ResponseWriter, r *http.Request) {
 func setTrackdataNote(w http.ResponseWriter, r *http.Request) {
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 		return
 	}
 	notes := strings.Join(d.Note, " ")
@@ -53,7 +53,7 @@ func setTrackdata(w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 		return
 	}
 

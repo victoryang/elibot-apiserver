@@ -5,12 +5,13 @@ import (
 	"encoding/json"
 )
 
-type Response struct {
+/* respond differently*/
+type SuccessResponse struct {
 	Msg 		string			`json:"msg"`
 }
 
-func ToJson(msg string) []byte {
-	response := Response{
+func ToSuccessJson(msg string) []byte {
+	response := SuccessResponse{
 		Msg:	msg,
 	}
 	r, _ := json.Marshal(response)
@@ -19,19 +20,27 @@ func ToJson(msg string) []byte {
 
 // WriteSuccessResponse write success headers and response if any.
 func WriteSuccessResponse(w http.ResponseWriter, res string) {
-	r := ToJson(res)
+	r := ToSuccessJson(res)
 	w.WriteHeader(http.StatusOK)
 	w.Write(r)
 }
 
-func WriteBadRequestResponse(w http.ResponseWriter, err error) {
-	r := ToJson(err.Error())
-	w.WriteHeader(http.StatusBadRequest)
-	w.Write(r)
+type ErrorResponse struct {
+	ErrCode		int 			`json:"error_code"`
+	ErrMsg 		string			`json:"error_msg"`
 }
 
-func WriteInternalServerErrorResponse(w http.ResponseWriter, err error) {
-	r := ToJson(err.Error())
+func ToErrJson(errno int) []byte {
+	response := ErrorResponse{
+		ErrCode:	errno,
+		ErrMsg:		ErrMsg(errno),
+	}
+	r, _ := json.Marshal(response)
+	return r
+}
+
+func WriteInternalServerErrorResponse(w http.ResponseWriter, errno int) {
+	r := ToErrJson(errno)
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Write(r)
 }
