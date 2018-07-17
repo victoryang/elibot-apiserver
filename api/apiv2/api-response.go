@@ -26,8 +26,8 @@ func WriteSuccessResponse(w http.ResponseWriter, res string) {
 }
 
 type ErrorResponse struct {
-	ErrCode		int 			`json:"error_code"`
-	ErrMsg 		string			`json:"error_msg"`
+	ErrCode		int 			`json:"errcode"`
+	ErrMsg 		string			`json:"errmsg"`
 }
 
 func ToErrJson(errno int) []byte {
