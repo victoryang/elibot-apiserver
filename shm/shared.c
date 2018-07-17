@@ -1,5 +1,5 @@
 #include "share/resource.h"
-#include "cJSON.h"
+#include "db/cJSON.h"
 
 unsigned char get_autorun_cyclemode() {
 	return GET_AUTORUN_CYCLEMODE();
@@ -16,7 +16,7 @@ static cJSON* get_struct_dspInfor() {
 cJSON* get_resource_data() {
 	cJSON* root;
 	root = cJSON_CreateObject();
-	cJSON_AddItemToObject(root, "dspInfor", get_dspInfor());
+	cJSON_AddItemToObject(root, "dspInfor", get_struct_dspInfor());
 	return root;
 }
 
