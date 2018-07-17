@@ -2,7 +2,6 @@ package apiv2
 
 import (
 	"context"
-	"errors"
 	"time"
 	"net/http"
 	"io/ioutil"
