@@ -1,5 +1,5 @@
-#ifndef MCRESOURCE_H
-#define MCRESOURCE_H
+#ifndef MRJ_H
+#define MRJ_H
 
 #include "stdlib.h"
 #include "cJSON.h"
@@ -7,4 +7,4 @@
 
 cJSON* get_resource_data()
 
-#endif //MCRESOURCE_H
+#endif //MRJ_H
