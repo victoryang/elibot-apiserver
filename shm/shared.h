@@ -1,5 +1,6 @@
 #ifndef SHARED_H
 #define SHARED_H
+#include "cJSON.h"
 
 unsigned char get_autorun_cyclemode();
 
