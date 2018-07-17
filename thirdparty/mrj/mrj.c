@@ -13,8 +13,7 @@ static void register_struct(cJSON* r, const char *name, RegisterFunc func) {
 	return;
 }
 
-cJSON* get_resource_data()
-{
+cJSON* get_resource_data() {
 	int i=0;
 	for(;Table[i].name!=LASTITEM.name; i++)
 	{

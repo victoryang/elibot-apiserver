@@ -1,0 +1,1 @@
+ arm-linux-gnueabihf-gcc -I/root/mcserver/include/  -o mrj.o -c mrj.c

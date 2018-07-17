@@ -4,18 +4,18 @@
 #include "share/resource.h"
 #include "cJSON.h"
 
-typedef RegisterFunc cJSON* (*func)();
+typedef cJSON* (*func_ptr)() RegisterFunc
 
 typedef struct {
 	char 			*name;
 	RegisterFunc	func;
 }Item;
 
-const Item LASTITEM = {"ENDLINE", NULL}
+static cJSON* get_dspInfor();
 
 Item Table[] = {
-	{"dspInfor", get_dspInfor},
-	LASTITEM
+	{"dspInfor", &get_dspInfor},
+	{"ENDLINE", NULL},
 };
 
 #endif //ITEMS_H
