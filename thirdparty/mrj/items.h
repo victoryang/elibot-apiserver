@@ -4,7 +4,7 @@
 #include "share/resource.h"
 #include "cJSON.h"
 
-typedef cJSON* (*func_ptr)() RegisterFunc
+typedef cJSON* (*RegisterFunc)();
 
 typedef struct {
 	char 			*name;
