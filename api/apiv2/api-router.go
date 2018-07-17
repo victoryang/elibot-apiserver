@@ -109,7 +109,7 @@ func RegisterAPIv2(r *mux.Router) {
 	multipleSinapi.HandleFunc("/sinpos", setMovxJoint).Methods("PUT")
 	multipleSinapi.HandleFunc("/sinpos", gotoSinpos).Methods("GET")*/
 
-	robotapi.HandleFunc("/parameters", setParameters).Methods("PUT")
+	/*robotapi.HandleFunc("/parameters", setParameters).Methods("PUT")
 
 	robcalibrateapi := robotapi.PathPrefix("/robcalibrate").Subrouter()
 	robcalibrateapi.HandleFunc("/autocalczero", setAutoCalcZero).Methods("PUT").Queries("filename", "{filename}")
@@ -158,7 +158,7 @@ func RegisterAPIv2(r *mux.Router) {
 	axisctrlapi.HandleFunc("/servo", setServoStatus).Methods("PUT")
 	axisctrlapi.HandleFunc("/axisinput", getAxisInput).Methods("GET").Queries("channel", "{channel}", "io_num", "{io_num}")
 	axisctrlapi.HandleFunc("/axisonput", setAxisOnput).Methods("PUT").Queries("channel", "{channel}", "io_num", "{io_num}")
-	axisctrlapi.HandleFunc("/dragteach", setDragteach).Methods("PUT")
+	axisctrlapi.HandleFunc("/dragteach", setDragteach).Methods("PUT")*/
 
 	repositoryapi := robotapi.PathPrefix("/repository").Subrouter()
 	repositoryapi.HandleFunc("/arcparam/{file_no}/{md_id}", setArcParam).Methods("PUT")

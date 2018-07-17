@@ -313,6 +313,10 @@ func getResourceAndCompare() (res []byte){
 		//Test:		1,
 	}
 
+	res := C.get_resource_data()
+	fmt.Println(cJSON_Print(res))
+	defer C.cJSON_Delete(res)
+
 	var crc int
 	now, err := json.Marshal(resource)
 	if err!=nil {

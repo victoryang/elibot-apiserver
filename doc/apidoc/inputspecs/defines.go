@@ -17,6 +17,7 @@
 * @apiErrorExample Response (example):
 *		HTTP/1.1 500 Internal Server Error
 *		{
-*			"msg":	"internal error"
+*			"errcode":	100,
+*			"errmsg":	"error!"		
 *		}
 */
