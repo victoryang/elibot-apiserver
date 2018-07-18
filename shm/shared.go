@@ -4,6 +4,7 @@ package shm
 // #cgo LDFLAGS: -lshare
 // #include <stdlib.h>
 // #include <shared.h>
+// #include <mrj.h>
 import "C"
 import (
 	"bytes"
@@ -250,7 +251,7 @@ type TechStampParas_T struct {
 	DRobP 			[][]float64
 }
 
-type SharedResource struct {
+/*type SharedResource struct {
 	DspInfor			DisplayInfo
 	AutoRunCycleMode	uint8
 	DisableAxis			uint32
@@ -296,6 +297,10 @@ type SharedResource struct {
 	ExtAxisDATA			ExtAxisData
 	WeaveData			WeavingPara
 	StampParas			TechStampParas_T
+}*/
+
+type SharedResource struct {
+	Data 			string 			`json:"data,omitempty"`
 }
 
 var SharedResourcePool = sync.Pool{
@@ -309,8 +314,16 @@ func getResourceAndCompare() (res []byte){
 	mutex.Lock()
 	defer mutex.Unlock()
 
+	cj := C.get_resource_data()
+
+	cstr := C.cJSON_Print(cj)
+    defer C.cJSON_Delete(cj)
+
+    gostr := C.GoString(cstr)
+    defer C.free(unsafe.Pointer(cstr))
+
 	resource := SharedResource{
-		//Test:		1,
+		Data:	gostr,
 	}
 
 	var crc int
