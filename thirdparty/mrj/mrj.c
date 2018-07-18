@@ -15,7 +15,7 @@ static void add_items(cJSON* r, const char *name, RegisterFunc func) {
 
 cJSON* get_resource_data() {
 	int i=0;
-	for(;Table[i].name!="ENDLINE"; i++)
+	for(;Table[i].func!=NULL; i++)
 	{
 		add_items(root, Table[i].name, Table[i].func);
 	}
@@ -24,5 +24,5 @@ cJSON* get_resource_data() {
 
 void init_resource() {
 	root = cJSON_CreateObject();
-	return 0;
+	return;
 }
