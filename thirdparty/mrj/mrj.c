@@ -1,7 +1,5 @@
 #include "mrj.h"
 
-cJSON* root;
-
 static void add_items(cJSON* r, const char *name, RegisterFunc func) {
 	cJSON* item = (*func)();
 	cJSON_bool ok = cJSON_IsInvalid(item);
@@ -13,15 +11,11 @@ static void add_items(cJSON* r, const char *name, RegisterFunc func) {
 }
 
 cJSON* get_resource_data() {
+	cJSON* root = cJSON_CreateObject();
 	int i=0;
 	for(;Table[i].func!=NULL; i++)
 	{
 		add_items(root, Table[i].name, Table[i].func);
 	}
 	return root;
-}
-
-void init_resource() {
-	root = cJSON_CreateObject();
-	return;
 }
