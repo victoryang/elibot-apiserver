@@ -11,11 +11,6 @@ typedef struct {
 	RegisterFunc	func;
 }Item;
 
-static cJSON* get_dspInfor();
-
-Item Table[] = {
-	{"dspInfor", &get_dspInfor},
-	{"ENDLINE", NULL},
-};
+extern Item Table[];
 
 #endif //ITEMS_H

@@ -6,5 +6,6 @@
 #include "items.h"
 
 cJSON* get_resource_data();
+void init_resource();
 
 #endif //MRJ_H

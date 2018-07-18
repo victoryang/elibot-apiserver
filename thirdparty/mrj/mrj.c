@@ -22,7 +22,7 @@ cJSON* get_resource_data() {
 	return root;
 }
 
-void init() {
+void init_resource() {
 	root = cJSON_CreateObject();
 	return 0;
 }

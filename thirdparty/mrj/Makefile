@@ -1,0 +1,16 @@
+CC = arm-linux-gnueabihf-gcc
+AR = arm-linux-gnueabihf-ar
+SHARED = -shared
+RCS = rcs
+
+CPPFLAGS += -I/root/mcserver/include/ -fPIC -Wall
+
+.PHONY: all
+
+all: libmrj.so
+
+libmrj.so: mrj.o
+	$(CC) $(SHARED) -o mrj.so mrj.o $@ $^
+
+mrj.o: mrj.c
+	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lshare
