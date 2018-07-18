@@ -12,6 +12,9 @@ all: libmrj.so
 libmrj.so: mrj.o items.o cJSON.o
 	$(CC) $(SHARED) -o $@ $^
 
+test: main.c mrj.o items.o cJSON.o
+	$(CC) $(CPPFLAGS) -o $@ $^ -lm -lshare
+
 mrj.o: mrj.c
 	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lshare
 

@@ -2,10 +2,10 @@
 
 static void add_items(cJSON* r, const char *name, RegisterFunc func) {
 	cJSON* item = (*func)();
-	cJSON_bool ok = cJSON_IsInvalid(item);
-	if(ok == cJSON_Invalid) {
+	/*cJSON_bool isInvalid = cJSON_IsInvalid(item);
+	if(isInvalid == cJSON_Invalid) {
 		return;
-	}
+	}*/
 	cJSON_AddItemToObject(r, name, item);
 	return;
 }

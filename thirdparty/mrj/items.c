@@ -3,8 +3,8 @@
 cJSON* get_dspInfor() {
 	cJSON* item;
 	item = cJSON_CreateObject();
-	cJSON_AddNumberToObject(item, "display_state", GetDisplayMsg_State());
-	cJSON_AddStringToObject(item, "display_msg", GetDisplayMsg());
+	cJSON_AddItemToObject(item, "display_state", cJSON_CreateNumber(GetDisplayMsg_State()));
+	cJSON_AddItemToObject(item, "display_msg", cJSON_CreateString(GetDisplayMsg()));
 	return item;
 }
 
