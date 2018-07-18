@@ -1,7 +1,7 @@
 package shm
 
 // #cgo CFLAGS: -I/root/mcserver/include/
-// #cgo LDFLAGS: -lshare
+// #cgo LDFLAGS: -lshare -L/root/go1.10/src/elibot-apiserver/thirdparty/mrj/libmrj.so
 // #include <stdlib.h>
 // #include <shared.h>
 // #include <mrj.h>

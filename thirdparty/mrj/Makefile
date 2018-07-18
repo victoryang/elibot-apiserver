@@ -9,8 +9,14 @@ CPPFLAGS += -I/root/mcserver/include/ -fPIC -Wall
 
 all: libmrj.so
 
-libmrj.so: mrj.o
+libmrj.so: mrj.o cJSON.o
 	$(CC) $(SHARED) -o $@ $^
 
 mrj.o: mrj.c
 	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lshare
+
+items.o: items.c
+	$(CC) $(CPPFLAGS) -o $@ -c $^
+
+cJSON.o: cJSON.c
+	$(CC) -fPIC -Wall -o $@ -c $^
