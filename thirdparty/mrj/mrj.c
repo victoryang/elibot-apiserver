@@ -3,10 +3,9 @@
 cJSON* root;
 
 static void add_items(cJSON* r, const char *name, RegisterFunc func) {
-	cJSON* item = func();
+	cJSON* item = (*func)();
 	cJSON_bool ok = cJSON_IsInvalid(item);
 	if(ok == cJSON_Invalid) {
-		cJSON_Delete(item);
 		return;
 	}
 	cJSON_AddItemToObject(r, name, item);

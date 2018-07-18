@@ -1,7 +1,7 @@
 package shm
 
 // #cgo CFLAGS: -I/root/mcserver/include/
-// #cgo LDFLAGS: -lshare -L/root/go1.10/src/elibot-apiserver/thirdparty/mrj/libmrj.so
+// #cgo LDFLAGS: -lshare -L/root/go1.10/src/elibot-apiserver/thirdparty/mrj/ -lmrj
 // #include <stdlib.h>
 // #include <shared.h>
 // #include <mrj.h>
@@ -11,6 +11,7 @@ import (
 	"sync"
 	"encoding/json"
 	"hash/crc32"
+	"unsafe"
 
 	Log "elibot-apiserver/log"
 )
@@ -383,5 +384,6 @@ func watchSharedResource(modified chan []byte) {
 }
 
 func InitSharedResource() int {
+	C.init_resource()
 	return int(C.init_shared_resource())
 }
