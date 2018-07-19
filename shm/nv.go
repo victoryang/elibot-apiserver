@@ -112,54 +112,20 @@ func getNVAndCompare() (res []byte){
 		Origin:				getOrigin(),
 	}
 
-	var crc int
-	now, err := json.Marshal(nvram)
+	buf, err := json.Marshal(nvram)
 	if err!=nil {
-		crc = 0
-	} else {
-		crc = int(crc32.ChecksumIEEE(now))
-	}
-
-	var cache []byte
-	buf := NVRamPool.Get().(*bytes.Buffer)
-	if buf == nil {
-		buf = bytes.NewBuffer(make([]byte, 0, BufferSize))
+		Log.Error("Json marshal error: ", err)
 		crc_nv = 0
-	} else {
-		cache = buf.Bytes()
+		return []byte("Json marshal error: " + err.Error())
 	}
- 	
- 	if crc == 0 {
- 		crc_nv = 0 
- 		res = []byte("")
- 	} else {
- 		if crc == crc_nv {
- 			res = nil
- 			return
- 		} else {
- 			crc_nv = crc
- 			res = now
- 		}
- 	}
- 
- 	buf.Reset()
- 	buf.Write(res)
- 	defer func(c []byte) {
-		if e := recover(); e!=nil {
-			Log.Error("buf write error: ", e)
 
-			buf := make([]byte, 0, BufferSize*2)
-			buf = c[:]
-			NVRamPool = sync.Pool{
-				New: func() interface{} {
-					return bytes.NewBuffer(buf)
-				},
-			}
-		}
-	}(cache)
-	
-	NVRamPool.Put(buf)
-	return
+	crc := int(crc32.ChecksumIEEE(buf))
+	if crc == crc_nv {
+		crc_nv = 0
+		return nil
+	}
+	crc_nv = crc
+	return buf
 }
 
 func watchNV(modified chan []byte) {

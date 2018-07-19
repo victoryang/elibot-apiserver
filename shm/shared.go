@@ -1,11 +1,11 @@
 package shm
 
-// #cgo LDFLAGS: -L/root/go1.10/src/elibot-apiserver/thirdparty/mrj/ -lmrj
+// #cgo CFLAGS: -I../thirdparty/mrj/
+// #cgo LDFLAGS: -L../thirdparty/mrj/ -lmrj
 // #include <stdlib.h>
 // #include <mrj.h>
 import "C"
 import (
-	"bytes"
 	"sync"
 	"encoding/json"
 	"hash/crc32"
@@ -18,12 +18,8 @@ type SharedResource struct {
 	Resource 			string 			`json:"resource,omitempty"`
 }
 
-var SharedResourcePool = sync.Pool{
-	New: func() interface{} {
-		return bytes.NewBuffer(make([]byte, 0, BufferSize))
-	},
-}
 var crc_shared_resource int = 0
+var resource_mutex sync.Mutex
 
 func getResourceAndCompare() (res []byte){
 	mutex.Lock()
@@ -41,54 +37,20 @@ func getResourceAndCompare() (res []byte){
 		Resource:	gostr,
 	}
 
-	var crc int
-	now, err := json.Marshal(resource)
+	buf, err := json.Marshal(resource)
 	if err!=nil {
-		crc = 0
-	} else {
-		crc = int(crc32.ChecksumIEEE(now))
+		Log.Error("Json marshal error: ", err)
+		crc_shared_resource = 0
+		return []byte("Json marshal error: " + err.Error())
 	}
 
-	var cache []byte
-	buf := SharedResourcePool.Get().(*bytes.Buffer)
-	if buf == nil {
-		buf = bytes.NewBuffer(make([]byte, 0, BufferSize))
+	crc := int(crc32.ChecksumIEEE(buf))
+	if crc == crc_shared_resource {
 		crc_shared_resource = 0
-	} else {
-		cache = buf.Bytes()
+		return nil
 	}
-
-	if crc == 0 {
-		crc_shared_resource = 0
- 		res = []byte("")
- 	} else {
- 		if crc == crc_shared_resource {
- 			res = nil
- 			return
- 		} else {
- 			crc_shared_resource = crc
- 			res = now
- 		}
- 	}
-
-	buf.Reset()
-	buf.Write(res)
-	defer func(c []byte) {
-		if e := recover(); e!=nil {
-			Log.Error("buf write error: ", e)
-
-			buf := make([]byte, 0, BufferSize*2)
-			buf = c[:]
-			SharedResourcePool = sync.Pool{
-				New: func() interface{} {
-					return bytes.NewBuffer(buf)
-				},
-			}
-		}
-	}(cache)
-
-	SharedResourcePool.Put(buf)
-	return
+	crc_shared_resource = crc
+	return buf
 }
 
 func watchSharedResource(modified chan []byte) {
