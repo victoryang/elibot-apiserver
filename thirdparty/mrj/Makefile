@@ -12,7 +12,7 @@ all: libmrj.so
 libmrj.so: mrj.o mcnv.o mcresource.o cJSON.o
 	$(CC) $(SHARED) -o $@ $^
 
-test: main.c mrj.o mcresource.o cJSON.o
+test: main.c mrj.o mcnv.o mcresource.o cJSON.o
 	$(CC) $(CPPFLAGS) -o $@ $^ -lm -lshare
 
 mrj.o: mrj.c
