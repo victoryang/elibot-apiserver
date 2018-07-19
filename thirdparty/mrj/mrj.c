@@ -12,10 +12,12 @@ static void add_items(cJSON* r, const char *name, RegisterFunc func) {
 
 char* get_resource_data() {
 	cJSON* root = cJSON_CreateObject();
+	cJSON* body = cJSON_CreateObject();
+	cJSON_AddItemToObject(root, "resource", body);
 	int i=0;
 	for(;Table[i].func!=NULL; i++)
 	{
-		add_items(root, Table[i].name, Table[i].func);
+		add_items(body, Table[i].name, Table[i].func);
 	}
 
 	char *ret = cJSON_PrintUnformatted(root);

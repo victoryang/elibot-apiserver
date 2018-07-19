@@ -30,16 +30,7 @@ func getResourceAndCompare() (res []byte){
     gostr := C.GoString(cstr)
     defer C.free(unsafe.Pointer(cstr))
 
-	resource := SharedResource{
-		Resource:	reformatString(gostr),
-	}
-
-	buf, err := json.Marshal(resource)
-	if err!=nil {
-		Log.Error("Json marshal error: ", err)
-		crc_shared_resource = 0
-		return []byte("Json marshal error: " + err.Error())
-	}
+	buf := []byte(gostr)
 
 	crc := int(crc32.ChecksumIEEE(buf))
 	if crc == crc_shared_resource {
