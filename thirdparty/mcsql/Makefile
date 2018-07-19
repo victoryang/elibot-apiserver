@@ -12,6 +12,9 @@ all: libmcsql.so
 libmcsql.so: mcsql.o mcquery.o
 	$(CC) $(SHARED) -o $@ $^
 
+test: test_main.c mcsql.o mcquery.o
+	$(CC) $(CPPFLAGS) -o $@ -c $^ -lsqlitedb
+
 mcsql.o: mcsql.c
 	$(CC) $(CPPFLAGS) -o $@ -c $^ -lsqlitedb
 
