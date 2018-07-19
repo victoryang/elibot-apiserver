@@ -21,5 +21,5 @@ cJSON* get_resource_data() {
 }
 
 int mrj_init() {
-	return resource_init();
+	return resource_init("/rbctrl/mcserver");
 }
