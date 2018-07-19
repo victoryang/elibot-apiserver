@@ -8,6 +8,7 @@ import "C"
 import (
 	"sync"
 	"hash/crc32"
+	"unsafe"
 
 	//Log "elibot-apiserver/log"
 )
