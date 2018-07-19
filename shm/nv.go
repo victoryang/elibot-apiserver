@@ -6,7 +6,6 @@ package shm
 // #include <nv.h>
 import "C"
 import (
-	"bytes"
 	"sync"
 	"encoding/json"
 	"hash/crc32"
@@ -28,11 +27,6 @@ type NvRam struct {
 	Origin				[]float64	`json:"origin,omitempty"`
 }
 
-var NVRamPool = sync.Pool{
-	New: func() interface{} {
-		return bytes.NewBuffer(make([]byte, 0, BufferSize))
-	},
-}
 var crc_nv int = 0
 var mutex sync.Mutex
 
@@ -121,7 +115,7 @@ func getNVAndCompare() (res []byte){
 
 	crc := int(crc32.ChecksumIEEE(buf))
 	if crc == crc_nv {
-		crc_nv = 0
+		//crc_nv = 0
 		return nil
 	}
 	crc_nv = crc
