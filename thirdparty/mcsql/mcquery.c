@@ -1,14 +1,5 @@
 #include "mcquery.h"
 
-db_query_req_option* new_db_query_req_option(int32_t type_handle_mode) {
-    db_query_req_option* option = (db_query_req_option*)malloc(sizeof(db_query_req_option));
-    if (NULL==option) {
-        return NULL;
-    }
-    option->type_handle_mode = type_handle_mode;
-    return option;
-}
-
 sql_parameter* getindexedsqlparam(db_query_req_parameter* req_params, int16_t i) {
     if(i >= req_params->param_size) {
         return NULL;
@@ -44,5 +35,3 @@ db_query_req_page* new_db_query_req_page(int page_start, int page_size) {
     page->page_size = page_size;
     return page;
 }
-
-
