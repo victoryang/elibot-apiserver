@@ -19,3 +19,7 @@ cJSON* get_resource_data() {
 	}
 	return root;
 }
+
+int mrj_init() {
+	return resource_init();
+}
