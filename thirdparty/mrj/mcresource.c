@@ -1,4 +1,4 @@
-#include "items.h"
+#include "mcresource.h"
 
 cJSON* get_dspInfor() {
 	cJSON* item;
@@ -8,7 +8,7 @@ cJSON* get_dspInfor() {
 	return item;
 }
 
-Item Table[] = {
+Item ResourceTable[] = {
 	{"dspInfor", &get_dspInfor},
 	{"ENDLINE", NULL},
 };

@@ -1,11 +1,11 @@
 #ifndef MRJ_H
 #define MRJ_H
 
-#include "stdlib.h"
-#include "cJSON.h"
-#include "items.h"
+#include "mcresource.h"
+#include "mcnv.h"
 
 char* get_resource_data();
+char* get_nv_data();
 
 int mrj_init();
 

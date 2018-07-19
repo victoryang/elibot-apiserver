@@ -7,16 +7,11 @@ package shm
 import "C"
 import (
 	"sync"
-	"encoding/json"
 	"hash/crc32"
 	"unsafe"
 
-	Log "elibot-apiserver/log"
+	//Log "elibot-apiserver/log"
 )
-
-type SharedResource struct {
-	Resource 			string 			`json:"resource,omitempty"`
-}
 
 var crc_shared_resource int = 0
 var resource_mutex sync.Mutex
@@ -27,8 +22,8 @@ func getResourceAndCompare() (res []byte){
 
 	cstr := C.get_resource_data()
 
-    gostr := C.GoString(cstr)
-    defer C.free(unsafe.Pointer(cstr))
+	gostr := C.GoString(cstr)
+	defer C.free(unsafe.Pointer(cstr))
 
 	buf := []byte(gostr)
 

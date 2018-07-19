@@ -1,5 +1,7 @@
-#ifndef ITEMS_H
-#define ITEMS_H
+#ifndef DEFINE_H
+#define DEFINE_H
+
+#include "stdlib.h"
 
 #include "share/resource.h"
 #include "cJSON.h"
@@ -11,6 +13,4 @@ typedef struct {
 	RegisterFunc	func;
 }Item;
 
-extern Item Table[];
-
-#endif //ITEMS_H
+#endif //DEFINE_H
