@@ -38,6 +38,10 @@ char* get_nv_data() {
 	return ret;
 }
 
+int init_nv_ram() {
+	return init_nvram(NULL);
+}
+
 int mrj_init() {
 	return resource_init("/rbctrl/mcserver");
 }
