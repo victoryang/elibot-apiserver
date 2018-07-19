@@ -7,9 +7,10 @@ char* mcsql_query(char* id, char* conn) {
 	}
 	req->query_id = id;
 	req->conn_str = conn;
-	req->option = db_query_req_option{DB_QUERY_MODE_STANDARD};
+	req->option = &db_query_req_option{DB_QUERY_MODE_STANDARD};
+	req->parameter = NULL;
+	req->page = NULL;
 
-	db_query_req req = db_query_req{id, conn, req_option, NULL, NULL};
 	cJSON* root = db_query(&req);
 
 	char *ret = cJSON_PrintUnformatted(root);
