@@ -10,14 +10,17 @@ static void add_items(cJSON* r, const char *name, RegisterFunc func) {
 	return;
 }
 
-cJSON* get_resource_data() {
+char* get_resource_data() {
 	cJSON* root = cJSON_CreateObject();
 	int i=0;
 	for(;Table[i].func!=NULL; i++)
 	{
 		add_items(root, Table[i].name, Table[i].func);
 	}
-	return root;
+
+	char *ret = cJSON_PrintUnformatted(root);
+	cJSON_Delete(root);
+	return ret;
 }
 
 int mrj_init() {

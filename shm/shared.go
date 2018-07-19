@@ -25,10 +25,7 @@ func getResourceAndCompare() (res []byte){
 	mutex.Lock()
 	defer mutex.Unlock()
 
-	cj := C.get_resource_data()
-
-	cstr := C.cJSON_PrintUnformatted(cj)
-    defer C.cJSON_Delete(cj)
+	cstr := C.get_resource_data()
 
     gostr := C.GoString(cstr)
     defer C.free(unsafe.Pointer(cstr))

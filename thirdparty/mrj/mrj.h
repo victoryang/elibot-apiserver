@@ -5,7 +5,7 @@
 #include "cJSON.h"
 #include "items.h"
 
-cJSON* get_resource_data();
+char* get_resource_data();
 
 int mrj_init();
 
