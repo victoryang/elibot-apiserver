@@ -31,7 +31,6 @@ char* get_resource_data() {
 
 char* get_nv_data() {
 	cJSON* root = cJSON_CreateObject();
-	cJSON* body = cJSON_CreateObject();
 	cJSON_AddItemToObject(root, "nv", get_nv());
 
 	char *ret = cJSON_PrintUnformatted(root);
