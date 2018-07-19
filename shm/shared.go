@@ -16,7 +16,7 @@ import (
 var crc_shared_resource int = 0
 var resource_mutex sync.Mutex
 
-func getResourceAndCompare() (res []byte){
+func getResourceAndCompare() []byte {
 	mutex.Lock()
 	defer mutex.Unlock()
 

@@ -17,7 +17,7 @@ import (
 var crc_nv int = 0
 var mutex sync.Mutex
 
-func getNVAndCompare() (res []byte){
+func getNVAndCompare() []byte {
 	mutex.Lock()
 	defer mutex.Unlock()
 
