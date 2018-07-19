@@ -7,13 +7,16 @@ char* mcsql_query(char* id, char* conn) {
 	}
 	req->query_id = id;
 	req->conn_str = conn;
-	req->option = &db_query_req_option{DB_QUERY_MODE_STANDARD};
+
+	struct db_query_req_option option = {DB_QUERY_MODE_STANDARD};
+	req->option = &option;
+
 	req->parameter = NULL;
 	req->page = NULL;
 
-	cJSON* root = db_query(&req);
+	cJSON* root = db_query(req);
 
 	char *ret = cJSON_PrintUnformatted(root);
 	cJSON_Delete(root);
-	return ret
+	return ret;
 }
