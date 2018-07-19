@@ -6,10 +6,8 @@
 int main(int argc, char const *argv[])
 {
 	resource_init("/rbctrl/mcserver");
-	cJSON* data = get_resource_data();
 
-	char* res = cJSON_Print(data);
+	char* res = get_resource_data(data);
 	printf("%s\n", res);
-    cJSON_Delete(data);
 	return 0;
 }
