@@ -22,7 +22,9 @@ func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (
     if vars == nil {
         res, err = sql.Db_query(sm.GetID(), DBName)
     } else {
-        res, err = sql.Db_query_with_params(sm.GetID(), DBName, vars)
+        var res1 []byte
+        res1, err = sql.Db_query_with_params(sm.GetID(), DBName, vars)
+        res = string(res1)
     }
 
     Log.Debug(res)

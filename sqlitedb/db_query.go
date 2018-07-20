@@ -1,8 +1,9 @@
 package sqlitedb
 
+// #cgo CFLAGS: -I/root/mcserver/include
 // #cgo LDFLAGS: -lsqlitedb
 // #include<stdlib.h>
-// #include<include/db/db_query.h>
+// #include<mcsql.h>
 import "C"
 import (
     "unsafe"
@@ -66,8 +67,8 @@ func (p *Parameter) newReqParameter(vars map[string]interface{}) *C.db_query_req
     for k,v := range vars {
         err := setsSqlparams(k, v, C.get_sqlparam_index(p.parameter, i))
         i++
-        if i > p.param_size || err != nil{
-            return "", errors.New("fail to start a query\n")
+        if i > C.int16_t(p.param_size) || err != nil{
+            return nil
         }
     }
     return p.parameter
@@ -79,7 +80,7 @@ func (p *Parameter) freeReqParameter() {
     }
 
     for i:=0; i<p.param_size; i++ {
-        param := C.get_sqlparam_index(req_parameter, C.int16_t(i))
+        param := C.get_sqlparam_index(p.parameter, C.int16_t(i))
         if param!=nil {
             C.free(unsafe.Pointer(param.name))
             if param._type == C.DATA_STRING {
