@@ -20,25 +20,16 @@ func setsSqlparams(key string, value interface{}, param *C.sql_parameter) error 
 
     switch t := value.(type) {
     case int32:
-        C.add_int32_to_param(value.(int32), param)
-    case uint32:
-        param._type = C.DB_TYPE_INT32
-        binary.LittleEndian.PutUint32(param.value[:], value.(uint32))
+        C.add_int32_to_param(C.int(value.(int32)), param)
+    
     case int64:
-        param._type = C.DB_TYPE_INT64
-        buf := new(bytes.Buffer)
-        binary.Write(buf, binary.LittleEndian, value.(int64))
-        copy(param.value[:], buf.Bytes())
-    case uint64:
-        param._type = C.DB_TYPE_INT64
-        binary.LittleEndian.PutUint64(param.value[:], value.(uint64))
+        C.add_int64_to_param(C.int64(value.(int64)), param)
+
     case float64:
-        param._type = C.DB_TYPE_DOUBLE
-        binary.LittleEndian.PutUint64(param.value[:], math.Float64bits(value.(float64)))
+        C.add_double_to_param(C.double(value.(float64)), param)
     case string:
         param._type = C.DB_TYPE_TEXT
-        p := C.CString(value.(string))
-        binary.LittleEndian.PutUint64(param.value[:], uint64(uintptr(unsafe.Pointer(p))))
+        C.add_string_to_param(C.CString(value.(string)), param)
 
     default:
         Log.Print("not support for ", t)
@@ -103,7 +94,7 @@ func Db_query_with_params(q_id, db_name string, vars map[string]interface{}) ([]
 
     buf := C.mcsql_query_with_param(id, conn, C.DB_QUERY_MODE_CUSTOM, req_parameter, nil)
     if buf == nil {
-        return nil, errors.New("failed to query")
+        return nil, errors.New("query empty")
     }
     res := C.GoString(buf)
     defer C.free(unsafe.Pointer(buf))
