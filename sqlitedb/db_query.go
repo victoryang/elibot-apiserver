@@ -1,14 +1,12 @@
 package sqlitedb
 
-// #cgo CFLAGS: -I/root/mcserver/include
-// #cgo LDFLAGS: -lsqlitedb
+// #cgo CFLAGS: -I/root/mcserver/include -I../thirdparty/mcsql
+// #cgo LDFLAGS: -lsqlitedb -L../thirdparty/mcsql -lmcsql
 // #include<stdlib.h>
-// #include<../thirdparty/mcsql/mcsql.h>
+// #include<mcsql.h>
 import "C"
 import (
     "unsafe"
-    "bytes"
-    "math"
     "errors"
     "encoding/binary"
 
@@ -23,7 +21,7 @@ func setsSqlparams(key string, value interface{}, param *C.sql_parameter) error 
         C.add_int32_to_param(C.int(value.(int32)), param)
     
     case int64:
-        C.add_int64_to_param(C.int64(value.(int64)), param)
+        C.add_int64_to_param(C.longlong(value.(int64)), param)
 
     case float64:
         C.add_double_to_param(C.double(value.(float64)), param)
