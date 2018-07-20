@@ -32,6 +32,7 @@ char* mcsql_query_with_param(char* id, char* conn, int32_t type_handle_mode, db_
 	if (NULL == option) {
 		return NULL;
 	}
+	req->option = option;
 
 	req->parameter = parameter;
 	req->page = page;
