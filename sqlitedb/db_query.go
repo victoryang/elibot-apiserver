@@ -3,7 +3,7 @@ package sqlitedb
 // #cgo CFLAGS: -I/root/mcserver/include
 // #cgo LDFLAGS: -lsqlitedb
 // #include<stdlib.h>
-// #include<mcsql.h>
+// #include<../thirdparty/mcsql/mcsql.h>
 import "C"
 import (
     "unsafe"
