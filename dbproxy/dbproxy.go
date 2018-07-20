@@ -15,7 +15,7 @@ func Get_ALL_Arc() (string, error) {
 func Get_Arc_Params(vars map[string]interface{}) (string, error) {
     Log.Debug("in Get_Arc_Params")
     for k,v := range vars {
-        Log.Debug("key: ", k, "v", v)
+        Log.Debug("key: ", k, "v ", v)
     }
     sm := new(sql.ArcSqlMapper)
     return RegisterAndQuery(sm, sql.ELIBOT_ARC_GET_PARAMS, vars)

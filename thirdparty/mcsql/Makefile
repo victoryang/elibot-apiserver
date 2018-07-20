@@ -9,16 +9,19 @@ CPPFLAGS += -I/root/mcserver/include/ -fPIC -Wall
 
 all: libmcsql.so
 
-libmcsql.so: mcsql.o mcquery.o
+libmcsql.so: mcsql.o mcquery.o mcmanager.o
 	$(CC) $(SHARED) -o $@ $^
 
-test: test_main.c mcsql.o mcquery.o
+test: test_main.c mcsql.o mcquery.o mcmanager.o
 	$(CC) $(CPPFLAGS) -o $@ $^ -lsqlitedb
 
 mcsql.o: mcsql.c
 	$(CC) $(CPPFLAGS) -o $@ -c $^ -lsqlitedb
 
 mcquery.o: mcquery.c
+	$(CC) $(CPPFLAGS) -o $@ -c $^ -lsqlitedb
+
+mcmanager.o: mcmanager.c
 	$(CC) $(CPPFLAGS) -o $@ -c $^ -lsqlitedb
 
 clean:

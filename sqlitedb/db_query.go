@@ -80,6 +80,7 @@ func (p *Parameter) freeReqParameter() {
 }
 
 func Db_query_with_params(q_id, db_name string, vars map[string]interface{}) ([]byte, error) {
+    Log.Debug("Db_query_with_params")
     id := C.CString(q_id)
     defer C.free(unsafe.Pointer(id))
 
@@ -88,6 +89,10 @@ func Db_query_with_params(q_id, db_name string, vars map[string]interface{}) ([]
 
     p := new(Parameter)
     req_parameter := p.newReqParameter(vars)
+    if req_parameter == nil {
+        Log.Error("req_parameter is nil")
+        return nil, errors.New("request fails")
+    }
     defer p.freeReqParameter()
 
     buf := C.mcsql_query_with_param(id, conn, C.DB_QUERY_MODE_CUSTOM, req_parameter, nil)
