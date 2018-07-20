@@ -57,16 +57,16 @@ type Parameter struct {
 
 func (p *Parameter) newReqParameter(vars map[string]interface{}) *C.db_query_req_parameter {
     p.param_size = len(vars)
-    p.parameter := C.new_db_query_req_parameter(C.int16_t(p.param_size))
+    p.parameter = C.new_db_query_req_parameter(C.int16_t(p.param_size))
     if p.parameter == nil {
         return nil
     }
 
     var i C.int16_t = 0
-    for k,v := range queries {
+    for k,v := range vars {
         err := setsSqlparams(k, v, C.get_sqlparam_index(p.parameter, i))
         i++
-        if i > req_params.param_size || err != nil{
+        if i > p.param_size || err != nil{
             return "", errors.New("fail to start a query\n")
         }
     }
@@ -79,7 +79,7 @@ func (p *Parameter) freeReqParameter() {
     }
 
     for i:=0; i<p.param_size; i++ {
-        param := C.get_sqlparam_index(req_parameter, i)
+        param := C.get_sqlparam_index(req_parameter, C.int16_t(i))
         if param!=nil {
             C.free(unsafe.Pointer(param.name))
             if param._type == C.DATA_STRING {
@@ -89,7 +89,7 @@ func (p *Parameter) freeReqParameter() {
         }
     }
 
-    C.free_db_query_req_parameter(p.parameter.params)
+    C.free_db_query_req_parameter(p.parameter)
 }
 
 func Db_query_with_params(q_id, db_name string, vars map[string]interface{}) ([]byte, error) {
