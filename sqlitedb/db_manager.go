@@ -1,7 +1,7 @@
 package sqlitedb
 
 // #include<stdlib.h>
-// #include<include/db/db_manager.h>
+// #include<mcmanager.h>
 // #include<db/sqlmapper/backup_sql_mapper.h>
 import "C"
 import (
