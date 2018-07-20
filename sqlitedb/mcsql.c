@@ -17,6 +17,9 @@ char* mcsql_query_with_param(char* id, char* conn, int32_t type_handle_mode, db_
 	req->page = page;
 
 	cJSON* root = db_query(req);
+	if (NULL == root) {
+		return NULL;
+	}
 
 	char *ret = cJSON_PrintUnformatted(root);
 	cJSON_Delete(root);

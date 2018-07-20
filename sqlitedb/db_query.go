@@ -20,10 +20,7 @@ func setsSqlparams(key string, value interface{}, param *C.sql_parameter) error 
 
     switch t := value.(type) {
     case int32:
-        param._type = C.DB_TYPE_INT32
-        buf := new(bytes.Buffer)
-        binary.Write(buf, binary.LittleEndian, value.(int32))
-        copy(param.value[:], buf.Bytes())
+        C.add_int32_to_param(value.(int32), param)
     case uint32:
         param._type = C.DB_TYPE_INT32
         binary.LittleEndian.PutUint32(param.value[:], value.(uint32))
