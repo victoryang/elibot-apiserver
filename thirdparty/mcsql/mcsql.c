@@ -1,21 +1,21 @@
 #include "mcsql.h"
 
-void add_int32_to_param(int32_t value, db_query_req_parameter* param) {
+void add_int32_to_param(int32_t value, sql_parameter* param) {
 	(*param).type = DB_TYPE_INT32;
 	(*param).value.int_value = value;
 }
 
-void add_int64_to_param(int64_t value, db_query_req_parameter* param) {
+void add_int64_to_param(int64_t value, sql_parameter* param) {
 	(*param).type = DB_TYPE_INT64;
 	(*param).value.int64_value = value;
 }
 
-void add_double_to_param(double value, db_query_req_parameter* param) {
+void add_double_to_param(double value, sql_parameter* param) {
 	(*param).type = DB_TYPE_DOUBLE;
 	(*param).value.double_value = value;
 }
 
-void add_string_to_param(char* value, db_query_req_parameter* param) {
+void add_string_to_param(char* value, sql_parameter* param) {
 	(*param).type = DB_TYPE_TEXT;
 	(*param).value.string_value = value;
 }
