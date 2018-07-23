@@ -12,9 +12,10 @@ import (
 
 func DBBackup(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting DB Backup")
-	err := db.DBBackup()
-	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+	errno := db.DBBackup()
+	if errno!=0 {
+		Log.Error("fail to backup db")
+		WriteInternalServerErrorResponse(w, ERRBACKUPDB)
 		return
 	}
 
@@ -25,7 +26,8 @@ func DBList(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting DB List")
 	files, err := db.DBList()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		Log.Error("fail to check list")
+		WriteInternalServerErrorResponse(w, ERRLISTDBS)
 		return
 	}
 
@@ -38,7 +40,8 @@ func DBDel(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	err := db.DBDel(vars["name"])
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		Log.Error("fail to delete db")
+		WriteInternalServerErrorResponse(w, ERRDELETEDB)
 		return
 	}
 
@@ -48,9 +51,10 @@ func DBDel(w http.ResponseWriter, r *http.Request) {
 func DBRestore(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting DB Restore")
 	vars := mux.Vars(r)
-	err := db.DBRestore(vars["name"])
-	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+	errno := db.DBRestore(vars["name"])
+	if errno!=0 {
+		Log.Error("fail to restore db")
+		WriteInternalServerErrorResponse(w, ERRRESTOREDB)
 		return
 	}
 

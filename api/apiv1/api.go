@@ -14,7 +14,7 @@ func getAllArc(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Arc")
 	res, err := db.Get_ALL_Arc()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -31,7 +31,7 @@ func getArcParams(w http.ResponseWriter, r *http.Request) {
 	queries["group"] = vars["group"]
 	res, err := db.Get_Arc_Params(queries)
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -42,7 +42,7 @@ func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all bookprograms")
 	res, err := db.Get_All_Bookprograms()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -53,7 +53,7 @@ func getAllEnum(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Enum")
 	res, err := db.Get_ALL_Enum()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -64,7 +64,7 @@ func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Extaxis")
 	res, err := db.Get_ALL_Extaxis()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -75,7 +75,7 @@ func getAllInterference(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Interference")
 	res, err := db.Get_All_Interference()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -86,7 +86,7 @@ func getAllIO(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all IO")
 	res, err := db.Get_All_IO()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -101,7 +101,7 @@ func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 	queries["lang"] = vars["lang"]
 	res, err := db.Get_All_Metadata(queries)
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -112,7 +112,7 @@ func getParams(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Parameter")
 	res, err := db.Get_Params()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -127,7 +127,7 @@ func getParameterById(w http.ResponseWriter, r *http.Request) {
 
 	res, err := db.Get_Parameter_By_Id(queries)
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -141,7 +141,7 @@ func parameterbygroup(w http.ResponseWriter, r *http.Request) {
 	queries["group"] = vars["group"]
 	res, err := db.Get_Parameter_By_Group(queries)
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -152,7 +152,7 @@ func getAllRef(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Ref")
 	res, err := db.Get_All_Ref()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -163,7 +163,7 @@ func getAllToolframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all toolframe")
 	res, err := db.Get_ALL_Toolframe()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -174,7 +174,7 @@ func getAllUserframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all userframe")
 	res, err := db.Get_ALL_Userframe()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
@@ -185,7 +185,7 @@ func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all zeropoints")
 	res, err := db.Get_All_Zeropoints()
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 

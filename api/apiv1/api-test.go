@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"context"
 	"time"
-	"errors"
 
 	"elibot-apiserver/mcserver"
+	Log "elibot-apiserver/log"
 )
 
 func hello(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +20,8 @@ func handleHealth(w http.ResponseWriter, r *http.Request) {
 func testSocket(w http.ResponseWriter, r *http.Request) {
 	var mcs *mcserver.MCserver
 	if mcs = mcserver.GetMcServer(); mcs == nil {
-		WriteInternalServerErrorResponse(w, errors.New("mcserver is not available right now"))
+		Log.Error("mcserver is not available right now")
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 	cmd := "testGo 0 1\n"
@@ -35,10 +36,12 @@ func testSocket(w http.ResponseWriter, r *http.Request) {
 
 	select {
 	case <-ctx.Done():
-		WriteInternalServerErrorResponse(w, ctx.Err())
+		Log.Error("test fail: ", ctx.Err())
+		WriteInternalServerErrorResponse(w, ERRQUERY)
 	case r := <- rCh:
 		if r.Err != nil {
-			WriteInternalServerErrorResponse(w, r.Err)
+			Log.Error("test fail: ", r.Err)
+			WriteInternalServerErrorResponse(w, ERRQUERY)
 		} else {
 			WriteSuccessResponse(w, []byte(r.Result))
 		}
