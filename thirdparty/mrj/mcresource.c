@@ -51,11 +51,11 @@ cJSON* getCurLine() {
 }
 
 
-cJSON* convertToIntArray(uint8_t* base, int array_size) {
+cJSON* convertToIntArray(volatile uint8_t* base, int array_size) {
 	int i=0;
 	cJSON* array = cJSON_CreateArray();
 	for (;i<array_size;i++) {
-		cJSON_AddItemToArray(array, cJSON_CreateNumber((const int *)base[i]));
+		cJSON_AddItemToArray(array, cJSON_CreateNumber((double)base[i]));
 	}
 	return array;
 }
@@ -104,7 +104,7 @@ cJSON* getRobotMode() {
 	return item;
 }
 
-cJSON* getEachLocavar(Robot_LOCVAR* base) {
+cJSON* getEachLocavar(Robot_LOCVAR base) {
 	cJSON *item, *array;
 	int i=0;
 	item = cJSON_CreateObject();
