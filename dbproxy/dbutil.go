@@ -15,7 +15,7 @@ var BackupPath string
 func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res []byte, err error) {
     err = sm.RegisterSqlMapper(mode)
     if err!=nil {
-        res = ""
+        res = []byte("")
         return
     }
 

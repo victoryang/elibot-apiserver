@@ -18,7 +18,7 @@ func DBBackup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, "succeed in backup\n")
+	WriteSuccessResponse(w, []byte("succeed in backup\n"))
 }
 
 func DBList(w http.ResponseWriter, r *http.Request) {
