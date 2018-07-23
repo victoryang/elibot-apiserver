@@ -29,4 +29,5 @@ func WriteInternalServerErrorResponse(w http.ResponseWriter, errno int) {
 	r := ToErrJson(errno)
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Write(r)
+	w.Flush()
 }
