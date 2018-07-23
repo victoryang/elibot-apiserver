@@ -4,12 +4,14 @@ import (
     "os"
     "errors"
     "io/ioutil"
+    "path"
     
     sql "elibot-apiserver/sqlitedb"
     Log "elibot-apiserver/log"
 )
 
 var DBName string
+var DBPath string
 var BackupPath string
 
 func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res []byte, err error) {
@@ -32,6 +34,7 @@ func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (
 
 func DBSetup(dbname string, backuppath string) {
     DBName = dbname
+    DBPath = path.Dir(backuppath)
     BackupPath = backuppath
 }
 
@@ -39,7 +42,7 @@ func DBSetup(dbname string, backuppath string) {
 func DBBackup() int {
     Log.Debug("in DBBackup")
  
-    return sql.SqlitedbBackup(DBName, BackupPath)
+    return sql.SqlitedbBackup(DBName, DBPath)
 }
 
 func DBList() ([]string, error) {
