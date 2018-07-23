@@ -9,6 +9,7 @@ import (
 func WriteSuccessResponse(w http.ResponseWriter, response []byte) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(response)
+	w.(http.Flusher).Flush()
 }
 
 type ErrorResponse struct {
@@ -29,5 +30,5 @@ func WriteInternalServerErrorResponse(w http.ResponseWriter, errno int) {
 	r := ToErrJson(errno)
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Write(r)
-	w.Flush()
+	w.(http.Flusher).Flush()
 }

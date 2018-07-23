@@ -31,7 +31,7 @@ func (w *ResponseWriter) Write(data []byte) (int, error) {
 	return w.ResponseWriter.Write(data)
 }
 
-func (w *responseWriter) Written() bool {
+func (w *ResponseWriter) Written() bool {
 	return w.status != 0
 }
 
@@ -43,7 +43,7 @@ func (w *ResponseWriter) WriteHeader(statusCode int) {
 	w.ResponseWriter.WriteHeader(statusCode)
 }
 
-func (w *responseWriter) Flush() {
+func (w *ResponseWriter) Flush() {
 	flusher, ok := w.ResponseWriter.(http.Flusher)
 	if ok {
 		if !w.Written() {
