@@ -2,7 +2,7 @@ package apiv1
 
 import (
 	"net/http"
-	"fmt"
+	"encoding/json"
 )
 
 // WriteSuccessResponse write success headers and response if any.
