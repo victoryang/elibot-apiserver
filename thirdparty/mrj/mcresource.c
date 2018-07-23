@@ -11,27 +11,27 @@ cJSON* getTeachMode() {
 }
 
 cJSON* getMachinePos() {
-	cJSON* item = cJSON_CreateDoubleArray(RobotRes_MachPos_base(), AXIS_COUNT);
+	cJSON* item = cJSON_CreateDoubleArray(RobotRes_MachPos_base, AXIS_COUNT);
 	return item;
 }
 
 cJSON* getMachinePose() {
-	cJSON* item = cJSON_CreateDoubleArray(RobotRes_MachPose_base(), 6);
+	cJSON* item = cJSON_CreateDoubleArray(RobotRes_MachPose_base, 6);
 	return item;
 }
 
 cJSON* getAbsPulse() {
-	cJSON* item = cJSON_CreateIntArray(SHARE_RES(abs_pulse), AXIS_COUNT);
+	cJSON* item = cJSON_CreateIntArray((const int *)SHARE_RES(abs_pulse), AXIS_COUNT);
 	return item;
 }
 
 cJSON* getAbzPulse() {
-	cJSON* item = cJSON_CreateIntArray(SHARE_RES(abz_pulse), AXIS_COUNT);
+	cJSON* item = cJSON_CreateIntArray((const int *)SHARE_RES(abz_pulse), AXIS_COUNT);
 	return item;
 }
 
 cJSON* getCurEncode() {
-	cJSON* item = cJSON_CreateIntArray(SHARE_RES(cur_encode), AXIS_COUNT);
+	cJSON* item = cJSON_CreateIntArray((const int *)SHARE_RES(cur_encode), AXIS_COUNT);
 	return item;
 }
 
@@ -61,12 +61,11 @@ cJSON* convertToIntArray(uint8_t* base, int array_size) {
 }
 cJSON* getRobPLC() {
 	cJSON* item = cJSON_CreateObject();
-	cJSON_CreateArray()
-	cJSON_AddItemToObject(item, "PLC_IN", convertToIntArray(SHARE_RES(plc).PLC_IN, IO_IN_NUM));
-	cJSON_AddItemToObject(item, "PLC_OUT", convertToIntArray(SHARE_RES(plc).PLC_OUT, IO_OUT_NUM));
-	cJSON_AddItemToObject(item, "PLC_VIN", convertToIntArray(SHARE_RES(plc).PLC_VIN, IO_VIN_NUM));
-	cJSON_AddItemToObject(item, "PLC_VOUT", convertToIntArray(SHARE_RES(plc).PLC_VOUT, IO_VOUT_NUM));
-	cJSON_AddItemToObject(item, "PLC_M", convertToIntArray(SHARE_RES(plc).PLC_M, IO_M_NUM));
+	cJSON_AddItemToObject(item, "PLC_IN", convertToIntArray((const int *)SHARE_RES(plc).PLC_IN, IO_IN_NUM));
+	cJSON_AddItemToObject(item, "PLC_OUT", convertToIntArray((const int *)SHARE_RES(plc).PLC_OUT, IO_OUT_NUM));
+	cJSON_AddItemToObject(item, "PLC_VIN", convertToIntArray((const int *)SHARE_RES(plc).PLC_VIN, IO_VIN_NUM));
+	cJSON_AddItemToObject(item, "PLC_VOUT", convertToIntArray((const int *)SHARE_RES(plc).PLC_VOUT, IO_VOUT_NUM));
+	cJSON_AddItemToObject(item, "PLC_M", convertToIntArray((const int *)SHARE_RES(plc).PLC_M, IO_M_NUM));
 	return item;
 }
 
