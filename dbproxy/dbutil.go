@@ -36,14 +36,10 @@ func DBSetup(dbname string, backuppath string) {
 }
 
 /* For sqlitedb backup, restore and upgrade*/
-func DBBackup() error {
+func DBBackup() int {
     Log.Debug("in DBBackup")
  
-    mgr, err := sql.NewDBManager(DBName, BackupPath, "", sql.DB_BACKUP, 0)
-    if err != nil {
-        return err
-    }
-    return mgr.Exec()
+    return sql.SqlitedbBackup(DBName, BackupPath)
 }
 
 func DBList() ([]string, error) {
@@ -75,12 +71,8 @@ func DBDel(Name string) error {
     return os.Remove(filename)
 }
 
-func DBRestore(BackupName string) error{
+func DBRestore(BackupName string) int{
     Log.Debug("in DBRestore")
  
-    mgr, err := sql.NewDBManager(DBName, BackupPath, BackupPath+BackupName, sql.DB_RESTORE, 1)
-    if err != nil {
-        return err
-    }
-    return mgr.Exec()
+    return sql.SqlitedbRestore(DBName, BackupPath, BackupPath+BackupName, 1)
 }

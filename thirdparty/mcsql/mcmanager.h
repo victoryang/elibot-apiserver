@@ -4,7 +4,12 @@
 #include "stdlib.h"
 #include "db/db_manager.h"
 
-int DBMgrExecute(struct db_manager* mgr, void *output);
-db_manager* NewDBManager();
+#define BUF_SIZE 255
+
+int mcmanager_backup_db(char* conn, char* db_dir);
+
+int mcmanager_restore_db(char* conn, char* db_dir, char* db_bak_name, char force);
+
+int mcmanager_upgrade_db(char* conn, char* db_dir, char* upgrade_pkg);
 
 #endif //MCMANAGER_H
