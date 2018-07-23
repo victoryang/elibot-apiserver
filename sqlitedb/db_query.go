@@ -25,6 +25,7 @@ func setsSqlparams(key string, value interface{}, param *C.sql_parameter) error 
 
     case float64:
         C.add_double_to_param(C.double(value.(float64)), param)
+
     case string:
         param._type = C.DB_TYPE_TEXT
         C.add_string_to_param(C.CString(value.(string)), param)
@@ -42,22 +43,21 @@ type Parameter struct {
     param_size      int
 }
 
-func (p *Parameter) newReqParameter(vars map[string]interface{}) *C.db_query_req_parameter {
+func (p *Parameter) newReqParameter(vars map[string]interface{}) {
     p.param_size = len(vars)
     p.parameter = C.new_db_query_req_parameter(C.int16_t(p.param_size))
     if p.parameter == nil {
-        return nil
+        return
     }
 
     var i C.int16_t = 0
     for k,v := range vars {
-        err := setsSqlparams(k, v, C.get_sqlparam_index(p.parameter, i))
-        i++
-        if i > C.int16_t(p.param_size) || err != nil{
-            return nil
+        if err := setsSqlparams(k, v, C.get_sqlparam_index(p.parameter, i)); err != nil {
+            continue
         }
+        i++
     }
-    return p.parameter
+    return
 }
 
 func (p *Parameter) freeReqParameter() {
@@ -88,14 +88,10 @@ func Db_query_with_params(q_id, db_name string, vars map[string]interface{}) ([]
     defer C.free(unsafe.Pointer(conn))
 
     p := new(Parameter)
-    req_parameter := p.newReqParameter(vars)
-    if req_parameter == nil {
-        Log.Error("req_parameter is nil")
-        return nil, errors.New("request fails")
-    }
+    p.newReqParameter(vars)
     defer p.freeReqParameter()
 
-    buf := C.mcsql_query_with_param(id, conn, C.DB_QUERY_MODE_CUSTOM, req_parameter, nil)
+    buf := C.mcsql_query_with_param(id, conn, C.DB_QUERY_MODE_CUSTOM, p.parameter, nil)
     if buf == nil {
         return nil, errors.New("query empty")
     }
@@ -105,35 +101,18 @@ func Db_query_with_params(q_id, db_name string, vars map[string]interface{}) ([]
     return []byte(res), nil
 }
 
-func Db_query(q_id string, db_name string) (string, error){
+func Db_query(q_id string, db_name string) ([]byte, error){
     id := C.CString(q_id)
     defer C.free(unsafe.Pointer(id))
 
     conn := C.CString(db_name)
     defer C.free(unsafe.Pointer(conn))
 
-    option := C.new_db_query_req_option(C.DB_QUERY_MODE_STANDARD)
-    defer C.free(unsafe.Pointer(option))
-
-    req := &C.db_query_req{
-					id,
-					conn,
-					option,
-					nil,
-					nil,
-				}
-
-    q_res := C.db_query(req)
-    if q_res==nil {
-    	Log.Error("fail to query")
-    	return "", errors.New("fail to query\n")
+    buf := C.mcsql_query(id, conn, C.DB_QUERY_MODE_STANDARD)
+    if buf == nil {
+        return nil, errors.New("query empty")
     }
-
-    str := C.cJSON_Print(q_res)
-    defer C.cJSON_Delete(q_res)
-
-    res := C.GoString(str)
-    defer C.free(unsafe.Pointer(str))
-
-    return res, nil
+    res := C.GoString(buf)
+    defer C.free(unsafe.Pointer(buf))
+    return []byte(res), nil
 }

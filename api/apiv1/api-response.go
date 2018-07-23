@@ -6,9 +6,9 @@ import (
 )
 
 // WriteSuccessResponse write success headers and response if any.
-func WriteSuccessResponse(w http.ResponseWriter, response string) {
+func WriteSuccessResponse(w http.ResponseWriter, response []byte) {
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, response)
+	w.Write(response)
 }
 
 func WriteInternalServerErrorResponse(w http.ResponseWriter, err error) {

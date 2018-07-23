@@ -24,8 +24,8 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	//r.HandleFunc("/v1/io", getAllIO).Methods("GET")
 	r.HandleFunc("/v1/metadata", getAllMetadata).Methods("GET").Queries("lang", "{lang}")
 	r.HandleFunc("/v1/params", getParams).Methods("GET")
-	r.HandleFunc("/v1/parameterbyid", getParameterById).Methods("GET").Queries("md_id", "{md_id}")
-	r.HandleFunc("/v1/parameterbygroup", parameterbygroup).Methods("GET").Queries("group", "{group}")
+	r.HandleFunc("/v1/parameter/id/{md_id}", getParameterById).Methods("GET")
+	r.HandleFunc("/v1/parameter/group/{group}", parameterbygroup).Methods("GET")
 	r.HandleFunc("/v1/ref", getAllRef).Methods("GET")
 	r.HandleFunc("/v1/toolframe", getAllToolframe).Methods("GET")
 	r.HandleFunc("/v1/userframe", getAllUserframe).Methods("GET")
@@ -34,7 +34,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	/*For DB backup, restore and upgrade*/
 	r.HandleFunc("/v1/db/backup", DBBackup).Methods("POST")
 	r.HandleFunc("/v1/db/backup", DBList).Methods("GET")
-	r.HandleFunc("/v1/db/backup", DBDel).Methods("DELETE").Queries("name", "{name}")
-	r.HandleFunc("/v1/db/restore", DBRestore).Methods("POST").Queries("name", "{name}")
+	r.HandleFunc("/v1/db/backup/{name}", DBDel).Methods("DELETE")
+	r.HandleFunc("/v1/db/backup/{name}/restore", DBRestore).Methods("POST")
 	return r
 }

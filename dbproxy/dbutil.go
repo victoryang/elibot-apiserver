@@ -12,7 +12,7 @@ import (
 var DBName string
 var BackupPath string
 
-func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res string, err error) {
+func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res []byte, err error) {
     err = sm.RegisterSqlMapper(mode)
     if err!=nil {
         res = ""
@@ -22,12 +22,10 @@ func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (
     if vars == nil {
         res, err = sql.Db_query(sm.GetID(), DBName)
     } else {
-        var res1 []byte
-        res1, err = sql.Db_query_with_params(sm.GetID(), DBName, vars)
-        res = string(res1)
+        res, err = sql.Db_query_with_params(sm.GetID(), DBName, vars)
     }
 
-    Log.Debug(res)
+    Log.Debug(string(res))
     Log.Print("get_all_metadatas OK")
     return
 }

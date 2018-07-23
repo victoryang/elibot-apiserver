@@ -30,7 +30,7 @@ func DBList(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res, _ := json.Marshal(files)
-	WriteSuccessResponse(w, string(res))
+	WriteSuccessResponse(w, res)
 }
 
 func DBDel(w http.ResponseWriter, r *http.Request) {
@@ -42,7 +42,7 @@ func DBDel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, "db detelted\n")
+	WriteSuccessResponse(w, []byte("db detelted\n"))
 }
 
 func DBRestore(w http.ResponseWriter, r *http.Request) {
@@ -54,5 +54,5 @@ func DBRestore(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, "succeed in restore\n")
+	WriteSuccessResponse(w, []byte("succeed in restore\n"))
 }
