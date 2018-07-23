@@ -2,11 +2,10 @@ package sqlitedb
 
 // #include<stdlib.h>
 // #include<mcmanager.h>
-// #include<db/sqlmapper/backup_sql_mapper.h>
 import "C"
 import (
 	"unsafe"
-	"errors"
+	Log "elibot-apiserver/log"
 )
 
 func SqlitedbBackup(DBname string, DBdir string) int {
@@ -17,9 +16,9 @@ func SqlitedbBackup(DBname string, DBdir string) int {
 	defer C.free(unsafe.Pointer(dir))
 
 	res := C.mcmanager_backup_db(conn, dir)
-	if res != C.DB_OK {
+	if res != C.ERRNONE {
 		Log.Error("fail to backup db")
-    	return res
+    	return int(res)
     }
     return 0
 }
@@ -35,9 +34,9 @@ func SqlitedbRestore(DBname string, DBdir string, backupname string, force_resto
 	defer C.free(unsafe.Pointer(bakname))
 
 	res := C.mcmanager_restore_db(conn, dir, bakname, C.char(force_restore))
-	if res != C.DB_OK {
+	if res != C.ERRNONE {
 		Log.Error("fail to restore db")
-    	return res
+    	return int(res)
     }
     return 0
 }

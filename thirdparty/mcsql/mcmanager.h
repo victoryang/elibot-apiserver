@@ -6,6 +6,7 @@
 #include "db/db_manager.h"
 
 #define BUF_SIZE 255
+#define ERRNONE DB_OK
 #define ERREMPTYMANAGER -1
 
 int mcmanager_backup_db(char* conn, char* db_dir);
