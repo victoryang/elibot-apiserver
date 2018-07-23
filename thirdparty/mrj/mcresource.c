@@ -130,15 +130,13 @@ cJSON* getEachLocavar(Robot_LOCVAR base) {
 }
 
 cJSON* getLocvar() {
-	cJSON *item, *array;
+	cJSON *item;
 	int i=0;
-	item = cJSON_CreateObject();
-	array = cJSON_CreateArray();
+	item = cJSON_CreateArray();
 
 	for (i=0; i<CALL_NEST_NUM; i++) {
-		cJSON_AddItemToArray(array, getEachLocavar(SHARE_RES(locvar)[i]));
+		cJSON_AddItemToArray(item, getEachLocavar(SHARE_RES(locvar)[i]));
 	}
-	cJSON_AddItemToObject(item, "locvar", array);
 	return item;
 }
 
