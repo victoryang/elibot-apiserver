@@ -109,7 +109,7 @@ cJSON* getEachLocavar(Robot_LOCVAR base) {
 	int i=0;
 	item = cJSON_CreateObject();
 
-	cJSON_AddItemToObject(item, "cRobLB", cJSON_CreateIntArray(base.cRobLB, LB_COUNT));
+	cJSON_AddItemToObject(item, "cRobLB", cJSON_CreateIntArray((const int *)base.cRobLB, LB_COUNT));
 
 	cJSON_AddItemToObject(item, "iRobLI", cJSON_CreateIntArray(base.iRobLI, LI_COUNT));
 
@@ -133,6 +133,7 @@ cJSON* getLocvar() {
 	cJSON *item, *array;
 	int i=0;
 	item = cJSON_CreateObject();
+	array = cJSON_CreateArray();
 
 	for (i=0; i<CALL_NEST_NUM; i++) {
 		cJSON_AddItemToArray(array, getEachLocavar(SHARE_RES(locvar)[i]));
