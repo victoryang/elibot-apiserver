@@ -34,7 +34,7 @@ func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (
 
 func DBSetup(dbname string, backuppath string) {
     DBName = dbname
-    DBPath = path.Dir(backuppath)
+    DBPath = path.Dir(dbname)
     BackupPath = backuppath
 }
 
