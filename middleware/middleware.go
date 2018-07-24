@@ -1,16 +1,9 @@
 package middleware
 
 import (
-	Log "elibot-apiserver/log"
-	"elibot-apiserver/middleware/accesslog"
-	"github.com/urfave/negroni"
+	"github.com/rs/cors"
 )
 
-func AddAccesslog(n *negroni.Negroni, accesslogfile string) *accesslog.Logger {
-	logger, err := accesslog.NewLogger(accesslogfile)
-	if err!=nil {
-		Log.Error("Error in opening access log file： ", err)
-		return nil
-	} 
-	return logger
+func NewCorsHandler() *cors.Cors {
+	return cors.AllowAll()
 }

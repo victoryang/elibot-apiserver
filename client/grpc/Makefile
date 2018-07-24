@@ -9,7 +9,7 @@ LDFLAGS  += -L/usr/local/cross/lib -L/usr/local/cross/lib/protobuf \
 PROTOC = protoc
 GRPC_CPP_PLUGIN = grpc_cpp_plugin
 GRPC_CPP_PLUGIN_PATH ?= `which $(GRPC_CPP_PLUGIN)`
-PROTOS_PATH = ../../serverpb
+PROTOS_PATH = ../../serverpb/hello
 
 vpath %.proto $(PROTOS_PATH)
 

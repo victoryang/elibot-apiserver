@@ -31,10 +31,25 @@ func (w *ResponseWriter) Write(data []byte) (int, error) {
 	return w.ResponseWriter.Write(data)
 }
 
+func (w *ResponseWriter) Written() bool {
+	return w.status != 0
+}
+
 func (w *ResponseWriter) WriteHeader(statusCode int) {
 	// Store the status code
 	w.status = statusCode
 
 	// Write the status code onward.
 	w.ResponseWriter.WriteHeader(statusCode)
+}
+
+func (w *ResponseWriter) Flush() {
+	flusher, ok := w.ResponseWriter.(http.Flusher)
+	if ok {
+		if !w.Written() {
+			// The status will be StatusOK if WriteHeader has not been called yet
+			w.WriteHeader(http.StatusOK)
+		}
+		flusher.Flush()
+	}
 }

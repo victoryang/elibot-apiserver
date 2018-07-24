@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package rpc;
+
+service ExtAxis {
+	// set ExtAxis pos to server
+	rpc GotoExtaxisPos (Req) returns (Reply) {}
+}
+
+message Req {
+	int32 	axis = 1;
+	int32	num = 2;
+}
+
+message Reply {
+	string 	res = 1;
+}

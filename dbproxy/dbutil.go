@@ -4,18 +4,20 @@ import (
     "os"
     "errors"
     "io/ioutil"
+    "path"
     
     sql "elibot-apiserver/sqlitedb"
     Log "elibot-apiserver/log"
 )
 
 var DBName string
+var DBPath string
 var BackupPath string
 
-func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res string, err error) {
+func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res []byte, err error) {
     err = sm.RegisterSqlMapper(mode)
     if err!=nil {
-        res = ""
+        res = []byte("")
         return
     }
 
@@ -25,25 +27,22 @@ func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (
         res, err = sql.Db_query_with_params(sm.GetID(), DBName, vars)
     }
 
-    Log.Debug(res)
+    Log.Debug(string(res))
     Log.Print("get_all_metadatas OK")
     return
 }
 
 func DBSetup(dbname string, backuppath string) {
     DBName = dbname
+    DBPath = path.Dir(dbname)
     BackupPath = backuppath
 }
 
 /* For sqlitedb backup, restore and upgrade*/
-func DBBackup() error {
+func DBBackup() int {
     Log.Debug("in DBBackup")
  
-    mgr, err := sql.NewDBManager(DBName, BackupPath, "", sql.DB_BACKUP, 0)
-    if err != nil {
-        return err
-    }
-    return mgr.Exec()
+    return sql.SqlitedbBackup(DBName, DBPath)
 }
 
 func DBList() ([]string, error) {
@@ -75,12 +74,8 @@ func DBDel(Name string) error {
     return os.Remove(filename)
 }
 
-func DBRestore(BackupName string) error{
+func DBRestore(BackupName string) int {
     Log.Debug("in DBRestore")
  
-    mgr, err := sql.NewDBManager(DBName, BackupPath, BackupPath+BackupName, sql.DB_RESTORE, 1)
-    if err != nil {
-        return err
-    }
-    return mgr.Exec()
+    return sql.SqlitedbRestore(DBName, BackupPath, BackupPath+BackupName, 1)
 }

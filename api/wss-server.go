@@ -9,7 +9,7 @@ import (
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/config"
-	"elibot-apiserver/api/v3"
+	"elibot-apiserver/api/websocket"
 )
 
 const (
@@ -18,7 +18,7 @@ const (
 
 type WsTLSServer struct {
 	httpServer 		*http.Server
-	hub 			*v3.Hub
+	hub 			*websocket.Hub
 }
 
 func (s *WsTLSServer) Run() {
@@ -44,13 +44,13 @@ func (s *WsTLSServer) PushBytes(msg []byte) {
 func NewWssServer(c *config.WebsocketEntryPoint) *WsTLSServer {
 	s := new(WsTLSServer)
 
-	s.hub = v3.NewHub()
+	s.hub = websocket.NewHub()
     go s.hub.Run()
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-                v3.ServeHome(c.IndexFile, w, r)
+                websocket.ServeHome(c.IndexFile, w, r)
     })
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-                v3.ServeWs(s.hub, w, r)
+                websocket.ServeWs(s.hub, w, r)
     })
 
     tlsconfig := &tls.Config{}
