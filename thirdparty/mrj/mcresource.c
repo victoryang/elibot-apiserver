@@ -130,7 +130,7 @@ int getCurEncode(cJSON** item) {
 }
 
 int getRobotState(cJSON** item) {
-	if (NULL == item) {
+	if (NULL == *item) {
 		*item = cJSON_CreateNumber(GetRobotState());
 		return 1;
 	}
