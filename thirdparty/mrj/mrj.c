@@ -2,18 +2,18 @@
 
 cJSON* resource_root;
 
-static char* add_items_to_body(ResourceItem items[]) {
+static cJSON* add_items_to_body(ResourceItem items[]) {
 	cJSON* body = cJSON_CreateObject();
 	int i;
 
 	for(i=0; items[i].func!=NULL; i++)
 	{
-		(*(items[i].func))(item[i].root);
+		(*(items[i].func))(items[i].root);
 		/*cJSON_bool isInvalid = cJSON_IsInvalid(item);
 		if(isInvalid == cJSON_Invalid) {
 			return;
 		}*/
-		cJSON_AddItemToObject(body, items[i].name, item[i].root);
+		cJSON_AddItemToObject(body, items[i].name, items[i].root);
 	}
 	return body;
 }
@@ -32,10 +32,10 @@ void free_resource_memory() {
 
 static int get_items(ResourceItem items[], char *name) {
 	int i;
-	int changed = 0
+	int changed = 0;
 	for(i=0; items[i].func!=NULL; i++)
 	{
-		changed = changed | (*(items[i].func))(item[i].root);
+		changed = changed | (*(items[i].func))(items[i].root);
 	}
 	return changed;
 }
@@ -64,9 +64,9 @@ int init_nv_ram() {
 int mrj_init() {
 	int ret = resource_init("/rbctrl/mcserver");
 	if (ret != 0) {
-		return ret
+		return ret;
 	}
 
-	init_resource_memory()
+	init_resource_memory();
 	return 0;
 }

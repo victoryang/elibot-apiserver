@@ -1,173 +1,173 @@
 #include "mcresource.h"
 
-bool getAutorunCycleMode(cJSON* item) {
+int getAutorunCycleMode(cJSON* item) {
 	if (NULL == item) {
 		item = cJSON_CreateNumber(GET_AUTORUN_CYCLEMODE());
-		return true;
+		return 1;
 	}
 	if (item->valuedouble == GET_AUTORUN_CYCLEMODE()){
-		return false;
+		return 0;
 	}
 	cJSON_SetNumberValue(item, GET_AUTORUN_CYCLEMODE());
-	return true;
+	return 1;
 }
 
-bool getTeachMode(cJSON* item) {
+int getTeachMode(cJSON* item) {
 	if (NULL == item) {
 		item = cJSON_CreateNumber(GET_TEACH_MODE());
-		return true;
+		return 1;
 	}
 	if (item->valuedouble == GET_TEACH_MODE()){
-		return false;
+		return 0;
 	}
 	cJSON_SetNumberValue(item, GET_TEACH_MODE());
-	return true;
+	return 1;
 }
 
-bool getMachinePos(cJSON* item) {
+int getMachinePos(cJSON* item) {
 	size_t i = 0;
-	bool changed = false;
+	int changed = 0;
 	cJSON* temp;
 	double now;
 	if (NULL == item) {
 		item = cJSON_CreateDoubleArray(RobotRes_MachPos_base, AXIS_COUNT);
-		return true;
+		return 1;
 	}
 	for(i = 0;i < (size_t)AXIS_COUNT; i++) {
 		temp = cJSON_GetArrayItem(item, i);
 		now = *(RobotRes_MachPos_base + i)
 		if (temp->valuedouble != now) {
 			cJSON_SetNumberValue(temp, now);
-			changed = true;
+			changed = 1;
 		}
 	}
 	
 	return changed;
 }
 
-bool getMachinePose(cJSON* item) {
+int getMachinePose(cJSON* item) {
 	size_t i = 0;
-	bool changed = false;
+	int changed = 0;
 	cJSON* temp;
 	double now;
 	if (NULL == item) {
 		item = cJSON_CreateDoubleArray(RobotRes_MachPose_base, 6);
-		return true;
+		return 1;
 	}
 	for(i = 0;i < 6; i++) {
 		temp = cJSON_GetArrayItem(item, i);
 		now = *(RobotRes_MachPose_base + i)
 		if (temp->valuedouble != now) {
 			cJSON_SetNumberValue(temp, now);
-			changed = true;
+			changed = 1;
 		}
 	}
 	
 	return changed;
 }
 
-bool getAbsPulse(cJSON* item) {
+int getAbsPulse(cJSON* item) {
 	size_t i = 0;
-	bool changed = false;
+	int changed = 0;
 	cJSON* temp;
 	int32_t now;
 	if (NULL == item) {
 		item = cJSON_CreateIntArray((const int *)SHARE_RES(abs_pulse), AXIS_COUNT);
-		return true;
+		return 1;
 	}
 	for(i = 0;i < AXIS_COUNT; i++) {
 		temp = cJSON_GetArrayItem(item, i);
 		now = *((const int *)SHARE_RES(abs_pulse) + i)
 		if (temp->valuedouble != (double)now) {
 			cJSON_SetNumberValue(temp, (double)now);
-			changed = true;
+			changed = 1;
 		}
 	}
 	
 	return changed;
 }
 
-bool getAbzPulse(cJSON* item) {
+int getAbzPulse(cJSON* item) {
 	size_t i = 0;
-	bool changed = false;
+	int changed = 0;
 	cJSON* temp;
 	int32_t now;
 	if (NULL == item) {
 		item = cJSON_CreateIntArray((const int *)SHARE_RES(abz_pulse), AXIS_COUNT);
-		return true;
+		return 1;
 	}
 	for(i = 0;i < AXIS_COUNT; i++) {
 		temp = cJSON_GetArrayItem(item, i);
 		now = *((const int *)SHARE_RES(abz_pulse) + i)
 		if (temp->valuedouble != (double)now) {
 			cJSON_SetNumberValue(temp, (double)now);
-			changed = true;
+			changed = 1;
 		}
 	}
 	
 	return changed;
 }
 
-bool getCurEncode(cJSON* item) {
+int getCurEncode(cJSON* item) {
 	size_t i = 0;
-	bool changed = false;
+	int changed = 0;
 	cJSON* temp;
 	int32_t now;
 	if (NULL == item) {
 		item = cJSON_CreateIntArray((const int *)SHARE_RES(cur_encode), AXIS_COUNT);
-		return true;
+		return 1;
 	}
 	for(i = 0;i < AXIS_COUNT; i++) {
 		temp = cJSON_GetArrayItem(item, i);
 		now = *((const int *)SHARE_RES(cur_encode) + i)
 		if (temp->valuedouble != (double)now) {
 			cJSON_SetNumberValue(temp, (double)now);
-			changed = true;
+			changed = 1;
 		}
 	}
 	
 	return changed;
 }
 
-bool getRobotState(cJSON* item) {
+int getRobotState(cJSON* item) {
 	if (NULL == item) {
 		item = cJSON_CreateNumber(GetRobotState());
-		return true;
+		return 1;
 	}
 	if (item->valuedouble == GetRobotState()){
-		return false;
+		return 0;
 	}
 	cJSON_SetNumberValue(item, GetRobotState());
-	return true;
+	return 1;
 }
 
-bool getServoReady(cJSON* item) {
+int getServoReady(cJSON* item) {
 	if (NULL == item) {
 		item = cJSON_CreateNumber(GetServoReady());
-		return true;
+		return 1;
 	}
 	if (item->valuedouble == GetServoReady()){
-		return false;
+		return 0;
 	}
 	cJSON_SetNumberValue(item, GetServoReady());
-	return true;
+	return 1;
 }
 
-bool getCurLine(cJSON* item) {
+int getCurLine(cJSON* item) {
 	if (NULL == item) {
 		item = cJSON_CreateNumber(GetCurLine());
-		return true;
+		return 1;
 	}
 	if (item->valuedouble == GetCurLine()){
-		return false;
+		return 0;
 	}
 	cJSON_SetNumberValue(item, GetCurLine());
-	return true;
+	return 1;
 }
 
-bool updateUint8ArrayElementIf(cJSON* array, volatile uint8_t* base) {
+int updateUint8ArrayElementIf(cJSON* array, volatile uint8_t* base) {
 	size_t i = 0;
-	bool changed = true;
+	int changed = 1;
 	size_t num = cJSON_GetArraySize(array);
 	cJSON* temp;
 	volatile uint8_t now;
@@ -176,7 +176,7 @@ bool updateUint8ArrayElementIf(cJSON* array, volatile uint8_t* base) {
 		now = base[i];
 		if ( temp->valuedouble!= (double)now) {
 			cJSON_SetNumberValue(temp, (double)now);
-			changed = true;
+			changed = 1;
 		}
 	}
 	return changed;
@@ -190,8 +190,8 @@ cJSON* setElementToArray(volatile uint8_t* base, int array_size) {
 	}
 	return array;
 }
-bool getRobPLC(cJSON* item) {
-	bool changed = false;
+int getRobPLC(cJSON* item) {
+	int changed = 0;
 	if (NULL == item) {
 		item = cJSON_CreateObject();
 		cJSON_AddItemToObject(item, "PLC_IN", setElementToArray(SHARE_RES(plc).PLC_IN, IO_IN_NUM));
@@ -199,7 +199,7 @@ bool getRobPLC(cJSON* item) {
 		cJSON_AddItemToObject(item, "PLC_VIN", setElementToArray(SHARE_RES(plc).PLC_VIN, IO_VIN_NUM));
 		cJSON_AddItemToObject(item, "PLC_VOUT", setElementToArray(SHARE_RES(plc).PLC_VOUT, IO_VOUT_NUM));
 		cJSON_AddItemToObject(item, "PLC_M", setElementToArray(SHARE_RES(plc).PLC_M, IO_M_NUM));
-		return true;
+		return 1;
 	}
 
 	changed = changed | updateArrayElementIf(cJSON_GetObjectItem(item, "PLC_IN"), SHARE_RES(plc).PLC_IN);
@@ -207,15 +207,15 @@ bool getRobPLC(cJSON* item) {
 	changed = changed | updateArrayElementIf(cJSON_GetObjectItem(item, "PLC_VIN"), SHARE_RES(plc).PLC_VIN);
 	changed = changed | updateArrayElementIf(cJSON_GetObjectItem(item, "PLC_VOUT"), SHARE_RES(plc).PLC_VOUT);
 	changed = changed | updateArrayElementIf(cJSON_GetObjectItem(item, "PLC_M"), SHARE_RES(plc).PLC_M);
-	if(changed == true) {
+	if(changed == 1) {
 		return item;
 	}
 	return NULL;
 }
 
-bool updateIntArrayElementIf(cJSON* array, const int* base) {
+int updateIntArrayElementIf(cJSON* array, const int* base) {
 	size_t i = 0;
-	bool changed = false;
+	int changed = 0;
 	size_t num = cJSON_GetArraySize(array);
 	cJSON* temp;
 	int now;
@@ -224,15 +224,15 @@ bool updateIntArrayElementIf(cJSON* array, const int* base) {
 		now = base[i];
 		if ( temp->valuedouble!= (double)now) {
 			cJSON_SetNumberValue(temp, (double)now);
-			changed = true;
+			changed = 1;
 		}
 	}
 	return changed;
 }
 
-bool updateShortArrayElementIf(cJSON* array, const short* base) {
+int updateShortArrayElementIf(cJSON* array, const short* base) {
 	size_t i = 0;
-	bool changed = false;
+	int changed = 0;
 	size_t num = cJSON_GetArraySize(array);
 	cJSON* temp;
 	short now;
@@ -241,15 +241,15 @@ bool updateShortArrayElementIf(cJSON* array, const short* base) {
 		now = base[i];
 		if ( temp->valuedouble!= (double)now) {
 			cJSON_SetNumberValue(temp, (double)now);
-			changed = true;
+			changed = 1;
 		}
 	}
 	return changed;
 }
 
-bool updateDoubleArrayElementIf(cJSON* array, const double* base) {
+int updateDoubleArrayElementIf(cJSON* array, const double* base) {
 	size_t i = 0;
-	bool changed = false;
+	int changed = 0;
 	size_t num = cJSON_GetArraySize(array);
 	cJSON* temp;
 	double now;
@@ -258,15 +258,15 @@ bool updateDoubleArrayElementIf(cJSON* array, const double* base) {
 		now = base[i];
 		if ( temp->valuedouble!= now) {
 			cJSON_SetNumberValue(temp, now);
-			changed = true;
+			changed = 1;
 		}
 	}
 	return changed;
 }
 
-bool update2DDoubleArrayElementIf(cJSON* array, const double** base) {
+int update2DDoubleArrayElementIf(cJSON* array, const double** base) {
 	size_t i = 0, j = 0;
-	bool changed = false;
+	int changed = 0;
 	size_t num = cJSON_GetArraySize(array);
 	cJSON* sub_array;
 	size_t sub_num;
@@ -280,17 +280,17 @@ bool update2DDoubleArrayElementIf(cJSON* array, const double** base) {
 			now = base[i][j];
 			if ( temp->valuedouble!= now) {
 				cJSON_SetNumberValue(temp, now);
-				changed = true;
+				changed = 1;
 			}
 		}
 	}
 	return changed;
 }
 
-bool getSysvar(cJSON* item) {
+int getSysvar(cJSON* item) {
 	cJSON *array;
 	int i=0;
-	bool changed = false;
+	int changed = 0;
 	if (NULL == item) {
 		item = cJSON_CreateObject();
 
@@ -328,16 +328,16 @@ bool getSysvar(cJSON* item) {
 	return changed;
 }
 
-bool getRobotMode(cJSON* item) {
+int getRobotMode(cJSON* item) {
 	if (NULL == item) {
 		item = cJSON_CreateNumber(GetRobotMode());
-		return true;
+		return 1;
 	}
 	if (item->valuedouble == GetRobotMode()){
-		return false;
+		return 0;
 	}
 	cJSON_SetNumberValue(item, GetRobotMode());
-	return true;
+	return 1;
 }
 
 cJSON* getEachLocavar(Robot_LOCVAR base) {
@@ -376,49 +376,49 @@ cJSON* getLocvar() {
 	return item;
 }
 
-bool getLocvarNum(cJSON* item) {
+int getLocvarNum(cJSON* item) {
 	if (NULL == item) {
 		item = cJSON_CreateNumber(SHARE_RES(locvar_num));
-		return true;
+		return 1;
 	}
 	
 	if (item->valuedouble == SHARE_RES(locvar_num)) {
-		return false;
+		return 0;
 	}
 	item->valuedouble = SHARE_RES(locvar_num);
-	return true;
+	return 1;
 }
 
-bool getAnalogIoInput(cJSON* item) {
+int getAnalogIoInput(cJSON* item) {
 	size_t i = 0;
-	bool changed = false;
+	int changed = 0;
 	cJSON* temp;
 	if (NULL == item) {
 		item = cJSON_CreateDoubleArray(SHARE_RES(analog_ioInput), ANALOG_IN_NUM);
-		return true;
+		return 1;
 	}
 	for(i = 0;i < (size_t)ANALOG_IN_NUM; i++) {
 		temp = cJSON_GetArrayItem(item, i);
 		now = *(SHARE_RES(analog_ioInput) + i)
 		if (temp->valuedouble != now) {
 			cJSON_SetNumberValue(temp, now);
-			changed = true;
+			changed = 1;
 		}
 	}
 	
 	return changed;
 }
 
-bool getServoDirveMode(cJSON* item) {
+int getServoDirveMode(cJSON* item) {
 	if (NULL == item) {
 		item = cJSON_CreateNumber(SHARE_RES(servo_dirve_mode));
-		return true;
+		return 1;
 	}
 	if (item->valuedouble == SHARE_RES(servo_dirve_mode)) {
-		return false;
+		return 0;
 	}
 	item->valuedouble = SHARE_RES(servo_dirve_mode);
-	return true;
+	return 1;
 }
 
 ResourceItem ResourceTable[] = {
