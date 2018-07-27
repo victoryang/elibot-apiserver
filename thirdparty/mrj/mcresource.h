@@ -3,6 +3,6 @@
 
 #include "define.h"
 
-extern Item ResourceTable[];
+extern ResourceItem ResourceTable[];
 
 #endif //MCRESOURCE_H

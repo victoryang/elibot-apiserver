@@ -1,32 +1,51 @@
 #include "mrj.h"
 
-static void add_items(cJSON* r, const char *name, RegisterFunc func) {
-	cJSON* item = (*func)();
-	/*cJSON_bool isInvalid = cJSON_IsInvalid(item);
-	if(isInvalid == cJSON_Invalid) {
-		return;
-	}*/
-	cJSON_AddItemToObject(r, name, item);
+cJSON* resource_root;
+
+static char* add_items_to_body(ResourceItem items[]) {
+	cJSON* body = cJSON_CreateObject();
+	int i;
+
+	for(i=0; items[i].func!=NULL; i++)
+	{
+		(*(items[i].func))(item[i].root);
+		/*cJSON_bool isInvalid = cJSON_IsInvalid(item);
+		if(isInvalid == cJSON_Invalid) {
+			return;
+		}*/
+		cJSON_AddItemToObject(body, items[i].name, item[i].root);
+	}
+	return body;
+}
+
+void init_resource_memory() {
+	cJSON* body;
+	resource_root = cJSON_CreateObject();
+	body = add_items_to_body(ResourceTable);
+	cJSON_AddItemToObject(resource_root, "resource", body);
 	return;
 }
 
-static char* add_items_to_body(Item items[], char *name) {
-	cJSON* root = cJSON_CreateObject();
-	cJSON* body = cJSON_CreateObject();
-	cJSON_AddItemToObject(root, name, body);
+void free_resource_memory() {
+	cJSON_Delete(resource_root);
+}
+
+static bool get_items(ResourceItem items[], char *name) {
 	int i;
+	bool changed = false
 	for(i=0; items[i].func!=NULL; i++)
 	{
-		add_items(body, items[i].name, items[i].func);
+		changed = changed | (*(items[i].func))(item[i].root);
 	}
-
-	char *ret = cJSON_PrintUnformatted(root);
-	cJSON_Delete(root);
-	return ret;
+	return changed;
 }
 
 char* get_resource_data() {
-	return add_items_to_body(ResourceTable, "resource");
+	bool changed = get_items(ResourceTable, "resource");
+	if (changed == true) {
+		return cJSON_PrintUnformatted(resource_root);
+	}
+	return NULL;
 }
 
 char* get_nv_data() {
@@ -43,5 +62,11 @@ int init_nv_ram() {
 }
 
 int mrj_init() {
-	return resource_init("/rbctrl/mcserver");
+	int ret = resource_init("/rbctrl/mcserver");
+	if (ret != 0) {
+		return ret
+	}
+
+	init_resource_memory()
+	return 0;
 }
