@@ -5,7 +5,7 @@ int getAutorunCycleMode(cJSON** item) {
 		*item = cJSON_CreateNumber(GET_AUTORUN_CYCLEMODE());
 		return 1;
 	}
-	if (*item->valuedouble == GET_AUTORUN_CYCLEMODE()){
+	if ((*item-)>valuedouble == GET_AUTORUN_CYCLEMODE()){
 		return 0;
 	}
 	cJSON_SetNumberValue(*item, GET_AUTORUN_CYCLEMODE());
@@ -17,7 +17,7 @@ int getTeachMode(cJSON** item) {
 		*item = cJSON_CreateNumber(GET_TEACH_MODE());
 		return 1;
 	}
-	if (*item->valuedouble == GET_TEACH_MODE()){
+	if ((*item)->valuedouble == GET_TEACH_MODE()){
 		return 0;
 	}
 	cJSON_SetNumberValue(*item, GET_TEACH_MODE());
@@ -134,7 +134,7 @@ int getRobotState(cJSON** item) {
 		*item = cJSON_CreateNumber(GetRobotState());
 		return 1;
 	}
-	if (*item->valuedouble == GetRobotState()){
+	if ((*item)->valuedouble == GetRobotState()){
 		return 0;
 	}
 	cJSON_SetNumberValue(*item, GetRobotState());
@@ -146,7 +146,7 @@ int getServoReady(cJSON** item) {
 		*item = cJSON_CreateNumber(GetServoReady());
 		return 1;
 	}
-	if (*item->valuedouble == GetServoReady()){
+	if ((*item)->valuedouble == GetServoReady()){
 		return 0;
 	}
 	cJSON_SetNumberValue(*item, GetServoReady());
@@ -158,7 +158,7 @@ int getCurLine(cJSON** item) {
 		*item = cJSON_CreateNumber(GetCurLine());
 		return 1;
 	}
-	if (*item->valuedouble == GetCurLine()){
+	if ((*item)->valuedouble == GetCurLine()){
 		return 0;
 	}
 	cJSON_SetNumberValue(*item, GetCurLine());
@@ -331,7 +331,7 @@ int getRobotMode(cJSON** item) {
 		*item = cJSON_CreateNumber(GetRobotMode());
 		return 1;
 	}
-	if (*item->valuedouble == GetRobotMode()){
+	if ((*item)->valuedouble == GetRobotMode()){
 		return 0;
 	}
 	cJSON_SetNumberValue(*item, GetRobotMode());
@@ -380,10 +380,10 @@ int getLocvarNum(cJSON** item) {
 		return 1;
 	}
 	
-	if (*item->valuedouble == SHARE_RES(locvar_num)) {
+	if ((*item)->valuedouble == SHARE_RES(locvar_num)) {
 		return 0;
 	}
-	*item->valuedouble = SHARE_RES(locvar_num);
+	(*item)->valuedouble = SHARE_RES(locvar_num);
 	return 1;
 }
 
@@ -413,10 +413,10 @@ int getServoDirveMode(cJSON** item) {
 		*item = cJSON_CreateNumber(SHARE_RES(servo_dirve_mode));
 		return 1;
 	}
-	if (*item->valuedouble == SHARE_RES(servo_dirve_mode)) {
+	if ((*item)->valuedouble == SHARE_RES(servo_dirve_mode)) {
 		return 0;
 	}
-	*item->valuedouble = SHARE_RES(servo_dirve_mode);
+	(*item)->valuedouble = SHARE_RES(servo_dirve_mode);
 	return 1;
 }
 
