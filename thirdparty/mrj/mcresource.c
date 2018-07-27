@@ -262,7 +262,7 @@ int updateDoubleArrayElementIf(cJSON* array, const double* base) {
 	return changed;
 }
 
-int update2DDoubleArrayElementIf(cJSON* array, const double* base[AXIS_COUNT]) {
+int update2DDoubleArrayElementIf(cJSON* array, const double** base) {
 	size_t i = 0, j = 0;
 	int changed = 0;
 	size_t num = cJSON_GetArraySize(array);
@@ -317,11 +317,11 @@ int getSysvar(cJSON* item) {
 		return 1;
 	}
 
-	changed = changed | updateIntArrayElementIf(cJSON_GetObjectItem(item, "cRobB"), SHARE_RES(sysvar).cRobB);
+	changed = changed | updateIntArrayElementIf(cJSON_GetObjectItem(item, "cRobB"), (const int*)SHARE_RES(sysvar).cRobB);
 	changed = changed | updateShortArrayElementIf(cJSON_GetObjectItem(item, "iRobI"), SHARE_RES(sysvar).iRobI);
 	changed = changed | updateDoubleArrayElementIf(cJSON_GetObjectItem(item, "dRobD"), SHARE_RES(sysvar).dRobD);
-	changed = changed | update2DDoubleArrayElementIf(cJSON_GetObjectItem(item, "dRobP"), SHARE_RES(sysvar).dRobP);
-	changed = changed | update2DDoubleArrayElementIf(cJSON_GetObjectItem(item, "dRobV"), SHARE_RES(sysvar).dRobV);
+	changed = changed | update2DDoubleArrayElementIf(cJSON_GetObjectItem(item, "dRobP"), (const double **)SHARE_RES(sysvar).dRobP);
+	changed = changed | update2DDoubleArrayElementIf(cJSON_GetObjectItem(item, "dRobV"), (const double **)SHARE_RES(sysvar).dRobV);
 
 	return changed;
 }
