@@ -262,29 +262,6 @@ int updateDoubleArrayElementIf(cJSON* array, const double* base) {
 	return changed;
 }
 
-int update2DDoubleArrayElementIf(cJSON* array, const double** base) {
-	size_t i = 0, j = 0;
-	int changed = 0;
-	size_t num = cJSON_GetArraySize(array);
-	cJSON* sub_array;
-	size_t sub_num;
-	cJSON* temp;
-	double now;
-	for(i = 0;i < num; i++) {
-		sub_array = cJSON_GetArrayItem(array, i);
-		sub_num = cJSON_GetArraySize(sub_array);
-		for (j = 0;j < sub_num; j++) {
-			temp = cJSON_GetArrayItem(sub_array, j);
-			now = base[i][j];
-			if ( temp->valuedouble!= now) {
-				cJSON_SetNumberValue(temp, now);
-				changed = 1;
-			}
-		}
-	}
-	return changed;
-}
-
 int getSysvar(cJSON** item) {
 	cJSON *array;
 	int i=0;
@@ -320,8 +297,12 @@ int getSysvar(cJSON** item) {
 	changed = changed | updateIntArrayElementIf(cJSON_GetObjectItem(*item, "cRobB"), (const int*)SHARE_RES(sysvar).cRobB);
 	changed = changed | updateShortArrayElementIf(cJSON_GetObjectItem(*item, "iRobI"), SHARE_RES(sysvar).iRobI);
 	changed = changed | updateDoubleArrayElementIf(cJSON_GetObjectItem(*item, "dRobD"), SHARE_RES(sysvar).dRobD);
-	changed = changed | update2DDoubleArrayElementIf(cJSON_GetObjectItem(*item, "dRobP"), (const double **)SHARE_RES(sysvar).dRobP);
-	changed = changed | update2DDoubleArrayElementIf(cJSON_GetObjectItem(*item, "dRobV"), (const double **)SHARE_RES(sysvar).dRobV);
+	for (i=0; i<P_COUNT; i++) {
+		changed = changed | updateDoubleArrayElementIf(cJSON_GetObjectItem(*item, "dRobP"), SHARE_RES(sysvar).dRobP[i]);
+	}
+	for (i=0; i<V_COUNT; i++) {
+		changed = changed | updateDoubleArrayElementIf(cJSON_GetObjectItem(*item, "dRobV"), SHARE_RES(sysvar).dRobV[i]);
+	}
 
 	return changed;
 }
