@@ -35,7 +35,7 @@ int getMachinePos(cJSON* item) {
 	}
 	for(i = 0;i < (size_t)AXIS_COUNT; i++) {
 		temp = cJSON_GetArrayItem(item, i);
-		now = *(RobotRes_MachPos_base + i)
+		now = *(RobotRes_MachPos_base + i);
 		if (temp->valuedouble != now) {
 			cJSON_SetNumberValue(temp, now);
 			changed = 1;
@@ -56,7 +56,7 @@ int getMachinePose(cJSON* item) {
 	}
 	for(i = 0;i < 6; i++) {
 		temp = cJSON_GetArrayItem(item, i);
-		now = *(RobotRes_MachPose_base + i)
+		now = *(RobotRes_MachPose_base + i);
 		if (temp->valuedouble != now) {
 			cJSON_SetNumberValue(temp, now);
 			changed = 1;
@@ -77,7 +77,7 @@ int getAbsPulse(cJSON* item) {
 	}
 	for(i = 0;i < AXIS_COUNT; i++) {
 		temp = cJSON_GetArrayItem(item, i);
-		now = *((const int *)SHARE_RES(abs_pulse) + i)
+		now = *((const int *)SHARE_RES(abs_pulse) + i);
 		if (temp->valuedouble != (double)now) {
 			cJSON_SetNumberValue(temp, (double)now);
 			changed = 1;
@@ -98,7 +98,7 @@ int getAbzPulse(cJSON* item) {
 	}
 	for(i = 0;i < AXIS_COUNT; i++) {
 		temp = cJSON_GetArrayItem(item, i);
-		now = *((const int *)SHARE_RES(abz_pulse) + i)
+		now = *((const int *)SHARE_RES(abz_pulse) + i);
 		if (temp->valuedouble != (double)now) {
 			cJSON_SetNumberValue(temp, (double)now);
 			changed = 1;
@@ -119,7 +119,7 @@ int getCurEncode(cJSON* item) {
 	}
 	for(i = 0;i < AXIS_COUNT; i++) {
 		temp = cJSON_GetArrayItem(item, i);
-		now = *((const int *)SHARE_RES(cur_encode) + i)
+		now = *((const int *)SHARE_RES(cur_encode) + i);
 		if (temp->valuedouble != (double)now) {
 			cJSON_SetNumberValue(temp, (double)now);
 			changed = 1;
@@ -172,7 +172,7 @@ int updateUint8ArrayElementIf(cJSON* array, volatile uint8_t* base) {
 	cJSON* temp;
 	volatile uint8_t now;
 	for(i = 0;i < num; i++) {
-		temp = cJSON_GetArrayItem(item, i);
+		temp = cJSON_GetArrayItem(array, i);
 		now = base[i];
 		if ( temp->valuedouble!= (double)now) {
 			cJSON_SetNumberValue(temp, (double)now);
@@ -202,15 +202,13 @@ int getRobPLC(cJSON* item) {
 		return 1;
 	}
 
-	changed = changed | updateArrayElementIf(cJSON_GetObjectItem(item, "PLC_IN"), SHARE_RES(plc).PLC_IN);
-	changed = changed | updateArrayElementIf(cJSON_GetObjectItem(item, "PLC_OUT"), SHARE_RES(plc).PLC_OUT);
-	changed = changed | updateArrayElementIf(cJSON_GetObjectItem(item, "PLC_VIN"), SHARE_RES(plc).PLC_VIN);
-	changed = changed | updateArrayElementIf(cJSON_GetObjectItem(item, "PLC_VOUT"), SHARE_RES(plc).PLC_VOUT);
-	changed = changed | updateArrayElementIf(cJSON_GetObjectItem(item, "PLC_M"), SHARE_RES(plc).PLC_M);
-	if(changed == 1) {
-		return item;
-	}
-	return NULL;
+	changed = changed | updateUint8ArrayElementIf(cJSON_GetObjectItem(item, "PLC_IN"), SHARE_RES(plc).PLC_IN);
+	changed = changed | updateUint8ArrayElementIf(cJSON_GetObjectItem(item, "PLC_OUT"), SHARE_RES(plc).PLC_OUT);
+	changed = changed | updateUint8ArrayElementIf(cJSON_GetObjectItem(item, "PLC_VIN"), SHARE_RES(plc).PLC_VIN);
+	changed = changed | updateUint8ArrayElementIf(cJSON_GetObjectItem(item, "PLC_VOUT"), SHARE_RES(plc).PLC_VOUT);
+	changed = changed | updateUint8ArrayElementIf(cJSON_GetObjectItem(item, "PLC_M"), SHARE_RES(plc).PLC_M);
+
+	return changed;
 }
 
 int updateIntArrayElementIf(cJSON* array, const int* base) {
@@ -220,7 +218,7 @@ int updateIntArrayElementIf(cJSON* array, const int* base) {
 	cJSON* temp;
 	int now;
 	for(i = 0;i < num; i++) {
-		temp = cJSON_GetArrayItem(item, i);
+		temp = cJSON_GetArrayItem(array, i);
 		now = base[i];
 		if ( temp->valuedouble!= (double)now) {
 			cJSON_SetNumberValue(temp, (double)now);
@@ -237,7 +235,7 @@ int updateShortArrayElementIf(cJSON* array, const short* base) {
 	cJSON* temp;
 	short now;
 	for(i = 0;i < num; i++) {
-		temp = cJSON_GetArrayItem(item, i);
+		temp = cJSON_GetArrayItem(array, i);
 		now = base[i];
 		if ( temp->valuedouble!= (double)now) {
 			cJSON_SetNumberValue(temp, (double)now);
@@ -254,7 +252,7 @@ int updateDoubleArrayElementIf(cJSON* array, const double* base) {
 	cJSON* temp;
 	double now;
 	for(i = 0;i < num; i++) {
-		temp = cJSON_GetArrayItem(item, i);
+		temp = cJSON_GetArrayItem(array, i);
 		now = base[i];
 		if ( temp->valuedouble!= now) {
 			cJSON_SetNumberValue(temp, now);
@@ -264,7 +262,7 @@ int updateDoubleArrayElementIf(cJSON* array, const double* base) {
 	return changed;
 }
 
-int update2DDoubleArrayElementIf(cJSON* array, const double** base) {
+int update2DDoubleArrayElementIf(cJSON* array, const double* base[AXIS_COUNT]) {
 	size_t i = 0, j = 0;
 	int changed = 0;
 	size_t num = cJSON_GetArraySize(array);
@@ -273,7 +271,7 @@ int update2DDoubleArrayElementIf(cJSON* array, const double** base) {
 	cJSON* temp;
 	double now;
 	for(i = 0;i < num; i++) {
-		sub_array = cJSON_GetArrayItem(item, i);
+		sub_array = cJSON_GetArrayItem(array, i);
 		sub_num = cJSON_GetArraySize(sub_array);
 		for (j = 0;j < sub_num; j++) {
 			temp = cJSON_GetArrayItem(sub_array, j);
@@ -316,7 +314,7 @@ int getSysvar(cJSON* item) {
 		}
 		cJSON_AddItemToObject(item, "dRobV", array);
 
-		return item;
+		return 1;
 	}
 
 	changed = changed | updateIntArrayElementIf(cJSON_GetObjectItem(item, "cRobB"), SHARE_RES(sysvar).cRobB);
@@ -393,13 +391,14 @@ int getAnalogIoInput(cJSON* item) {
 	size_t i = 0;
 	int changed = 0;
 	cJSON* temp;
+	double now;
 	if (NULL == item) {
 		item = cJSON_CreateDoubleArray(SHARE_RES(analog_ioInput), ANALOG_IN_NUM);
 		return 1;
 	}
 	for(i = 0;i < (size_t)ANALOG_IN_NUM; i++) {
 		temp = cJSON_GetArrayItem(item, i);
-		now = *(SHARE_RES(analog_ioInput) + i)
+		now = *(SHARE_RES(analog_ioInput) + i);
 		if (temp->valuedouble != now) {
 			cJSON_SetNumberValue(temp, now);
 			changed = 1;
