@@ -5,7 +5,7 @@ int getAutorunCycleMode(cJSON** item) {
 		*item = cJSON_CreateNumber(GET_AUTORUN_CYCLEMODE());
 		return 1;
 	}
-	if ((*item-)>valuedouble == GET_AUTORUN_CYCLEMODE()){
+	if ((*item)->valuedouble == GET_AUTORUN_CYCLEMODE()){
 		return 0;
 	}
 	cJSON_SetNumberValue(*item, GET_AUTORUN_CYCLEMODE());
