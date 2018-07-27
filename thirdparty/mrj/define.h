@@ -7,7 +7,7 @@
 #include "cJSON.h"
 
 typedef cJSON* (*RegisterFunc)();
-typedef bool (*RegisterFunc1)(cJSON* item);
+typedef int (*RegisterFunc1)(cJSON* item);
 
 typedef struct {
 	char 			*name;
