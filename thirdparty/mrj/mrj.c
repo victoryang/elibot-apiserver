@@ -8,7 +8,7 @@ static cJSON* add_items_to_body(ResourceItem items[]) {
 
 	for(i=0; items[i].func!=NULL; i++)
 	{
-		(*(items[i].func))(items[i].root);
+		(*(items[i].func))(&items[i].root);
 		/*cJSON_bool isInvalid = cJSON_IsInvalid(item);
 		if(isInvalid == cJSON_Invalid) {
 			return;
@@ -30,18 +30,18 @@ void free_resource_memory() {
 	cJSON_Delete(resource_root);
 }
 
-static int get_items(ResourceItem items[], char *name) {
+static int get_items(ResourceItem items[]) {
 	int i;
 	int changed = 0;
 	for(i=0; items[i].func!=NULL; i++)
 	{
-		changed = changed | (*(items[i].func))(items[i].root);
+		changed = changed | (*(items[i].func))(&items[i].root);
 	}
 	return changed;
 }
 
 char* get_resource_data() {
-	int changed = get_items(ResourceTable, "resource");
+	int changed = get_items(ResourceTable);
 	if (changed != 0) {
 		return cJSON_PrintUnformatted(resource_root);
 	}
