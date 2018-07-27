@@ -30,9 +30,9 @@ void free_resource_memory() {
 	cJSON_Delete(resource_root);
 }
 
-static bool get_items(ResourceItem items[], char *name) {
+static int get_items(ResourceItem items[], char *name) {
 	int i;
-	bool changed = false
+	int changed = 0
 	for(i=0; items[i].func!=NULL; i++)
 	{
 		changed = changed | (*(items[i].func))(item[i].root);
@@ -41,8 +41,8 @@ static bool get_items(ResourceItem items[], char *name) {
 }
 
 char* get_resource_data() {
-	bool changed = get_items(ResourceTable, "resource");
-	if (changed == true) {
+	int changed = get_items(ResourceTable, "resource");
+	if (changed != 0) {
 		return cJSON_PrintUnformatted(resource_root);
 	}
 	return NULL;
