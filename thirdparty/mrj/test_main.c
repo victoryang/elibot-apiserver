@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <mrj.h>
+#include "mrj.h"
 
 int main(int argc, char const *argv[])
 {

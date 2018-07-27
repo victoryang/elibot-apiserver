@@ -383,7 +383,7 @@ int getLocvarNum(cJSON** item) {
 	if ((*item)->valuedouble == SHARE_RES(locvar_num)) {
 		return 0;
 	}
-	(*item)->valuedouble = SHARE_RES(locvar_num);
+	cJSON_SetNumberValue((*item), SHARE_RES(locvar_num));
 	return 1;
 }
 
@@ -416,7 +416,7 @@ int getServoDirveMode(cJSON** item) {
 	if ((*item)->valuedouble == SHARE_RES(servo_dirve_mode)) {
 		return 0;
 	}
-	(*item)->valuedouble = SHARE_RES(servo_dirve_mode);
+	cJSON_SetNumberValue((*item), SHARE_RES(servo_dirve_mode));
 	return 1;
 }
 
