@@ -23,6 +23,8 @@ void get_iRobI_with_range(cJSON* root, int start, int end) {
 	if (end > I_COUNT) {
 		end = I_COUNT;
 	}
+
+	array = cJSON_CreateArray();
 	for (i=start; i<end; i++) {
 		cJSON_AddItemToArray(array, cJSON_CreateNumber(SHARE_RES(sysvar).iRobI[i]));
 	}
@@ -63,6 +65,7 @@ void get_dRobV_with_range(cJSON* root, int start, int end) {
 	if (start > V_COUNT || end > V_COUNT) {
 		return;
 	}
+
 	array = cJSON_CreateArray();
 	for (i=start; i<end; i++) {
 		cJSON_AddItemToArray(array, cJSON_CreateDoubleArray(SHARE_RES(sysvar).dRobV[i], VSub_COUNT));
