@@ -61,3 +61,37 @@ func getSysFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 	ret := shm.GetSysVar(datatype, start, end)
 	WriteJsonSuccessResponse(w, ret)
 }
+
+func getcrobLb(w http.ResponseWriter, r *http.Request) {
+	getLocFromShm(crobb, w, r)
+}
+
+func getiRobLI(w http.ResponseWriter, r *http.Request) {
+	getLocFromShm(irobi, w, r)
+}
+
+func getdRobLD(w http.ResponseWriter, r *http.Request) {
+	getLocFromShm(drobd, w, r)
+}
+
+func getdRobLP(w http.ResponseWriter, r *http.Request) {
+	getLocFromShm(drobp, w, r)
+}
+
+func getdRobLV(w http.ResponseWriter, r *http.Request) {
+	getLocFromShm(drobv, w, r)
+}
+
+func getLocFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
+	start, end, err := validate(r)
+	if err!=nil {
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+	}
+	vars := mux.Vars(r)
+	num, err := strconv.Atoi(vars["num"])
+	if err!=nil {
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+	}
+	ret := shm.GetLocVar(datatype, num, start, end)
+	WriteJsonSuccessResponse(w, ret)
+}

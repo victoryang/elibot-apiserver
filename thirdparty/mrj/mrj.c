@@ -5,7 +5,16 @@ cJSON* resource_root;
 char* get_sysvar_data(int datatype, int start, int end) {
 	cJSON* root;
 	char* ret;
-	root = get_data_with_range(datatype, start, end);
+	root = get_sysvar_with_range(datatype, start, end);
+	ret = cJSON_PrintUnformatted(root);
+	cJSON_Delete(root);
+	return ret;
+}
+
+char* get_locvar_data(int datatype, int number, int start, int end) {
+	cJSON* root;
+	char* ret;
+	root = get_locvar_with_range(datatype, number, start, end);
 	ret = cJSON_PrintUnformatted(root);
 	cJSON_Delete(root);
 	return ret;

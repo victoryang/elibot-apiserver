@@ -6,19 +6,14 @@
 #include "share/resource.h"
 #include "cJSON.h"
 
-typedef cJSON* (*RegisterFunc)();
-typedef int (*RegisterFunc1)(cJSON** item);
-typedef void (*getFunc)(cJSON*, int, int);
-
-typedef struct {
-	char 			*name;
-	RegisterFunc	func;
-}Item;
+typedef int (*RegisterFunc)(cJSON** item);
+typedef void (*getSysVarFunc)(cJSON*, int, int);
+typedef void (*getLocVarFunc)(cJSON*, int, int, int);
 
 typedef struct {
 	char 			*name;
 	cJSON 			*root;
-	RegisterFunc1	func;
+	RegisterFunc	func;
 }ResourceItem;
 
 #endif //DEFINE_H

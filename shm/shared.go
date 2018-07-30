@@ -23,6 +23,13 @@ func GetSysVar(datatype int, start int, end int) []byte {
 	return []byte(gostr)
 }
 
+func GetLocVar(datatype int, num int, start int, end int) []byte {
+	cstr := C.get_locvar_data(C.int(datatype), C.int(num), C.int(start), C.int(end))
+	gostr := C.GoString(cstr)
+	defer C.free(unsafe.Pointer(cstr))
+	return []byte(gostr)
+}
+
 func getResourceAndCompare() []byte {
 	mutex.Lock()
 	defer mutex.Unlock()
