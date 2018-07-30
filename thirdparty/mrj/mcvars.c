@@ -180,7 +180,7 @@ getLocVarFunc locVarTable[] = {
 	&get_dRobLD_with_range,
 	&get_dRobLP_with_range,
 	&get_dRobLV_with_range,
-}
+};
 
 cJSON* get_locvar_with_range(int datatype, int number, int start, int end) {
 	getLocVarFunc gf;
