@@ -25,7 +25,7 @@ func WriteSuccessResponse(w http.ResponseWriter, res string) {
 	w.Write(r)
 }
 
-func WriteJsonSuccessResponse(w http.ResponseWriter, res []byte]) {
+func WriteJsonSuccessResponse(w http.ResponseWriter, res []byte) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
 }
