@@ -12,6 +12,11 @@ func RegisterAPIv2(r *mux.Router) {
 
 	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/health", handleHealth).Methods("GET")
+	r.HandleFunc("/v2/resource/sysvar/crobb", getcrobb).Methods("GET").Queries("start", "{start}", "end", "{end}")
+	r.HandleFunc("/v2/resource/sysvar/iRobI", getiRobI).Methods("GET").Queries("start", "{start}", "end", "{end}")
+	r.HandleFunc("/v2/resource/sysvar/dRobD", getdRobD).Methods("GET").Queries("start", "{start}", "end", "{end}")
+	r.HandleFunc("/v2/resource/sysvar/dRobP", getdRobP).Methods("GET").Queries("start", "{start}", "end", "{end}")
+	r.HandleFunc("/v2/resource/sysvar/dRobV", getdRobV).Methods("GET").Queries("start", "{start}", "end", "{end}")
 
 	/*r.HandleFunc("/v2/aio", getAIO).Methods("GET")
 	r.HandleFunc("/v2/aio", setAIO).Methods("PUT")

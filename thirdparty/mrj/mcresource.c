@@ -287,7 +287,7 @@ int getSysvar(cJSON** item) {
 
 		array = cJSON_CreateArray();
 		for (i=0; i<V_COUNT; i++) {
-			cJSON_AddItemToArray(array, cJSON_CreateDoubleArray(SHARE_RES(sysvar).dRobP[i], VSub_COUNT));
+			cJSON_AddItemToArray(array, cJSON_CreateDoubleArray(SHARE_RES(sysvar).dRobV[i], VSub_COUNT));
 		}
 		cJSON_AddItemToObject(*item, "dRobV", array);
 
@@ -413,7 +413,7 @@ ResourceItem ResourceTable[] = {
 	{"servoReady", NULL, &getServoReady},
 	{"currentLine", NULL, &getCurLine},
 	{"plc", NULL, &getRobPLC},
-	{"sysvar", NULL, &getSysvar},
+	//{"sysvar", NULL, &getSysvar},
 	{"robotMode", NULL, &getRobotMode},
 	//{"locvar", NULL, &getLocvar},
 	{"locvar_num", NULL, &getLocvarNum},

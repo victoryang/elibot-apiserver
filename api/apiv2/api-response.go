@@ -25,6 +25,11 @@ func WriteSuccessResponse(w http.ResponseWriter, res string) {
 	w.Write(r)
 }
 
+func WriteSuccessResponse(w http.ResponseWriter, res []byte]) {
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)
+}
+
 type ErrorResponse struct {
 	ErrCode		int 			`json:"errcode"`
 	ErrMsg 		string			`json:"errmsg"`

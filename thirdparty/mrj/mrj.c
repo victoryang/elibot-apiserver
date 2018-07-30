@@ -2,6 +2,15 @@
 
 cJSON* resource_root;
 
+char* get_sysvar_data(int datatype, int start, int end) {
+	cJSON* root;
+	char* ret;
+	root = get_data_with_range(datatype, start, end);
+	ret = cJSON_PrintUnformatted(root);
+	cJSON_Delete(root);
+	return ret;
+}
+
 static cJSON* add_items_to_body(ResourceItem items[]) {
 	cJSON* body = cJSON_CreateObject();
 	int i;
