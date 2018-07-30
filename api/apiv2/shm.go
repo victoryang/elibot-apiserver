@@ -56,5 +56,5 @@ func getSysFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 	}
 	ret := shm.getSysVar(datatype, start, end)
-	WriteSuccessResponse(w, ret)
+	WriteJsonSuccessResponse(w, ret)
 }
