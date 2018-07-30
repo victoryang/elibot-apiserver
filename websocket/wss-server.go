@@ -17,7 +17,7 @@ const (
 
 type WsTLSServer struct {
 	httpServer 		*http.Server
-	hub 			Hub
+	hub 			*Hub
 }
 
 func (s *WsTLSServer) Run() {
