@@ -1,4 +1,4 @@
-package websokcet
+package websocket
 
 import (
 	"crypto/tls"
