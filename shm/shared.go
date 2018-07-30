@@ -16,7 +16,7 @@ import (
 var crc_shared_resource int = 0
 var resource_mutex sync.Mutex
 
-func getSysVar(datatype int, start int, end int) []byte {
+func GetSysVar(datatype int, start int, end int) []byte {
 	cstr := C.get_sysvar_data(C.int(datatype), C.int(start), C.int(end))
 	gostr := C.GoString(cstr)
 	defer C.free(unsafe.Pointer(cstr))

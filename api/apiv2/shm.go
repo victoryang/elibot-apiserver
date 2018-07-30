@@ -1,9 +1,12 @@
 package apiv2
 
 import (
+	"net/http"
 	"strconv"
 	"errors"
 	"elibot-apiserver/shm"
+
+	"github.com/gorilla/mux"
 )
 
 const (
@@ -24,7 +27,7 @@ func validate(r *http.Request) (int, int, error) {
 	if err!=nil {
 		return -1, -1, err
 	}
-	if start < 0 || end || 0 || start > end {
+	if start < 0 || end < 0 || start > end {
 		return -1, -1, errors.New("bad request value")
 	}
 	return start, end, nil
@@ -55,6 +58,6 @@ func getSysFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 	}
-	ret := shm.getSysVar(datatype, start, end)
+	ret := shm.GetSysVar(datatype, start, end)
 	WriteJsonSuccessResponse(w, ret)
 }
