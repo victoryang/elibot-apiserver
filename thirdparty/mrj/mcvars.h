@@ -8,8 +8,6 @@
 #define GetSysVardRobP 3
 #define GetSysVardRobV 4
 
-#define void (*getFunc)(int, int, int)
-
 cJSON* get_data_with_range(int datatype, int start, int end);
 
 #endif //MCVARS_H

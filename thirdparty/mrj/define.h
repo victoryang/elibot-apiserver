@@ -8,6 +8,7 @@
 
 typedef cJSON* (*RegisterFunc)();
 typedef int (*RegisterFunc1)(cJSON** item);
+typedef void (*getFunc)(int, int, int);
 
 typedef struct {
 	char 			*name;
