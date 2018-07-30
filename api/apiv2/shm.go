@@ -1,4 +1,4 @@
-package shm
+package apiv2
 
 import (
 	"strconv"

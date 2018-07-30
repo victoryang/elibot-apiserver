@@ -12,6 +12,7 @@ import (
 	"elibot-apiserver/config"
 	"elibot-apiserver/mcserver"
 	"elibot-apiserver/shm"
+	"elibot-apiserver/websocket"
 )
 
 const (
@@ -29,7 +30,7 @@ const (
 	ERR_START_SHMSERVER
 )
 
-func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *api.WsServer, shms *shm.ShmServer) {
+func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *websocket.WsServer, shms *shm.ShmServer) {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
@@ -112,7 +113,7 @@ func main() {
 		os.Exit(ERR_START_GRPCSERVER)
 	}
 
-	wss := api.NewWsServer(cfg.Websocket)
+	wss := websocket.NewWsServer(cfg.Websocket)
 	wss.Run()
 
 	shms,err := shm.NewServer(wss)
