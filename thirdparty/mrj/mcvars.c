@@ -16,6 +16,7 @@ void get_cRobB_with_range(cJSON* root, int start, int end) {
 
 void get_iRobI_with_range(cJSON* root, int start, int end) {
 	int i=0;
+	cJSON *array;
 	if (start > I_COUNT) {
 		return;
 	}
@@ -30,6 +31,7 @@ void get_iRobI_with_range(cJSON* root, int start, int end) {
 
 void get_dRobD_with_range(cJSON* root, int start, int end) {
 	double *base;
+	int count;
 	if (start > D_COUNT) {
 		return;
 	}
@@ -49,7 +51,7 @@ void get_dRobP_with_range(cJSON* root, int start, int end) {
 	}
 	
 	array = cJSON_CreateArray();
-	for (i=start; i<end, i++) {
+	for (i=start; i<end; i++) {
 		cJSON_AddItemToArray(array, cJSON_CreateDoubleArray(SHARE_RES(sysvar).dRobP[i], AXIS_COUNT));
 	}
 	cJSON_AddItemToObject(root, "dRobP", array);
@@ -62,24 +64,24 @@ void get_dRobV_with_range(cJSON* root, int start, int end) {
 		return;
 	}
 	array = cJSON_CreateArray();
-	for (i=start; i<end, i++) {
+	for (i=start; i<end; i++) {
 		cJSON_AddItemToArray(array, cJSON_CreateDoubleArray(SHARE_RES(sysvar).dRobV[i], VSub_COUNT));
 	}
 	cJSON_AddItemToObject(root, "dRobV", array);
 }
 
 getFunc getTable[] = {
-	get_cRobB_with_range,
-	get_iRobI_with_range,
-	get_dRobD_with_range,
-	get_dRobP_with_range,
-	get_dRobV_with_range,
+	&get_cRobB_with_range,
+	&get_iRobI_with_range,
+	&get_dRobD_with_range,
+	&get_dRobP_with_range,
+	&get_dRobV_with_range,
 };
 
 cJSON* get_data_with_range(int datatype, int start, int end) {
 	getFunc gf;
 	cJSON* root=NULL;
-	switch datatype {
+	switch (datatype) {
 		case GetSysVarcRobB:
 		case GetSysVariRobI:
 		case GetSysVardRobD:
