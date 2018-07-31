@@ -14,5 +14,5 @@ sudo cp build/lib/libz.so.1.2.8  /usr/arm-linux-gnueabihf/lib/
 sudo ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1
 sudo mkdir /root/mcserver/
 sudo tar -xvf build/include/include.tar.gz -C /root/mcserver/
-sudo cp build/include/config.h .
+sudo cp build/include/config.h /root/mcserver/
 sudo cp build/lib/libshare.a /usr/arm-linux-gnueabihf/lib/
