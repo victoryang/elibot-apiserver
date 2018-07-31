@@ -1,13 +1,5 @@
 #!/bin/sh
 
-export GOROOT=/usr/local/go
-export GOPATH=/root/go
-export PATH=${GOPATH}/bin:${GOROOT}/bin:${PATH}
-export GO_VERSION=1.10
-export GO_DOWNLOAD_URL=https://storage.googleapis.com/golang
-export APISERVER_GIT=https://github.com/victoryang/elibot-apiserver.git
-export MCSERVER=/root/mcserver
-
 # install gcc-arm tool chain
 sudo apt-get update >/dev/null
 sudo apt-get install -y cd

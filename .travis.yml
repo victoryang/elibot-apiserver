@@ -7,26 +7,21 @@ go:
   - "1.10.x"
 go_import_path: ${GOPATH}/src/
 
-env:
-  - APISERVER_GIT=https://github.com/victoryang/elibot-apiserver.git
-  - MCSERVER=/root/mcserver/
-
 go_import_path: github.com/victoryang/elibot-apiserver
 
 install:
   - chmod +x travis-ci/install.sh && sh -C travis-ci/install.sh
 
 script:
-  - sudo su
-  - cd ${GOPATH}/src/
-  - git clone ${APISERVER_GIT}
-  - cd elibot-apiserver/build/
-  - cp lib/libsqlitedb.so /usr/lib/gcc-cross/arm-linux-gnueabihf/4.8
-  - cp lib/libz.so.1.2.8  /usr/arm-linux-gnueabihf/lib/
+  - cp build/lib/libsqlitedb.so /usr/lib/gcc-cross/arm-linux-gnueabihf/4.8
+  - cp build/lib/libz.so.1.2.8  /usr/arm-linux-gnueabihf/lib/
   - ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1
-  - mkdir ${MCSERVER}
-  - tar -xvf include/include.tar.gz -C ${MCSERVER}
-  - cp lib/libshare.a /usr/arm-linux-gnueabihf/lib/
+  - mkdir /root/mcserver/
+  - tar -xvf build/include/include.tar.gz -C /root/mcserver/
+  - cp build/lib/libshare.a /usr/arm-linux-gnueabihf/lib/
+  - cd thirdparty/mcsql/ && make
+  - cd ../mrj/ && make
+  - cd ../..
   - chmod +x travis-ci/build.sh && sh -C travis-ci/build.sh
 
 deploy:
