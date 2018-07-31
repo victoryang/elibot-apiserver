@@ -17,15 +17,16 @@ install:
   - chmod +x travis-ci/install.sh && sh -C travis-ci/install.sh
 
 script:
-  - sudo cd ${GOPATH}/src/
-  - sudo git clone ${APISERVER_GIT}
-  - sudo cd elibot-apiserver/build/
-  - sudo cp lib/libsqlitedb.so /usr/lib/gcc-cross/arm-linux-gnueabihf/4.8
-  - sudo cp lib/libz.so.1.2.8  /usr/arm-linux-gnueabihf/lib/
-  - sudo ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1
-  - sudo mkdir ${MCSERVER}
-  - sudo tar -xvf include/include.tar.gz -C ${MCSERVER}
-  - sudo cp lib/libshare.a /usr/arm-linux-gnueabihf/lib/
+  - sudo su
+  - cd ${GOPATH}/src/
+  - git clone ${APISERVER_GIT}
+  - cd elibot-apiserver/build/
+  - cp lib/libsqlitedb.so /usr/lib/gcc-cross/arm-linux-gnueabihf/4.8
+  - cp lib/libz.so.1.2.8  /usr/arm-linux-gnueabihf/lib/
+  - ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1
+  - mkdir ${MCSERVER}
+  - tar -xvf include/include.tar.gz -C ${MCSERVER}
+  - cp lib/libshare.a /usr/arm-linux-gnueabihf/lib/
   - chmod +x travis-ci/build.sh && sh -C travis-ci/build.sh
 
 deploy:
