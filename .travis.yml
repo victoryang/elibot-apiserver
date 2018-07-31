@@ -1,6 +1,12 @@
 sudo: required
 dist: trusty
 
+language: go
+
+go:
+  - "1.10.x"
+go_import_path: ${GOPATH}/src/
+
 env:
   - 
 
@@ -10,8 +16,7 @@ install:
   - chmod +x travis-ci/install.sh && sh -C travis-ci/install.sh
 
 script:
-  - cd thirdparty/mcsql/ && make
-  - cd ../..
+  - chmod +x travis-ci/build.sh && sh -C travis-ci/build.sh
 
 deploy:
   provider: releases

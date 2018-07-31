@@ -16,9 +16,12 @@ sudo apt-get install -y g++-arm-linux-gnueabi
 #sudo apt-get install lib64z1 
 # This library should be replaced with the one which is competible to libsqlitedb.so
 # which is provided in build directory(a linux sysV version for arm board)
-cp libsqlitedb /usr/lib/gcc-cross/arm-linux-gnueabihf/5/
-cp libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/ 
+cp ../lib/libsqlitedb /usr/lib/gcc-cross/arm-linux-gnueabihf/5/
+cp ../lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/ 
 ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1
+cp ../lib/libshare.a /usr/arm-linux-gnueabihf/lib/
+sudo mkdir /root/mcserver
+sudo tar -xvf include/include.tar.gz -C /root/mcserver/
 
 #env GOOS=linux GOARCH=arm64 go build -o elibot-server
 
