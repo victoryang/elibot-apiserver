@@ -9,4 +9,7 @@
 # sed -i 's/shms,err := shm.NewServer(wss)/var err error = nil/g' main.go
 # sed -i '/Log.Error(err.Error())/d' main.go
 
+make -f thirdparty/mcsql/Makefile
+make -f thirdparty/mrj/Makefile
+
 CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 go build -v -o elibot-server
