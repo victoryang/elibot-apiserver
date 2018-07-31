@@ -12,8 +12,6 @@ install:
   - chmod +x travis-ci/install.sh && sh -C travis-ci/install.sh
 
 script:
-  - mkdir ${GOPATH}/src/elibot-apiserver
-  - cp -a * ${GOPATH}/src/elibot-apiserver
   - chmod +x travis-ci/build.sh && sh -C travis-ci/build.sh
 
 deploy:
