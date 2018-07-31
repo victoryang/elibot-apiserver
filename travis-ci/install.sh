@@ -19,7 +19,8 @@ sudo apt-get install -y g++-arm-linux-gnueabihf
 # include go tool
 sudo mkdir ${GOROOT}
 sudo mkdir ${GOPATH}
-sudo curl -s ${GO_DOWNLOAD_URL}/go${GO_VERSION}.linux-amd64.tar.gz | tar -v -C /usr/local/ -xz
+sudo curl -s ${GO_DOWNLOAD_URL}/go${GO_VERSION}.linux-amd64.tar.gz 
+sudo tar -v -C /usr/local/ -xz go${GO_VERSION}.linux-amd64.tar.gz
 sudo mkdir -p ${GOPATH}/src ${GOPATH}/bin
 
 # install build dependency
