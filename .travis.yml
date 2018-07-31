@@ -1,26 +1,17 @@
 sudo: required
 dist: trusty
 
-language: go
-go:
-  - "1.8"
-
 env:
   - 
 
 go_import_path: github.com/victoryang/elibot-apiserver
 
 install:
-  - sudo cp travis-ci/libsqlitedb.so /usr/lib/
-  - sudo tar -xvf build/include.tar.gz -C /root/
+  - chmod +x travis-ci/install.sh && sh -C travis-ci/install.sh
 
 script:
-  - mkdir -p $HOME/gopath/src/elibot-apiserver
-  - cp -r $HOME/gopath/src/github.com/victoryang/elibot-apiserver/ $HOME/gopath/src/
-  - cd $HOME/gopath/src/elibot-apiserver/
   - cd thirdparty/mcsql/ && make
   - cd ../..
-  - chmod +x build/go-build.sh && sh -C build/go-build.sh
 
 deploy:
   provider: releases
