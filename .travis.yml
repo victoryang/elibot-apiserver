@@ -19,9 +19,8 @@ script:
   - sudo mkdir /root/mcserver/
   - sudo tar -xvf build/include/include.tar.gz -C /root/mcserver/
   - sudo cp build/lib/libshare.a /usr/arm-linux-gnueabihf/lib/
-  - sudo cd thirdparty/mcsql/ && make
-  - sudo cd ../mrj/ && make
-  - sudo cd ../..
+  - make -f thirdparty/mcsql/Makefile
+  - make -f thirdparty/mrj/Makefile
   - chmod +x travis-ci/build.sh && sh -C travis-ci/build.sh
 
 deploy:
