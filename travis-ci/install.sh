@@ -9,7 +9,8 @@ export APISERVER_GIT=https://github.com/victoryang/elibot-apiserver.git
 export MCSERVER=/root/mcserver
 
 # install gcc-arm tool chain
-sudo apt-get update && apt-get install -y git curl
+sudo apt-get update >/dev/null
+sudo apt-get install -y git curl
 sudo apt-get install -y libc6-armel-cross libc6-dev-armel-cross
 sudo apt-get install -y binutils-arm-linux-gnueabi binutils-arm-linux-gnueabihf
 sudo apt-get install -y libncurses5-dev
