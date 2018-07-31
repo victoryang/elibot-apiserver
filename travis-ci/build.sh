@@ -9,8 +9,12 @@
 # sed -i 's/shms,err := shm.NewServer(wss)/var err error = nil/g' main.go
 # sed -i '/Log.Error(err.Error())/d' main.go
 
+sed -i 's/\/root\/mcserver/\/usr\/local\/include\/mcserver/g' thirdparty/mcsql/Makefile
+sed -i 's/\/root\/mcserver/\/usr\/local\/include\/mcserver/g' thirdparty/mrj/Makefile
+sed -i 's/\/root\/mcserver/\/usr\/local\/include\/mcserver/g' sqlitedb/db_query.go
+sed -i 's/\/root\/mcserver/\/usr\/local\/include\/mcserver/g' shm/worker.go
+
 sudo make -C thirdparty/mcsql/
 sudo make -C thirdparty/mrj/
 
-sudo su
 CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 go build -v -o elibot-server

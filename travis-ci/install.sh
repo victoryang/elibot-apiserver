@@ -12,7 +12,7 @@ sudo apt-get install -y g++-arm-linux-gnueabihf >/dev/null
 sudo cp build/lib/libsqlitedb.so /usr/lib/gcc-cross/arm-linux-gnueabihf/4.8
 sudo cp build/lib/libz.so.1.2.8  /usr/arm-linux-gnueabihf/lib/
 sudo ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/lib/libz.so.1
-sudo mkdir /root/mcserver/
-sudo tar -xvf build/include/include.tar.gz -C /root/mcserver/
-sudo cp build/include/config.h /root/mcserver/
+sudo mkdir /usr/local/include/mcserver/
+sudo tar -xvf build/include/include.tar.gz -C /usr/local/include/mcserver/
+sudo cp build/include/config.h /usr/local/include/mcserver/
 sudo cp build/lib/libshare.a /usr/arm-linux-gnueabihf/lib/
