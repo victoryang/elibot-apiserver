@@ -1,0 +1,27 @@
+RequestBody:
+  type: object
+  required:
+  - value
+  properties:
+    value:
+      type: string
+    index:
+      type: string
+    notes:
+      type: string
+RequestBody1:
+  type: object
+  required:
+  - value
+  properties:
+    value:
+      type: string
+    index:
+      type: string
+RequestBody2:
+  type: object
+  required:
+  - value
+  properties:
+    value:
+      type: string

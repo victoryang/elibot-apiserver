@@ -5,7 +5,8 @@ import (
 	"time"
 	"context"
 
-	apiv1 "elibot-apiserver/api/v1"
+	"elibot-apiserver/api/apiv1"
+	"elibot-apiserver/api/apiv2"
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/middleware"
 	"elibot-apiserver/middleware/accesslog"
@@ -55,13 +56,15 @@ func (s *Server) configServerHandler() http.Handler {
 
 	n := negroni.New(negroni.NewRecovery())
 
-	s.AccessLog.Logger = middleware.AddAccesslog(n, s.AccessLog.File)
-	if s.AccessLog.Logger!=nil {
+	if logger, err := accesslog.NewLogger(s.AccessLog.File); err == nil {
+		s.AccessLog.Logger = logger
 		n.Use(s.AccessLog.Logger)
 	}
 	
-	n.UseHandler(apiv1.RegisterAPIRouter(r))
-	
+	n.Use(middleware.NewCorsHandler())
+
+	n.UseHandler(apiv1.RegisterAPIv1(r))
+	apiv2.RegisterAPIv2(r)
 	// Register all routers.
 	return n
 }

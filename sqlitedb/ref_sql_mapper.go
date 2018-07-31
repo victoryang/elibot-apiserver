@@ -1,7 +1,7 @@
 package sqlitedb
 
 // #include<stdlib.h>
-// #include<include/ref_sql_mapper.h>
+// #include<db/sqlmapper/ref_sql_mapper.h>
 import "C"
 import (
 	"errors"

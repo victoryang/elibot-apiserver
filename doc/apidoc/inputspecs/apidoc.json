@@ -1,0 +1,20 @@
+{
+  "name": "elibot-apiserver",
+  "version": "0.1.0",
+  "description": "apidoc project",
+  "title": "apidoc for apiserver",
+  "url" : "http://{mcserver_ip}:9000",
+  "sampleUrl": "http://{mcserver_ip}:9000",
+  "header": {
+    "title": "My own header title",
+    "filename": "header.md"
+  },
+  "footer": {
+    "title": "My own footer title",
+    "filename": "footer.md"
+  },
+  "template": {
+        "withCompare": true,
+        "withGenerator": true
+  }
+}

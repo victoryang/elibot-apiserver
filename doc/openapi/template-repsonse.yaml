@@ -1,0 +1,4 @@
+Response:
+  description: For all responses
+  schema:
+    $ref: '#/definitions/ResponseBody'

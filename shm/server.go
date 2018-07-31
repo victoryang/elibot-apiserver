@@ -3,7 +3,7 @@ package shm
 import(
 	"context"
 	"fmt"
-	"elibot-apiserver/api"
+	"elibot-apiserver/websocket"
 	Log "elibot-apiserver/log"
 )
 
@@ -13,13 +13,13 @@ const (
 )
 
 type ShmServer struct {
-	Wss 		*api.WsServer
+	Wss 		*websocket.WsServer
 	Hit 		chan []byte
 	Ctx 		context.Context
 	Cancel 		context.CancelFunc
 }
 
-func sender(ctx context.Context, ws *api.WsServer, hit chan []byte) {
+func sender(ctx context.Context, ws *websocket.WsServer, hit chan []byte) {
 	Log.Print("Shared memory server started...")
 
 	DONE:
@@ -49,7 +49,7 @@ func (s *ShmServer) StartToWatch() {
 	go sender(s.Ctx, s.Wss, s.Hit)
 }
 
-func NewServer(server *api.WsServer) (*ShmServer, error){
+func NewServer(server *websocket.WsServer) (*ShmServer, error){
 	s := new(ShmServer)
 	ctx, cancel := context.WithCancel(context.Background())
 	s = &ShmServer{

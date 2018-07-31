@@ -28,13 +28,13 @@ func setConnDeadline(conn net.Conn) {
 func HandleCommand(conn net.Conn, command string) (string, error) {
 	setConnDeadline(conn)
 
-	err := writeline(conn, command)
+	err := writeConn(conn, command)
 	if err!=nil {
 		freeConn(conn)
 		return "", err
 	}
 
-	res, err := readline(conn)
+	res, err := readConn(conn)
 	if err!=nil {
 		freeConn(conn)
 		return "", err

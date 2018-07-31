@@ -16,8 +16,8 @@ import(
 )
 
 const (
-	duration = 5
-	watchPeriod = time.Second * duration
+	duration = 500
+	watchPeriod = time.Millisecond * duration
 )
 
 type WatchFunc func(chan []byte)

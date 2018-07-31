@@ -1,7 +1,7 @@
 package sqlitedb
 
 // #include<stdlib.h>
-// #include<include/zeropoint_sql_mapper.h>
+// #include<db/sqlmapper/zeropoint_sql_mapper.h>
 import "C"
 import (
 	"errors"
