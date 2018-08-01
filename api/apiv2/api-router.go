@@ -80,33 +80,11 @@ func RegisterAPIv2(r *mux.Router) {
 	extdeviceapi.HandleFunc("/vision/enable", enableVision).Methods("GET")
 	extdeviceapi.HandleFunc("/vision/disable", disableVision).Methods("GET")*/
 
-	/*arcweldingapi := robotapi.PathPrefix("/arcwelding").Subrouter()
-	arcweldingapi.HandleFunc("/arcen", setArcEn).Methods("PUT")
-	arcweldingapi.HandleFunc("/diandong", setDiandong).Methods("PUT")
-	arcweldingapi.HandleFunc("/songqi", setSongqi).Methods("PUT")
-	arcweldingapi.HandleFunc("/arcweldpara", setArcWeldPara).Methods("PUT")
-	arcweldingapi.HandleFunc("/arcweldpara", saveArcWeldPara).Methods("POST")
-	arcweldingapi.HandleFunc("/weavepara", setWeavePara).Methods("PUT")
-	arcweldingapi.HandleFunc("/weavepara", saveWeavePara).Methods("POST")
-
-	autosettoolapi := robotapi.PathPrefix("/autosettool").Subrouter()
-	autosettoolapi.HandleFunc("/toolframe", setToolFrame).Methods("PUT")
-	autosettoolapi.HandleFunc("/autotoolframe", autoSetToolFrame).Methods("PUT")
-	autosettoolapi.HandleFunc("/toolpos", setToolPos).Methods("PUT")
-	autosettoolapi.HandleFunc("/toolnum", setToolNum).Methods("PUT")
-	autosettoolapi.HandleFunc("/toolnote", setToolNote).Methods("PUT")
-
+	/*
 	bookprogrameapi := robotapi.PathPrefix("/bookprograme").Subrouter()
 	bookprogrameapi.HandleFunc("/", deleteRunFile).Methods("DELETE")
 	bookprogrameapi.HandleFunc("/", deleteRunFile).Methods("PUT")
 	bookprogrameapi.HandleFunc("/enable", setBookProgEnable).Methods("PUT")
-
-	extaxisapi := robotapi.PathPrefix("/extaxis").Subrouter()
-	extaxisapi.HandleFunc("/", setExtAxis).Methods("PUT")
-	extaxisapi.HandleFunc("/", setExtAxis).Methods("DELETE")
-	extaxisapi.HandleFunc("/cooperate", setExtAxisCooperate).Methods("PUT")
-	extaxisapi.HandleFunc("/gotopos", gotoExtAxisPos).Methods("POST")
-	extaxisapi.HandleFunc("/pos", setExtAxisPos).Methods("PUT")
 
 	interferenceapi := robotapi.PathPrefix("/interference").Subrouter()
 	interferenceapi.HandleFunc("/", setInterference).Methods("PUT")
