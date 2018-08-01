@@ -15,9 +15,15 @@ const (
 	drobd = 2
 	drobp = 3
 	drobv = 4
+
+	croblb = crobb
+	irobli = irobi
+	drobld = drobd
+	droblp = drobp
+	droblv = drobv
 )
 
-func validate(r *http.Request) (int, int, error) {
+func validateRange(r *http.Request) (int, int, error) {
 	vars := mux.Vars(r)
 	start, err := strconv.Atoi(vars["start"])
 	if err!=nil {
@@ -54,43 +60,43 @@ func getdRobV(w http.ResponseWriter, r *http.Request) {
 }
 
 func getSysFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
-	start, end, err := validate(r)
+	start, end, err := validateRange(r)
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
 	}
 	ret := shm.GetSysVar(datatype, start, end)
 	WriteJsonSuccessResponse(w, ret)
 }
 
 func getcrobLb(w http.ResponseWriter, r *http.Request) {
-	getLocFromShm(crobb, w, r)
+	getLocFromShm(croblb, w, r)
 }
 
 func getiRobLI(w http.ResponseWriter, r *http.Request) {
-	getLocFromShm(irobi, w, r)
+	getLocFromShm(irobli, w, r)
 }
 
 func getdRobLD(w http.ResponseWriter, r *http.Request) {
-	getLocFromShm(drobd, w, r)
+	getLocFromShm(drobld, w, r)
 }
 
 func getdRobLP(w http.ResponseWriter, r *http.Request) {
-	getLocFromShm(drobp, w, r)
+	getLocFromShm(droblp, w, r)
 }
 
 func getdRobLV(w http.ResponseWriter, r *http.Request) {
-	getLocFromShm(drobv, w, r)
+	getLocFromShm(droblv, w, r)
 }
 
 func getLocFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
-	start, end, err := validate(r)
+	start, end, err := validateRange(r)
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
 	}
 	vars := mux.Vars(r)
 	num, err := strconv.Atoi(vars["num"])
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
 	}
 	ret := shm.GetLocVar(datatype, num, start, end)
 	WriteJsonSuccessResponse(w, ret)

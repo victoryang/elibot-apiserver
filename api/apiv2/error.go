@@ -7,6 +7,7 @@ const (
 	ERRMCSEVERNOTAVAILABLE = 101
 	ERRREQUESTTIMEOUT = 102
 	ERRREQUESTFAIL = 103
+	ERRINCORRECTRANGE = 104
 )
 
 var ErrStringMap = map[int]string {
@@ -14,6 +15,7 @@ var ErrStringMap = map[int]string {
 	ERRMCSEVERNOTAVAILABLE:			"Mcserver is not available right now",
 	ERRREQUESTTIMEOUT:				"Request times out or cancelled",
 	ERRREQUESTFAIL:					"Request fails",
+	ERRINCORRECTRANGE:				"Request range is incorrect",
 }
 
 func ErrMsg(errno int) string {
