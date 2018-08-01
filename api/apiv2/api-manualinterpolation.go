@@ -54,7 +54,7 @@ func runForward(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("run forward ", d.Values[:])
-	cmd := ConcatCommand(cmdRunForward, d.Values[:])
+	cmd := ConcatCommand(cmdRunForward, d.Values...)
 	SendToMCServerWithTimeout(w, r, cmd, TagManualInterpolation)
 }
 

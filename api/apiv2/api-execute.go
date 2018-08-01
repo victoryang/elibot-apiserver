@@ -65,7 +65,7 @@ func setSpeed(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
 }
 
-func mainfile(w http.ResponseWriter, r *http.Request) {
+func setMainfile(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	filename := vars["filename"]
 
