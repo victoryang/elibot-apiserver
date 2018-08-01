@@ -14,6 +14,7 @@ var ErrStringMap = map[int]string {
 	ERRMCSEVERNOTAVAILABLE:			"Mcserver is not available right now",
 	ERRREQUESTTIMEOUT:				"Request times out or cancelled",
 	ERRREQUESTFAIL:					"Request fails",
+	ERRINCORRECTRANGE:				"Request range is incorrect"
 }
 
 func ErrMsg(errno int) string {
