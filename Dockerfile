@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 
-RUN apt-get update && apt-get install -y git curl
+RUN apt-get update && apt-get install -y git curl make
 
 RUN apt-get install -y libc6-armel-cross libc6-dev-armel-cross \
     && apt-get install -y binutils-arm-linux-gnueabi \
