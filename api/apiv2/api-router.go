@@ -78,26 +78,19 @@ func RegisterAPIv2(r *mux.Router) {
 	extdeviceapi.HandleFunc("/distsenserdata", setDistSenserdata).Methods("PUT")
 	extdeviceapi.HandleFunc("/distsenserdata", saveDistSenserdata).Methods("POST")
 	extdeviceapi.HandleFunc("/vision/enable", enableVision).Methods("GET")
-	extdeviceapi.HandleFunc("/vision/disable", disableVision).Methods("GET")*/
+	extdeviceapi.HandleFunc("/vision/disable", disableVision).Methods("GET")
 
-	/*
 	bookprogrameapi := robotapi.PathPrefix("/bookprograme").Subrouter()
 	bookprogrameapi.HandleFunc("/", deleteRunFile).Methods("DELETE")
 	bookprogrameapi.HandleFunc("/", deleteRunFile).Methods("PUT")
 	bookprogrameapi.HandleFunc("/enable", setBookProgEnable).Methods("PUT")
 
-	interferenceapi := robotapi.PathPrefix("/interference").Subrouter()
-	interferenceapi.HandleFunc("/", setInterference).Methods("PUT")
-	interferenceapi.HandleFunc("/pos", setInterferencePos).Methods("PUT")
-	interferenceapi.HandleFunc("/gotopos", gotoInterferencepos).Methods("POST")
-	interferenceapi.HandleFunc("/", resetInterference).Methods("DELETE")
-
 	multipleSinapi := robotapi.PathPrefix("/multipleSin").Subrouter()
 	multipleSinapi.HandleFunc("/mulsinx", mulsinx).Methods("PUT")
 	multipleSinapi.HandleFunc("/sinpos", setMovxJoint).Methods("PUT")
-	multipleSinapi.HandleFunc("/sinpos", gotoSinpos).Methods("GET")*/
+	multipleSinapi.HandleFunc("/sinpos", gotoSinpos).Methods("GET")
 
-	/*robotapi.HandleFunc("/parameters", setParameters).Methods("PUT")
+	robotapi.HandleFunc("/parameters", setParameters).Methods("PUT")
 
 	robcalibrateapi := robotapi.PathPrefix("/robcalibrate").Subrouter()
 	robcalibrateapi.HandleFunc("/autocalczero", setAutoCalcZero).Methods("PUT").Queries("filename", "{filename}")
