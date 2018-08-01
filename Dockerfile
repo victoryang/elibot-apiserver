@@ -20,4 +20,4 @@ RUN rm -rf ${GOROOT} \
 
 WORKDIR ${GOPATH}/src/elibot-apiserver/
 
-CMD ["post-install.sh"]
+CMD ["./post-install.sh"]
