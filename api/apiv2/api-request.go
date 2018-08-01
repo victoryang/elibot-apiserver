@@ -9,6 +9,8 @@ type RequestData struct {
 	// required: true
 	Value 		string 		`json:"value,omitempty"`
 
+	Values 		[]string	`json:"values,omitempty"`
+
 	// some certain notes
 	Note		[]string    `json:"note,omitempty`
 }
