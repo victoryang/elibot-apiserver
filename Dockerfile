@@ -14,7 +14,7 @@ ENV PATH ${GOPATH}/bin:${GOROOT}/bin:${PATH}
 ENV GO_VERSION 1.10
 ENV GO_DOWNLOAD_URL https://dl.google.com/go
 RUN rm -rf ${GOROOT} \
-  && curl ${GO_DOWNLOAD_URL}/go${GO_VERSION}.linux-amd64.tar.gz | tar -v -C /usr/local/ -xz \
+  && curl -s ${GO_DOWNLOAD_URL}/go${GO_VERSION}.linux-amd64.tar.gz | tar -v -C /usr/local/ -xz \
   && mkdir -p ${GOPATH}/src ${GOPATH}/bin \
   && go version
 
