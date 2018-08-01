@@ -12,7 +12,7 @@ ENV GOROOT /usr/local/go
 ENV GOPATH /root/go
 ENV PATH ${GOPATH}/bin:${GOROOT}/bin:${PATH}
 ENV GO_VERSION 1.10
-ENV GO_DOWNLOAD_URL https://storage.googleapis.com/golang
+ENV GO_DOWNLOAD_URL https://dl.google.com/go
 RUN rm -rf ${GOROOT} \
   && wget ${GO_DOWNLOAD_URL}/go${GO_VERSION}.linux-amd64.tar.gz | tar -v -C /usr/local/ -xz \
   && mkdir -p ${GOPATH}/src ${GOPATH}/bin \
