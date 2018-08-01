@@ -89,7 +89,7 @@ func getdRobLV(w http.ResponseWriter, r *http.Request) {
 }
 
 func getLocFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
-	start, end, err := validate(r)
+	start, end, err := validateRange(r)
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
 	}
