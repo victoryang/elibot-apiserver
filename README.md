@@ -4,6 +4,6 @@
 A api server for elibot
 
 
-## docker build
-docker build .
-docker run -it --rm -v '${PWD}:/root/go/elibot-apiserver/'
+## docker
+docker build -t apiserver:apiserver .
+docker run -it --rm -v '${PWD}:/root/go/src/elibot-apiserver/' apiserver:apiserver
