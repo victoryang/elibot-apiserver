@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func Registerapiv1(r *mux.Router) {
+func Registerapiv1(r *mux.Router) http.Handler {
 	Log.Debug("Register V2 api...")
 
 	r.HandleFunc("/", hello).Methods("GET")
@@ -144,5 +144,5 @@ func Registerapiv1(r *mux.Router) {
 	visiondataapi.HandleFunc("/datarefresh", dataReresh).Methods("POST")
 	visiondataapi.HandleFunc("/gotopoint", goToPoint).Methods("POST")*/
 
-	return
+	return r
 }
