@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func Registerapiv1(r *mux.Router) http.Handler {
+func RegisterAPIv1(r *mux.Router) http.Handler {
 	Log.Debug("Register V1 api...")
 
 	r.HandleFunc("/", hello).Methods("GET")
