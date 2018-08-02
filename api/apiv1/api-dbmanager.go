@@ -19,7 +19,7 @@ func DBBackup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, []byte("succeed in backup\n"))
+	WriteSuccessResponse(w, "succeed in backup")
 }
 
 func DBList(w http.ResponseWriter, r *http.Request) {
@@ -31,8 +31,7 @@ func DBList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res, _ := json.Marshal(files)
-	WriteSuccessResponse(w, res)
+	WriteSuccessResponse(w, files)
 }
 
 func DBDel(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +44,7 @@ func DBDel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, []byte("db detelted\n"))
+	WriteSuccessResponse(w, "db detelted")
 }
 
 func DBRestore(w http.ResponseWriter, r *http.Request) {
@@ -58,5 +57,5 @@ func DBRestore(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, []byte("succeed in restore\n"))
+	WriteSuccessResponse(w, "succeed in restore")
 }

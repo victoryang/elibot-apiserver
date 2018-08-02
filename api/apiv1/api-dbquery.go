@@ -18,7 +18,7 @@ func getAllArc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getArcParams(w http.ResponseWriter, r *http.Request) {
@@ -35,7 +35,7 @@ func getArcParams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
@@ -46,7 +46,7 @@ func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllEnum(w http.ResponseWriter, r *http.Request) {
@@ -57,7 +57,7 @@ func getAllEnum(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
@@ -68,7 +68,7 @@ func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllInterference(w http.ResponseWriter, r *http.Request) {
@@ -79,7 +79,7 @@ func getAllInterference(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllIO(w http.ResponseWriter, r *http.Request) {
@@ -90,7 +90,7 @@ func getAllIO(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllMetadata(w http.ResponseWriter, r *http.Request) {
@@ -105,7 +105,7 @@ func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getParams(w http.ResponseWriter, r *http.Request) {
@@ -116,7 +116,7 @@ func getParams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getParameterById(w http.ResponseWriter, r *http.Request) {
@@ -131,7 +131,7 @@ func getParameterById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func parameterbygroup(w http.ResponseWriter, r *http.Request) {
@@ -145,7 +145,7 @@ func parameterbygroup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllRef(w http.ResponseWriter, r *http.Request) {
@@ -156,7 +156,7 @@ func getAllRef(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllToolframe(w http.ResponseWriter, r *http.Request) {
@@ -167,7 +167,7 @@ func getAllToolframe(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllUserframe(w http.ResponseWriter, r *http.Request) {
@@ -178,7 +178,7 @@ func getAllUserframe(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
@@ -189,5 +189,5 @@ func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
