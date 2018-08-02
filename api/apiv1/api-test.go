@@ -43,7 +43,7 @@ func testSocket(w http.ResponseWriter, r *http.Request) {
 			Log.Error("test fail: ", r.Err)
 			WriteInternalServerErrorResponse(w, ERRQUERY)
 		} else {
-			WriteSuccessResponse(w, []byte(r.Result))
+			WriteSuccessResponse(w, r.Result)
 		}
 	}
 }

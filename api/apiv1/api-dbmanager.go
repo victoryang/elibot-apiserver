@@ -31,7 +31,8 @@ func DBList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, files)
+	res, _ := json.Marshal(files)
+	WriteJsonSuccessResponse(w, files)
 }
 
 func DBDel(w http.ResponseWriter, r *http.Request) {

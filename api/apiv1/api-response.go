@@ -21,8 +21,7 @@ func ToSuccessJson(msg string) []byte {
 // WriteSuccessResponse write success headers and response if any.
 func WriteSuccessResponse(w http.ResponseWriter, res string) {
 	r := ToSuccessJson(res)
-	w.WriteHeader(http.StatusOK)
-	w.Write(r)
+	WriteJsonSuccessResponse(w, r)
 }
 
 func WriteJsonSuccessResponse(w http.ResponseWriter, res []byte) {
