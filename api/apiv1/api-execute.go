@@ -1,4 +1,4 @@
-package apiv2
+package apiv1
 
 import (
 	"net/http"
@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	TagExecute = "apiv2:robot:execute"
+	TagExecute = "apiv1:robot:execute"
 
 	cmdRun = "run"
 	cmdPause = "pause"

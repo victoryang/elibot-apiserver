@@ -1,4 +1,4 @@
-package apiv2
+package apiv1
 
 import (
 	"net/http"
@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	TagVisionData = "apiv2:robot:visiondata"
+	TagVisionData = "apiv1:robot:visiondata"
 
 	cmdSetVisionCraftNum = "set_visioncraftnum"
 	cmdSetVisionDataNote = "set_visiondatanote"

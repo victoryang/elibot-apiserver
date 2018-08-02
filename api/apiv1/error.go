@@ -3,21 +3,31 @@ package apiv1
 const (
 	NONE = iota
 
-	ERRBACKUPDB = 100
-	ERRLISTDBS = 101
-	ERRDELETEDB = 102
-	ERRRESTOREDB = 103
+	ERRINVALIDBODY = 100
+	ERRMCSEVERNOTAVAILABLE = 101
+	ERRREQUESTTIMEOUT = 102
+	ERRREQUESTFAIL = 103
+	ERRINCORRECTRANGE = 104
+	ERRQUERY = 105
 
-	ERRQUERY = 104
+	ERRBACKUPDB = 200
+	ERRLISTDBS = 201
+	ERRDELETEDB = 202
+	ERRRESTOREDB = 203
 )
 
 var ErrStringMap = map[int]string {
+	ERRINVALIDBODY: 				"Could not parse request body",
+	ERRMCSEVERNOTAVAILABLE:			"Mcserver is not available right now",
+	ERRREQUESTTIMEOUT:				"Request times out or cancelled",
+	ERRREQUESTFAIL:					"Request fails",
+	ERRINCORRECTRANGE:				"Request range is incorrect",
+	ERRQUERY:						"Fail to query",
+
 	ERRBACKUPDB: 				"Fail to backup db",
 	ERRLISTDBS: 				"Fail to list dbs",
 	ERRDELETEDB:				"Fail to delete db",
 	ERRRESTOREDB: 				"Fail to restore db",
-
-	ERRQUERY:					"Fail to query",
 }
 
 func ErrMsg(errno int) string {

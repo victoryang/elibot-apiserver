@@ -1,4 +1,4 @@
-package apiv2
+package apiv1
 
 import (
 	"net/http"
@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	TagManualInterpolation = "apiv2:robot:manualinterpolation"
+	TagManualInterpolation = "apiv1:robot:manualinterpolation"
 
 	cmdCoord = "coord"
 	cmdStop = "stop"
@@ -17,10 +17,6 @@ const (
 	cmdRunForward = "runForward"
 	cmdRunToZero = "runToZero"
 )
-
-type AxisData struct {
-	Value 		[]string
-}
 
 func setCoordinateMode(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
