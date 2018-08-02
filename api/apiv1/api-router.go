@@ -24,6 +24,12 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	resourceapi.HandleFunc("/locvar/droblp/{num}", getdRobLP).Methods("GET").Queries("start", "{start}", "end", "{end}")
 	resourceapi.HandleFunc("/locvar/droblv/{num}", getdRobLV).Methods("GET").Queries("start", "{start}", "end", "{end}")
 
+	dbapi := r.PathPrefix("/v2/db").Subrouter()
+	dbapi.HandleFunc("/backup", DBBackup).Methods("POST")
+	dbapi.HandleFunc("/backup", DBList).Methods("GET")
+	dbapi.HandleFunc("/backup/{name}", DBDel).Methods("DELETE")
+	dbapi.HandleFunc("/backup/{name}/restore", DBRestore).Methods("POST")
+
 	robotapi := r.PathPrefix("/v2/robot").Subrouter()
 	repositoryapi := robotapi.PathPrefix("/repository").Subrouter()
 	repositoryapi.HandleFunc("/arc", getAllArc).Methods("GET")
@@ -46,12 +52,6 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	repositoryapi.HandleFunc("/userframe/{userno}/{md_id}", setUserFrame).Methods("PUT")
 	repositoryapi.HandleFunc("/zeropoints", getAllZeroPoints).Methods("GET")
 	repositoryapi.HandleFunc("/zeropoint/{md_id}", setZeroPoint).Methods("PUT")
-
-	dbapi := r.PathPrefix("/v2/db").Subrouter()
-	dbapi.HandleFunc("/backup", DBBackup).Methods("POST")
-	dbapi.HandleFunc("/backup", DBList).Methods("GET")
-	dbapi.HandleFunc("/backup/{name}", DBDel).Methods("DELETE")
-	dbapi.HandleFunc("/backup/{name}/restore", DBRestore).Methods("POST")
 
 	executeapi := robotapi.PathPrefix("/execute").Subrouter()
 	executeapi.HandleFunc("/run/{args}", execCmd).Methods("GET")
