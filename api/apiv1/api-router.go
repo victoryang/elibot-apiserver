@@ -8,11 +8,11 @@ import (
 )
 
 func RegisterAPIv1(r *mux.Router) http.Handler {
-	Log.Debug("Register V1 api...")
+	Log.Debug("Register v1 api...")
 
 	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/health", handleHealth).Methods("GET")
-	resourceapi := r.PathPrefix("/v2/resource").Subrouter()
+	resourceapi := r.PathPrefix("/v1/resource").Subrouter()
 	resourceapi.HandleFunc("/sysvar/crobb", getcrobb).Methods("GET").Queries("start", "{start}", "end", "{end}")
 	resourceapi.HandleFunc("/sysvar/irobi", getiRobI).Methods("GET").Queries("start", "{start}", "end", "{end}")
 	resourceapi.HandleFunc("/sysvar/drobd", getdRobD).Methods("GET").Queries("start", "{start}", "end", "{end}")
@@ -24,13 +24,13 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	resourceapi.HandleFunc("/locvar/droblp/{num}", getdRobLP).Methods("GET").Queries("start", "{start}", "end", "{end}")
 	resourceapi.HandleFunc("/locvar/droblv/{num}", getdRobLV).Methods("GET").Queries("start", "{start}", "end", "{end}")
 
-	dbapi := r.PathPrefix("/v2/db").Subrouter()
+	dbapi := r.PathPrefix("/v1/db").Subrouter()
 	dbapi.HandleFunc("/backup", DBBackup).Methods("POST")
 	dbapi.HandleFunc("/backup", DBList).Methods("GET")
 	dbapi.HandleFunc("/backup/{name}", DBDel).Methods("DELETE")
 	dbapi.HandleFunc("/backup/{name}/restore", DBRestore).Methods("POST")
 
-	robotapi := r.PathPrefix("/v2/robot").Subrouter()
+	robotapi := r.PathPrefix("/v1/robot").Subrouter()
 	repositoryapi := robotapi.PathPrefix("/repository").Subrouter()
 	repositoryapi.HandleFunc("/arc", getAllArc).Methods("GET")
 	repositoryapi.HandleFunc("/arcparams", getArcParams).Methods("GET").Queries("file_no", "{file_no}", "group", "{group}")
@@ -72,18 +72,18 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	axisctrlapi := robotapi.PathPrefix("/axisctrl").Subrouter()
 	axisctrlapi.HandleFunc("/dragteach/{enabled}", setDragteach).Methods("PUT")
 
-	/*r.HandleFunc("/v2/aio", getAIO).Methods("GET")
-	r.HandleFunc("/v2/aio", setAIO).Methods("PUT")
-	r.HandleFunc("/v2/aiodouble", getAIOdouble).Methods("GET")
-	r.HandleFunc("/v2/aiodouble", setAIOdouble).Methods("PUT")
+	/*r.HandleFunc("/v1/aio", getAIO).Methods("GET")
+	r.HandleFunc("/v1/aio", setAIO).Methods("PUT")
+	r.HandleFunc("/v1/aiodouble", getAIOdouble).Methods("GET")
+	r.HandleFunc("/v1/aiodouble", setAIOdouble).Methods("PUT")
 
-	r.HandleFunc("/v2/nvram", saveNvRam).Methods("POST")
+	r.HandleFunc("/v1/nvram", saveNvRam).Methods("POST")
 
-	r.HandleFunc("/v2/lisence", inputLisence).Methods("PUT")
-	r.HandleFunc("/v2/serialnum", getSerialnum).Methods("GET")
-	r.HandleFunc("/v2/version", getVersion).Methods("GET")
+	r.HandleFunc("/v1/lisence", inputLisence).Methods("PUT")
+	r.HandleFunc("/v1/serialnum", getSerialnum).Methods("GET")
+	r.HandleFunc("/v1/version", getVersion).Methods("GET")
 
-	remoteapi := r.PathPrefix("/v2/remote").Subrouter()
+	remoteapi := r.PathPrefix("/v1/remote").Subrouter()
 	remoteapi.HandleFunc("/stamppara", setStampPara).Methods("PUT")
 	remoteapi.HandleFunc("/stampip", modifyStampIp).Methods("PUT")
 	remoteapi.HandleFunc("/stampsetting", saveStampSetting).Methods("GET")
@@ -92,7 +92,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	remoteapi.HandleFunc("/feedpoint", setFeedPoint).Methods("PUT")
 	remoteapi.HandleFunc("/feedtoppoint", setFeedTopPoint).Methods("PUT")
 
-	extdeviceapi := r.PathPrefix("/v2/extdevice").Subrouter()
+	extdeviceapi := r.PathPrefix("/v1/extdevice").Subrouter()
 	extdeviceapi.HandleFunc("/smtrkdev", setSmtrkdev).Methods("PUT")
 	extdeviceapi.HandleFunc("/smtrkdev", saveSmtrkdev).Methods("POST")
 	extdeviceapi.HandleFunc("/distsenserdata", setDistSenserdata).Methods("PUT")
