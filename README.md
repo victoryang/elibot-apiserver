@@ -10,4 +10,4 @@ A api server for elibot
 	docker run -it --rm -v ${PWD}:/root/go/src/elibot-apiserver/ apiserver:apiserver
 
 ## build
-	chmod +x build/build.sh && sh -C build/build.sh
+	make
