@@ -33,7 +33,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	robotapi := r.PathPrefix("/v1/robot").Subrouter()
 	repositoryapi := robotapi.PathPrefix("/repository").Subrouter()
 	repositoryapi.HandleFunc("/arc", getAllArc).Methods("GET")
-	repositoryapi.HandleFunc("/arcparams", getArcParams).Methods("GET").Queries("file_no", "{file_no}", "group", "{group}")
+	repositoryapi.HandleFunc("/arcparams/{file_no}", getArcParams).Methods("GET").Queries("group", "{group}")
 	repositoryapi.HandleFunc("/arcparam/{file_no}/{md_id}", setArcParam).Methods("PUT")
 	repositoryapi.HandleFunc("/bookprograms", getAllBookprograms).Methods("GET")
 	repositoryapi.HandleFunc("/enum", getAllEnum).Methods("GET")

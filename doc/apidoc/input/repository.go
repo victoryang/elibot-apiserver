@@ -28,7 +28,7 @@
 */
 
 /**
-* @api {get} /v1/robot/repository/arcparams getArcParams
+* @api {get} /v1/robot/repository/arcparams/:file_no?group=:group getArcParams
 * @apiVersion 0.1.0
 * @apiName getArcParams
 * @apiGroup Repository
@@ -36,8 +36,10 @@
 * @apiDescription getArcParams
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.253:9000/v1/robot/repository/arcparams
+* curl -X GET http://192.168.1.253:9000/v1/robot/repository/:file_no?group=:group
 *
+* @apiParam (params) {string} file_no  URL Param: file no
+* @apiParam (params) {string} group    URL Param: group id
 * @apiUse DefaultHeaderAndExample
 *
 * @apiUse DefaultResponsesAndExample
