@@ -102,7 +102,7 @@
 * @apiDescription getcRobLB
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.253:9000/v1/locvar/croblb/:num?start=:start&end=:end
+* curl -X GET http://192.168.1.253:9000/v1/resource/locvar/croblb/:num?start=:start&end=:end
 *
 * @apiUse DefaultHeaderAndExample
 *
@@ -122,7 +122,7 @@
 * @apiDescription getiRobLI
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.253:9000/v1/locvar/irobli/:num?start=:start&end=:end
+* curl -X GET http://192.168.1.253:9000/v1/resource/locvar/irobli/:num?start=:start&end=:end
 *
 * @apiUse DefaultHeaderAndExample
 *
@@ -142,7 +142,7 @@
 * @apiDescription getdRobLD
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.253:9000/v1/locvar/drobld/:num?start=:start&end=:end
+* curl -X GET http://192.168.1.253:9000/v1/resource/locvar/drobld/:num?start=:start&end=:end
 *
 * @apiUse DefaultHeaderAndExample
 *
@@ -162,7 +162,7 @@
 * @apiDescription getdRobLP
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.253:9000/v1/locvar/droblp/:num?start=:start&end=:end
+* curl -X GET http://192.168.1.253:9000/v1/resource/locvar/droblp/:num?start=:start&end=:end
 *
 * @apiUse DefaultHeaderAndExample
 *
@@ -182,7 +182,7 @@
 * @apiDescription getdRobLV
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.253:9000/v1/locvar/droblv/:num?start=:start&end=:end
+* curl -X GET http://192.168.1.253:9000/v1/resource/locvar/droblv/:num?start=:start&end=:end
 *
 * @apiUse DefaultHeaderAndExample
 *
