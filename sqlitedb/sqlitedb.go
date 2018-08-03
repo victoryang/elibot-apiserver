@@ -1,7 +1,6 @@
 package sqlitedb
 
 import (
-    "elibot-apiserver/sqlitedb/mapper"
     Log "elibot-apiserver/log"
 )
 

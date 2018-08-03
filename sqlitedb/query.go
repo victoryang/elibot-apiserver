@@ -8,7 +8,6 @@ import "C"
 import (
     "unsafe"
     "errors"
-    "encoding/binary"
 
     Log "elibot-apiserver/log"
 )
