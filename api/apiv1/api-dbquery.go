@@ -181,8 +181,8 @@ func getAllUserframe(w http.ResponseWriter, r *http.Request) {
 	WriteJsonSuccessResponse(w, res)
 }
 
-func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("starting get all zeropoints")
+func getAllZeroPoint(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting get all zeropoint")
 	res, err := db.Get_All_Zeropoints()
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)

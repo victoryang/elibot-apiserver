@@ -50,7 +50,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	repositoryapi.HandleFunc("/toolframe/{tool_no}/{md_id}/pos/{pos_no}", setToolFrame).Methods("PUT")
 	repositoryapi.HandleFunc("/userframe", getAllUserframe).Methods("GET")
 	repositoryapi.HandleFunc("/userframe/{userno}/{md_id}", setUserFrame).Methods("PUT")
-	repositoryapi.HandleFunc("/zeropoints", getAllZeroPoints).Methods("GET")
+	repositoryapi.HandleFunc("/zeropoint", getAllZeroPoint).Methods("GET")
 	repositoryapi.HandleFunc("/zeropoint/{md_id}", setZeroPoint).Methods("PUT")
 
 	executeapi := robotapi.PathPrefix("/execute").Subrouter()
