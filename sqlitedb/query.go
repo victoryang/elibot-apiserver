@@ -51,7 +51,7 @@ func Db_query(q_id string, db_name string) ([]byte, error){
     return []byte(res), nil
 }
 
-func RegisterAndQuery(sm mapper.SqlMapper, mode int, vars map[string]interface{}) (res []byte, err error) {
+func RegisterAndQuery(sm SqlMapper, mode int, vars map[string]interface{}) (res []byte, err error) {
     err = sm.RegisterSqlMapper(mode)
     if err!=nil {
         res = []byte("")
