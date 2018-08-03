@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"encoding/json"
 
-	db "elibot-apiserver/dbproxy"
+	db "elibot-apiserver/sqlitedb"
 	Log "elibot-apiserver/log"
 
 	"github.com/gorilla/mux"

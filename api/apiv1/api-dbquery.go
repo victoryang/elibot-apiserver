@@ -6,7 +6,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	db "elibot-apiserver/dbproxy"
+	db "elibot-apiserver/sqlitedb"
 	Log "elibot-apiserver/log"
 )
 

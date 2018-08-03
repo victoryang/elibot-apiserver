@@ -8,7 +8,7 @@ import (
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/api"
 	"elibot-apiserver/auth"
-	"elibot-apiserver/dbproxy"
+	"elibot-apiserver/sqlitedb"
 	"elibot-apiserver/config"
 	"elibot-apiserver/mcserver"
 	"elibot-apiserver/shm"
@@ -81,7 +81,7 @@ func ConfigServerLog(cfg *config.GlobalConfiguration) error {
 
 func SetUpDatabase(cfg *config.GlobalConfiguration) {
 	db := cfg.Databases
-	dbproxy.DBSetup(db.FileName, db.BackupDir)
+	sqlitedb.DBSetup(db.FileName, db.BackupDir)
 }
 
 func main() {
