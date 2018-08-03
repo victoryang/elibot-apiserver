@@ -12,7 +12,7 @@
 */
 
 /**
-* @api {put} /v2/robot/repository/arcparam/:file_no/:md_id setArcParam
+* @api {put} /v1/robot/repository/arcparam/:file_no/:md_id setArcParam
 * @apiVersion 0.1.0
 * @apiName setArcParam
 * @apiGroup Repository
@@ -20,7 +20,7 @@
 * @apiDescription setArcParam [md_id] [value] [file_no] [index]
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v2/robot/repository/arcparam/:file_no/:md_id
+* curl -X PUT http://192.168.1.253:9000/v1/robot/repository/arcparam/:file_no/:md_id
 *
 * @apiUse DefaultHeaderAndExample
 *
@@ -32,7 +32,7 @@
 */
 
 /**
-* @api {put} /v2/robot/repository/interference/:no/:md_id setInterference
+* @api {put} /v1/robot/repository/interference/:no/:md_id setInterference
 * @apiVersion 0.1.0
 * @apiName setInterference
 * @apiGroup Repository
@@ -40,7 +40,7 @@
 * @apiDescription setInterference [md_id] [value] [no] [index]
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v2/robot/repository/interference/:no/:md_id
+* curl -X PUT http://192.168.1.253:9000/v1/robot/repository/interference/:no/:md_id
 *
 * @apiUse DefaultHeaderAndExample
 *
@@ -52,7 +52,7 @@
 */
 
 /**
-* @api {put} /v2/robot/repository/params/:md_id 	setParam
+* @api {put} /v1/robot/repository/params/:md_id 	setParam
 * @apiVersion 0.1.0
 * @apiName setParam
 * @apiGroup Repository
@@ -60,7 +60,7 @@
 * @apiDescription setParam [md_id] [value] [index]
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v2/robot/repository/params/:md_id
+* curl -X PUT http://192.168.1.253:9000/v1/robot/repository/params/:md_id
 *
 * @apiUse DefaultHeaderAndExample
 *
@@ -71,7 +71,7 @@
 */
 
 /**
-* @api {put} /v2/robot/repository/toolframes/:tool_no/:md_id/pos/:pos_no setToolFrame
+* @api {put} /v1/robot/repository/toolframes/:tool_no/:md_id/pos/:pos_no setToolFrame
 * @apiVersion 0.1.0
 * @apiName setToolFrame
 * @apiGroup Repository
@@ -79,7 +79,7 @@
 * @apiDescription setToolFrame [md_id] [value] [tool_no] [pos_no|index] [index]
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v2/robot/repository/toolframes/:tool_no/:md_id/pos/:pos_no
+* curl -X PUT http://192.168.1.253:9000/v1/robot/repository/toolframes/:tool_no/:md_id/pos/:pos_no
 *
 * @apiUse DefaultHeaderAndExample
 *
@@ -92,7 +92,7 @@
 */
 
 /**
-* @api {put} /v2/robot/repository/userframe/:userno/:md_id 	setUserFrame 
+* @api {put} /v1/robot/repository/userframe/:userno/:md_id 	setUserFrame 
 * @apiVersion 0.1.0
 * @apiName setUserFrame
 * @apiGroup Repository
@@ -100,7 +100,7 @@
 * @apiDescription setUserFrame [md_id] [value] [userNo]
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v2/robot/repository/userframe/:userno/:md_id
+* curl -X PUT http://192.168.1.253:9000/v1/robot/repository/userframe/:userno/:md_id
 *
 * @apiUse DefaultHeaderAndExample
 *
@@ -112,7 +112,7 @@
 */
 
 /**
-* @api {put} /v2/robot/repository/zeropoint/:md_id 	setZeroPoint
+* @api {put} /v1/robot/repository/zeropoint/:md_id 	setZeroPoint
 * @apiVersion 0.1.0
 * @apiName setZeroPoint
 * @apiGroup Repository
@@ -120,7 +120,7 @@
 * @apiDescription setZeroPoint [md_id] [value] [index]
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v2/robot/repository/zeropoint/:md_id
+* curl -X PUT http://192.168.1.253:9000/v1/robot/repository/zeropoint/:md_id
 *
 * @apiUse DefaultHeaderAndExample
 *

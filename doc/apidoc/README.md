@@ -9,7 +9,7 @@
 
 ### replace the template directory
 ### run docker image, replace $PWD with actual directory. This will generate an example website
-	docker run --rm -v '$(PWD):/apidoc' -it apidoc/apidoc --input ./inputspecs --output ./output -v
+	docker run --rm -v '$(PWD):/apidoc' -it apidoc/apidoc --input ./inputspecs --template ./template --output ./output -v
 
 ## test api
 curl -H "Content-Type: application/json" -X PUT -d '{"index":"1", "data":"1"}'
