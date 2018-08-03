@@ -10,8 +10,8 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func DBBackup(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("starting DB Backup")
+func DBBackupDB(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting DB Backup db")
 	errno := db.DBBackup()
 	if errno!=0 {
 		Log.Error("fail to backup db")
@@ -22,8 +22,8 @@ func DBBackup(w http.ResponseWriter, r *http.Request) {
 	WriteSuccessResponse(w, "succeed in backup")
 }
 
-func DBList(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("starting DB List")
+func DBListBackups(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting DB List Backups")
 	files, err := db.DBList()
 	if err!=nil {
 		Log.Error("fail to check list")
@@ -35,8 +35,8 @@ func DBList(w http.ResponseWriter, r *http.Request) {
 	WriteJsonSuccessResponse(w, res)
 }
 
-func DBDel(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("starting DB Deletion")
+func DBDelBackup(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting DB Backup Deletion")
 	vars := mux.Vars(r)
 	err := db.DBDel(vars["name"])
 	if err!=nil {
@@ -48,8 +48,8 @@ func DBDel(w http.ResponseWriter, r *http.Request) {
 	WriteSuccessResponse(w, "db detelted")
 }
 
-func DBRestore(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("starting DB Restore")
+func DBRestoreBackup(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting DB Backup Restore")
 	vars := mux.Vars(r)
 	errno := db.DBRestore(vars["name"])
 	if errno!=0 {

@@ -198,7 +198,7 @@
 */
 
 /**
-* @api {get} /v1/robot/repository/parameter/group/:group parameterbygroup
+* @api {get} /v1/robot/repository/parameter/group/:group getParameterbygroup
 * @apiVersion 0.1.0
 * @apiName parameterbygroup
 * @apiGroup Repository
@@ -251,7 +251,7 @@
 */
 
 /**
-* @api {put} /v1/robot/repository/toolframe getAllToolframe
+* @api {get} /v1/robot/repository/toolframe getAllToolframe
 * @apiVersion 0.1.0
 * @apiName getAllToolframe
 * @apiGroup Repository
@@ -259,7 +259,7 @@
 * @apiDescription getAllToolframe
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v1/robot/repository/toolframe
+* curl -X GET http://192.168.1.253:9000/v1/robot/repository/toolframe
 *
 * @apiUse DefaultHeaderAndExample
 *
@@ -288,7 +288,7 @@
 */
 
 /**
-* @api {put} /v1/robot/repository/userframe getAllUserframe
+* @api {get} /v1/robot/repository/userframe getAllUserframe
 * @apiVersion 0.1.0
 * @apiName getAllUserframe
 * @apiGroup Repository
@@ -296,7 +296,7 @@
 * @apiDescription getAllUserframe
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v1/robot/repository/userframe
+* curl -X GET http://192.168.1.253:9000/v1/robot/repository/userframe
 *
 * @apiUse DefaultHeaderAndExample
 *
@@ -324,7 +324,7 @@
 */
 
 /**
-* @api {put} /v1/robot/repository/zeropoint getAllZeroPoint
+* @api {get} /v1/robot/repository/zeropoint getAllZeroPoint
 * @apiVersion 0.1.0
 * @apiName getAllZeroPoint
 * @apiGroup Repository
@@ -332,7 +332,7 @@
 * @apiDescription getAllZeroPoint
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v1/robot/repository/zeropoint
+* curl -X GET http://192.168.1.253:9000/v1/robot/repository/zeropoint
 *
 * @apiUse DefaultHeaderAndExample
 *

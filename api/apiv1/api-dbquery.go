@@ -120,7 +120,7 @@ func getParams(w http.ResponseWriter, r *http.Request) {
 }
 
 func getParameterById(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("starting get all Parameter")
+	Log.Debug("starting get Parameter by id")
 	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
 	queries["md_id"] = vars["md_id"]
@@ -134,8 +134,8 @@ func getParameterById(w http.ResponseWriter, r *http.Request) {
 	WriteJsonSuccessResponse(w, res)
 }
 
-func parameterbygroup(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("starting get all Parameter")
+func getParameterByGroup(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting get Parameter by group")
 	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
 	queries["group"] = vars["group"]

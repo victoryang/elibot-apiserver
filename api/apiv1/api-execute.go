@@ -20,7 +20,7 @@ const (
 	cmdCycleMode = "cycleMode"
 )
 
-func execCmd(w http.ResponseWriter, r *http.Request) {
+func runCmd(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	args := vars["args"]
 
@@ -29,7 +29,7 @@ func execCmd(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
 }
 
-func execPause(w http.ResponseWriter, r *http.Request) {
+func doPause(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	args := vars["args"]
 

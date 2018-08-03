@@ -39,7 +39,7 @@ func validateRange(r *http.Request) (int, int, error) {
 	return start, end, nil
 }
 
-func getcrobb(w http.ResponseWriter, r *http.Request) {
+func getcRobB(w http.ResponseWriter, r *http.Request) {
 	getSysFromShm(crobb, w, r)
 }
 
@@ -68,7 +68,7 @@ func getSysFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 	WriteJsonSuccessResponse(w, ret)
 }
 
-func getcrobLb(w http.ResponseWriter, r *http.Request) {
+func getcRobLB(w http.ResponseWriter, r *http.Request) {
 	getLocFromShm(croblb, w, r)
 }
 
