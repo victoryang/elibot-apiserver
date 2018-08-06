@@ -19,7 +19,7 @@ func ExtractResponseToString(r *http.Response) string {
 	buf, err := ioutil.ReadAll(r.Body)
 	if err!=nil {
 		fmt.Println(err)
-		return nil
+		return ""
 	}
 	return string(buf)
 }
@@ -31,35 +31,34 @@ func SendToServer(method string, url string, data []byte) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err!=nil {
-		t.Error("test failed")
+		fmt.Error("test failed")
 	} else {
 		defer resp.Close()
 		d := time.Since(start)
-		fmt.Println(ExtractResponseToJson(resp))
+		fmt.Println(ExtractResponseToString(resp))
 		fmt.Println("time: ", d)
 	}
 	return
 }
 
 func Test_SetArcParam(t *testing.T) {
-	u := url.Parse(serverip)
+	u,_ := url.Parse(serverip)
 	file_no := "0"
-	md_id := "param.body.robot_type"
+	md_id := "arc.welder.prepareAspirationTime"
 	u.Path = "v1/robot/repository/arcparam/" + file_no + "/" + md_id
-	v := url.Values{}
 
-	SendToServer("PUT", u.String(), []byte(`{index:0, data:40}`))
+	SendToServer("PUT", u.String(), []byte(`{"index":"0", "value":"40"}`))
 }
 
 func Test_SetParam(t *testing.T) {
-	SendToServer("PUT", "192.168.1.217:9000/v1/robot/repository/params/param.body.robot_type", []byte(`{index:0, data:40}`))
+	SendToServer("PUT", "192.168.1.217:9000/v1/robot/repository/params/param.body.robot_type", []byte(`{"index":"0", "value":"40"}`))
 }
 
 func Test_SetParam(t *testing.T) {
-	SendToServer("PUT", "192.168.1.217:9000/v1/robot/repository/params/param.body.robot_type", []byte(`{data:40}`))
+	SendToServer("PUT", "192.168.1.217:9000/v1/robot/repository/params/param.body.robot_type", []byte(`{"index":"0", "value":"40"}`))
 }
 
 func Test_SetParam(t *testing.T) {
-	SendToServer("PUT", "192.168.1.217:9000/v1/robot/repository/params/param.body.robot_type", []byte(`{data:40}`))
+	SendToServer("PUT", "192.168.1.217:9000/v1/robot/repository/params/param.body.robot_type", []byte(`{"index":"0", "value":"40"}`))
 }
 
