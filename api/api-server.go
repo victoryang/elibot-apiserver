@@ -6,7 +6,6 @@ import (
 	"context"
 
 	"elibot-apiserver/api/apiv1"
-	"elibot-apiserver/api/apiv2"
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/middleware"
 	"elibot-apiserver/middleware/accesslog"
@@ -64,7 +63,6 @@ func (s *Server) configServerHandler() http.Handler {
 	n.Use(middleware.NewCorsHandler())
 
 	n.UseHandler(apiv1.RegisterAPIv1(r))
-	apiv2.RegisterAPIv2(r)
 	// Register all routers.
 	return n
 }

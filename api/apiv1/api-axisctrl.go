@@ -1,4 +1,4 @@
-package apiv2
+package apiv1
 
 import (
 	"net/http"
@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	TagAxisCtrl = "apiv2:robot:axisctrl"
+	TagAxisCtrl = "apiv1:robot:axisctrl"
 
 	cmdDragTeach = "drag_teach"
 )

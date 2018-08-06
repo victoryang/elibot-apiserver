@@ -10,11 +10,11 @@ import (
 )
 
 func hello(w http.ResponseWriter, r *http.Request) {
-	WriteSuccessResponse(w, []byte("Welcome to elibot\n"))
+	WriteSuccessResponse(w, "Welcome to elibot\n")
 }
 
 func handleHealth(w http.ResponseWriter, r *http.Request) {
-	WriteSuccessResponse(w, []byte("echo OK\n"))
+	WriteSuccessResponse(w, "echo OK\n")
 }
 
 func testSocket(w http.ResponseWriter, r *http.Request) {
@@ -43,7 +43,7 @@ func testSocket(w http.ResponseWriter, r *http.Request) {
 			Log.Error("test fail: ", r.Err)
 			WriteInternalServerErrorResponse(w, ERRQUERY)
 		} else {
-			WriteSuccessResponse(w, []byte(r.Result))
+			WriteSuccessResponse(w, r.Result)
 		}
 	}
 }

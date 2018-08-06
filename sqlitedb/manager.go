@@ -1,4 +1,4 @@
-package dbproxy
+package sqlitedb
 
 import (
     "os"
@@ -6,7 +6,6 @@ import (
     "io/ioutil"
     "path"
     
-    sql "elibot-apiserver/sqlitedb"
     Log "elibot-apiserver/log"
 )
 
@@ -14,25 +13,7 @@ var DBName string
 var DBPath string
 var BackupPath string
 
-func RegisterAndQuery(sm sql.SqlMapper, mode int, vars map[string]interface{}) (res []byte, err error) {
-    err = sm.RegisterSqlMapper(mode)
-    if err!=nil {
-        res = []byte("")
-        return
-    }
-
-    if vars == nil {
-        res, err = sql.Db_query(sm.GetID(), DBName)
-    } else {
-        res, err = sql.Db_query_with_params(sm.GetID(), DBName, vars)
-    }
-
-    Log.Debug(string(res))
-    Log.Print("get_all_metadatas OK")
-    return
-}
-
-func DBSetup(dbname string, backuppath string) {
+func SetupDB(dbname string, backuppath string) {
     DBName = dbname
     DBPath = path.Dir(dbname)
     BackupPath = backuppath
@@ -42,7 +23,7 @@ func DBSetup(dbname string, backuppath string) {
 func DBBackup() int {
     Log.Debug("in DBBackup")
  
-    return sql.SqlitedbBackup(DBName, DBPath)
+    return SqlitedbBackup(DBName, DBPath)
 }
 
 func DBList() ([]string, error) {
@@ -77,5 +58,5 @@ func DBDel(Name string) error {
 func DBRestore(BackupName string) int {
     Log.Debug("in DBRestore")
  
-    return sql.SqlitedbRestore(DBName, BackupPath, BackupPath+BackupName, 1)
+    return SqlitedbRestore(DBName, BackupPath, BackupPath+BackupName, 1)
 }

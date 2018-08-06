@@ -1,4 +1,4 @@
-package apiv2
+package apiv1
 
 import (
 	"net/http"
@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	TagExecute = "apiv2:robot:execute"
+	TagExecute = "apiv1:robot:execute"
 
 	cmdRun = "run"
 	cmdPause = "pause"
@@ -20,7 +20,7 @@ const (
 	cmdCycleMode = "cycleMode"
 )
 
-func execCmd(w http.ResponseWriter, r *http.Request) {
+func runCmd(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	args := vars["args"]
 
@@ -29,7 +29,7 @@ func execCmd(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
 }
 
-func execPause(w http.ResponseWriter, r *http.Request) {
+func doPause(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	args := vars["args"]
 

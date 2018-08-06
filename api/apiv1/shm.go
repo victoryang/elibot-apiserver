@@ -1,4 +1,4 @@
-package apiv2
+package apiv1
 
 import (
 	"net/http"
@@ -39,7 +39,7 @@ func validateRange(r *http.Request) (int, int, error) {
 	return start, end, nil
 }
 
-func getcrobb(w http.ResponseWriter, r *http.Request) {
+func getcRobB(w http.ResponseWriter, r *http.Request) {
 	getSysFromShm(crobb, w, r)
 }
 
@@ -63,12 +63,13 @@ func getSysFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 	start, end, err := validateRange(r)
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		return
 	}
 	ret := shm.GetSysVar(datatype, start, end)
 	WriteJsonSuccessResponse(w, ret)
 }
 
-func getcrobLb(w http.ResponseWriter, r *http.Request) {
+func getcRobLB(w http.ResponseWriter, r *http.Request) {
 	getLocFromShm(croblb, w, r)
 }
 
@@ -92,11 +93,13 @@ func getLocFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 	start, end, err := validateRange(r)
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		return
 	}
 	vars := mux.Vars(r)
 	num, err := strconv.Atoi(vars["num"])
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		return
 	}
 	ret := shm.GetLocVar(datatype, num, start, end)
 	WriteJsonSuccessResponse(w, ret)

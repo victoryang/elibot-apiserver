@@ -1,4 +1,4 @@
-package apiv2
+package apiv1
 
 import (
 	"net/http"
@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	TagRepository = "apiv2:robot:repository"
+	TagRepository = "apiv1:robot:repository"
 
 	cmdSetArcParam = "setArcParam"
 	cmdSetInterference = "setInterference"

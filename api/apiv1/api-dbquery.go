@@ -6,19 +6,19 @@ import (
 
 	"github.com/gorilla/mux"
 
-	db "elibot-apiserver/dbproxy"
+	db "elibot-apiserver/sqlitedb"
 	Log "elibot-apiserver/log"
 )
 
 func getAllArc(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Arc")
-	res, err := db.Get_ALL_Arc()
+	res, err := db.GetAllArc()
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getArcParams(w http.ResponseWriter, r *http.Request) {
@@ -29,68 +29,68 @@ func getArcParams(w http.ResponseWriter, r *http.Request) {
 	file_no, _ := strconv.Atoi(vars["file_no"])
 	queries["file_no"] = int32(file_no)
 	queries["group"] = vars["group"]
-	res, err := db.Get_Arc_Params(queries)
+	res, err := db.GetArcParams(queries)
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all bookprograms")
-	res, err := db.Get_All_Bookprograms()
+	res, err := db.GetAllBookprograms()
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllEnum(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Enum")
-	res, err := db.Get_ALL_Enum()
+	res, err := db.GetAllEnum()
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Extaxis")
-	res, err := db.Get_ALL_Extaxis()
+	res, err := db.GetAllExtaxis()
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllInterference(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Interference")
-	res, err := db.Get_All_Interference()
+	res, err := db.GetAllInterference()
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllIO(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all IO")
-	res, err := db.Get_All_IO()
+	res, err := db.GetAllIO()
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllMetadata(w http.ResponseWriter, r *http.Request) {
@@ -99,95 +99,95 @@ func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 
 	queries := make(map[string]interface{})
 	queries["lang"] = vars["lang"]
-	res, err := db.Get_All_Metadata(queries)
+	res, err := db.GetAllMetadata(queries)
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getParams(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Parameter")
-	res, err := db.Get_Params()
+	res, err := db.GetParams()
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getParameterById(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("starting get all Parameter")
+	Log.Debug("starting get Parameter by id")
 	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
 	queries["md_id"] = vars["md_id"]
 
-	res, err := db.Get_Parameter_By_Id(queries)
+	res, err := db.GetParameterById(queries)
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
-func parameterbygroup(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("starting get all Parameter")
+func getParameterByGroup(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting get Parameter by group")
 	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
 	queries["group"] = vars["group"]
-	res, err := db.Get_Parameter_By_Group(queries)
+	res, err := db.GetParameterByGroup(queries)
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllRef(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Ref")
-	res, err := db.Get_All_Ref()
+	res, err := db.GetAllRef()
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllToolframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all toolframe")
-	res, err := db.Get_ALL_Toolframe()
+	res, err := db.GetAllToolframe()
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
 func getAllUserframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all userframe")
-	res, err := db.Get_ALL_Userframe()
+	res, err := db.GetAllUserframe()
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }
 
-func getAllZeroPoints(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("starting get all zeropoints")
-	res, err := db.Get_All_Zeropoints()
+func getAllZeroPoint(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting get all zeropoint")
+	res, err := db.GetAllZeropoint()
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
 
-	WriteSuccessResponse(w, res)
+	WriteJsonSuccessResponse(w, res)
 }

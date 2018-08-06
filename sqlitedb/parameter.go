@@ -1,7 +1,5 @@
 package sqlitedb
 
-// #cgo CFLAGS: -I/root/mcserver/include -I../thirdparty/mcsql
-// #cgo LDFLAGS: -lsqlitedb -L../thirdparty/mcsql -lmcsql
 // #include<stdlib.h>
 // #include<mcsql.h>
 import "C"
@@ -12,6 +10,11 @@ import (
 
     Log "elibot-apiserver/log"
 )
+
+type Parameter struct {
+    parameter       *C.db_query_req_parameter
+    param_size      int
+}
 
 func setsSqlparams(key string, value interface{}, param *C.sql_parameter) error {
     param.name = C.CString(key)
@@ -36,11 +39,6 @@ func setsSqlparams(key string, value interface{}, param *C.sql_parameter) error 
     }
 
     return nil
-}
-
-type Parameter struct {
-    parameter       *C.db_query_req_parameter
-    param_size      int
 }
 
 func (p *Parameter) newReqParameter(vars map[string]interface{}) {
@@ -77,42 +75,4 @@ func (p *Parameter) freeReqParameter() {
     }
 
     C.free_db_query_req_parameter(p.parameter)
-}
-
-func Db_query_with_params(q_id, db_name string, vars map[string]interface{}) ([]byte, error) {
-    Log.Debug("Db_query_with_params")
-    id := C.CString(q_id)
-    defer C.free(unsafe.Pointer(id))
-
-    conn := C.CString(db_name)
-    defer C.free(unsafe.Pointer(conn))
-
-    p := new(Parameter)
-    p.newReqParameter(vars)
-    defer p.freeReqParameter()
-
-    buf := C.mcsql_query_with_param(id, conn, C.DB_QUERY_MODE_CUSTOM, p.parameter, nil)
-    if buf == nil {
-        return nil, errors.New("query empty")
-    }
-    res := C.GoString(buf)
-    defer C.free(unsafe.Pointer(buf))
-
-    return []byte(res), nil
-}
-
-func Db_query(q_id string, db_name string) ([]byte, error){
-    id := C.CString(q_id)
-    defer C.free(unsafe.Pointer(id))
-
-    conn := C.CString(db_name)
-    defer C.free(unsafe.Pointer(conn))
-
-    buf := C.mcsql_query(id, conn, C.DB_QUERY_MODE_STANDARD)
-    if buf == nil {
-        return nil, errors.New("query empty")
-    }
-    res := C.GoString(buf)
-    defer C.free(unsafe.Pointer(buf))
-    return []byte(res), nil
 }

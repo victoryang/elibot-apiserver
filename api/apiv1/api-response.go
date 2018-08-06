@@ -5,11 +5,28 @@ import (
 	"encoding/json"
 )
 
+/* respond differently*/
+type SuccessResponse struct {
+	Msg 		string			`json:"msg"`
+}
+
+func ToSuccessJson(msg string) []byte {
+	response := SuccessResponse{
+		Msg:	msg,
+	}
+	r, _ := json.Marshal(response)
+	return r
+}
+
 // WriteSuccessResponse write success headers and response if any.
-func WriteSuccessResponse(w http.ResponseWriter, response []byte) {
+func WriteSuccessResponse(w http.ResponseWriter, res string) {
+	r := ToSuccessJson(res)
+	WriteJsonSuccessResponse(w, r)
+}
+
+func WriteJsonSuccessResponse(w http.ResponseWriter, res []byte) {
 	w.WriteHeader(http.StatusOK)
-	w.Write(response)
-	w.(http.Flusher).Flush()
+	w.Write(res)
 }
 
 type ErrorResponse struct {
@@ -30,5 +47,4 @@ func WriteInternalServerErrorResponse(w http.ResponseWriter, errno int) {
 	r := ToErrJson(errno)
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Write(r)
-	w.(http.Flusher).Flush()
 }
