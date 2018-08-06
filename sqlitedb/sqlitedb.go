@@ -113,7 +113,7 @@ func GetAllUserframe() ([]byte, error) {
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
 }
 
-func GetAllZeropoints() ([]byte, error) {
+func GetAllZeropoint() ([]byte, error) {
     Log.Debug("in GetAllZeropoint")
     
     sm := new(ZeroPointSqlMapper)
