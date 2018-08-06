@@ -13,6 +13,7 @@ import (
 
 const (
 	serverip = "http://192.168.1.253:9000"
+	interval = 50 * time.Millisecond
 )
 
 func ExtractResponseToString(r *http.Response) string {
@@ -33,7 +34,7 @@ func SendToServer(method string, url string, data []byte) {
 	if err!=nil {
 		fmt.Error("test failed")
 	} else {
-		defer resp.Close()
+		req.Close = true
 		d := time.Since(start)
 		fmt.Println(ExtractResponseToString(resp))
 		fmt.Println("time: ", d)
@@ -42,12 +43,18 @@ func SendToServer(method string, url string, data []byte) {
 }
 
 func Test_SetArcParam(t *testing.T) {
+	ticker := time.NewTicker(interval)
 	u,_ := url.Parse(serverip)
 	file_no := "0"
 	md_id := "arc.welder.prepareAspirationTime"
 	u.Path = "v1/robot/repository/arcparam/" + file_no + "/" + md_id
-
-	SendToServer("PUT", u.String(), []byte(`{"index":"0", "value":"40"}`))
+ 	for {
+            select {
+            case <-ticker.C:
+                    SendToServer("PUT", u.String(), []byte(`{"index":"0", "value":"40"}`))
+                    break
+            }
+    }
 }
 
 func Test_SetParam(t *testing.T) {
