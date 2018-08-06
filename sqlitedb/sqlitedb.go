@@ -4,15 +4,15 @@ import (
     Log "elibot-apiserver/log"
 )
 
-func Get_ALL_Arc() ([]byte, error) {
-    Log.Debug("in Get_ALL_Arc")
+func GetAllArc() ([]byte, error) {
+    Log.Debug("in GetAllArc")
     
     sm := new(ArcSqlMapper)
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
 }
 
-func Get_Arc_Params(vars map[string]interface{}) ([]byte, error) {
-    Log.Debug("in Get_Arc_Params")
+func GetArcParams(vars map[string]interface{}) ([]byte, error) {
+    Log.Debug("in GetArcParams")
     for k,v := range vars {
         Log.Debug("key: ", k, " v ", v)
     }
@@ -20,43 +20,43 @@ func Get_Arc_Params(vars map[string]interface{}) ([]byte, error) {
     return RegisterAndQuery(sm, ELIBOT_ARC_GET_PARAMS, vars)
 }
 
-func Get_All_Bookprograms() ([]byte, error){
-    Log.Debug("in Get_All_Bookprograms")
+func GetAllBookprograms() ([]byte, error){
+    Log.Debug("in GetAllBookprograms")
  
     sm := new(BookProgramSqlMapper)
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
 }
 
-func Get_ALL_Enum() ([]byte, error) {
-    Log.Debug("in Get_ALL_Enum")
+func GetAllEnum() ([]byte, error) {
+    Log.Debug("in GetAllEnum")
     
     sm := new(EnumSqlMapper)
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
 }
 
-func Get_ALL_Extaxis() ([]byte, error) {
-    Log.Debug("in Get_ALL_Extaxis")
+func GetAllExtaxis() ([]byte, error) {
+    Log.Debug("in GetAllExtaxis")
     
     sm := new(ExtaxisSqlMapper)
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
 }
 
-func Get_All_Interference() ([]byte, error) {
-    Log.Debug("in Get_All_Interference")
+func GetAllInterference() ([]byte, error) {
+    Log.Debug("in GetAllInterference")
     
     sm := new(InterferenceSqlMapper)
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
 }
 
-func Get_All_IO() ([]byte, error) {
-    Log.Debug("in Get_All_IO")
+func GetAllIO() ([]byte, error) {
+    Log.Debug("in GetAllIO")
     
     sm := new(IoSqlMapper)
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
 }
 
-func Get_All_Metadata(vars map[string]interface{}) ([]byte, error) {
-    Log.Debug("in Get_All_Metadata")
+func GetAllMetadata(vars map[string]interface{}) ([]byte, error) {
+    Log.Debug("in GetAllMetadata")
     for k,v := range vars {
         Log.Debug("key: ", k, " v ", v)
     }
@@ -65,15 +65,15 @@ func Get_All_Metadata(vars map[string]interface{}) ([]byte, error) {
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, vars)
 }
 
-func Get_Params() ([]byte, error) {
-    Log.Debug("in Get_Params")
+func GetParams() ([]byte, error) {
+    Log.Debug("in GetParams")
     
     sm := new(ParameterSqlMapper)
     return RegisterAndQuery(sm, ELIBOT_PARAMETER_GET_PARAMS, nil)
 }
 
-func Get_Parameter_By_Id(vars map[string]interface{}) ([]byte, error) {
-    Log.Debug("in Get_Parameter_By_Id")
+func GetParameterById(vars map[string]interface{}) ([]byte, error) {
+    Log.Debug("in GetParameterById")
     for k,v := range vars {
         Log.Debug("key: ", k, " v ", v)
     }
@@ -82,8 +82,8 @@ func Get_Parameter_By_Id(vars map[string]interface{}) ([]byte, error) {
     return RegisterAndQuery(sm, ELIBOT_PARAMETER_GET_BY_ID, vars)
 }
 
-func Get_Parameter_By_Group(vars map[string]interface{}) ([]byte, error) {
-    Log.Debug("in Get_Parameter_By_Group")
+func GetParameterByGroup(vars map[string]interface{}) ([]byte, error) {
+    Log.Debug("in GetParameterByGroup")
     for k,v := range vars {
         Log.Debug("key: ", k, " v ", v)
     }
@@ -92,29 +92,29 @@ func Get_Parameter_By_Group(vars map[string]interface{}) ([]byte, error) {
     return RegisterAndQuery(sm, ELIBOT_PARAMETER_GET_BY_GROUP, vars)
 }
 
-func Get_All_Ref() ([]byte, error) {
-    Log.Debug("in Get_All_Ref")
+func GetAllRef() ([]byte, error) {
+    Log.Debug("in GetAllRef")
     
     sm := new(RefSqlMapper)
     return RegisterAndQuery(sm, ELIBOT_REF_GET_ALL, nil)
 }
 
-func Get_ALL_Toolframe() ([]byte, error) {
-    Log.Debug("in Get_ALL_Toolframe")
+func GetAllToolframe() ([]byte, error) {
+    Log.Debug("in GetAllToolframe")
     
     sm := new(ToolframeSqlMapper)
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
 }
 
-func Get_ALL_Userframe() ([]byte, error) {
-    Log.Debug("in Get_ALL_Userframe")
+func GetAllUserframe() ([]byte, error) {
+    Log.Debug("in GetAllUserframe")
 
     sm := new(UserframeSqlMapper)
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
 }
 
-func Get_All_Zeropoints() ([]byte, error) {
-    Log.Debug("in Get_All_Zeropoints")
+func GetAllZeropoints() ([]byte, error) {
+    Log.Debug("in GetAllZeropoint")
     
     sm := new(ZeroPointSqlMapper)
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
