@@ -81,7 +81,7 @@ func ConfigServerLog(cfg *config.GlobalConfiguration) error {
 
 func SetUpDatabase(cfg *config.GlobalConfiguration) {
 	db := cfg.Databases
-	sqlitedb.DBSetup(db.FileName, db.BackupDir)
+	sqlitedb.SetupDB(db.FileName, db.BackupDir)
 }
 
 func main() {

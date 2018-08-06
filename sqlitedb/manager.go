@@ -13,7 +13,7 @@ var DBName string
 var DBPath string
 var BackupPath string
 
-func DBSetup(dbname string, backuppath string) {
+func SetupDB(dbname string, backuppath string) {
     DBName = dbname
     DBPath = path.Dir(dbname)
     BackupPath = backuppath
