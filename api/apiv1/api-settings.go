@@ -1,6 +1,7 @@
 package apiv1
 
 import (
+	"net"
 	"net/http"
 	"os/exec"
 	"io/ioutil"
@@ -46,4 +47,24 @@ func setSystemDate(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	cmd := exec.Command("date", "-s", vars["date"])
 	runShell(cmd, w)
+}
+
+func getSystemIP(w http.ResponseWriter, r *http.Request) {
+	addrs, err := net.InterfaceAddrs()
+	if err!=nil {
+		Log.Error("Failed to get any address: ", err)
+		WriteInternalServerErrorResponse(w, ERRRUNCMD)
+		return
+	}
+
+	var LocalIP string
+	for _, address := range addrs {
+        if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+            if ipnet.IP.To4() != nil {
+                LocalIP = ipnet.IP.To4()
+            }
+        }
+    }
+
+    WriteSuccessResponse(w, LocalIP)
 }
