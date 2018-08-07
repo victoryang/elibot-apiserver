@@ -61,7 +61,7 @@ func getSystemIP(w http.ResponseWriter, r *http.Request) {
 	for _, address := range addrs {
         if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
             if ipnet.IP.To4() != nil {
-                LocalIP = ipnet.IP.To4()
+                LocalIP = ipnet.IP.String()
             }
         }
     }
