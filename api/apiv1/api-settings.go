@@ -28,7 +28,8 @@ func getSystemDate(w http.ResponseWriter, r *http.Request) {
 func setSystemDate(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	date := vars["date"]
-	cmd := exec.Command("date", "-s", date)
+	command := "date -s " + date
+	cmd := exec.Command(command)
 	out, err := cmd.Output()
 	if err != nil {
 		Log.Error(err)
