@@ -11,6 +11,7 @@ import (
 func runShell(cmd *exec.Cmd, w http.ResponseWriter) {
 	out, err := cmd.CombinedOutput()
 	if err!=nil {
+		Log.Error("Failed to exec cmd: ", err)
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
 		return
 	}
