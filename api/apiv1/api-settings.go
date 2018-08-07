@@ -28,7 +28,13 @@ func runShell(cmd *exec.Cmd, w http.ResponseWriter) {
 
 func rebootSystem(w http.ResponseWriter, r *http.Request) {
 	cmd := exec.Command("reboot")
-	runShell(cmd, w)
+	err := cmd.Start()
+	if err!=nil {
+		Log.Error("Failed to reboot: ", err)
+		WriteInternalServerErrorResponse(w, ERRRUNCMD)
+		return
+	}
+	WriteSuccessResponse(w, "succeed in reboot")
 }
 
 func getSystemDate(w http.ResponseWriter, r *http.Request) {
