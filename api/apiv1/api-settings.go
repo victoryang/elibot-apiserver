@@ -3,19 +3,23 @@ package apiv1
 import (
 	"net/http"
 	"os/exec"
+	"bytes"
 	Log "elibot-apiserver/log"
 
 	"github.com/gorilla/mux"
 )
 
 func runShell(cmd *exec.Cmd, w http.ResponseWriter) {
-	out, err := cmd.CombinedOutput()
+	var out bytes.Buffer
+	cmd.Stdout = &out
+    cmd.Stderr = &out
+    err := cmd.Start()
 	if err!=nil {
 		Log.Error("Failed to exec cmd: ", err)
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
 		return
 	}
-	WriteJsonSuccessResponse(w, out)
+	WriteJsonSuccessResponse(w, out.Bytes())
 }
 
 func rebootSystem(w http.ResponseWriter, r *http.Request) {
