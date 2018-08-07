@@ -5,7 +5,7 @@ import (
 	"os/exec"
 	Log "elibot-apiserver/log"
 
-	"github.com/gorilla/mux"
+	//"github.com/gorilla/mux"
 )
 
 func rebootSystem(w http.ResponseWriter, r *http.Request) {
