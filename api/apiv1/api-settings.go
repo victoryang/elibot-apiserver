@@ -24,3 +24,12 @@ func getSystemDate(w http.ResponseWriter, r *http.Request) {
 	}
 	WriteJsonSuccessResponse(w, out)
 }
+
+func setSystemDate(w http.ResponseWriter, r *http.Request) {
+	cmd := exec.Command("date", "-s", "\'1980-02-20\'")
+	out, err := cmd.Output()
+	if err != nil {
+		Log.Error(err)
+	}
+	WriteJsonSuccessResponse(w, out)
+}
