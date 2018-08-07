@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"os/exec"
 	"io/ioutil"
-	"bytes"
 	Log "elibot-apiserver/log"
 
 	"github.com/gorilla/mux"
