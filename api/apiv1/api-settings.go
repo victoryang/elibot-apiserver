@@ -5,7 +5,7 @@ import (
 	"os/exec"
 	Log "elibot-apiserver/log"
 
-	//"github.com/gorilla/mux"
+	"github.com/gorilla/mux"
 )
 
 func rebootSystem(w http.ResponseWriter, r *http.Request) {
@@ -26,7 +26,9 @@ func getSystemDate(w http.ResponseWriter, r *http.Request) {
 }
 
 func setSystemDate(w http.ResponseWriter, r *http.Request) {
-	cmd := exec.Command("date", "-s", "1980-02-20")
+	vars := mux.Vars(r)
+	date := vars["date"]
+	cmd := exec.Command("date", "-s", date)
 	out, err := cmd.Output()
 	if err != nil {
 		Log.Error(err)
