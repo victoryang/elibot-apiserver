@@ -3,6 +3,7 @@ package apiv1
 import (
 	"net/http"
 	"os/exec"
+	"io/ioutil"
 	"bytes"
 	Log "elibot-apiserver/log"
 
@@ -10,16 +11,20 @@ import (
 )
 
 func runShell(cmd *exec.Cmd, w http.ResponseWriter) {
-	var out bytes.Buffer
-	cmd.Stdout = &out
-    cmd.Stderr = &out
+	stdout, _ := cmd.StdoutPipe()
     err := cmd.Start()
 	if err!=nil {
 		Log.Error("Failed to exec cmd: ", err)
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
 		return
 	}
-	WriteJsonSuccessResponse(w, out.Bytes())
+	content, err := ioutil.ReadAll(stdout)
+	if err!=nil {
+		Log.Error("Error to read stdout ", err)
+		WriteInternalServerErrorResponse(w, ERRRUNCMD)
+		return
+	}
+	WriteJsonSuccessResponse(w, content)
 }
 
 func rebootSystem(w http.ResponseWriter, r *http.Request) {
