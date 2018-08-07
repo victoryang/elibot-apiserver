@@ -22,5 +22,5 @@ func getSystemDate(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		Log.Error(err)
 	}
-	WriteSuccessResponse(w, out)
+	WriteJsonSuccessResponse(w, out)
 }
