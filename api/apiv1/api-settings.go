@@ -3,43 +3,32 @@ package apiv1
 import (
 	"net/http"
 	"os/exec"
-	"io/ioutil"
 	Log "elibot-apiserver/log"
 
 	"github.com/gorilla/mux"
 )
 
-func rebootSystem(w http.ResponseWriter, r *http.Request) {
-	cmd := exec.Command("reboot")
-	if err := cmd.Run(); err!=nil {
-		Log.Error("reboot not executed: ", err)
+func runShell(cmd *exec.Cmd, w http.ResponseWriter) {
+	out, err := cmd.CombinedOutput()
+	if err!=nil {
+		WriteInternalServerErrorResponse(w, ERRRUNCMD)
 		return
 	}
-	WriteSuccessResponse(w, "succeed in reboot")
+	WriteJsonSuccessResponse(w, out)
+}
+
+func rebootSystem(w http.ResponseWriter, r *http.Request) {
+	cmd := exec.Command("reboot")
+	runShell(cmd, w)
 }
 
 func getSystemDate(w http.ResponseWriter, r *http.Request) {
 	cmd := exec.Command("date")
-	stdout, err := cmd.StdoutPipe()
-	cmd.Start()
-	out, err := ioutil.ReadAll(stdout)
-	if err != nil {
-		Log.Error("output error: ", err)
-		return
-	}
-	WriteJsonSuccessResponse(w, out)
+	runShell(cmd, w)
 }
 
 func setSystemDate(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	args := " -s " + vars["date"]
-	cmd := exec.Command("date", args)
-	stdout, err := cmd.StdoutPipe()
-	cmd.Start()
-	out, err := ioutil.ReadAll(stdout)
-	if err != nil {
-		Log.Error("output error: ", err)
-		return
-	}
-	WriteJsonSuccessResponse(w, out)
+	cmd := exec.Command("date", "-s", vars["date"])
+	runShell(cmd, w)
 }
