@@ -53,6 +53,11 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	repositoryapi.HandleFunc("/zeropoint", getAllZeroPoint).Methods("GET")
 	repositoryapi.HandleFunc("/zeropoint/{md_id}", setZeroPoint).Methods("PUT")
 
+	settingsapi := r.PathPrefix("/v1/settings").Subrouter()
+	settingsapi.HandleFunc("/reboot", rebootSystem).Methods("GET")
+	/*settingsapi.HandleFunc("/date", getDate).Methods("GET")
+	settingsapi.HandleFunc("/date/{date}", setDate).Methods("PUT")*/
+
 	executeapi := robotapi.PathPrefix("/execute").Subrouter()
 	executeapi.HandleFunc("/run/{args}", runCmd).Methods("POST")
 	executeapi.HandleFunc("/pause/{args}", doPause).Methods("POST")
