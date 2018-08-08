@@ -7,7 +7,7 @@ import (
 )
 
 var InterfacePath = "/etc/network/interfaces"
-var InterfaceBack = "/etc/network/interfaces.bak"
+var InterfaceBack = "/etc/network/interface.bak"
 
 var templateForReplacement = "        address "
 var templateForInterface = []string{

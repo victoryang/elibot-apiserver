@@ -6,6 +6,7 @@ import (
 	"os/exec"
 	"io/ioutil"
 	Log "elibot-apiserver/log"
+	"elibot-apiserver/db"
 
 	"github.com/gorilla/mux"
 )
@@ -83,4 +84,31 @@ func setSystemIP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	WriteSuccessResponse(w, "succeed in changing ip, please reboot and login with new ip")
+}
+
+func getKV(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	res, err := db.GetValue(vars["key"])
+	if err!=nil {
+		Log.Error("Failed to get value: ", err)
+		WriteInternalServerErrorResponse(w, ERRRUNCMD)
+		return
+	}
+	WriteSuccessResponse(w, res)
+}
+
+func setKV(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	d := &RequestData{}
+	if err := ParseBodyToObject(r, d); err!=nil {
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		return
+	}
+	res, err := db.SetValue(vars["key"], d.Value)
+	if err!=nil {
+		Log.Error("Failed to set value: ", err)
+		WriteInternalServerErrorResponse(w, ERRRUNCMD)
+		return
+	}
+	WriteSuccessResponse(w, res)
 }
