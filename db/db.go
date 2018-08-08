@@ -28,7 +28,7 @@ func GetValue(key string) (string, error) {
 		return "", err
 	}
 	var res string
-	for row.Next() {
+	for rows.Next() {
 		if err := rows.Scan(&res); err!=nil {
 			continue
 		}
