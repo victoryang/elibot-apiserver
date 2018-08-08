@@ -22,15 +22,10 @@ func SetupDB(dbname string) {
 }
 
 func GetValue(key string) (string, error) {
-	stmt, err := conn.Prepare("SELECT * FROM " + table + " where key=?")
+	rows, err := conn.Query("SELECT * FROM " + table + " where key=?", key)
 	if err!=nil {
 		Log.Error("failed to get value")
 		return "", err
-	}
-	rows, errs := stmt.Exec(key)
-	if errs!=nil {
-		Log.Error("failed to get value")
-		return "", errs
 	}
 	var res string
 	for rows.Next() {
