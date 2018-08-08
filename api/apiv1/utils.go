@@ -14,7 +14,7 @@ var templateForInterface = []string{
 	"# Configure Loopback",
 	"auto lo",
 	"iface lo inet loopback",
-	"\n",
+	"",
 	"# Configure eth0",
 	"auto eth0",
 	"iface eth0 inet static",
