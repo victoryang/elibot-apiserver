@@ -11,6 +11,10 @@ var InterfaceBack = "/etc/network/interfaces.bak"
 
 var templateForReplacement = "        address"
 var templateForInterface = []string{
+	"# Configure Loopback",
+	"auto lo",
+	"iface lo inet loopback",
+	"\n",
 	"# Configure eth0",
 	"auto eth0",
 	"iface eth0 inet static",
@@ -22,7 +26,7 @@ var templateForInterface = []string{
 }
 
 func generateTemplateBackup(desip string) error {
-	templateForInterface[3] = templateForReplacement + desip
+	templateForInterface[7] = templateForReplacement + desip
 	file, err := os.OpenFile(InterfaceBack, os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 	   return err
