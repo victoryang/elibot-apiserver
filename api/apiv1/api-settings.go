@@ -24,7 +24,7 @@ func runShell(cmd *exec.Cmd, w http.ResponseWriter) {
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
 		return
 	}
-	WriteJsonSuccessResponse(w, content)
+	WriteSuccessResponse(w, string(content))
 }
 
 func rebootSystem(w http.ResponseWriter, r *http.Request) {
@@ -35,7 +35,7 @@ func rebootSystem(w http.ResponseWriter, r *http.Request) {
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
 		return
 	}
-	WriteSuccessResponse(w, "succeed in reboot")
+	WriteSuccessResponse(w, "succeed in rebooting")
 }
 
 func getSystemDate(w http.ResponseWriter, r *http.Request) {
@@ -57,14 +57,30 @@ func getSystemIP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var LocalIP string
+	var local string
 	for _, address := range addrs {
         if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
             if ipnet.IP.To4() != nil {
-                LocalIP = ipnet.IP.String()
+                local = ipnet.IP.String()
             }
         }
     }
 
-    WriteSuccessResponse(w, LocalIP)
+    WriteSuccessResponse(w, local)
+}
+
+func setSystemIP(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	if err := generateTemplateBackup(vars["ip"]); err!=nil {
+		Log.Error("Failed to modify ip: ", err)
+		WriteInternalServerErrorResponse(w, ERRRUNCMD)
+		return
+	}
+	if err := modifyInterface(); err!=nil {
+		Log.Error("Failed to modify ip: ", err)
+		WriteInternalServerErrorResponse(w, ERRRUNCMD)
+		return
+	}
+
+	WriteSuccessResponse(w, "succeed in changing ip, please reboot and login with new ip")
 }

@@ -58,6 +58,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	settingsapi.HandleFunc("/date", getSystemDate).Methods("GET")
 	settingsapi.HandleFunc("/date/{date}", setSystemDate).Methods("PUT")
 	settingsapi.HandleFunc("/ip", getSystemIP).Methods("GET")
+	settingsapi.HandleFunc("/ip/{ip}", setSystemIP).Methods("PUT")
 
 	executeapi := robotapi.PathPrefix("/execute").Subrouter()
 	executeapi.HandleFunc("/run/{args}", runCmd).Methods("POST")
