@@ -104,11 +104,11 @@ func setKV(w http.ResponseWriter, r *http.Request) {
 		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 		return
 	}
-	res, err := db.SetValue(vars["key"], d.Value)
+	err := db.SetValue(vars["key"], d.Value)
 	if err!=nil {
 		Log.Error("Failed to set value: ", err)
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
 		return
 	}
-	WriteSuccessResponse(w, res)
+	WriteSuccessResponse(w, "succeed in setting value")
 }
