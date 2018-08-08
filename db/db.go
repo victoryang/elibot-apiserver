@@ -27,7 +27,11 @@ func GetValue(key string) (string, error) {
 		Log.Error("failed to get value")
 		return "", err
 	}
-	rows, err = stmt.Exec(key)
+	rows, errs := stmt.Exec(key)
+	if errs!=nil {
+		Log.Error("failed to get value")
+		return "", errs
+	}
 	var res string
 	for rows.Next() {
 		if err := rows.Scan(&res); err!=nil {
