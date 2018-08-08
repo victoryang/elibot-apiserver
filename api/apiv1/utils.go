@@ -9,7 +9,7 @@ import (
 var InterfacePath = "/etc/network/interfaces"
 var InterfaceBack = "/etc/network/interfaces.bak"
 
-var templateForReplacement = "        address"
+var templateForReplacement = "        address "
 var templateForInterface = []string{
 	"# Configure Loopback",
 	"auto lo",
