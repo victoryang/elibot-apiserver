@@ -87,7 +87,6 @@ func setSystemIP(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllKV(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
 	res, err := db.GetAllKV()
 	if err!=nil {
 		Log.Error("Failed to get value: ", err)

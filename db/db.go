@@ -6,7 +6,7 @@ import (
 
 var table = "elt_settings"
 
-func GetAllKV(key string) (map[string]string, error) {
+func GetAllKV() (map[string]string, error) {
 	command := "SELECT * FROM " + table
 	return doQueryCommand(command)
 }
