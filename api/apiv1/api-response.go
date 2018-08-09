@@ -24,6 +24,23 @@ func WriteSuccessResponse(w http.ResponseWriter, res string) {
 	WriteJsonSuccessResponse(w, r)
 }
 
+type SuccessResponse struct {
+	Msg 		interface{}			`json:"msg"`
+}
+
+func ToSuccessJson(msg interface{}) []byte {
+	response := SuccessResponse{
+		Msg:	msg,
+	}
+	r, _ := json.Marshal(response)
+	return r
+}
+
+func WriteMultiSuccessResponse(w http.ResponseWriter, res interface{}) {
+	r := ToSuccessJson(res)
+	WriteJsonSuccessResponse(w, r)
+}
+
 func WriteJsonSuccessResponse(w http.ResponseWriter, res []byte) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(res)
