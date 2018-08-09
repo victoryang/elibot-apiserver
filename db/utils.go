@@ -40,6 +40,7 @@ func iterateRows(rows *sql.Rows) string {
 	var value string
 	for rows.Next() {
 		if err := rows.Scan(&key, &value); err!=nil {
+			Log.Error("scan rows fails: ", err)
 			continue
 		}
 	}
