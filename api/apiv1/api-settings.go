@@ -72,12 +72,12 @@ func getSystemIP(w http.ResponseWriter, r *http.Request) {
 
 func setSystemIP(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	if err := generateTemplateBackup(vars["ip"]); err!=nil {
+	if err := settings.GenerateTemplateBackup(vars["ip"]); err!=nil {
 		Log.Error("Failed to modify ip: ", err)
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
 		return
 	}
-	if err := modifyInterface(); err!=nil {
+	if err := settings.ModifyInterface(); err!=nil {
 		Log.Error("Failed to modify ip: ", err)
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
 		return
