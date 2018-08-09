@@ -55,7 +55,7 @@ func doQueryCommand(command string, args ...interface{}) (map[string]string, err
 	rows, err := conn.Query(command, args...)
 	if err!=nil {
 		Log.Error("failed to query: ", err)
-		return "", err
+		return nil, err
 	}
 	return iterateRows(rows), nil
 }
