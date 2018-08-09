@@ -5,12 +5,11 @@ import (
 	"encoding/json"
 )
 
-/* respond differently*/
 type SuccessResponse struct {
-	Msg 		string			`json:"msg"`
+	Msg 		interface{}			`json:"msg"`
 }
 
-func ToSuccessJson(msg string) []byte {
+func ToSuccessJson(msg interface{}) []byte {
 	response := SuccessResponse{
 		Msg:	msg,
 	}
@@ -18,26 +17,8 @@ func ToSuccessJson(msg string) []byte {
 	return r
 }
 
-// WriteSuccessResponse write success headers and response if any.
-func WriteSuccessResponse(w http.ResponseWriter, res string) {
+func WriteSuccessResponse(w http.ResponseWriter, res interface{}) {
 	r := ToSuccessJson(res)
-	WriteJsonSuccessResponse(w, r)
-}
-
-type MultiSuccessResponse struct {
-	Msg 		interface{}			`json:"msg"`
-}
-
-func ToMultiSuccessJson(msg interface{}) []byte {
-	response := MultiSuccessResponse{
-		Msg:	msg,
-	}
-	r, _ := json.Marshal(response)
-	return r
-}
-
-func WriteMultiSuccessResponse(w http.ResponseWriter, res interface{}) {
-	r := ToMultiSuccessJson(res)
 	WriteJsonSuccessResponse(w, r)
 }
 

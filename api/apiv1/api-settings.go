@@ -93,7 +93,7 @@ func getAllKV(w http.ResponseWriter, r *http.Request) {
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
 		return
 	}
-	WriteMultiSuccessResponse(w, res)
+	WriteSuccessResponse(w, res)
 }
 
 func getKV(w http.ResponseWriter, r *http.Request) {
@@ -104,7 +104,7 @@ func getKV(w http.ResponseWriter, r *http.Request) {
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
 		return
 	}
-	WriteMultiSuccessResponse(w, res)
+	WriteSuccessResponse(w, res)
 }
 
 func setKV(w http.ResponseWriter, r *http.Request) {
