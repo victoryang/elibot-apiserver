@@ -6,6 +6,11 @@ import (
 
 var table = "elt_settings"
 
+func GetAllKV(key string) (map[string]string, error) {
+	command := "SELECT * FROM " + table
+	return doQueryCommand(command)
+}
+
 func GetValue(key string) (map[string]string, error) {
 	command := "SELECT * FROM " + table + " where key=?"
 	return doQueryCommand(command, key)

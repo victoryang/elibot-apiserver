@@ -86,7 +86,7 @@ func setSystemIP(w http.ResponseWriter, r *http.Request) {
 	WriteSuccessResponse(w, "succeed in changing ip, please reboot and login with new ip")
 }
 
-/*func getAllKV(w http.ResponseWriter, r *http.Request) {
+func getAllKV(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	res, err := db.GetAllKV()
 	if err!=nil {
@@ -94,8 +94,8 @@ func setSystemIP(w http.ResponseWriter, r *http.Request) {
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
 		return
 	}
-	WriteSuccessResponse(w, res)
-}*/
+	WriteMultiSuccessResponse(w, res)
+}
 
 func getKV(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
