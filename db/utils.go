@@ -13,7 +13,8 @@ var mu sync.Mutex
 var conn *sql.DB = nil
 
 func createTableIfNotExist() error {
-	if err := prepareAndExecuteCommand("CREATE TABLE IF NOT EXISTS elt_settings(key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL)"); err!=nil {
+	command := "CREATE TABLE IF NOT EXISTS elt_settings(key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL)"
+	if err := prepareAndExecuteCommand(command); err!=nil {
 		Log.Error("create table fails: ", err)
 	}
 	return nil
@@ -60,7 +61,7 @@ func doQueryCommand(command string, args ...interface{}) (string, error){
 	return iterateRows(rows), nil
 }
 
-func prepareAndExecuteCommand(command string, args ...interface{}) {
+func prepareAndExecuteCommand(command string, args ...interface{}) error {
 	mu.Lock()
 	defer mu.Unlock()
 	stmt, err := conn.Prepare(command)
