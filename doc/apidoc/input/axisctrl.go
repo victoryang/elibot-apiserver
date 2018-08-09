@@ -9,7 +9,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/axisctrl/dragteach/:enabled
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
 * @apiParam (params) {string} enabled  	   URL Param: enabled to set
 *

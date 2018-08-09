@@ -20,7 +20,7 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/settings/kv
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -37,7 +37,7 @@
 * curl -X GET http://192.168.1.253:9000/v1/settings/kv/:key
 *
 * @apiParam (params) {string} key  URL Param: key to get
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -55,7 +55,7 @@
 *
 * @apiParam (params) {string} key  URL Param: key to set
 * @apiUse RequestValue
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -71,7 +71,7 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/reboot
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -87,7 +87,7 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/settings/date
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -104,7 +104,7 @@
 * curl -X PUT http://192.168.1.253:9000/v1/settings/date/:date
 *
 * @apiParam (params) {string} date  URL Param: date to set
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -120,7 +120,7 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/settings/ip
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -137,7 +137,7 @@
 * curl -X PUT http://192.168.1.253:9000/v1/settings/ip/:ip
 *
 * @apiParam (params) {string} ip  URL Param: ip to set
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
 */

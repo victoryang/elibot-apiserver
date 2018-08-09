@@ -9,7 +9,7 @@
 * @apiExample Example usage:
 * curl -X POST http://192.168.1.253:9000/v1/robot/execute/run/:args
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
 * @apiParam (params) {string} args  	   URL Param: args to set
 *
@@ -27,7 +27,7 @@
 * @apiExample Example usage:
 * curl -X POST http://192.168.1.253:9000/v1/robot/execute/pause/:args
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
 * @apiParam (params) {string} args  	   URL Param: args to set
 *
@@ -45,7 +45,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/execute/mode/:mode
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
 * @apiParam (params) {string} mode  	   URL Param: mode to set
 *
@@ -63,7 +63,7 @@
 * @apiExample Example usage:
 * curl -X POST http://192.168.1.253:9000/v1/robot/execute/alarm/:args
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
 * @apiParam (params) {string} args  	   URL Param: args to set
 *
@@ -81,7 +81,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/execute/speed/:data
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
 * @apiParam (params) {string} data  	   URL Param: data to set
 *
@@ -99,7 +99,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/execute/mainfile/:filename
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
 * @apiParam (params) {string} filename  	   URL Param: filename to set
 *
@@ -117,7 +117,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/execute/cyclemode/:cyclemode
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
 * @apiParam (params) {string} cyclemode  	   URL Param: cyclemode to set
 *

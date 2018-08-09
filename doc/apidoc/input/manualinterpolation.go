@@ -9,7 +9,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/manualinterpolation/coord/:mode
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
 * @apiParam (params) {string} mode  	   URL Param: mode to set
 *
@@ -27,7 +27,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/manualinterpolation/manual/:key/:arg
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
 * @apiParam (params) {string} key  	   URL Param: key to set
 *
@@ -47,7 +47,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/manualinterpolation/runforward
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -63,7 +63,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/manualinterpolation/run/:zero
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
 * @apiParam (params) {string} zero  	   URL Param: zero to set
 *
@@ -81,7 +81,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/manualinterpolation/stop
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
 */

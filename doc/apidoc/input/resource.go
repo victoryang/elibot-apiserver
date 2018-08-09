@@ -9,12 +9,12 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/resource/sysvar/crobb?start=:start&end=:end
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} start  URL Param: start index
 * @apiParam (params) {string} end    URL Param: end index
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -28,12 +28,12 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/resource/sysvar/irobi?start=:start&end=:end
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} start  URL Param: start index
 * @apiParam (params) {string} end    URL Param: end index
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -47,12 +47,12 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/resource/sysvar/drobd?start=:start&end=:end
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} start  URL Param: start index
 * @apiParam (params) {string} end    URL Param: end index
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -66,12 +66,12 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/resource/sysvar/drobp?start=:start&end=:end
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} start  URL Param: start index
 * @apiParam (params) {string} end    URL Param: end index
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -85,12 +85,12 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/resource/sysvar/drobv?start=:start&end=:end
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} start  URL Param: start index
 * @apiParam (params) {string} end    URL Param: end index
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -104,13 +104,13 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/resource/locvar/croblb/:num?start=:start&end=:end
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} start  URL Param: start index
 * @apiParam (params) {string} end    URL Param: end index
 * @apiParam (params) {string} num  	 URL Param: num to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -124,13 +124,13 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/resource/locvar/irobli/:num?start=:start&end=:end
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} start  URL Param: start index
 * @apiParam (params) {string} end    URL Param: end index 
 * @apiParam (params) {string} num  	 URL Param: num to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -144,13 +144,13 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/resource/locvar/drobld/:num?start=:start&end=:end
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} start  URL Param: start index
 * @apiParam (params) {string} end    URL Param: end index 
 * @apiParam (params) {string} num  	 URL Param: num to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -164,13 +164,13 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/resource/locvar/droblp/:num?start=:start&end=:end
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} start  URL Param: start index
 * @apiParam (params) {string} end    URL Param: end index 
 * @apiParam (params) {string} num  	 URL Param: num to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -184,11 +184,11 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/resource/locvar/droblv/:num?start=:start&end=:end
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} start  URL Param: start index
 * @apiParam (params) {string} end    URL Param: end index 
 * @apiParam (params) {string} num  	 URL Param: num to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
