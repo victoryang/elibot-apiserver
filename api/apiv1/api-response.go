@@ -24,12 +24,12 @@ func WriteSuccessResponse(w http.ResponseWriter, res string) {
 	WriteJsonSuccessResponse(w, r)
 }
 
-type SuccessResponse struct {
+type MultiSuccessResponse struct {
 	Msg 		interface{}			`json:"msg"`
 }
 
-func ToSuccessJson(msg interface{}) []byte {
-	response := SuccessResponse{
+func ToMultiSuccessJson(msg interface{}) []byte {
+	response := MultiSuccessResponse{
 		Msg:	msg,
 	}
 	r, _ := json.Marshal(response)
@@ -37,7 +37,7 @@ func ToSuccessJson(msg interface{}) []byte {
 }
 
 func WriteMultiSuccessResponse(w http.ResponseWriter, res interface{}) {
-	r := ToSuccessJson(res)
+	r := ToMultiSuccessJson(res)
 	WriteJsonSuccessResponse(w, r)
 }
 

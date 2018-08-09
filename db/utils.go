@@ -35,19 +35,21 @@ func SetupDB(dbname string) {
     return
 }
 
-func iterateRows(rows *sql.Rows) string {
-	var key string
-	var value string
+func iterateRows(rows *sql.Rows) map[string]string {
+	maps := make(map[string]string)
 	for rows.Next() {
+		var key string
+		var value string
 		if err := rows.Scan(&key, &value); err!=nil {
 			Log.Error("scan rows fails: ", err)
 			continue
 		}
+		maps[key] = value
 	}
-	return value
+	return maps
 }
 
-func doQueryCommand(command string, args ...interface{}) (string, error){
+func doQueryCommand(command string, args ...interface{}) (map[string]string, error){
 	mu.Lock()
 	defer mu.Unlock()
 	rows, err := conn.Query(command, args...)

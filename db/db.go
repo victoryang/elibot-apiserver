@@ -6,7 +6,7 @@ import (
 
 var table = "elt_settings"
 
-func GetValue(key string) (string, error) {
+func GetValue(key string) (map[string]string, error) {
 	command := "SELECT * FROM " + table + " where key=?"
 	return doQueryCommand(command, key)
 }
