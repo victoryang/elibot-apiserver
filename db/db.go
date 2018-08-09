@@ -7,7 +7,8 @@ import (
 var table = "elt_settings"
 
 func GetValue(key string) (string, error) {
-	return doQueryCommand("SELECT * FROM " + table + " where key=?", key)
+	command := "SELECT * FROM " + table + " where key=?"
+	return doQueryCommand(command, key)
 }
 
 func SetValue(key string, value string) error {
