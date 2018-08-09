@@ -10,6 +10,7 @@ import (
 	"elibot-apiserver/auth"
 	"elibot-apiserver/sqlitedb"
 	"elibot-apiserver/db"
+	"elibot-apiserver/settings"
 	"elibot-apiserver/config"
 	"elibot-apiserver/mcserver"
 	"elibot-apiserver/shm"
@@ -84,6 +85,7 @@ func SetUpDatabase(cfg *config.GlobalConfiguration) {
 	dbcfg := cfg.Databases
 	sqlitedb.SetupDB(dbcfg.FileName, dbcfg.BackupDir)
 	db.SetupDB(dbcfg.FileName)
+	settings.SetupTable()
 }
 
 func main() {

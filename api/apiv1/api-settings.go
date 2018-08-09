@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"io/ioutil"
 	Log "elibot-apiserver/log"
-	"elibot-apiserver/db"
+	"elibot-apiserver/settings"
 
 	"github.com/gorilla/mux"
 )
@@ -87,7 +87,7 @@ func setSystemIP(w http.ResponseWriter, r *http.Request) {
 }
 
 func getAllSettingsKV(w http.ResponseWriter, r *http.Request) {
-	res, err := db.GetAllSettingsKV()
+	res, err := settings.GetAllKeyValue()
 	if err!=nil {
 		Log.Error("Failed to get value: ", err)
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
@@ -98,7 +98,7 @@ func getAllSettingsKV(w http.ResponseWriter, r *http.Request) {
 
 func getSettingsKV(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	res, err := db.GetSettingsValue(vars["key"])
+	res, err := settings.GetKeyValue(vars["key"])
 	if err!=nil {
 		Log.Error("Failed to get value: ", err)
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
@@ -114,7 +114,7 @@ func setSettingsKV(w http.ResponseWriter, r *http.Request) {
 		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 		return
 	}
-	err := db.SetSettingsValue(vars["key"], d.Value)
+	err := settings.SetKeyValue(vars["key"], d.Value)
 	if err!=nil {
 		Log.Error("Failed to set value: ", err)
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
