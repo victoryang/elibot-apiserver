@@ -86,8 +86,8 @@ func setSystemIP(w http.ResponseWriter, r *http.Request) {
 	WriteSuccessResponse(w, "succeed in changing ip, please reboot and login with new ip")
 }
 
-func getAllKV(w http.ResponseWriter, r *http.Request) {
-	res, err := db.GetAllKV()
+func getAllSettingsKV(w http.ResponseWriter, r *http.Request) {
+	res, err := db.GetAllSettingsKV()
 	if err!=nil {
 		Log.Error("Failed to get value: ", err)
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
@@ -96,9 +96,9 @@ func getAllKV(w http.ResponseWriter, r *http.Request) {
 	WriteSuccessResponse(w, res)
 }
 
-func getKV(w http.ResponseWriter, r *http.Request) {
+func getSettingsKV(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	res, err := db.GetValue(vars["key"])
+	res, err := db.GetSettingsValue(vars["key"])
 	if err!=nil {
 		Log.Error("Failed to get value: ", err)
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)
@@ -107,14 +107,14 @@ func getKV(w http.ResponseWriter, r *http.Request) {
 	WriteSuccessResponse(w, res)
 }
 
-func setKV(w http.ResponseWriter, r *http.Request) {
+func setSettingsKV(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
 		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 		return
 	}
-	err := db.SetValue(vars["key"], d.Value)
+	err := db.SetSettingsValue(vars["key"], d.Value)
 	if err!=nil {
 		Log.Error("Failed to set value: ", err)
 		WriteInternalServerErrorResponse(w, ERRRUNCMD)

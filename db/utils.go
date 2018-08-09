@@ -12,8 +12,8 @@ var DBName string
 var mu sync.Mutex
 var conn *sql.DB = nil
 
-func createTableIfNotExist() error {
-	command := "CREATE TABLE IF NOT EXISTS elt_settings(key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL)"
+func createTableIfNotExist(table string) error {
+	command := "CREATE TABLE IF NOT EXISTS " + table + "(key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL)"
 	if err := prepareAndExecuteCommand(command); err!=nil {
 		Log.Error("create table fails: ", err)
 	}
@@ -28,8 +28,8 @@ func SetupDB(dbname string) {
     	Log.Error("failed to setup db")
     	return
     }
-    if err := createTableIfNotExist(); err!=nil {
-    	Log.Error("create table fails: ", err)
+    if err := createTableIfNotExist(tableSettings); err!=nil {
+    	Log.Error("create settings table fails")
     	return
     }
     return
