@@ -150,7 +150,7 @@
 */
 
 /**
-* @api {get} /v1/robot/repository/metadata getAllMetadata
+* @api {get} /v1/robot/repository/metadata?lang=:lang getAllMetadata
 * @apiVersion 0.1.0
 * @apiName getAllMetadata
 * @apiGroup Repository
@@ -158,9 +158,11 @@
 * @apiDescription getAllMetadata
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.253:9000/v1/robot/repository/metadata
+* curl -X GET http://192.168.1.253:9000/v1/robot/repository/metadata?lang=:lang
 *
 * @apiUse DefaultHeader
+*
+* @apiParam (params) {string} lang  	URL Param: lang to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
