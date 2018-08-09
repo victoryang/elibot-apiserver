@@ -53,7 +53,7 @@ func iterateRows(rows *sql.Rows) string {
 func doQueryCommand(command string, args ...interface{}) (string, error){
 	mu.Lock()
 	defer mu.Unlock()
-	rows, err := conn.Query(command, args)
+	rows, err := conn.Query(command, args...)
 	if err!=nil {
 		Log.Error("failed to query: ", err)
 		return "", err
@@ -69,7 +69,7 @@ func prepareAndExecuteCommand(command string, args ...interface{}) error {
 		Log.Error("failed to prepare statement")
 		return err
 	}
-	_, err = stmt.Exec(args)
+	_, err = stmt.Exec(args...)
 	if err!=nil {
 		Log.Error("failed to execute statement")
 		return err
