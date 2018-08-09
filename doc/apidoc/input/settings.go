@@ -126,6 +126,25 @@
 */
 
 /**
+* @apiDefine RequestBodyForSettingIP
+*
+* @apiParam (params) {string} address    Body Content: address
+* @apiParam (params) {string} netmask    Body Content: netmask
+* @apiParam (params) {string} network    Body Content: network
+* @apiParam (params) {string} broadcast  Body Content: broadcast
+* @apiParam (params) {string} gateway    Body Content: gateway
+*
+* @apiParamExample {json} Request-Body (example):
+* 		{
+*			"address":"192.168.1.253",
+*			"netmask":"255.255.255.0",
+*			"network":"192.168.1.0",
+*			"broadcast":"192.168.255.255",
+*			"gateway":"192.168.1.1"
+*		}
+*/
+
+/**
 * @api {put} /v1/settings/ip/:ip setSystemIP
 * @apiVersion 0.1.0
 * @apiName setSystemIP
@@ -134,9 +153,9 @@
 * @apiDescription setSystemIP
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v1/settings/ip/:ip
+* curl -X PUT http://192.168.1.253:9000/v1/settings/ip
 *
-* @apiParam (params) {string} ip  URL Param: ip to set
+* @apiUse RequestBodyForSettingIP
 * @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
