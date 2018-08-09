@@ -22,9 +22,9 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/arc
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -40,9 +40,9 @@
 *
 * @apiParam (params) {string} file_no  URL Param: file no
 * @apiParam (params) {string} group    URL Param: group id
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -56,7 +56,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/repository/arcparam/:file_no/:md_id
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} file_no  URL Param: file to set
 * @apiParam (params) {string} md_id    URL Param: metadata id
@@ -76,9 +76,9 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/bookprograms
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -92,9 +92,9 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/enum
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -108,9 +108,9 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/extaxis
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -124,9 +124,9 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/interference
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -140,7 +140,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/repository/interference/:no/:md_id
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} no  	   URL Param: no to set
 * @apiParam (params) {string} md_id    URL Param: metadata id
@@ -150,7 +150,7 @@
 */
 
 /**
-* @api {get} /v1/robot/repository/metadata getAllMetadata
+* @api {get} /v1/robot/repository/metadata?lang=:lang getAllMetadata
 * @apiVersion 0.1.0
 * @apiName getAllMetadata
 * @apiGroup Repository
@@ -158,11 +158,13 @@
 * @apiDescription getAllMetadata
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.253:9000/v1/robot/repository/metadata
+* curl -X GET http://192.168.1.253:9000/v1/robot/repository/metadata?lang=:lang
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiParam (params) {string} lang  	URL Param: lang to set
+*
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -176,9 +178,9 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/params
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -192,11 +194,11 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/parameter/id/:md_id
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} md_id  	   URL Param: md_id to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -210,11 +212,11 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/parameter/group/:group
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} group  		URL Param: group to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -228,7 +230,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/repository/params/:md_id
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
@@ -247,9 +249,9 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/ref
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -263,9 +265,9 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/toolframe
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -279,7 +281,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/repository/toolframes/:tool_no/:md_id/pos/:pos_no
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} tool_no  URL Param: tool no to set
 * @apiParam (params) {string} md_id    URL Param: metadata id
@@ -300,9 +302,9 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/userframe
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -316,7 +318,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/repository/userframe/:userno/:md_id
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} userno   URL Param: user no
 * @apiParam (params) {string} md_id    URL Param: metadata id
@@ -336,9 +338,9 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/zeropoint
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -352,7 +354,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/robot/repository/zeropoint/:md_id
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiParam (params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue

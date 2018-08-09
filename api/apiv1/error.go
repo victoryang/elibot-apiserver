@@ -14,6 +14,8 @@ const (
 	ERRLISTDBS = 201
 	ERRDELETEDB = 202
 	ERRRESTOREDB = 203
+
+	ERRRUNCMD = 301
 )
 
 var ErrStringMap = map[int]string {
@@ -28,6 +30,7 @@ var ErrStringMap = map[int]string {
 	ERRLISTDBS: 				"Fail to list dbs",
 	ERRDELETEDB:				"Fail to delete db",
 	ERRRESTOREDB: 				"Fail to restore db",
+	ERRRUNCMD:					"Fail to run cmd",
 }
 
 func ErrMsg(errno int) string {

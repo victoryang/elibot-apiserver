@@ -45,7 +45,7 @@ func DBDelBackup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, "db detelted")
+	WriteSuccessResponse(w, "db deleted")
 }
 
 func DBRestoreBackup(w http.ResponseWriter, r *http.Request) {

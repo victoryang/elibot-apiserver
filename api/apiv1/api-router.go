@@ -53,6 +53,16 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	repositoryapi.HandleFunc("/zeropoint", getAllZeroPoint).Methods("GET")
 	repositoryapi.HandleFunc("/zeropoint/{md_id}", setZeroPoint).Methods("PUT")
 
+	settingsapi := r.PathPrefix("/v1/settings").Subrouter()
+	settingsapi.HandleFunc("/reboot", rebootSystem).Methods("GET")
+	settingsapi.HandleFunc("/date", getSystemDate).Methods("GET")
+	settingsapi.HandleFunc("/date/{date}", setSystemDate).Methods("PUT")
+	settingsapi.HandleFunc("/ip", getSystemIP).Methods("GET")
+	settingsapi.HandleFunc("/ip/{ip}", setSystemIP).Methods("PUT")
+	settingsapi.HandleFunc("/kv", getAllSettingsKV).Methods("GET")
+	settingsapi.HandleFunc("/kv/{key}", getSettingsKV).Methods("GET")
+	settingsapi.HandleFunc("/kv/{key}", setSettingsKV).Methods("POST")
+
 	executeapi := robotapi.PathPrefix("/execute").Subrouter()
 	executeapi.HandleFunc("/run/{args}", runCmd).Methods("POST")
 	executeapi.HandleFunc("/pause/{args}", doPause).Methods("POST")
@@ -71,78 +81,6 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 
 	axisctrlapi := robotapi.PathPrefix("/axisctrl").Subrouter()
 	axisctrlapi.HandleFunc("/dragteach/{enabled}", setDragteach).Methods("PUT")
-
-	/*r.HandleFunc("/v1/aio", getAIO).Methods("GET")
-	r.HandleFunc("/v1/aio", setAIO).Methods("PUT")
-	r.HandleFunc("/v1/aiodouble", getAIOdouble).Methods("GET")
-	r.HandleFunc("/v1/aiodouble", setAIOdouble).Methods("PUT")
-
-	r.HandleFunc("/v1/nvram", saveNvRam).Methods("POST")
-
-	r.HandleFunc("/v1/lisence", inputLisence).Methods("PUT")
-	r.HandleFunc("/v1/serialnum", getSerialnum).Methods("GET")
-	r.HandleFunc("/v1/version", getVersion).Methods("GET")
-
-	remoteapi := r.PathPrefix("/v1/remote").Subrouter()
-	remoteapi.HandleFunc("/stamppara", setStampPara).Methods("PUT")
-	remoteapi.HandleFunc("/stampip", modifyStampIp).Methods("PUT")
-	remoteapi.HandleFunc("/stampsetting", saveStampSetting).Methods("GET")
-	remoteapi.HandleFunc("/stacklevel", setStackLevel).Methods("PUT")
-	remoteapi.HandleFunc("/stackrange", setStackRange).Methods("PUT")
-	remoteapi.HandleFunc("/feedpoint", setFeedPoint).Methods("PUT")
-	remoteapi.HandleFunc("/feedtoppoint", setFeedTopPoint).Methods("PUT")
-
-	extdeviceapi := r.PathPrefix("/v1/extdevice").Subrouter()
-	extdeviceapi.HandleFunc("/smtrkdev", setSmtrkdev).Methods("PUT")
-	extdeviceapi.HandleFunc("/smtrkdev", saveSmtrkdev).Methods("POST")
-	extdeviceapi.HandleFunc("/distsenserdata", setDistSenserdata).Methods("PUT")
-	extdeviceapi.HandleFunc("/distsenserdata", saveDistSenserdata).Methods("POST")
-	extdeviceapi.HandleFunc("/vision/enable", enableVision).Methods("GET")
-	extdeviceapi.HandleFunc("/vision/disable", disableVision).Methods("GET")
-
-	bookprogrameapi := robotapi.PathPrefix("/bookprograme").Subrouter()
-	bookprogrameapi.HandleFunc("/", deleteRunFile).Methods("DELETE")
-	bookprogrameapi.HandleFunc("/", deleteRunFile).Methods("PUT")
-	bookprogrameapi.HandleFunc("/enable", setBookProgEnable).Methods("PUT")
-
-	multipleSinapi := robotapi.PathPrefix("/multipleSin").Subrouter()
-	multipleSinapi.HandleFunc("/mulsinx", mulsinx).Methods("PUT")
-	multipleSinapi.HandleFunc("/sinpos", setMovxJoint).Methods("PUT")
-	multipleSinapi.HandleFunc("/sinpos", gotoSinpos).Methods("GET")
-
-	robotapi.HandleFunc("/parameters", setParameters).Methods("PUT")
-
-	robcalibrateapi := robotapi.PathPrefix("/robcalibrate").Subrouter()
-	robcalibrateapi.HandleFunc("/autocalczero", setAutoCalcZero).Methods("PUT").Queries("filename", "{filename}")
-	robcalibrateapi.HandleFunc("/autorunzero", setAutoRunZero).Methods("PUT")
-
-	trackdataapi := robotapi.PathPrefix("/trackdata").Subrouter()
-	trackdataapi.HandleFunc("/craftnum", setTrackCraftNum).Methods("PUT").Queries("num", "{num}")
-	trackdataapi.HandleFunc("/note", setTrackdataNote).Methods("PUT")
-	trackdataapi.HandleFunc("/", setTrackdata).Methods("PUT").Queries("property", "{property}", "context", "{context}")
-	trackdataapi.HandleFunc("/", saveTrackdata).Methods("POST")
-	trackdataapi.HandleFunc("/calibration", startCalibration).Methods("POST").Queries("trigger", "{trigger}")
-	trackdataapi.HandleFunc("/pointa", recordPointA).Methods("POST")
-	trackdataapi.HandleFunc("/pointb", recordPointB).Methods("POST")
-	trackdataapi.HandleFunc("/pointc", recordPointC).Methods("POST")
-	trackdataapi.HandleFunc("/referencepoint", recordReferencePoint).Methods("POST")
-	trackdataapi.HandleFunc("/gotoReferPos", gotoReferPos).Methods("POST")
-	trackdataapi.HandleFunc("/calibrationrsult", getCalibrationRsult).Methods("GET")
-
-	visiondataapi := robotapi.PathPrefix("/visiondata").Subrouter()
-	visiondataapi.HandleFunc("/craftnum", setVisionCraftNum).Methods("PUT")
-	visiondataapi.HandleFunc("/note", setVisionDataNote).Methods("PUT")
-	visiondataapi.HandleFunc("/", setVisionData).Methods("PUT").Queries("property", "{property}", "context", "{context}")
-	visiondataapi.HandleFunc("/", saveVisionData).Methods("POST")
-	visiondataapi.HandleFunc("/camera", triggerCamera).Methods("POST")
-	visiondataapi.HandleFunc("/visionencoval", recordVisionEncoVal).Methods("POST")
-	visiondataapi.HandleFunc("/visualcalibration", setVisualCalibration).Methods("GET")
-	visiondataapi.HandleFunc("/robencoval", recordRobEncoVal).Methods("POST")
-	visiondataapi.HandleFunc("/robotpoint", recordRobotPoint).Methods("POST")
-	visiondataapi.HandleFunc("/visualpoint", recordVisualPoint).Methods("POST")
-	visiondataapi.HandleFunc("/photo", takePhoto).Methods("POST")
-	visiondataapi.HandleFunc("/datarefresh", dataReresh).Methods("POST")
-	visiondataapi.HandleFunc("/gotopoint", goToPoint).Methods("POST")*/
 
 	return r
 }

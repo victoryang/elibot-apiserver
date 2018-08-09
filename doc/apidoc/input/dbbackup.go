@@ -9,7 +9,7 @@
 * @apiExample Example usage:
 * curl -X POST http://192.168.1.253:9000/v1/db/backup
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -25,7 +25,7 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/db/backup
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -41,9 +41,9 @@
 * @apiExample Example usage:
 * curl -X DELETE http://192.168.1.253:9000/v1/db/backup/:name
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
-* @apiParam (params) {string} name  	   URL Param: name to set
+* @apiParam (params) {string} name  	   URL Param: db name to delete
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -59,9 +59,9 @@
 * @apiExample Example usage:
 * curl -X POST http://192.168.1.253:9000/v1/db/backup/:name/restore
 *
-* @apiUse DefaultHeaderAndExample
+* @apiUse DefaultHeader
 * 
-* @apiParam (params) {string} name  	   URL Param: name to set
+* @apiParam (params) {string} name  	   URL Param: db name to restore
 *
 * @apiUse DefaultResponsesAndExample
 */
