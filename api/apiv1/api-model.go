@@ -11,3 +11,11 @@ type RequestData struct {
 
 	Values 		[]string	`json:"values,omitempty"`
 }
+
+type RequestDataForIP struct {
+	Address 		string 			`json:address, omitempty`
+	Netmask 		string 			`json:netmask, omitempty`
+	Network 		string 			`json:network, omitempty`
+	Broadcast 		string 			`json:broadcast, omitempty`
+	Gateway 		string 			`json:gateway, omitempty`
+}
