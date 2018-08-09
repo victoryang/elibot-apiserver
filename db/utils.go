@@ -36,13 +36,14 @@ func SetupDB(dbname string) {
 }
 
 func iterateRows(rows *sql.Rows) string {
-	var r string
+	var key string
+	var value string
 	for rows.Next() {
-		if err := rows.Scan(&r); err!=nil {
+		if err := rows.Scan(&key, &value); err!=nil {
 			continue
 		}
 	}
-	return r
+	return value
 }
 
 func doQueryCommand(command string, args ...interface{}) (string, error){
