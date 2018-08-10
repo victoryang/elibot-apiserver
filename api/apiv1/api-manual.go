@@ -12,7 +12,7 @@ const (
 	TagManualInterpolation = "apiv1:robot:manualinterpolation"
 
 	cmdCoord = "coord"
-	cmdManual = "manual"
+	cmdManual = "manual "
 	cmdRunForward = "runForward"
 	cmdRunToZero = "runToZero"
 	cmdStop = "stop"
@@ -38,7 +38,8 @@ func doManual(w http.ResponseWriter, r *http.Request) {
 	} 
 
 	Log.Debug("set mannual ", axis, d.Args[:])
-	cmd := ConcatCommand(cmdManual, axis, d.Args...)
+	cmdtmp := cmdManual + axis
+	cmd := ConcatCommand(cmdtmp, d.Args...)
 	SendToMCServerWithTimeout(w, r, cmd, TagManualInterpolation)
 }
 
