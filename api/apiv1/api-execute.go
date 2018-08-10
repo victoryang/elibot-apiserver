@@ -15,26 +15,30 @@ const (
 	cmdPause = "pause"
 	cmdMode = "mode"
 	cmdClearAlarm = "ClearAlarm"
+	cmdResetProg = "progReset"
 	cmdSpeed = "speed"
 	cmdSetMainfile = "set_mainfile"
 	cmdCycleMode = "cycleMode"
 )
 
-func runCmd(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	args := vars["args"]
+func doRunCmd(w http.ResponseWriter, r *http.Request) {
+	d := &RequestDataForCommandArgs{}
+	if err := ParseBodyToObject(r, d); err!=nil {
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		return
+	}
 
-	Log.Debug("run ", args)
-	cmd := ConcatCommand(cmdRun, args)
+	Log.Debug("run ", d.Args[:])
+	cmd := ConcatCommand(cmdRun, d.Args...)
 	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
 }
 
 func doPause(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	args := vars["args"]
+	mode := vars["mode"]
 
-	Log.Debug("pause ", args)
-	cmd := ConcatCommand(cmdPause, args)
+	Log.Debug("pause ", mode)
+	cmd := ConcatCommand(cmdPause, mode)
 	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
 }
 
@@ -47,13 +51,21 @@ func setRobotMode(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
 }
 
-func clearAlarm(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	args := vars["args"]
+func doClearAlarm(w http.ResponseWriter, r *http.Request) {
+	d := &RequestDataForCommandArgs{}
+	if err := ParseBodyToObject(r, d); err!=nil {
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		return
+	}
 
-	Log.Debug("clear alarm ", args)
-	cmd := ConcatCommand(cmdClearAlarm, args)
+	Log.Debug("clear alarm ", d.Args[:])
+	cmd := ConcatCommand(cmdClearAlarm, d.Args...)
 	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+}
+
+func doProgReset(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("progReset")
+	SendToMCServerWithTimeout(w, r, cmdResetProg, TagExecute)
 }
 
 func setSpeed(w http.ResponseWriter, r *http.Request) {

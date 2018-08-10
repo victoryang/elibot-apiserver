@@ -11,14 +11,24 @@ import (
 const (
 	TagAxisCtrl = "apiv1:robot:axisctrl"
 
+	cmdServo = "servo"
 	cmdDragTeach = "drag_teach"
 )
 
-func setDragteach (w http.ResponseWriter, r *http.Request){
+func setServoStatus (w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
-	enabled := vars["enabled"]
+	status := vars["status"]
 
-	Log.Debug("drag_teach ", enabled)
-	cmd := ConcatCommand(cmdDragTeach, enabled)
+	Log.Debug("servo ", status)
+	cmd := ConcatCommand(cmdServo, status)
+	SendToMCServerWithTimeout(w, r, cmd, TagAxisCtrl)
+}
+
+func setDragteachStatus (w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+	status := vars["status"]
+
+	Log.Debug("drag_teach ", status)
+	cmd := ConcatCommand(cmdDragTeach, status)
 	SendToMCServerWithTimeout(w, r, cmd, TagAxisCtrl)
 }

@@ -19,3 +19,7 @@ type RequestDataForIP struct {
 	Broadcast 		string 			`json:broadcast, omitempty`
 	Gateway 		string 			`json:gateway, omitempty`
 }
+
+type RequestDataForCommandArgs struct {
+	Args 		[]string		`json:args, omitempty`
+}
