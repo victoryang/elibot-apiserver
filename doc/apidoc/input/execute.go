@@ -13,7 +13,7 @@
 * 
 * @apiParam (params) {string} args  	   URL Param: args to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -31,7 +31,7 @@
 * 
 * @apiParam (params) {string} args  	   URL Param: args to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -49,7 +49,7 @@
 * 
 * @apiParam (params) {string} mode  	   URL Param: mode to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -67,7 +67,7 @@
 * 
 * @apiParam (params) {string} args  	   URL Param: args to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -85,7 +85,7 @@
 * 
 * @apiParam (params) {string} data  	   URL Param: data to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -103,7 +103,7 @@
 * 
 * @apiParam (params) {string} filename  	   URL Param: filename to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -121,5 +121,5 @@
 * 
 * @apiParam (params) {string} cyclemode  	   URL Param: cyclemode to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */

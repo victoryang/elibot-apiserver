@@ -22,7 +22,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -39,7 +39,7 @@
 * @apiParam (params) {string} key  URL Param: key to get
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -57,7 +57,7 @@
 * @apiUse RequestValue
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -73,7 +73,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -89,7 +89,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -106,7 +106,7 @@
 * @apiParam (params) {string} date  URL Param: date to set
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -122,7 +122,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -158,5 +158,5 @@
 * @apiUse RequestBodyForSettingIP
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */

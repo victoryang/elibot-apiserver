@@ -62,7 +62,7 @@
 * @apiParam (params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -146,7 +146,7 @@
 * @apiParam (params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -235,7 +235,7 @@
 * @apiParam (params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -288,7 +288,7 @@
 * @apiParam (params) {string} pos_no   URL Param: pos num
 * @apiUse RequestBodyIndexAndValue
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -324,7 +324,7 @@
 * @apiParam (params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -359,5 +359,5 @@
 * @apiParam (params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
