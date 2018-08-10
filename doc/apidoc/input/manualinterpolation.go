@@ -13,7 +13,7 @@
 * 
 * @apiParam (params) {string} mode  	   URL Param: mode to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -33,7 +33,7 @@
 *
 * @apiParam (params) {string} arg  	   URL Param: arg to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -49,7 +49,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -67,7 +67,7 @@
 * 
 * @apiParam (params) {string} zero  	   URL Param: zero to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**
@@ -83,5 +83,5 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */

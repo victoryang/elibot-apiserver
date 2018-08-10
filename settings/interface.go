@@ -9,7 +9,14 @@ import (
 var InterfacePath = "/etc/network/interfaces"
 var InterfaceBack = "/etc/network/interface.bak"
 
-var templateForReplacement = "        address "
+var templateForReplacement = []string {
+	"        address ",
+	"        netmask ",
+	"        network ",
+	"        broadcast ",
+	"        gateway ",
+}
+
 var templateForInterface = []string{
 	"# Configure Loopback",
 	"auto lo",
@@ -25,8 +32,17 @@ var templateForInterface = []string{
 	"        gateway 192.168.1.1",
 }
 
-func GenerateTemplateBackup(desip string) error {
-	templateForInterface[7] = templateForReplacement + desip
+func replaceValue(des string, i int) {
+	if des!="" {
+		templateForInterface[i+7] = templateForReplacement[i] + des
+	}
+}
+
+func GenerateTemplateBackup(args ...string) error {
+	for i, v := range args {
+		replaceValue(v, i)
+	}
+
 	file, err := os.OpenFile(InterfaceBack, os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 	   return err

@@ -5,7 +5,7 @@
 
 /**
 * @apiDefine DefaultResponsesAndExample
-* @apiSuccess {string} msg returned message
+* @apiSuccess {String} Body  returned json message from server
 *
 * @apiError (Error 5xx) InternalServerError Some error happens
 *
@@ -19,7 +19,7 @@
 
 /**
 * @apiDefine DefaultJsonResponsesAndExample
-* @apiSuccess {Object} msg returned message
+* @apiSuccess {Object} Body  return json message to client
 *
 * @apiError (Error 5xx) InternalServerError Some error happens
 *
@@ -27,6 +27,6 @@
 *		HTTP/1.1 500 Internal Server Error
 *		{
 *			"errcode":	100,
-*			"errmsg":	"error!"		
+*			"errmsg":	"Some error!"		
 *		}
 */

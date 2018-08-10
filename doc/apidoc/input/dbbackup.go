@@ -27,7 +27,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */
 
 /**

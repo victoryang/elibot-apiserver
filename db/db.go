@@ -51,6 +51,7 @@ func DoQueryCommand(command string, args ...interface{}) (map[string]string, err
 		Log.Error("failed to query: ", err)
 		return nil, err
 	}
+	defer rows.Close()
 	return iterateRows(rows), nil
 }
 

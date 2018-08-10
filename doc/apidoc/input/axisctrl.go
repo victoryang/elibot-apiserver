@@ -13,5 +13,5 @@
 * 
 * @apiParam (params) {string} enabled  	   URL Param: enabled to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse DefaultJsonResponsesAndExample
 */

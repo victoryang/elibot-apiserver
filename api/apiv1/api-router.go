@@ -58,7 +58,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	settingsapi.HandleFunc("/date", getSystemDate).Methods("GET")
 	settingsapi.HandleFunc("/date/{date}", setSystemDate).Methods("PUT")
 	settingsapi.HandleFunc("/ip", getSystemIP).Methods("GET")
-	settingsapi.HandleFunc("/ip/{ip}", setSystemIP).Methods("PUT")
+	settingsapi.HandleFunc("/ip", setSystemIP).Methods("PUT")
 	settingsapi.HandleFunc("/kv", getAllSettingsKV).Methods("GET")
 	settingsapi.HandleFunc("/kv/{key}", getSettingsKV).Methods("GET")
 	settingsapi.HandleFunc("/kv/{key}", setSettingsKV).Methods("POST")

@@ -10,11 +10,11 @@ import (
 )
 
 func hello(w http.ResponseWriter, r *http.Request) {
-	WriteSuccessResponse(w, "Welcome to elibot\n")
+	WriteSuccessResponse(w, "Welcome to elibot")
 }
 
 func handleHealth(w http.ResponseWriter, r *http.Request) {
-	WriteSuccessResponse(w, "echo OK\n")
+	WriteSuccessResponse(w, "echo OK")
 }
 
 func testSocket(w http.ResponseWriter, r *http.Request) {
