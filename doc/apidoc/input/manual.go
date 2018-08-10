@@ -49,7 +49,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string[]="axis..."} args 	   Body Param: args to set
+* @apiParam (params) {string[]="axis0, axis1..."} args 	   Body Param: args to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
