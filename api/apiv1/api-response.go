@@ -5,20 +5,8 @@ import (
 	"encoding/json"
 )
 
-type SuccessResponse struct {
-	Msg 		interface{}			`json:"msg"`
-}
-
-func ToSuccessJson(msg interface{}) []byte {
-	response := SuccessResponse{
-		Msg:	msg,
-	}
-	r, _ := json.Marshal(response)
-	return r
-}
-
 func WriteSuccessResponse(w http.ResponseWriter, res interface{}) {
-	r := ToSuccessJson(res)
+	r, _ := json.Marshal(response)
 	WriteJsonSuccessResponse(w, r)
 }
 
