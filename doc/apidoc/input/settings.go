@@ -57,7 +57,7 @@
 * @apiUse RequestValue
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse DefaultResponsesAndExample
 */
 
 /**
@@ -73,7 +73,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse DefaultResponsesAndExample
 */
 
 /**
@@ -158,5 +158,5 @@
 * @apiUse RequestBodyForSettingIP
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse DefaultResponsesAndExample
 */

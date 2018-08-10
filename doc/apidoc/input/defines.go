@@ -5,7 +5,7 @@
 
 /**
 * @apiDefine DefaultResponsesAndExample
-* @apiSuccess {string} msg returned message
+* @apiSuccess {String} Body  return json message to client
 *
 * @apiError (Error 5xx) InternalServerError Some error happens
 *

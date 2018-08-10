@@ -11,7 +11,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse DefaultResponsesAndExample
 */
 
 /**
@@ -45,7 +45,7 @@
 * 
 * @apiParam (params) {string} name  	   URL Param: db name to delete
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse DefaultResponsesAndExample
 */
 
 /**
@@ -63,5 +63,5 @@
 * 
 * @apiParam (params) {string} name  	   URL Param: db name to restore
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse DefaultResponsesAndExample
 */
