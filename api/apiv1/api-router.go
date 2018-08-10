@@ -77,7 +77,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	manualinterpolationapi.HandleFunc("/coord/{mode}", setCoordinateMode).Methods("PUT")
 	manualinterpolationapi.HandleFunc("/cmd_manual/{axis}", doManual).Methods("POST")
 	manualinterpolationapi.HandleFunc("/cmd_runforward", doRunForward).Methods("POST")
-	manualinterpolationapi.HandleFunc("/cmd_runzero/{status}", doRunToZero).Methods("POST")
+	manualinterpolationapi.HandleFunc("/cmd_runtozero/{status}", doRunToZero).Methods("POST")
 	manualinterpolationapi.HandleFunc("/cmd_stop", doRobotStop).Methods("POST")
 
 	axisctrlapi := robotapi.PathPrefix("/axisctrl").Subrouter()

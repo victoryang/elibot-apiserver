@@ -55,7 +55,7 @@
 */
 
 /**
-* @api {post} /v1/robot/manual/cmd_runzero/:status doRunToZero
+* @api {post} /v1/robot/manual/cmd_runtozero/:status doRunToZero
 * @apiVersion 0.1.0
 * @apiName doRunToZero
 * @apiGroup manual
@@ -63,7 +63,7 @@
 * @apiDescription doRunToZero
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v1/robot/manual/cmd_runzero/:status
+* curl -X PUT http://192.168.1.253:9000/v1/robot/manual/cmd_runtozero/:status
 *
 * @apiUse DefaultHeader
 * 
