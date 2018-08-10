@@ -12,10 +12,10 @@ const (
 	TagManualInterpolation = "apiv1:robot:manualinterpolation"
 
 	cmdCoord = "coord"
-	cmdStop = "stop"
 	cmdManual = "manual"
 	cmdRunForward = "runForward"
 	cmdRunToZero = "runToZero"
+	cmdStop = "stop"
 )
 
 func setCoordinateMode(w http.ResponseWriter, r *http.Request) {
@@ -27,38 +27,43 @@ func setCoordinateMode(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, r, cmd, TagManualInterpolation)
 }
 
-func robotStop(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("robot stop")
-	SendToMCServerWithTimeout(w, r, cmdStop, TagManualInterpolation)
-}
-
-func setManual(w http.ResponseWriter, r *http.Request) {
+func doManual(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	key := vars["key"]
-	arg := vars["arg"]
+	axis := vars["axis"]
 
-	Log.Debug("set mannual ", key, arg)
-	cmd := ConcatCommand(cmdManual, key, arg)
+	d := &RequestDataForCommandArgs{}
+	if err := ParseBodyToObject(r, d); err!=nil {
+		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		return
+	} 
+
+	Log.Debug("set mannual ", axis, d.Args[:])
+	cmd := ConcatCommand(cmdManual, axis, d.Args...)
 	SendToMCServerWithTimeout(w, r, cmd, TagManualInterpolation)
 }
 
-func runForward(w http.ResponseWriter, r *http.Request) {
-	d := &RequestData{}
+func doRunForward(w http.ResponseWriter, r *http.Request) {
+	d := &RequestDataForCommandArgs{}
 	if err := ParseBodyToObject(r, d); err!=nil {
 		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 		return
 	}
 
-	Log.Debug("run forward ", d.Values[:])
-	cmd := ConcatCommand(cmdRunForward, d.Values...)
+	Log.Debug("run forward ", d.Args[:])
+	cmd := ConcatCommand(cmdRunForward, d.Args...)
 	SendToMCServerWithTimeout(w, r, cmd, TagManualInterpolation)
 }
 
-func runToZero(w http.ResponseWriter, r *http.Request) {
+func doRunToZero(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	zero := vars["zero"]
+	status := vars["status"]
 
-	Log.Debug("run to zero ", zero)
-	cmd := ConcatCommand(cmdRunToZero, zero)
+	Log.Debug("runToZero ", status)
+	cmd := ConcatCommand(cmdRunToZero, status)
 	SendToMCServerWithTimeout(w, r, cmd, TagManualInterpolation)
+}
+
+func doRobotStop(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("robot stop")
+	SendToMCServerWithTimeout(w, r, cmdStop, TagManualInterpolation)
 }

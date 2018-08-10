@@ -64,23 +64,25 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	settingsapi.HandleFunc("/kv/{key}", setSettingsKV).Methods("POST")
 
 	executeapi := robotapi.PathPrefix("/execute").Subrouter()
-	executeapi.HandleFunc("/run/{args}", runCmd).Methods("POST")
-	executeapi.HandleFunc("/pause/{args}", doPause).Methods("POST")
-	executeapi.HandleFunc("/mode/{mode}", setRobotMode).Methods("PUT")
-	executeapi.HandleFunc("/alarm/{args}", clearAlarm).Methods("POST")
+	executeapi.HandleFunc("/cmd_run", doRunCmd).Methods("POST")
+	executeapi.HandleFunc("/cmd_pause/{mode}", doPause).Methods("POST")
+	executeapi.HandleFunc("/robotmode/{mode}", setRobotMode).Methods("PUT")
+	executeapi.HandleFunc("/cmd_clearalarm", doClearAlarm).Methods("POST")
+	executeapi.HandleFunc("/cmd_progreset", doProgReset).Methods("POST")
 	executeapi.HandleFunc("/speed/{data}", setSpeed).Methods("PUT")
-	executeapi.HandleFunc("/mainfile/{filename}", setMainfile).Methods("PUT")
+	executeapi.HandleFunc("/mainprog/{progname}", setMainfile).Methods("PUT")
 	executeapi.HandleFunc("/cyclemode/{cyclemode}", setCycleMode).Methods("PUT")
 
-	manualinterpolationapi := robotapi.PathPrefix("/manualinterpolation").Subrouter()
+	manualinterpolationapi := robotapi.PathPrefix("/manual").Subrouter()
 	manualinterpolationapi.HandleFunc("/coord/{mode}", setCoordinateMode).Methods("PUT")
-	manualinterpolationapi.HandleFunc("/manual/{key}/{arg}", setManual).Methods("PUT")
-	manualinterpolationapi.HandleFunc("/runforward", runForward).Methods("PUT")
-	manualinterpolationapi.HandleFunc("/run/{zero}", runToZero).Methods("PUT")
-	manualinterpolationapi.HandleFunc("/stop", robotStop).Methods("PUT")
+	manualinterpolationapi.HandleFunc("/cmd_manual/{axis}", doManual).Methods("POST")
+	manualinterpolationapi.HandleFunc("/cmd_runforward", doRunForward).Methods("POST")
+	manualinterpolationapi.HandleFunc("/cmd_runzero/{status}", doRunToZero).Methods("POST")
+	manualinterpolationapi.HandleFunc("/cmd_stop", doRobotStop).Methods("POST")
 
 	axisctrlapi := robotapi.PathPrefix("/axisctrl").Subrouter()
-	axisctrlapi.HandleFunc("/dragteach/{enabled}", setDragteach).Methods("PUT")
+	axisctrlapi.HandleFunc("/servo/{status}", setServoStatus).Methods("PUT")
+	axisctrlapi.HandleFunc("/dragteach/{status}", setDragteachStatus).Methods("PUT")
 
 	return r
 }
