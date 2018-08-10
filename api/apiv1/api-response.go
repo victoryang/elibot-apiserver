@@ -6,7 +6,7 @@ import (
 )
 
 func WriteSuccessResponse(w http.ResponseWriter, res interface{}) {
-	r, _ := json.Marshal(response)
+	r, _ := json.Marshal(res)
 	WriteJsonSuccessResponse(w, r)
 }
 
