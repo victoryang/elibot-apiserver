@@ -1,7 +1,7 @@
 /**
 * @apiDefine RequestValue
 *
-* @apiParam (params) {string} value    Body Content: value
+* @apiParam (Params) {string} value    Body Content: value
 *
 * @apiParamExample {json} Request-Body (example):
 * 		{
@@ -36,7 +36,7 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/settings/kv/:key
 *
-* @apiParam (params) {string} key  URL Param: key to get
+* @apiParam (Params) {string} key  URL Param: key to get
 * @apiUse DefaultHeader
 *
 * @apiUse DefaultJsonResponsesAndExample
@@ -53,7 +53,7 @@
 * @apiExample Example usage:
 * curl -X POST http://192.168.1.253:9000/v1/settings/kv/:key
 *
-* @apiParam (params) {string} key  URL Param: key to set
+* @apiParam (Params) {string} key  URL Param: key to set
 * @apiUse RequestValue
 * @apiUse DefaultHeader
 *
@@ -103,7 +103,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/settings/date/:date
 *
-* @apiParam (params) {string} date  URL Param: date to set
+* @apiParam (Params) {string} date  URL Param: date to set
 * @apiUse DefaultHeader
 *
 * @apiUse DefaultJsonResponsesAndExample
@@ -128,11 +128,11 @@
 /**
 * @apiDefine RequestBodyForSettingIP
 *
-* @apiParam (params) {string} address    Body Content: address
-* @apiParam (params) {string} netmask    Body Content: netmask
-* @apiParam (params) {string} network    Body Content: network
-* @apiParam (params) {string} broadcast  Body Content: broadcast
-* @apiParam (params) {string} gateway    Body Content: gateway
+* @apiParam (Params) {string} address    Body Content: address
+* @apiParam (Params) {string} netmask    Body Content: netmask
+* @apiParam (Params) {string} network    Body Content: network
+* @apiParam (Params) {string} broadcast  Body Content: broadcast
+* @apiParam (Params) {string} gateway    Body Content: gateway
 *
 * @apiParamExample {json} Request-Body (example):
 * 		{

@@ -11,7 +11,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string="on","off"} status  	URL Param: status to set
+* @apiParam (Params) {string="on","off"} status  	URL Param: status to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -29,7 +29,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string="on","off"} status  	   URL Param: status to set
+* @apiParam (Params) {string="on","off"} status  	   URL Param: status to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */

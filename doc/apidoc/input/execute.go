@@ -11,7 +11,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string[]="-c","-s","-f <file>","-l <line>", "-n <count>"} args  	   BODY Param: run -c, continue mode. 
+* @apiParam (Params) {string[]="-c","-s","-f <file>","-l <line>", "-n <count>"} args  	   BODY Param: run -c, continue mode. 
 *																									run -s, run one step, don't clear envirment.
 *																									run -f <file> -l <line> -n <count>, run from file@line
 *
@@ -31,7 +31,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string="ep","sd"} mode  	   URL Param: mode to set
+* @apiParam (Params) {string="ep","sd"} mode  	   URL Param: mode to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -49,7 +49,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string="play","teach","remote"} mode  	URL Param: mode to set
+* @apiParam (Params) {string="play","teach","remote"} mode  	URL Param: mode to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -67,7 +67,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string[]="-f"} args  	   Body Param: -f for force to ClearAlarm ,ten minites
+* @apiParam (Params) {string[]="-f"} args  	   Body Param: -f for force to ClearAlarm ,ten minites
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -101,7 +101,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string="0~10000"} data  	   URL Param: data to set
+* @apiParam (Params) {string="0~10000"} data  	   URL Param: data to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -119,7 +119,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string} progname  	   URL Param: progname to set
+* @apiParam (Params) {string} progname  	   URL Param: progname to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -137,7 +137,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string="step","one","SERIES"} cyclemode  	   URL Param: cyclemode to set
+* @apiParam (Params) {string="step","one","SERIES"} cyclemode  	   URL Param: cyclemode to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */

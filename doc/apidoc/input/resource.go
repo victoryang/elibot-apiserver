@@ -11,8 +11,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} start  URL Param: start index
-* @apiParam (params) {string} end    URL Param: end index
+* @apiParam (Params) {string} start  URL Param: start index
+* @apiParam (Params) {string} end    URL Param: end index
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -30,8 +30,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} start  URL Param: start index
-* @apiParam (params) {string} end    URL Param: end index
+* @apiParam (Params) {string} start  URL Param: start index
+* @apiParam (Params) {string} end    URL Param: end index
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -49,8 +49,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} start  URL Param: start index
-* @apiParam (params) {string} end    URL Param: end index
+* @apiParam (Params) {string} start  URL Param: start index
+* @apiParam (Params) {string} end    URL Param: end index
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -68,8 +68,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} start  URL Param: start index
-* @apiParam (params) {string} end    URL Param: end index
+* @apiParam (Params) {string} start  URL Param: start index
+* @apiParam (Params) {string} end    URL Param: end index
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -87,8 +87,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} start  URL Param: start index
-* @apiParam (params) {string} end    URL Param: end index
+* @apiParam (Params) {string} start  URL Param: start index
+* @apiParam (Params) {string} end    URL Param: end index
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -106,9 +106,9 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} start  URL Param: start index
-* @apiParam (params) {string} end    URL Param: end index
-* @apiParam (params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} start  URL Param: start index
+* @apiParam (Params) {string} end    URL Param: end index
+* @apiParam (Params) {string} num  	 URL Param: num to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -126,9 +126,9 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} start  URL Param: start index
-* @apiParam (params) {string} end    URL Param: end index 
-* @apiParam (params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} start  URL Param: start index
+* @apiParam (Params) {string} end    URL Param: end index 
+* @apiParam (Params) {string} num  	 URL Param: num to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -146,9 +146,9 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} start  URL Param: start index
-* @apiParam (params) {string} end    URL Param: end index 
-* @apiParam (params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} start  URL Param: start index
+* @apiParam (Params) {string} end    URL Param: end index 
+* @apiParam (Params) {string} num  	 URL Param: num to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -166,9 +166,9 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} start  URL Param: start index
-* @apiParam (params) {string} end    URL Param: end index 
-* @apiParam (params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} start  URL Param: start index
+* @apiParam (Params) {string} end    URL Param: end index 
+* @apiParam (Params) {string} num  	 URL Param: num to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -186,9 +186,9 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} start  URL Param: start index
-* @apiParam (params) {string} end    URL Param: end index 
-* @apiParam (params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} start  URL Param: start index
+* @apiParam (Params) {string} end    URL Param: end index 
+* @apiParam (Params) {string} num  	 URL Param: num to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
