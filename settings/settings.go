@@ -26,7 +26,8 @@ func SetKeyValue(key string, value string) error {
 }
 
 func SetupTable() {
-	if err := db.CreateTableIfNotExist(tableSettings); err!=nil {
+	command := "CREATE TABLE IF NOT EXISTS " + tableSettings + "(key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL)"
+	if err := db.CreateTableIfNotExist(command); err!=nil {
     	Log.Error("create settings table fails")
     }
 }

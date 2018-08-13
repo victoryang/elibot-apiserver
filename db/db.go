@@ -21,8 +21,7 @@ func SetupDB(dbname string) {
     return
 }
 
-func CreateTableIfNotExist(table string) error {
-	command := "CREATE TABLE IF NOT EXISTS " + table + "(key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL)"
+func CreateTableIfNotExist(command string) error {
 	if err := PrepareAndExecuteCommand(command); err!=nil {
 		Log.Error("create table fails: ", err)
 	}
