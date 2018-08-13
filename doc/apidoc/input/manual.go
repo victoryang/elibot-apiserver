@@ -31,7 +31,7 @@
 * 
 * @apiParam (params) {string="0~11"} axis  	   URL Param: axis to set
 *
-* @apiParam (params) {string="-r"} args 	   Body Param: args to set
+* @apiParam (params) {string="-r"} [args] 	   Body Param: args to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */

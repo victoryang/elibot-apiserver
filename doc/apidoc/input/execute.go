@@ -11,7 +11,9 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string[]} args  	   BODY Param: args to set
+* @apiParam (params) {string[]="-c","-s","-f <file>","-l <line>", "-n <count>"} args  	   BODY Param: run -c, continue mode. 
+*																									run -s, run one step, don't clear envirment.
+*																									run -f <file> -l <line> -n <count>, run from file@line
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -29,7 +31,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string} mode  	   URL Param: mode to set
+* @apiParam (params) {string="ep","sd"} mode  	   URL Param: mode to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -65,7 +67,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string[]} args  	   Body Param: args to set
+* @apiParam (params) {string[]="-f"} args  	   Body Param: -f for force to ClearAlarm ,ten minites
 *
 * @apiUse DefaultJsonResponsesAndExample
 */

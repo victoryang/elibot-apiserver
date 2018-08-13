@@ -62,6 +62,8 @@ func PrepareAndExecuteCommand(command string, args ...interface{}) error {
 		Log.Error("failed to prepare statement")
 		return err
 	}
+	defer stmt.Close()
+
 	_, err = stmt.Exec(args...)
 	if err!=nil {
 		Log.Error("failed to execute statement")
