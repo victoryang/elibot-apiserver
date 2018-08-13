@@ -1,6 +1,6 @@
 /**
 * @apiDefine DefaultHeader 
-* @apiHeader {string="application/json"} Content-Type=application/json;charset=utf-8
+* @apiHeader {string="application/json","charset=utf-8"} Content-Type=application/json;charset=utf-8
 */
 
 /**
