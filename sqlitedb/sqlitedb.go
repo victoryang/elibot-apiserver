@@ -48,11 +48,14 @@ func GetAllInterference() ([]byte, error) {
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
 }
 
-func GetAllIO() ([]byte, error) {
+func GetAllIO(vars map[string]interface{}) ([]byte, error) {
     Log.Debug("in GetAllIO")
+    for k,v := range vars {
+        Log.Debug("key: ", k, " v ", v)
+    }
     
     sm := new(IoSqlMapper)
-    return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
+    return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, vars)
 }
 
 func GetAllMetadata(vars map[string]interface{}) ([]byte, error) {

@@ -40,6 +40,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	repositoryapi.HandleFunc("/extaxis", getAllExtaxis).Methods("GET")
 	repositoryapi.HandleFunc("/interference", getAllInterference).Methods("GET")
 	repositoryapi.HandleFunc("/interference/{no}/{md_id}", setInterference).Methods("PUT")
+	repositoryapi.HandleFunc("/ios/{group}", getAllIos).Methods("GET").Queries("lang", "{lang}", "auth", "{auth}", "tech", "{tech}")
 	repositoryapi.HandleFunc("/metadata", getAllMetadata).Methods("GET").Queries("lang", "{lang}")
 	repositoryapi.HandleFunc("/params", getParams).Methods("GET")
 	repositoryapi.HandleFunc("/parameter/id/{md_id}", getParameterById).Methods("GET")
