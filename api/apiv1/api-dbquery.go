@@ -86,10 +86,10 @@ func getAllIos(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all IOs")
 	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
-	queries["group"] := vars["group"]
-	queries["lang"] := vars["lang"]
-	queries["auth"] := vars["auth"]
-	queries["tech"] := vars["tech"]
+	queries["group"] = vars["group"]
+	queries["lang"] = vars["lang"]
+	queries["auth"] = vars["auth"]
+	queries["tech"] = vars["tech"]
 
 	res, err := db.GetAllIO(queries)
 	if err!=nil {
