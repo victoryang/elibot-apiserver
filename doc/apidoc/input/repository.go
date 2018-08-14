@@ -1,8 +1,8 @@
 /**
 * @apiDefine RequestBodyIndexAndValue
 *
-* @apiParam (params) {string} index    Body Content: index
-* @apiParam (params) {string} value    Body Content: value
+* @apiParam (Params) {string} index    Body Content: index
+* @apiParam (Params) {string} value    Body Content: value
 *
 * @apiParamExample {json} Request-Body (example):
 * 		{
@@ -38,8 +38,8 @@
 * @apiExample Example usage:
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/:file_no?group=:group
 *
-* @apiParam (params) {string} file_no  URL Param: file no
-* @apiParam (params) {string} group    URL Param: group id
+* @apiParam (Params) {string} file_no  URL Param: file no
+* @apiParam (Params) {string} group    URL Param: group id
 * @apiUse DefaultHeader
 *
 * @apiUse DefaultJsonResponsesAndExample
@@ -58,8 +58,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} file_no  URL Param: file to set
-* @apiParam (params) {string} md_id    URL Param: metadata id
+* @apiParam (Params) {string} file_no  URL Param: file to set
+* @apiParam (Params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
 * @apiUse DefaultJsonResponsesAndExample
@@ -142,8 +142,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} no  	   URL Param: no to set
-* @apiParam (params) {string} md_id    URL Param: metadata id
+* @apiParam (Params) {string} no  	   URL Param: no to set
+* @apiParam (Params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
 * @apiUse DefaultJsonResponsesAndExample
@@ -162,7 +162,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} lang  	URL Param: lang to set
+* @apiParam (Params) {string} lang  	URL Param: lang to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -196,7 +196,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} md_id  	   URL Param: md_id to set
+* @apiParam (Params) {string} md_id  	   URL Param: md_id to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -214,7 +214,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} group  		URL Param: group to set
+* @apiParam (Params) {string} group  		URL Param: group to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -232,7 +232,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} md_id    URL Param: metadata id
+* @apiParam (Params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
 * @apiUse DefaultJsonResponsesAndExample
@@ -283,9 +283,9 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} tool_no  URL Param: tool no to set
-* @apiParam (params) {string} md_id    URL Param: metadata id
-* @apiParam (params) {string} pos_no   URL Param: pos num
+* @apiParam (Params) {string} tool_no  URL Param: tool no to set
+* @apiParam (Params) {string} md_id    URL Param: metadata id
+* @apiParam (Params) {string} pos_no   URL Param: pos num
 * @apiUse RequestBodyIndexAndValue
 *
 * @apiUse DefaultJsonResponsesAndExample
@@ -320,8 +320,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} userno   URL Param: user no
-* @apiParam (params) {string} md_id    URL Param: metadata id
+* @apiParam (Params) {string} userno   URL Param: user no
+* @apiParam (Params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
 * @apiUse DefaultJsonResponsesAndExample
@@ -356,7 +356,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string} md_id    URL Param: metadata id
+* @apiParam (Params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
 * @apiUse DefaultJsonResponsesAndExample

@@ -11,7 +11,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string="joint","cart","tool","user","cylinder"} mode  	   URL Param: mode to set
+* @apiParam (Params) {string="joint","cart","tool","user","cylinder"} mode  	   URL Param: mode to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -29,9 +29,9 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string="0~11"} axis  	   URL Param: axis to set
+* @apiParam (Params) {string="0~11"} axis  	   URL Param: axis to set
 *
-* @apiParam (params) {string="-r"} args 	   Body Param: args to set
+* @apiParam (Params) {string="-r"} [args] 	   Body Param: args to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -49,7 +49,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiParam (params) {string[]="axis0, axis1..."} args 	   Body Param: args to set
+* @apiParam (Params) {string[]="axis0, axis1..."} args 	   Body Param: args to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -67,7 +67,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string="origin","zero"} status  	   URL Param: status to set
+* @apiParam (Params) {string="origin","zero"} status  	   URL Param: status to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */

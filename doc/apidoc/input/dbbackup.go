@@ -43,7 +43,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string} name  	   URL Param: db name to delete
+* @apiParam (Params) {string} name  	   URL Param: db name to delete
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -61,7 +61,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (params) {string} name  	   URL Param: db name to restore
+* @apiParam (Params) {string} name  	   URL Param: db name to restore
 *
 * @apiUse DefaultResponsesAndExample
 */

@@ -15,14 +15,18 @@ var conn *sql.DB = nil
 func SetupDB(dbname string) {
 	var err error
     DBName = dbname
-    if conn, err = sql.Open("sqlite3", dbname); err!=nil {
+    if conn, err = sql.Open("sqlite3", dbname+"?_journal_mode=WAL"); err!=nil {
     	Log.Error("failed to setup db: ", err)
     }
+
     return
 }
 
-func CreateTableIfNotExist(table string) error {
-	command := "CREATE TABLE IF NOT EXISTS " + table + "(key TEXT PRIMARY KEY NOT NULL, value TEXT NOT NULL)"
+func CloseDB() error {
+	return conn.Close()
+}
+
+func CreateTableIfNotExist(command string) error {
 	if err := PrepareAndExecuteCommand(command); err!=nil {
 		Log.Error("create table fails: ", err)
 	}
@@ -63,6 +67,8 @@ func PrepareAndExecuteCommand(command string, args ...interface{}) error {
 		Log.Error("failed to prepare statement")
 		return err
 	}
+	defer stmt.Close()
+
 	_, err = stmt.Exec(args...)
 	if err!=nil {
 		Log.Error("failed to execute statement")

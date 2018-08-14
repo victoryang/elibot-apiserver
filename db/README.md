@@ -17,3 +17,12 @@
 	sqlite3 newdb.db
 	sqlite>.read tmp.sql
 	sqlite>.quit
+
+## ISSUE: SQL error: database is locked
+	$ fuser development.db
+	> development.db: 5430
+
+	kill -9 5430
+
+## Check sqlite compile option
+	PRAGMA compile_options;

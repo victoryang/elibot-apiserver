@@ -53,6 +53,7 @@ func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, ws
 			s.Shutdown()
 			stopAdminServer()
 
+			db.CloseDB()
 			mcs.Close()
 
 			os.Exit(0)
