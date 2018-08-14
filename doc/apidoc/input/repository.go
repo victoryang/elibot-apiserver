@@ -322,7 +322,7 @@
 *
 * @apiParam (Params) {string} userno   URL Param: user no
 * @apiParam (Params) {string} md_id    URL Param: metadata id
-* @apiUse RequestBodyIndexAndValue
+* @apiParam (Params) {string} value    Body Param: value to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */

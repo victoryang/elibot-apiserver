@@ -108,7 +108,7 @@
 *
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index
-* @apiParam (Params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -128,7 +128,7 @@
 *
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index 
-* @apiParam (Params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -148,7 +148,7 @@
 *
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index 
-* @apiParam (Params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -168,7 +168,7 @@
 *
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index 
-* @apiParam (Params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -188,7 +188,7 @@
 *
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index 
-* @apiParam (Params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
