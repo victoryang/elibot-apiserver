@@ -15,9 +15,10 @@ var conn *sql.DB = nil
 func SetupDB(dbname string) {
 	var err error
     DBName = dbname
-    if conn, err = sql.Open("sqlite3", dbname); err!=nil {
+    if conn, err = sql.Open("sqlite3", dbname+"?_journal_mode=WAL"); err!=nil {
     	Log.Error("failed to setup db: ", err)
     }
+
     return
 }
 
