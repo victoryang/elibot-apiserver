@@ -76,7 +76,7 @@ func LoadConfig() *config.GlobalConfiguration{
 func ConfigServerLog(cfg *config.GlobalConfiguration) error {
 	dir := path.Dir(cfg.ServerLogsFile)
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
-    	os.MkdirAll(dir, os.ModeDir|0755)
+    	os.MkdirAll(dir, os.ModeDir|os.ModePerm)
 	}
 	if err := Log.OpenFile(cfg.ServerLogsFile); err!=nil {
 		Log.Error("Configure server log error: ", err)
