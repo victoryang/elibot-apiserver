@@ -105,8 +105,8 @@ func getLocFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 	WriteJsonSuccessResponse(w, ret)
 }
 
-func getResourceOnce(w http.ResponseWriter, r *http.Request) {
-	ret := shm.GetResourceOnce()
+func getSharedOnce(w http.ResponseWriter, r *http.Request) {
+	ret := shm.GetSharedOnce()
 	WriteJsonSuccessResponse(w, ret)
 }
 

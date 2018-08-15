@@ -194,15 +194,15 @@
 */
 
 /**
-* @api {get} /v1/resource/ getResourceOnce
+* @api {get} /v1/resource/shared getSharedOnce
 * @apiVersion 0.1.0
-* @apiName getResourceOnce
+* @apiName getSharedOnce
 * @apiGroup Resource
 *
-* @apiDescription getResourceOnce
+* @apiDescription getSharedOnce
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.253:9000/v1/resource/
+* curl -X GET http://192.168.1.253:9000/v1/resource/shared
 *
 * @apiUse DefaultHeader
 *

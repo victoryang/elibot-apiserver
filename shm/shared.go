@@ -30,7 +30,7 @@ func GetLocVar(datatype int, num int, start int, end int) []byte {
 	return []byte(gostr)
 }
 
-func GetResourceOnce() []byte {
+func GetSharedOnce() []byte {
 	cstr := C.get_resource_data()
 
 	gostr := C.GoString(cstr)
