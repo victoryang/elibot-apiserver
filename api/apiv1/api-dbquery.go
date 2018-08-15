@@ -91,7 +91,7 @@ func getAllIos(w http.ResponseWriter, r *http.Request) {
 	auth, _ := strconv.Atoi(vars["auth"])
 	queries["auth"] = int32(auth)
 	tech, _ := strconv.Atoi(vars["tech"])
-	queries["tech"] = vars["tech"]
+	queries["tech"] = int32(tech)
 
 	res, err := db.GetAllIO(queries)
 	if err!=nil {
