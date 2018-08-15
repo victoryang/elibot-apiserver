@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"path"
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/api"
@@ -73,6 +74,10 @@ func LoadConfig() *config.GlobalConfiguration{
 }
 
 func ConfigServerLog(cfg *config.GlobalConfiguration) error {
+	dir := path.Dir(cfg.ServerLogsFile)
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+    	os.MkdirAll(dir, os.ModeDir|os.ModePerm)
+	}
 	if err := Log.OpenFile(cfg.ServerLogsFile); err!=nil {
 		Log.Error("Configure server log error: ", err)
 		return err

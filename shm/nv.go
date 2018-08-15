@@ -17,6 +17,15 @@ import (
 var crc_nv int = 0
 var mutex sync.Mutex
 
+func GetNVOnce() []byte {
+	cstr := C.get_nv_data()
+
+	gostr := C.GoString(cstr)
+	defer C.free(unsafe.Pointer(cstr))
+
+	return []byte(gostr)
+}
+
 func getNVAndCompare() []byte {
 	mutex.Lock()
 	defer mutex.Unlock()

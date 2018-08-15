@@ -108,7 +108,7 @@
 *
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index
-* @apiParam (Params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -128,7 +128,7 @@
 *
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index 
-* @apiParam (Params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -148,7 +148,7 @@
 *
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index 
-* @apiParam (Params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -168,7 +168,7 @@
 *
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index 
-* @apiParam (Params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
@@ -188,7 +188,39 @@
 *
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index 
-* @apiParam (Params) {string} num  	 URL Param: num to set
+* @apiParam (Params) {string} num  	 URL Param: local var nest num
+*
+* @apiUse DefaultJsonResponsesAndExample
+*/
+
+/**
+* @api {get} /v1/resource/shared getSharedOnce
+* @apiVersion 0.1.0
+* @apiName getSharedOnce
+* @apiGroup Resource
+*
+* @apiDescription getSharedOnce
+*
+* @apiExample Example usage:
+* curl -X GET http://192.168.1.253:9000/v1/resource/shared
+*
+* @apiUse DefaultHeader
+*
+* @apiUse DefaultJsonResponsesAndExample
+*/
+
+/**
+* @api {get} /v1/resource/nv getNVOnce
+* @apiVersion 0.1.0
+* @apiName getNVOnce
+* @apiGroup Resource
+*
+* @apiDescription getNVOnce
+*
+* @apiExample Example usage:
+* curl -X GET http://192.168.1.253:9000/v1/resource/nv
+*
+* @apiUse DefaultHeader
 *
 * @apiUse DefaultJsonResponsesAndExample
 */

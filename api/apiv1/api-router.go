@@ -23,6 +23,8 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	resourceapi.HandleFunc("/locvar/drobld", getdRobLD).Methods("GET").Queries("start", "{start}", "end", "{end}", "num", "{num}")
 	resourceapi.HandleFunc("/locvar/droblp", getdRobLP).Methods("GET").Queries("start", "{start}", "end", "{end}", "num", "{num}")
 	resourceapi.HandleFunc("/locvar/droblv", getdRobLV).Methods("GET").Queries("start", "{start}", "end", "{end}", "num", "{num}")
+	resourceapi.HandleFunc("/shared", getSharedOnce).Methods("GET")
+	resourceapi.HandleFunc("/nv", getNVOnce).Methods("GET")
 
 	dbapi := r.PathPrefix("/v1/db").Subrouter()
 	dbapi.HandleFunc("/backup", DBBackupDB).Methods("POST")
@@ -40,6 +42,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	repositoryapi.HandleFunc("/extaxis", getAllExtaxis).Methods("GET")
 	repositoryapi.HandleFunc("/interference", getAllInterference).Methods("GET")
 	repositoryapi.HandleFunc("/interference/{no}/{md_id}", setInterference).Methods("PUT")
+	repositoryapi.HandleFunc("/ios/{group}", getAllIos).Methods("GET").Queries("lang", "{lang}", "auth", "{auth}", "tech", "{tech}")
 	repositoryapi.HandleFunc("/metadata", getAllMetadata).Methods("GET").Queries("lang", "{lang}")
 	repositoryapi.HandleFunc("/params", getParams).Methods("GET")
 	repositoryapi.HandleFunc("/parameter/id/{md_id}", getParameterById).Methods("GET")

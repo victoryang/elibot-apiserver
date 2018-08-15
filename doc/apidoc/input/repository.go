@@ -150,6 +150,27 @@
 */
 
 /**
+* @api {get} /v1/robot/repository/ios/:group?lang=:lang&auth=:auth&tech=:tech getAllIos
+* @apiVersion 0.1.0
+* @apiName getAllIos
+* @apiGroup Repository
+*
+* @apiDescription getAllIos
+*
+* @apiExample Example usage:
+* curl -X GET http://192.168.1.253:9000/v1/robot/repository/ios/:group?lang=:lang&auth=:auth&tech=:tech
+*
+* @apiUse DefaultHeader
+*
+* @apiParam (Params) {string} group  	URL Param: group to set
+* @apiParam (Params) {string} lang  	URL Param: lang to set
+* @apiParam (Params) {string} auth  	URL Param: auth to set
+* @apiParam (Params) {string} tech  	URL Param: tech to set
+*
+* @apiUse DefaultJsonResponsesAndExample
+*/
+
+/**
 * @api {get} /v1/robot/repository/metadata?lang=:lang getAllMetadata
 * @apiVersion 0.1.0
 * @apiName getAllMetadata
@@ -322,7 +343,7 @@
 *
 * @apiParam (Params) {string} userno   URL Param: user no
 * @apiParam (Params) {string} md_id    URL Param: metadata id
-* @apiUse RequestBodyIndexAndValue
+* @apiParam (Params) {string} value    Body Param: value to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */

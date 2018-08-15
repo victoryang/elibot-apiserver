@@ -82,9 +82,18 @@ func getAllInterference(w http.ResponseWriter, r *http.Request) {
 	WriteJsonSuccessResponse(w, res)
 }
 
-func getAllIO(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("starting get all IO")
-	res, err := db.GetAllIO()
+func getAllIos(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting get all IOs")
+	vars := mux.Vars(r)
+	queries := make(map[string]interface{})
+	queries["group"] = vars["group"]
+	queries["lang"] = vars["lang"]
+	auth, _ := strconv.Atoi(vars["auth"])
+	queries["auth"] = int32(auth)
+	tech, _ := strconv.Atoi(vars["tech"])
+	queries["tech"] = int32(tech)
+
+	res, err := db.GetAllIO(queries)
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return

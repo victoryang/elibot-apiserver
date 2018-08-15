@@ -104,3 +104,13 @@ func getLocFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 	ret := shm.GetLocVar(datatype, num, start, end)
 	WriteJsonSuccessResponse(w, ret)
 }
+
+func getSharedOnce(w http.ResponseWriter, r *http.Request) {
+	ret := shm.GetSharedOnce()
+	WriteJsonSuccessResponse(w, ret)
+}
+
+func getNVOnce(w http.ResponseWriter, r *http.Request) {
+	ret := shm.GetNVOnce()
+	WriteJsonSuccessResponse(w, ret)
+}
