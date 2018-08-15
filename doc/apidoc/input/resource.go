@@ -192,3 +192,35 @@
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
+
+/**
+* @api {get} /v1/resource/ getResourceOnce
+* @apiVersion 0.1.0
+* @apiName getResourceOnce
+* @apiGroup Resource
+*
+* @apiDescription getResourceOnce
+*
+* @apiExample Example usage:
+* curl -X GET http://192.168.1.253:9000/v1/resource/
+*
+* @apiUse DefaultHeader
+*
+* @apiUse DefaultJsonResponsesAndExample
+*/
+
+/**
+* @api {get} /v1/resource/nv getNVOnce
+* @apiVersion 0.1.0
+* @apiName getNVOnce
+* @apiGroup Resource
+*
+* @apiDescription getNVOnce
+*
+* @apiExample Example usage:
+* curl -X GET http://192.168.1.253:9000/v1/resource/nv
+*
+* @apiUse DefaultHeader
+*
+* @apiUse DefaultJsonResponsesAndExample
+*/

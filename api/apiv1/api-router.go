@@ -23,6 +23,8 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	resourceapi.HandleFunc("/locvar/drobld", getdRobLD).Methods("GET").Queries("start", "{start}", "end", "{end}", "num", "{num}")
 	resourceapi.HandleFunc("/locvar/droblp", getdRobLP).Methods("GET").Queries("start", "{start}", "end", "{end}", "num", "{num}")
 	resourceapi.HandleFunc("/locvar/droblv", getdRobLV).Methods("GET").Queries("start", "{start}", "end", "{end}", "num", "{num}")
+	resourceapi.HandleFunc("/", getResourceOnce).Methods("GET")
+	resourceapi.HandleFunc("/nv", getNVOnce).Methods("GET")
 
 	dbapi := r.PathPrefix("/v1/db").Subrouter()
 	dbapi.HandleFunc("/backup", DBBackupDB).Methods("POST")

@@ -30,6 +30,15 @@ func GetLocVar(datatype int, num int, start int, end int) []byte {
 	return []byte(gostr)
 }
 
+func GetResourceOnce() []byte {
+	cstr := C.get_resource_data()
+
+	gostr := C.GoString(cstr)
+	defer C.free(unsafe.Pointer(cstr))
+
+	return []byte(gostr)
+}
+
 func getResourceAndCompare() []byte {
 	mutex.Lock()
 	defer mutex.Unlock()
