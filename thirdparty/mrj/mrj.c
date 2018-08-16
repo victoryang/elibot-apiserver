@@ -1,7 +1,5 @@
 #include "mrj.h"
 
-cJSON* resource_root;
-
 char* get_sysvar_data(int datatype, int start, int end) {
 	cJSON* root;
 	char* ret;
