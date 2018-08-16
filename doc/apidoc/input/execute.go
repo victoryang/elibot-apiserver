@@ -19,7 +19,7 @@
 */
 
 /**
-* @api {post} /v1/robot/execute/cmd_pause/:mode doPause
+* @api {post} /v1/robot/execute/cmd_pause doPause
 * @apiVersion 0.1.0
 * @apiName doPause
 * @apiGroup Execute
@@ -27,12 +27,10 @@
 * @apiDescription doPause
 *
 * @apiExample Example usage:
-* curl -X POST http://192.168.1.253:9000/v1/robot/execute/cmd_pause/:mode
+* curl -X POST http://192.168.1.253:9000/v1/robot/execute/cmd_pause
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (Params) {string="ep","sd"} mode  	   URL Param: mode to set
-*
 * @apiUse DefaultJsonResponsesAndExample
 */
 
