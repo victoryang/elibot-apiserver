@@ -126,6 +126,10 @@ func main() {
 	wss := websocket.NewWsServer(cfg.Websocket)
 	wss.Run()
 
+	if err := NewMCServerLogWatcher(wss); err!=nil {
+		Log.Error("Could not watch server log")
+	}
+
 	shms,err := shm.NewServer(wss)
 	if err!=nil {
 		Log.Error(err.Error())
