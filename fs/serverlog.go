@@ -23,12 +23,12 @@ func readLastLineFromFile() string {
 	err := cmd.Start()
 	if err!=nil {
 		Log.Error("Failed to exec cmd: ", err)
-		return nil
+		return ""
 	}
 	content, err := ioutil.ReadAll(stdout)
 	if err!=nil {
 		Log.Error("Error to read stdout ", err)
-		return nil
+		return ""
 	}
 	return string(content)
 }
@@ -37,7 +37,7 @@ func handleWriteEvent() {
 	res := readLastLineFromFile()
 	if strings.Contains(res, "error") {
 		rsp,_ := json.Marshal(Response{
-			serverlog:	res
+			serverlog:	res,
 			})
 		ws.PushBytes(rsp)
 	}

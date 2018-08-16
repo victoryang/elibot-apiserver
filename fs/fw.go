@@ -50,7 +50,7 @@ func NewFileWatcher(filename string, handle eventfunc) (*FileWatcher, error) {
 	}
 
 	return &FileWatcher{
-		logfile:		filename,
+		filename:		filename,
 		watcher:		w,
 		handle:			handle,
 	}, nil
