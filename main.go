@@ -16,6 +16,7 @@ import (
 	"elibot-apiserver/mcserver"
 	"elibot-apiserver/shm"
 	"elibot-apiserver/websocket"
+	"elibot-apiserver/fs"
 )
 
 const (
@@ -126,7 +127,7 @@ func main() {
 	wss := websocket.NewWsServer(cfg.Websocket)
 	wss.Run()
 
-	if err := NewMCServerLogWatcher(wss); err!=nil {
+	if err := fs.NewMCServerLogWatcher(wss); err!=nil {
 		Log.Error("Could not watch server log")
 	}
 
