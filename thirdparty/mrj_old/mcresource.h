@@ -3,6 +3,6 @@
 
 #include "define.h"
 
-cJSON* get_resource();
+extern ResourceItem ResourceTable[];
 
 #endif //MCRESOURCE_H
