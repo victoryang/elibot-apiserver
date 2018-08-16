@@ -16,7 +16,7 @@ import(
 )
 
 const (
-	duration = 500
+	duration = 100
 	watchPeriod = time.Millisecond * duration
 )
 
