@@ -11,7 +11,7 @@ import (
 )
 
 var logfile = "/rbctrl/mcserver-err.log"
-var ws websocket.WsServer
+var ws *websocket.WsServer
 
 type Response struct {
 	serverlog 		string 		`json:"serverlog,omitempty"`
@@ -57,7 +57,7 @@ func logWatcherHandler(evt fsnotify.Event, err error) {
 	}
 }
 
-func NewMCServerLogWatcher(s websocket.WsServer) error{
+func NewMCServerLogWatcher(s *websocket.WsServer) error{
 	fw, err := NewFileWatcher(logfile, logWatcherHandler)
 	if err!=nil {
 		return err
