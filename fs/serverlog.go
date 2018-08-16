@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"strings"
 	"github.com/fsnotify/fsnotify"
-	Log "api-server/log"
-	"api-server/websocket"
+	Log "elibot-apiserver/log"
+	"elibot-apiserver/websocket"
 )
 
 var logfile = "/rbctrl/mcserver-err.log"
