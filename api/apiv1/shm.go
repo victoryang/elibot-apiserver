@@ -105,6 +105,11 @@ func getLocFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 	WriteJsonSuccessResponse(w, ret)
 }
 
+func getPLCOnce(w http.ResponseWriter, r *http.Request) {
+	ret := shm.GetPLCOnce()
+	WriteJsonSuccessResponse(w, ret)
+}
+
 func getSharedOnce(w http.ResponseWriter, r *http.Request) {
 	ret := shm.GetSharedOnce()
 	WriteJsonSuccessResponse(w, ret)

@@ -14,7 +14,9 @@ import (
 )
 
 var crc_shared_resource int = 0
+var crc_plc int = 0
 var resource_mutex sync.Mutex
+var plc_mutex sync.Mutex
 
 func GetSysVar(datatype int, start int, end int) []byte {
 	cstr := C.get_sysvar_data(C.int(datatype), C.int(start), C.int(end))
@@ -30,6 +32,15 @@ func GetLocVar(datatype int, num int, start int, end int) []byte {
 	return []byte(gostr)
 }
 
+func GetPLCOnce() []byte {
+	cstr := C.get_plc_data()
+
+	gostr := C.GoString(cstr)
+	defer C.free(unsafe.Pointer(cstr))
+
+	return []byte(gostr)
+}
+
 func GetSharedOnce() []byte {
 	cstr := C.get_resource_data()
 
@@ -37,6 +48,31 @@ func GetSharedOnce() []byte {
 	defer C.free(unsafe.Pointer(cstr))
 
 	return []byte(gostr)
+}
+
+func getPLCAndCompare() []byte {
+	plc_mutex.Lock()
+	defer plc_mutex.Unlock()
+
+	cstr := C.get_plc_data()
+
+	gostr := C.GoString(cstr)
+	defer C.free(unsafe.Pointer(cstr))
+
+	buf := []byte(gostr)
+
+	crc := int(crc32.ChecksumIEEE(buf))
+	if crc == crc_plc {
+		return nil
+	}
+	crc_plc = crc
+	return buf
+}
+
+func watchPLC(modified chan []byte) {
+	if res := getPLCAndCompare(); res != nil {
+		modified <- res
+	}
 }
 
 func getResourceAndCompare() []byte {
