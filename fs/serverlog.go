@@ -18,19 +18,22 @@ type Response struct {
 }
 
 func readLastLineFromFile() string {
-	cmd := exec.Command("tail", "-n 1", logfile)
-	stdout, _ := cmd.StdoutPipe()
-	err := cmd.Start()
+	file, err := os.Open(logfile)
 	if err!=nil {
-		Log.Error("Failed to exec cmd: ", err)
 		return ""
 	}
-	content, err := ioutil.ReadAll(stdout)
-	if err!=nil {
-		Log.Error("Error to read stdout ", err)
+
+	r, err := newReverseReader(file)
+	if err!= nil {
 		return ""
 	}
-	return string(content)
+
+	p := make([]byte, 255)
+	n, err := r.Read(p)
+	if err!= nil {
+		return ""
+	} 
+	return string(p[:n])
 }
 
 func handleWriteEvent() {
