@@ -194,6 +194,22 @@
 */
 
 /**
+* @api {get} /v1/resource/plc getPLCOnce
+* @apiVersion 0.1.0
+* @apiName getPLCOnce
+* @apiGroup Resource
+*
+* @apiDescription getPLCOnce
+*
+* @apiExample Example usage:
+* curl -X GET http://192.168.1.253:9000/v1/resource/plc
+*
+* @apiUse DefaultHeader
+*
+* @apiUse DefaultJsonResponsesAndExample
+*/
+
+/**
 * @api {get} /v1/resource/shared getSharedOnce
 * @apiVersion 0.1.0
 * @apiName getSharedOnce

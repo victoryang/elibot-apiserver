@@ -18,6 +18,15 @@ char* get_locvar_data(int datatype, int number, int start, int end) {
 	return ret;
 }
 
+char* get_plc_data() {
+	cJSON* root = cJSON_CreateObject();
+	cJSON_AddItemToObject(root, "plc", get_plc());
+
+	char *ret = cJSON_PrintUnformatted(root);
+	cJSON_Delete(root);
+	return ret;
+}
+
 char* get_resource_data() {
 	cJSON* root = cJSON_CreateObject();
 	cJSON_AddItemToObject(root, "resource", get_resource());

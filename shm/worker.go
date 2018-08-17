@@ -28,6 +28,7 @@ func REGISTERFUNC(k string, f WatchFunc) {
 func initWatchFuncs() {
 	watchfuncs = make(map[string]WatchFunc)
 
+	REGISTERFUNC("plc", watchPLC)
 	REGISTERFUNC("sharedResource", watchSharedResource)
 	REGISTERFUNC("NV", watchNV)
 }

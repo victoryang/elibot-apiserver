@@ -16,7 +16,8 @@ var ws *websocket.WsServer
 type Alarm struct {
 	Time 			uint32			`json:"time"`
 	ErrNo 			[]string 		`json:"errno"`
-	Msg 			[]string 		`json:"msg"`
+	Msg 			string 			`json:"msg"`
+	Args			[]string 		`json:"args"`
 }
 
 type Response struct {
@@ -70,7 +71,8 @@ func parseAlarm(input string) *Alarm {
 	return &Alarm{
 		Time:	uint32(t),
 		ErrNo:	list[2:5],
-		Msg:	list[5:],
+		Msg:	list[5],
+		Args:	list[6:],
 	}
 }
 
