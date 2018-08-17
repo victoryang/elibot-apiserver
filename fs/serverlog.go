@@ -4,6 +4,7 @@ import (
 	"os"
 	"encoding/json"
 	"strings"
+	"strconv"
 	"github.com/fsnotify/fsnotify"
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/websocket"
@@ -12,8 +13,10 @@ import (
 var logfile = "/rbctrl/mcserver-err.log"
 var ws *websocket.WsServer
 
-type Response struct {
-	serverlog 		string 		`json:"serverlog,omitempty"`
+type Alarm struct {
+	Time 			uint32
+	ErrNo 			[]string
+	Msg 			[]string
 }
 
 func readLastLineFromFile() string {
@@ -47,13 +50,35 @@ func readLastLineFromFile() string {
 	return ""
 }
 
+func parseAlarm(input string) {
+	list := strings.Split(input, "0x3")
+	if len(list) < 6 {
+		Log.Error("error errlog data")
+		return nil
+	}
+
+	t, err := strconv.ParseUint(list[0], 10, 32)
+	if err !=nil {
+		Log.Error("error parse errlog data: time")
+		return nil
+	}
+
+	return &Alarm{
+		Time:	t,
+		ErrNo:	list[2:5],
+		Msg:	list[5:]
+	}
+}
+
 func handleWriteEvent() {
 	res := readLastLineFromFile()
 	if res == "" {
 		return
 	}
+
 	if strings.Contains(res, "error") {
-		rsp,err := json.Marshal(Response{serverlog:	res})
+		alarm := parseAlarm(res)
+		rsp,err := json.Marshal(alarm)
 		if err!=nil {
 			Log.Error("Could not marshal to json ", err)
 		} else {
