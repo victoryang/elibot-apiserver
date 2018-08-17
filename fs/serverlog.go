@@ -1,8 +1,7 @@
 package fs
 
 import (
-	"os/exec"
-	"io/ioutil"
+	"os"
 	"encoding/json"
 	"strings"
 	"github.com/fsnotify/fsnotify"
