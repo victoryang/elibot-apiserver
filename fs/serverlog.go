@@ -53,7 +53,8 @@ func handleWriteEvent() {
 		return
 	}
 	if strings.Contains(res, "error") {
-		if rsp,err := json.Marshal(Response{serverlog:	res}); err!=nil {
+		rsp,err := json.Marshal(Response{serverlog:	res})
+		if err!=nil {
 			Log.Error("Could not marshal to json ", err)
 		} else {
 			ws.PushBytes(rsp)
