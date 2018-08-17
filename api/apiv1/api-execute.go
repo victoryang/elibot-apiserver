@@ -34,12 +34,7 @@ func doRunCmd(w http.ResponseWriter, r *http.Request) {
 }
 
 func doPause(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	mode := vars["mode"]
-
-	Log.Debug("pause ", mode)
-	cmd := ConcatCommand(cmdPause, mode)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithTimeout(w, r, cmdPause, TagExecute)
 }
 
 func setRobotMode(w http.ResponseWriter, r *http.Request) {

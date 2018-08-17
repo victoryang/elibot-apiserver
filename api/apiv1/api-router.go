@@ -68,7 +68,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 
 	executeapi := robotapi.PathPrefix("/execute").Subrouter()
 	executeapi.HandleFunc("/cmd_run", doRunCmd).Methods("POST")
-	executeapi.HandleFunc("/cmd_pause/{mode}", doPause).Methods("POST")
+	executeapi.HandleFunc("/cmd_pause", doPause).Methods("POST")
 	executeapi.HandleFunc("/robotmode/{mode}", setRobotMode).Methods("PUT")
 	executeapi.HandleFunc("/cmd_clearalarm", doClearAlarm).Methods("POST")
 	executeapi.HandleFunc("/cmd_progreset", doProgReset).Methods("POST")
