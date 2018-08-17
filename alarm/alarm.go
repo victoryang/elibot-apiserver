@@ -1,4 +1,4 @@
-package fs
+package alarm
 
 import (
 	"os"
@@ -94,7 +94,7 @@ func handleWriteEvent() {
 	}
 }
 
-func logWatcherHandler(evt fsnotify.Event, err error) {
+func AlarmHandler(evt fsnotify.Event, err error) {
 	if err!=nil {
 		Log.Debug("watch error: ", err)
 		return
@@ -109,8 +109,8 @@ func logWatcherHandler(evt fsnotify.Event, err error) {
 	}
 }
 
-func NewMCServerLogWatcher(s *websocket.WsServer) error{
-	fw, err := NewFileWatcher(logfile, logWatcherHandler)
+func NewAlarmMonitor(s *websocket.WsServer) error{
+	fw, err := NewFileWatcher(logfile, AlarmHandler)
 	if err!=nil {
 		return err
 	}
