@@ -105,6 +105,7 @@ func logWatcherHandler(evt fsnotify.Event, err error) {
 	case fsnotify.Write:
 		handleWriteEvent()
 	case fsnotify.Remove:
+		//TODO:
 	}
 }
 
