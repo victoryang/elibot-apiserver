@@ -34,7 +34,7 @@ func readLastLineFromFile() string {
 		return ""
 	}
 
-	p := make([]byte, 127)
+	p := make([]byte, 256)
 	n, err := r.Read(p)
 	if err!= nil {
 		return ""
