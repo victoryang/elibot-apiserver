@@ -27,12 +27,20 @@ func readLastLineFromFile() string {
 		return ""
 	}
 
-	p := make([]byte, 255)
+	p := make([]byte, 127)
 	n, err := r.Read(p)
 	if err!= nil {
 		return ""
-	} 
-	return string(p[:n])
+	}
+
+	f := func(c rune) bool {
+		return !unicode.IsLetter(c) && !unicode.IsNumber(c)
+	}
+	res := strings.Split(p[:n], "\n")
+	if res == nil {
+		return ""
+	}
+	return res[len(res)-1]
 }
 
 func handleWriteEvent() {
