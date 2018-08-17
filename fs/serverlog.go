@@ -51,7 +51,7 @@ func readLastLineFromFile() string {
 }
 
 func parseAlarm(input string) *Alarm {
-	list := strings.Split(input, "0x3")
+	list := strings.Split(input, "\x03")
 	if len(list) < 6 {
 		Log.Error("error errlog data")
 		return nil
