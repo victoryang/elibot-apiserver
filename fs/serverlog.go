@@ -50,7 +50,7 @@ func readLastLineFromFile() string {
 	return ""
 }
 
-func parseAlarm(input string) {
+func parseAlarm(input string) *Alarm {
 	list := strings.Split(input, "0x3")
 	if len(list) < 6 {
 		Log.Error("error errlog data")
@@ -78,6 +78,9 @@ func handleWriteEvent() {
 
 	if strings.Contains(res, "error") {
 		alarm := parseAlarm(res)
+		if alarm == nil {
+			return
+		}
 		rsp,err := json.Marshal(alarm)
 		if err!=nil {
 			Log.Error("Could not marshal to json ", err)
