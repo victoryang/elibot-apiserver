@@ -35,11 +35,15 @@ func readLastLineFromFile() string {
 
 func handleWriteEvent() {
 	res := readLastLineFromFile()
+	if res == "" {
+		return
+	}
 	if strings.Contains(res, "error") {
-		rsp,_ := json.Marshal(Response{
-			serverlog:	res,
-			})
-		ws.PushBytes(rsp)
+		if rsp,err := json.Marshal(Response{serverlog:	res}); err!=nil {
+			Log.Error("Could not marshal to json ", err)
+		} else {
+			ws.PushBytes(rsp)
+		}
 	}
 }
 
