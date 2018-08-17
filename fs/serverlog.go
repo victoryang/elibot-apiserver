@@ -14,7 +14,7 @@ var logfile = "/rbctrl/mcserver-err.log"
 var ws *websocket.WsServer
 
 type Alarm struct {
-	Time 			uint32
+	Time 			uint64
 	ErrNo 			[]string
 	Msg 			[]string
 }
