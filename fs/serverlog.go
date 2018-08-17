@@ -66,7 +66,7 @@ func parseAlarm(input string) {
 	return &Alarm{
 		Time:	t,
 		ErrNo:	list[2:5],
-		Msg:	list[5:]
+		Msg:	list[5:],
 	}
 }
 
