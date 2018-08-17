@@ -33,10 +33,7 @@ func readLastLineFromFile() string {
 		return ""
 	}
 
-	f := func(c rune) bool {
-		return !unicode.IsLetter(c) && !unicode.IsNumber(c)
-	}
-	res := strings.Split(p[:n], "\n")
+	res := strings.Split(string(p[:n]), "\n")
 	if res == nil {
 		return ""
 	}
