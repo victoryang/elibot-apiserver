@@ -14,9 +14,13 @@ var logfile = "/rbctrl/mcserver-err.log"
 var ws *websocket.WsServer
 
 type Alarm struct {
-	Time 			uint64
-	ErrNo 			[]string
-	Msg 			[]string
+	Time 			uint32			`json:"time"`
+	ErrNo 			[]string 		`json:"errno"`
+	Msg 			[]string 		`json:"msg"`
+}
+
+type Response struct {
+	AlarmLog		Alarm   		`json:"alarm"` 		
 }
 
 func readLastLineFromFile() string {
@@ -64,7 +68,7 @@ func parseAlarm(input string) *Alarm {
 	}
 
 	return &Alarm{
-		Time:	t,
+		Time:	uint32(t),
 		ErrNo:	list[2:5],
 		Msg:	list[5:],
 	}
@@ -81,7 +85,7 @@ func handleWriteEvent() {
 		if alarm == nil {
 			return
 		}
-		rsp,err := json.Marshal(alarm)
+		rsp,err := json.Marshal(Response{AlarmLog: *alarm})
 		if err!=nil {
 			Log.Error("Could not marshal to json ", err)
 		} else {
