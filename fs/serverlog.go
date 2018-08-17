@@ -37,7 +37,12 @@ func readLastLineFromFile() string {
 	if res == nil {
 		return ""
 	}
-	return res[len(res)-1]
+
+	for i:=len(res)-1; i>=0; i-- {
+		return res[i]
+	}
+
+	return ""
 }
 
 func handleWriteEvent() {
