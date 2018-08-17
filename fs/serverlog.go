@@ -39,7 +39,9 @@ func readLastLineFromFile() string {
 	}
 
 	for i:=len(res)-1; i>=0; i-- {
-		return res[i]
+		if res[i] != "" {
+			return res[i]
+		}
 	}
 
 	return ""
