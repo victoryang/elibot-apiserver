@@ -1,0 +1,1 @@
+echo "944634788\x03get_arc_weld_file@607\x030\x031F001\x030\x03get arc weld data error" >> mcserver-err.log
