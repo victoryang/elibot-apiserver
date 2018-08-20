@@ -21,6 +21,7 @@ func SetKeyValue(key string, value string) error {
 	command := "INSERT or REPLACE INTO " + tableSettings + " VALUES(?,?)"
 	if err := db.PrepareAndExecuteCommand(command, key, value); err!=nil {
 		Log.Error("failed to set value: ", err)
+		return err
 	}
 	return nil
 }
