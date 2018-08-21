@@ -37,6 +37,9 @@ func GetRecordsNumber() int {
 }
 
 func GetRecords(from int, end int) ([]byte, error) {
+	defer func() {
+		setTagToSettings(strcov.Itoa(end))
+	}()
 	if end > len(records) {
 		end = len(records)
 	}
