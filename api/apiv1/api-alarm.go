@@ -24,8 +24,9 @@ func getAllLogs(w http.ResponseWriter, r *http.Request) {
 func getLogsByTimeStamp(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("getLogsByTimeStamp")
 	vars := mux.Vars(r)
+	timestamp,_ := strconv.Atoi(vars["timestamp"])
 
-	res, err := alarm.GetRecordsByTimeStamp(vars["timestamp"])
+	res, err := alarm.GetRecordsByTimeStamp(timestamp)
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return

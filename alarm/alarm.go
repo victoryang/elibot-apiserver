@@ -16,7 +16,7 @@ type Response struct {
 	Alarm		[]Record   		`json:"alarm"` 		
 }
 
-func GetRecordsByTimeStamp(time string) ([]byte, error) {
+func GetRecordsByTimeStamp(time uint32) ([]byte, error) {
 	var rec []Record
 	for _, r := range records {
 		if r.Time == time {
