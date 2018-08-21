@@ -2,6 +2,7 @@ package alarm
 
 import (
 	"elibot-apiserver/db"
+	Log "elibot-apiserver/log"
 )
 
 var tableSettings = "elt_settings"
