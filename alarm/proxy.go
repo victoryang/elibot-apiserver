@@ -24,13 +24,20 @@ func GetRecordsByErrNo(errno string) ([]byte, error) {
 	return json.Marshal(Response{Alarm: rec}) 
 }
 
+func GetAlreadyReadTag() int {
+	if ret, err := strconv.Atoi(getTagFromSettings()); err==nil {
+		return ret
+	}
+	return 0
+}
+
 func GetRecordsNumber() int {
 	return len(records)
 }
 
 func GetRecords(from int, end int) ([]byte, error) {
 	if end > len(records) {
-		return json.Marshal(Response{Alarm: records[from:]}) 
+		end = len(records)
 	}
 	return json.Marshal(Response{Alarm: records[from:end]})
 }

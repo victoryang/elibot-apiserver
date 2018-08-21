@@ -48,6 +48,11 @@ func getLogsByErrNo(w http.ResponseWriter, r *http.Request) {
 	WriteJsonSuccessResponse(w, res)
 }
 
+func getAlreadyReadTag(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("getAlreadyReadTag")
+	WriteSuccessResponse(w, alarm.GetAlreadyReadTag())
+}
+
 func getLogNumber(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("getLogNumber")
 	WriteSuccessResponse(w, alarm.GetRecordsNumber())
