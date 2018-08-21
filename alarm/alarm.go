@@ -20,7 +20,7 @@ func GetRecordsByTimeStamp(time uint32) ([]byte, error) {
 	var rec []Record
 	for _, r := range records {
 		if r.Time == time {
-			rec := append(rec, r)
+			rec = append(rec, r)
 		}
 	}
 	return json.Marshal(Response{Alarm: rec}) 
@@ -30,7 +30,7 @@ func GetRecordsByErrNo(errno string) ([]byte, error) {
 	var rec []Record
 	for _, r := range records {
 		if r.ErrNo[0] == errno {
-			rec := append(rec, r)
+			rec = append(rec, r)
 		}
 	}
 	return json.Marshal(Response{Alarm: rec}) 
