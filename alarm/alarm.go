@@ -21,6 +21,9 @@ func GetRecordsLen() int {
 }
 
 func GetRecords(from int, end int) ([]byte, error) {
+	if end > len(records) {
+		return json.Marshal(Response{Alarm: records[from:]}) 
+	}
 	return json.Marshal(Response{Alarm: records[from:end]})
 }
 

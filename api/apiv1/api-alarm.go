@@ -26,6 +26,10 @@ func getLogs(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	from,_ := strconv.Atoi(vars["from"])
 	end,_ := strconv.Atoi(vars["end"])
+	if from < 0 || end < 0 || from > end {
+		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		return
+	}
 	res, err := alarm.GetRecords(from, end)
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
