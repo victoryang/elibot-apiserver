@@ -10,11 +10,6 @@ import (
 	Log "elibot-apiserver/log"
 )
 
-func getLogNumber(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("getLogNumber")
-	WriteSuccessResponse(w, alarm.GetRecordsNumber())
-}
-
 func getAllLogs(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("getAllLogs")
 	res, err := alarm.GetAllRecords()
@@ -24,6 +19,37 @@ func getAllLogs(w http.ResponseWriter, r *http.Request) {
 	}
 
 	WriteJsonSuccessResponse(w, res)
+}
+
+func getLogsByTimeStamp(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("getLogsByTimeStamp")
+	vars := mux.Vars(r)
+
+	res, err := alarm.GetRecordsByTimeStamp(vars["timestamp"])
+	if err!=nil {
+		WriteInternalServerErrorResponse(w, ERRQUERY)
+		return
+	}
+
+	WriteJsonSuccessResponse(w, res)
+}
+
+func getLogsByErrNo(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("getLogsByErrNo")
+	vars := mux.Vars(r)
+
+	res, err := alarm.GetRecordsByErrNo(vars["errno"])
+	if err!=nil {
+		WriteInternalServerErrorResponse(w, ERRQUERY)
+		return
+	}
+
+	WriteJsonSuccessResponse(w, res)
+}
+
+func getLogNumber(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("getLogNumber")
+	WriteSuccessResponse(w, alarm.GetRecordsNumber())
 }
 
 func getLogs(w http.ResponseWriter, r *http.Request) {

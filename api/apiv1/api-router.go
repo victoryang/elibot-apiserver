@@ -90,6 +90,8 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 
 	alarmapi := r.PathPrefix("/v1/alarm").Subrouter()
 	alarmapi.HandleFunc("/", getAllLogs).Methods("GET")
+	alarmapi.HandleFunc("/timestamp/{timestamp}", getLogsByTimeStamp).Methods("GET")
+	alarmapi.HandleFunc("/errno/{errno}", getLogsByErrNo).Methods("GET")
 	alarmapi.HandleFunc("/num", getLogNumber).Methods("GET")
 	alarmapi.HandleFunc("/range", getLogs).Methods("GET").Queries("from", "{from}", "end", "{end}")
 

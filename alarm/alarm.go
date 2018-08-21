@@ -16,6 +16,26 @@ type Response struct {
 	Alarm		[]Record   		`json:"alarm"` 		
 }
 
+func GetRecordsByTimeStamp(time string) ([]byte, error) {
+	var rec []Record
+	for _, r := range records {
+		if r.Time == time {
+			rec := append(rec, r)
+		}
+	}
+	return json.Marshal(Response{Alarm: rec}) 
+}
+
+func GetRecordsByErrNo(errno string) ([]byte, error) {
+	var rec []Record
+	for _, r := range records {
+		if r.ErrNo[0] == errno {
+			rec := append(rec, r)
+		}
+	}
+	return json.Marshal(Response{Alarm: rec}) 
+}
+
 func GetRecordsNumber() int {
 	return len(records)
 }
@@ -28,7 +48,7 @@ func GetRecords(from int, end int) ([]byte, error) {
 }
 
 func GetAllRecords() ([]byte, error) {
-	return json.Marshal(Response{Alarm: records[:]})
+	return json.Marshal(Response{Alarm: records})
 }
 
 func handleWriteEvent() {
