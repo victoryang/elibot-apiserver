@@ -6,7 +6,7 @@ import (
 	Log "elibot-apiserver/log"
 )
 
-func ScanAndParse(input string) []*Record {
+func ScanAndParse(input string) []Record {
 	fd, err := os.Open(input)
 	if err!=nil {
 		Log.Error("Read error: ", err)
@@ -14,7 +14,7 @@ func ScanAndParse(input string) []*Record {
 	}
 	defer fd.Close()
 
-	var rec []*Record
+	var rec []Record
 	scanner := bufio.NewScanner(fd)
     for scanner.Scan() {
         r := parseLineMessage(scanner.Text())

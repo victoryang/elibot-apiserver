@@ -14,7 +14,7 @@ type Record struct {
 	Args			[]string 		`json:"args"`
 }
 
-func parseLineMessage(line string) *Record {
+func parseLineMessage(line string) Record {
 	list := strings.Split(line, "\x03")
 	if len(list) < 6 {
 		Log.Error("error errlog data")
@@ -27,7 +27,7 @@ func parseLineMessage(line string) *Record {
 		return nil
 	}
 
-	return &Record{
+	return Record{
 		Time:	uint32(t),
 		ErrNo:	list[2:5],
 		Msg:	list[5],

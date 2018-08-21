@@ -10,10 +10,22 @@ import (
 
 var logfile = "/rbctrl/mcserver-err.log"
 var ws *websocket.WsServer
-var records []*Record
+var records []Record
 
 type Response struct {
-	Alarm		Record   		`json:"alarm"` 		
+	Alarm		[]Record   		`json:"alarm"` 		
+}
+
+func GetRecordsLen() int {
+	return len(records)
+}
+
+func GetRecords(from int, end int) ([]byte, error) {
+	return json.Marshal(Response{Alarm: records[from:end]})
+}
+
+func GetAllRecords() ([]byte, error) {
+	return json.Marshal(Response{Alarm: records[:]})
 }
 
 func handleWriteEvent() {
@@ -25,15 +37,18 @@ func handleWriteEvent() {
 	rec := tmp[len(records):]
 	records = tmp
 
+	var ret []Record
 	for _, r := range rec {
 		if strings.Contains(r.Msg, "error") {
-			rsp, err := json.Marshal(Response{Alarm: *r})
-			if err!=nil {
-				Log.Error("Could not marshal to json ", err)
-			} else {
-				ws.PushBytes(rsp)
-			}
+			ret = append(ret, r)
 		}
+	}
+
+	rsp, err := json.Marshal(Response{Alarm: ret})
+	if err!=nil {
+		Log.Error("Could not marshal to json ", err)
+	} else {
+		ws.PushBytes(rsp)
 	}
 	return
 }
