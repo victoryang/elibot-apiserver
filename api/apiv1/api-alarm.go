@@ -10,6 +10,11 @@ import (
 	Log "elibot-apiserver/log"
 )
 
+func getLogNumber(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("getLogNumber")
+	WriteSuccessResponse(w, alarm.GetRecordsNumber())
+}
+
 func getAllLogs(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("getAllLogs")
 	res, err := alarm.GetAllRecords()

@@ -16,7 +16,7 @@ type Response struct {
 	Alarm		[]Record   		`json:"alarm"` 		
 }
 
-func GetRecordsLen() int {
+func GetRecordsNumber() int {
 	return len(records)
 }
 
