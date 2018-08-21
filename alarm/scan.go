@@ -6,7 +6,7 @@ import (
 	Log "elibot-apiserver/log"
 )
 
-func ScanAndParse(input string) []Record {
+func ScanAndParse(input string) []*Record {
 	fd, err := os.Open(input)
 	if err!=nil {
 		Log.Error("Read error: ", err)

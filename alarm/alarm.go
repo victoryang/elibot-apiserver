@@ -1,10 +1,8 @@
 package alarm
 
 import (
-	"os"
 	"encoding/json"
 	"strings"
-	"bufio"
 	"github.com/fsnotify/fsnotify"
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/websocket"
@@ -12,7 +10,7 @@ import (
 
 var logfile = "/rbctrl/mcserver-err.log"
 var ws *websocket.WsServer
-var records []Record
+var records []*Record
 
 type Response struct {
 	Alarm		Record   		`json:"alarm"` 		
@@ -29,7 +27,7 @@ func handleWriteEvent() {
 
 	for _, r := range rec {
 		if strings.Contains(r.Msg, "error") {
-			rsp, err := json.Marshal(Response{Alarm: r})
+			rsp, err := json.Marshal(Response{Alarm: *r})
 			if err!=nil {
 				Log.Error("Could not marshal to json ", err)
 			} else {
