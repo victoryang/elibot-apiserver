@@ -4,8 +4,6 @@ import (
 	"strings"
 	"strconv"
 	"fmt"
-
-	Log "elibot-apiserver/log"
 )
 
 type Record struct {
