@@ -17,8 +17,9 @@ func ScanAndParse(input string) []Record {
 	var rec []Record
 	scanner := bufio.NewScanner(fd)
     for scanner.Scan() {
-        r := parseLineMessage(scanner.Text())
-        rec = append(rec, r)
+        if r,err := parseLineMessage(scanner.Text()); err==nil {
+        	rec = append(rec, r)
+        }
     }
     return rec
 }

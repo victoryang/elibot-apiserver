@@ -3,6 +3,7 @@ package alarm
 import (
 	"strings"
 	"strconv"
+	"fmt"
 
 	Log "elibot-apiserver/log"
 )
@@ -14,17 +15,15 @@ type Record struct {
 	Args			[]string 		`json:"args"`
 }
 
-func parseLineMessage(line string) Record {
+func parseLineMessage(line string) (Record, error) {
 	list := strings.Split(line, "\x03")
 	if len(list) < 6 {
-		Log.Error("error errlog data")
-		return nil
+		return Record{}, fmt.Errorf("error errlog data")
 	}
 
 	t, err := strconv.ParseUint(list[0], 10, 32)
 	if err !=nil {
-		Log.Error("error parse errlog data: time")
-		return nil
+		return Record{}, err
 	}
 
 	return Record{
@@ -32,5 +31,5 @@ func parseLineMessage(line string) Record {
 		ErrNo:	list[2:5],
 		Msg:	list[5],
 		Args:	list[6:],
-	}
+	}, nil
 }
