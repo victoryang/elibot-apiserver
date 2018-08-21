@@ -24,8 +24,8 @@ func getAllLogs(w http.ResponseWriter, r *http.Request) {
 func getLogs(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("getLogs")
 	vars := mux.Vars(r)
-	from := strconv.Atoi(vars["from"])
-	end := strconv.Atoi(vars["end"])
+	from,_ := strconv.Atoi(vars["from"])
+	end,_ := strconv.Atoi(vars["end"])
 	res, err := alarm.GetRecords(from, end)
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
