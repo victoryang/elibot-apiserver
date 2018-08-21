@@ -26,7 +26,7 @@ func getLogsByTimeStamp(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	timestamp,_ := strconv.Atoi(vars["timestamp"])
 
-	res, err := alarm.GetRecordsByTimeStamp(timestamp)
+	res, err := alarm.GetRecordsByTimeStamp(uint32(timestamp))
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
