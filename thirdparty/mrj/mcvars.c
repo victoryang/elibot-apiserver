@@ -51,7 +51,7 @@ void get_dRobD_with_range(cJSON* root, int start, int end) {
 void get_dRobP_with_range(cJSON* root, int start, int end) {
 	cJSON *array;
 	int i;
-	if (start > P_COUNT || end > P_COUNT) {
+	if (start > P_COUNT) {
 		return;
 	}
 	if (end > P_COUNT) {
@@ -69,7 +69,7 @@ void get_dRobP_with_range(cJSON* root, int start, int end) {
 void get_dRobV_with_range(cJSON* root, int start, int end) {
 	cJSON *array;
 	int i;
-	if (start > V_COUNT || end > V_COUNT) {
+	if (start > V_COUNT) {
 		return;
 	}
 	if (end > V_COUNT) {
@@ -163,7 +163,7 @@ void get_dRobLD_with_range(cJSON* root, int num, int start, int end) {
 void get_dRobLP_with_range(cJSON* root, int num, int start, int end) {
 	cJSON *array;
 	int i;
-	if (start > LP_COUNT || end > LP_COUNT || num >= CALL_NEST_NUM) {
+	if (start > LP_COUNT || num >= CALL_NEST_NUM) {
 		return;
 	}
 	if (end > LP_COUNT) {
@@ -181,7 +181,7 @@ void get_dRobLP_with_range(cJSON* root, int num, int start, int end) {
 void get_dRobLV_with_range(cJSON* root, int num, int start, int end) {
 	cJSON *array;
 	int i;
-	if (start > LV_COUNT || end > LV_COUNT || num >= CALL_NEST_NUM) {
+	if (start > LV_COUNT || num >= CALL_NEST_NUM) {
 		return;
 	}
 	if (end > LV_COUNT) {
