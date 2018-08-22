@@ -96,5 +96,8 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	alarmapi.HandleFunc("/num", getLogNumber).Methods("GET")
 	alarmapi.HandleFunc("/range", getLogs).Methods("GET").Queries("from", "{from}", "end", "{end}")
 
+	filesapi := r.PathPrefix("/v1/files").Subrouter()
+	filesapi.HandleFunc("/upload", handleUploadFile).Methods("POST")
+
 	return r
 }
