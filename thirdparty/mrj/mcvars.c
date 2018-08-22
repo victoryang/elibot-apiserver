@@ -125,6 +125,7 @@ void get_cRobLB_with_range(cJSON* root, int num, int start, int end) {
 	count = end - start;
 	cJSON_AddItemToObject(root, "cRobLB", cJSON_CreateIntArray((const int *)base, count));
 	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(LB_COUNT));
+	cJSON_AddItemToObject(root, "NestNum", cJSON_CreateNumber(CALL_NEST_NUM));
 }
 
 void get_iRobLI_with_range(cJSON* root, int num, int start, int end) {
@@ -143,6 +144,7 @@ void get_iRobLI_with_range(cJSON* root, int num, int start, int end) {
 	}
 	cJSON_AddItemToObject(root, "iRobLI", array);
 	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(LI_COUNT));
+	cJSON_AddItemToObject(root, "NestNum", cJSON_CreateNumber(CALL_NEST_NUM));
 }
 
 void get_dRobLD_with_range(cJSON* root, int num, int start, int end) {
@@ -158,6 +160,7 @@ void get_dRobLD_with_range(cJSON* root, int num, int start, int end) {
 	count = end - start;
 	cJSON_AddItemToObject(root, "dRobLD", cJSON_CreateDoubleArray(base, count));
 	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(LD_COUNT));
+	cJSON_AddItemToObject(root, "NestNum", cJSON_CreateNumber(CALL_NEST_NUM));
 }
 
 void get_dRobLP_with_range(cJSON* root, int num, int start, int end) {
@@ -176,6 +179,7 @@ void get_dRobLP_with_range(cJSON* root, int num, int start, int end) {
 	}
 	cJSON_AddItemToObject(root, "dRobLP", array);
 	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(LP_COUNT));
+	cJSON_AddItemToObject(root, "NestNum", cJSON_CreateNumber(CALL_NEST_NUM));
 }
 
 void get_dRobLV_with_range(cJSON* root, int num, int start, int end) {
@@ -194,6 +198,7 @@ void get_dRobLV_with_range(cJSON* root, int num, int start, int end) {
 	}
 	cJSON_AddItemToObject(root, "dRobLV", array);
 	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(LV_COUNT));
+	cJSON_AddItemToObject(root, "NestNum", cJSON_CreateNumber(CALL_NEST_NUM));
 }
 
 getLocVarFunc locVarTable[] = {
