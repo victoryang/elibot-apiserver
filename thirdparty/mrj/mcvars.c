@@ -12,6 +12,7 @@ void get_cRobB_with_range(cJSON* root, int start, int end) {
 	base = SHARE_RES(sysvar).cRobB + start;
 	count = end - start;
 	cJSON_AddItemToObject(root, "cRobB", cJSON_CreateIntArray((const int *)base, count));
+	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(B_COUNT));
 }
 
 void get_iRobI_with_range(cJSON* root, int start, int end) {
@@ -29,6 +30,7 @@ void get_iRobI_with_range(cJSON* root, int start, int end) {
 		cJSON_AddItemToArray(array, cJSON_CreateNumber(SHARE_RES(sysvar).iRobI[i]));
 	}
 	cJSON_AddItemToObject(root, "iRobI", array);
+	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(I_COUNT));
 }
 
 void get_dRobD_with_range(cJSON* root, int start, int end) {
@@ -43,6 +45,7 @@ void get_dRobD_with_range(cJSON* root, int start, int end) {
 	base = SHARE_RES(sysvar).dRobD + start;
 	count = end - start;
 	cJSON_AddItemToObject(root, "dRobD", cJSON_CreateDoubleArray(base, count));
+	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(D_COUNT));
 }
 
 void get_dRobP_with_range(cJSON* root, int start, int end) {
@@ -51,12 +54,16 @@ void get_dRobP_with_range(cJSON* root, int start, int end) {
 	if (start > P_COUNT || end > P_COUNT) {
 		return;
 	}
+	if (end > P_COUNT) {
+		end = P_COUNT;
+	}
 	
 	array = cJSON_CreateArray();
 	for (i=start; i<end; i++) {
 		cJSON_AddItemToArray(array, cJSON_CreateDoubleArray(SHARE_RES(sysvar).dRobP[i], AXIS_COUNT));
 	}
 	cJSON_AddItemToObject(root, "dRobP", array);
+	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(P_COUNT));
 }
 
 void get_dRobV_with_range(cJSON* root, int start, int end) {
@@ -65,12 +72,16 @@ void get_dRobV_with_range(cJSON* root, int start, int end) {
 	if (start > V_COUNT || end > V_COUNT) {
 		return;
 	}
+	if (end > V_COUNT) {
+		end = V_COUNT;
+	}
 
 	array = cJSON_CreateArray();
 	for (i=start; i<end; i++) {
 		cJSON_AddItemToArray(array, cJSON_CreateDoubleArray(SHARE_RES(sysvar).dRobV[i], VSub_COUNT));
 	}
 	cJSON_AddItemToObject(root, "dRobV", array);
+	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(V_COUNT));
 }
 
 getSysVarFunc sysVarTable[] = {
@@ -113,6 +124,7 @@ void get_cRobLB_with_range(cJSON* root, int num, int start, int end) {
 	base = SHARE_RES(locvar)[num].cRobLB + start;
 	count = end - start;
 	cJSON_AddItemToObject(root, "cRobLB", cJSON_CreateIntArray((const int *)base, count));
+	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(LB_COUNT));
 }
 
 void get_iRobLI_with_range(cJSON* root, int num, int start, int end) {
@@ -130,6 +142,7 @@ void get_iRobLI_with_range(cJSON* root, int num, int start, int end) {
 		cJSON_AddItemToArray(array, cJSON_CreateNumber(SHARE_RES(locvar)[num].iRobLI[i]));
 	}
 	cJSON_AddItemToObject(root, "iRobLI", array);
+	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(LI_COUNT));
 }
 
 void get_dRobLD_with_range(cJSON* root, int num, int start, int end) {
@@ -144,6 +157,7 @@ void get_dRobLD_with_range(cJSON* root, int num, int start, int end) {
 	base = SHARE_RES(locvar)[num].dRobLD + start;
 	count = end - start;
 	cJSON_AddItemToObject(root, "dRobLD", cJSON_CreateDoubleArray(base, count));
+	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(LD_COUNT));
 }
 
 void get_dRobLP_with_range(cJSON* root, int num, int start, int end) {
@@ -152,12 +166,16 @@ void get_dRobLP_with_range(cJSON* root, int num, int start, int end) {
 	if (start > LP_COUNT || end > LP_COUNT || num >= CALL_NEST_NUM) {
 		return;
 	}
+	if (end > LP_COUNT) {
+		end = LP_COUNT;
+	}
 	
 	array = cJSON_CreateArray();
 	for (i=start; i<end; i++) {
 		cJSON_AddItemToArray(array, cJSON_CreateDoubleArray(SHARE_RES(locvar)[num].dRobLP[i], AXIS_COUNT));
 	}
 	cJSON_AddItemToObject(root, "dRobLP", array);
+	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(LP_COUNT));
 }
 
 void get_dRobLV_with_range(cJSON* root, int num, int start, int end) {
@@ -166,12 +184,16 @@ void get_dRobLV_with_range(cJSON* root, int num, int start, int end) {
 	if (start > LV_COUNT || end > LV_COUNT || num >= CALL_NEST_NUM) {
 		return;
 	}
+	if (end > LV_COUNT) {
+		end = LV_COUNT;
+	}
 
 	array = cJSON_CreateArray();
 	for (i=start; i<end; i++) {
 		cJSON_AddItemToArray(array, cJSON_CreateDoubleArray(SHARE_RES(locvar)[num].dRobLV[i], VSub_COUNT));
 	}
 	cJSON_AddItemToObject(root, "dRobLV", array);
+	cJSON_AddItemToObject(root, "TotalSize", cJSON_CreateNumber(LV_COUNT));
 }
 
 getLocVarFunc locVarTable[] = {
