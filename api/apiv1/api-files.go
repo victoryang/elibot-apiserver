@@ -15,6 +15,7 @@ func SetRootPath(path string) {
 }
 
 func handleUploadFile(w http.ResponseWriter, r *http.Request) {
+	r.ParseMultipartForm(32 << 20)
 	src, handler, err := r.FormFile("fileupload")
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)

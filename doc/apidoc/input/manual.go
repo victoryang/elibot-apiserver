@@ -25,7 +25,7 @@
 * @apiDescription doManual
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v1/robot/manual/cmd_manual/:axis
+* curl -X POST http://192.168.1.253:9000/v1/robot/manual/cmd_manual/:axis
 *
 * @apiUse DefaultHeader
 * 
@@ -45,7 +45,7 @@
 * @apiDescription doRunForward
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v1/robot/manual/cmd_runforward
+* curl -X POST http://192.168.1.253:9000/v1/robot/manual/cmd_runforward
 *
 * @apiUse DefaultHeader
 *
@@ -63,7 +63,7 @@
 * @apiDescription doRunToZero
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v1/robot/manual/cmd_runtozero/:status
+* curl -X POST http://192.168.1.253:9000/v1/robot/manual/cmd_runtozero/:status
 *
 * @apiUse DefaultHeader
 * 
@@ -81,7 +81,7 @@
 * @apiDescription doRobotStop
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.253:9000/v1/robot/manual/cmd_stop
+* curl -X POST http://192.168.1.253:9000/v1/robot/manual/cmd_stop
 *
 * @apiUse DefaultHeader
 *
