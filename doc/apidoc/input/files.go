@@ -16,3 +16,19 @@
 *
 * @apiUse DefaultResponsesAndExample
 */
+
+/**
+* @api {get} /v1/files/jbi getJBIList
+* @apiVersion 0.1.0
+* @apiName getJBIList
+* @apiGroup DBBackup
+*
+* @apiDescription getJBIList
+*
+* @apiExample Example usage:
+* curl -X GET http://192.168.1.253:9000/v1/files/jbi
+*
+* @apiUse DefaultHeader
+*
+* @apiUse DefaultJsonResponsesAndExample
+*/
