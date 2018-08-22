@@ -7,7 +7,7 @@
 * @apiDescription UploadFile
 *
 * @apiExample Example usage:
-* curl -X POST http://192.168.1.166:9000/v1/files/upload
+* curl -X POST http://192.168.1.253:9000/v1/files/upload
 *
 * @apiHeader {string="multipart/form-data"} Content-Type=multipart/form-data
 *
