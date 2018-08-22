@@ -3,6 +3,7 @@ package apiv1
 import (
 	"os"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"strings"
 )
@@ -36,7 +37,7 @@ func handleUploadFile(w http.ResponseWriter, r *http.Request) {
     WriteSuccessResponse(w, "succeed in uploading file " + handler.Filename)
 }
 
-func getJBIList() {
+func getJBIList(w http.ResponseWriter, r *http.Request) {
 	files, err := ioutil.ReadDir(RootPath)
     if err != nil {
         WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
