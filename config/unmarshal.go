@@ -158,6 +158,10 @@ func (g *GlobalConfiguration) UnmarshalYAML(unmarshal func(interface{}) error) e
 		g.ServerLogsFile = DefaultGlobalConfiguration.ServerLogsFile
 	}
 
+	if g.UploadPath == "" {
+		g.UploadPath = DefaultGlobalConfiguration.UploadPath
+	}
+
 	if g.Debug == nil {
 		g.Debug = DefaultGlobalConfiguration.Debug
 	}

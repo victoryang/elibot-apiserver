@@ -4,9 +4,14 @@ import (
 	"os"
 	"io"
 	"net/http"
+	"strings"
 )
 
-var StorePath string = "/rbctrl/"
+var RootPath string
+
+func SetRootPath(path string) {
+	RootPath = path
+}
 
 func handleUploadFile(w http.ResponseWriter, r *http.Request) {
 	src, handler, err := r.FormFile("fileupload")
@@ -16,7 +21,7 @@ func handleUploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 	defer src.Close()
 
-	des, err := os.OpenFile(StorePath + handler.Filename, os.O_WRONLY|os.O_CREATE, 0666)
+	des, err := os.OpenFile(RootPath + handler.Filename, os.O_WRONLY|os.O_CREATE, 0666)
     if err != nil {
         WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
 		return
@@ -29,4 +34,21 @@ func handleUploadFile(w http.ResponseWriter, r *http.Request) {
     }
 
     WriteSuccessResponse(w, "succeed in uploading file " + handler.Filename)
+}
+
+func getJBIList() {
+	files, err := ioutil.ReadDir(RootPath)
+    if err != nil {
+        WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
+		return
+    }
+
+    var list []string
+    for _, f := range files {
+    	if strings.Contains(f.Name(), ".jbi") {
+    		list = append(list, f.Name())
+    	}
+    }
+
+    WriteSuccessResponse(w, list)
 }

@@ -33,3 +33,6 @@ go tool pprof goprofex http://192.168.1.253:9090/debug/pprof/block
 
 # replace a word in all files in a directory
 find ./ -type f -exec sed -i 's/string1/string2/' {} \;
+
+# multipart/form upload files: data model
+https://matt.aimonetti.net/posts/2013/07/01/golang-multipart-file-upload-example/

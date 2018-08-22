@@ -98,6 +98,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 
 	filesapi := r.PathPrefix("/v1/files").Subrouter()
 	filesapi.HandleFunc("/upload", handleUploadFile).Methods("POST")
+	filesapi.HandleFunc("/jbi", getJBIList).Methods("GET")
 
 	return r
 }
