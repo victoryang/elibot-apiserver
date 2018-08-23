@@ -91,6 +91,10 @@ define([
               } catch (e) {
               }
           }
+
+          if (t === 'number') {
+            param[ key ] = Number.parseInt(val);
+          }
       });
 
       // send AJAX request, catch success or error callback
