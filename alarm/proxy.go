@@ -13,28 +13,45 @@ func GetRecords(start int, end int, timestamp uint32) ([]byte, error) {
 	defer func() {
 		clearUnReadRecordNumber()
 	}()
-	if end > len(records) {
-		end = len(records)
+
+	var recs []Record
+	ret := getRecordsByTimeStamp(timestamp)
+	length := len(ret)
+	if length!=0 {
+		if end > length {
+			end = length 
+		}
+		recs = ret[start:end]
+	} else {
+		recs = nil
 	}
 
-	ret := getRecordsByTimeStamp(timestamp, records[start:end])
-	return json.Marshal(Response{Alarm: ret, TotalSize: len(ret)})
+	return json.Marshal(Response{Alarm: recs, TotalSize: length})
 }
 
 func GetRecordsByLevel(level string, start int, end int, timestamp uint32) ([]byte, error) {
 	defer func() {
 		clearUnReadRecordNumber()
 	}()
-	if end > len(records) {
-		end = len(records)
-	}
 
-	tmp := getRecordsByTimeStamp(timestamp, records[start:end])
-	var rec []Record
-	for _, r := range tmp {
+	var recs []Record
+	ret := getRecordsByTimeStamp(timestamp)
+
+	var filter []Record
+	for _, r := range ret {
 		if r.ErrNo[0] == level {
-			rec = append(rec, r)
+			filter = append(filter, r)
 		}
 	}
-	return json.Marshal(Response{Alarm: rec, TotalSize: len(rec)}) 
+
+	length := len(filter)
+	if length!=0 {
+		if end > length {
+			end = length 
+		}
+		recs = filter[start:end]
+	} else {
+		recs = nil
+	}
+	return json.Marshal(Response{Alarm: recs, TotalSize: length}) 
 }
