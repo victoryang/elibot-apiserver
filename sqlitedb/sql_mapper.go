@@ -1,5 +1,7 @@
 package sqlitedb
 
+// #cgo CFLAGS: -I/root/mcserver/include -I../thirdparty/mcsql
+// #cgo LDFLAGS: -lsqlitedb -L../thirdparty/mcsql -lmcsql
 // #include<mcsqlmapper.h>
 import "C"
 import (
