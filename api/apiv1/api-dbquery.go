@@ -14,6 +14,7 @@ func getAllArc(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Arc")
 	res, err := db.GetAllArc()
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -31,6 +32,7 @@ func getArcParams(w http.ResponseWriter, r *http.Request) {
 	queries["group"] = vars["group"]
 	res, err := db.GetArcParams(queries)
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -42,6 +44,7 @@ func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all bookprograms")
 	res, err := db.GetAllBookprograms()
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -53,6 +56,7 @@ func getAllEnum(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Enum")
 	res, err := db.GetAllEnum()
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -64,6 +68,7 @@ func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Extaxis")
 	res, err := db.GetAllExtaxis()
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -75,6 +80,7 @@ func getAllInterference(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Interference")
 	res, err := db.GetAllInterference()
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -95,6 +101,7 @@ func getAllIos(w http.ResponseWriter, r *http.Request) {
 
 	res, err := db.GetAllIO(queries)
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -110,6 +117,7 @@ func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 	queries["lang"] = vars["lang"]
 	res, err := db.GetAllMetadata(queries)
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -121,6 +129,7 @@ func getParams(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Parameter")
 	res, err := db.GetParams()
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -136,6 +145,7 @@ func getParameterById(w http.ResponseWriter, r *http.Request) {
 
 	res, err := db.GetParameterById(queries)
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -150,6 +160,7 @@ func getParameterByGroup(w http.ResponseWriter, r *http.Request) {
 	queries["group"] = vars["group"]
 	res, err := db.GetParameterByGroup(queries)
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -161,6 +172,7 @@ func getAllRef(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Ref")
 	res, err := db.GetAllRef()
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -172,6 +184,7 @@ func getAllToolframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all toolframe")
 	res, err := db.GetAllToolframe()
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -183,6 +196,7 @@ func getAllUserframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all userframe")
 	res, err := db.GetAllUserframe()
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
@@ -194,6 +208,7 @@ func getAllZeroPoint(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all zeropoint")
 	res, err := db.GetAllZeropoint()
 	if err!=nil {
+		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return
 	}
