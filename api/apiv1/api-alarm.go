@@ -39,6 +39,7 @@ func getLogsByAlarmLevel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	timestamp,_ := strconv.Atoi(vars["timestamp"])
 	res, err := alarm.GetRecordsByLevel(vars["level"], start, end, uint32(timestamp))
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
