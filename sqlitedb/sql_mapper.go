@@ -9,6 +9,7 @@ import (
 )
 // SqlMapper defines methods of a sql mapper
 type SqlMapper interface {
+	RegisterSqlMapper(mode int)		error
 	GetID()		                    string
 }
 
