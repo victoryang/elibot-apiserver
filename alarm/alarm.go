@@ -17,9 +17,9 @@ type WsResponse struct {
 	NewItemNo 	int 			`json:"NewItemNo"`	
 }
 
-func getRecordsByTimeStamp(time uint32, recs []Record) []Record {
+func getRecordsByTimeStamp(time uint32) []Record {
 	var rec []Record
-	for _, r := range recs {
+	for _, r := range records {
 		if r.Time >= time {
 			rec = append(rec, r)
 		}
