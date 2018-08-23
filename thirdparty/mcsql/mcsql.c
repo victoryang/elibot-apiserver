@@ -21,15 +21,14 @@ void add_string_to_param(char* value, sql_parameter* param) {
 }
 
 char* mcsql_query_with_param(char* id, char* conn, int32_t type_handle_mode, db_query_req_parameter* parameter, db_query_req_page* page) {
-	db_query_req_option* option = new_db_query_req_option(type_handle_mode);
-	if (NULL == option) {
-		return NULL;
-	}
+	db_query_req_option opt = {
+            type_handle_mode:type_handle_mode
+    };
 
 	db_query_req req = {
 		query_id: id,
 		conn_str: conn,
-		option: option,
+		option: &option,
 		parameter: parameter,
 		page: page,
 	};
