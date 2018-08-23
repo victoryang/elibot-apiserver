@@ -28,7 +28,7 @@ char* mcsql_query_with_param(char* id, char* conn, int32_t type_handle_mode, db_
 	db_query_req req = {
 		query_id: id,
 		conn_str: conn,
-		option: &option,
+		option: &opt,
 		parameter: parameter,
 		page: page,
 	};
