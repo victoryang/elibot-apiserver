@@ -45,7 +45,7 @@ func handleWriteEvent() {
 		}
 	}
 
-	rsp, err := json.Marshal(Response{Alarm: ret, NewItemNo: getUnReadRecordNumber()})
+	rsp, err := json.Marshal(WsResponse{Alarm: ret, NewItemNo: getUnReadRecordNumber()})
 	if err!=nil {
 		Log.Error("Could not marshal to json ", err)
 	} else {
