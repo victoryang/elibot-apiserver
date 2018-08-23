@@ -1,5 +1,5 @@
 /**
-* @api {get} /v1/alarm/range?start=:start&end=:end&timestamp:=timestamp getLogs
+* @api {get} /v1/alarm/range?start=:start&end=:end&timestamp=:timestamp getLogs
 * @apiVersion 0.1.0
 * @apiName getLogs
 * @apiGroup Alarm
@@ -7,7 +7,7 @@
 * @apiDescription getLogs
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.253:9000/v1/alarm/range?start=:start&end=:end&timestamp:=timestamp
+* curl -X GET http://192.168.1.253:9000/v1/alarm/range?start=:start&end=:end&timestamp=:timestamp
 *
 * @apiUse DefaultHeader
 *
