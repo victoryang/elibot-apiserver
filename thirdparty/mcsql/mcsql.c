@@ -37,7 +37,6 @@ char* mcsql_query_with_param(char* id, char* conn, int32_t type_handle_mode, db_
 
 	char *ret = cJSON_PrintUnformatted(root);
 	cJSON_Delete(root);
-	free(option);
 	return ret;
 }
 
