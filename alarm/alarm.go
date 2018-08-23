@@ -12,8 +12,19 @@ var logfile = "/rbctrl/mcserver-err.log"
 var ws *websocket.WsServer
 var records []Record
 
-type Response struct {
-	Alarm		[]Record   		`json:"alarm"` 		
+type WsResponse struct {
+	Alarm		[]Record   		`json:"alarm"` 	
+	NewItemNo 	int 			`json:"NewItemNo"`	
+}
+
+func getRecordsByTimeStamp(time uint32, recs []Record) []Record {
+	var rec []Record
+	for _, r := range recs {
+		if r.Time >= time {
+			rec = append(rec, r)
+		}
+	}
+	return rec 
 }
 
 func handleWriteEvent() {
@@ -23,6 +34,8 @@ func handleWriteEvent() {
 	}
 
 	rec := tmp[len(records):]
+	addNewRecordNumber(len(rec))
+
 	records = tmp
 
 	var ret []Record
@@ -32,7 +45,7 @@ func handleWriteEvent() {
 		}
 	}
 
-	rsp, err := json.Marshal(Response{Alarm: ret})
+	rsp, err := json.Marshal(Response{Alarm: ret, NewItemNo: getUnReadRecordNumber()})
 	if err!=nil {
 		Log.Error("Could not marshal to json ", err)
 	} else {
@@ -56,6 +69,7 @@ func AlarmHandler(evt fsnotify.Event, err error) {
 
 func InitRecords() {
 	records = ScanAndParse(logfile)
+	clearUnReadRecordNumber()
 	return
 }
 

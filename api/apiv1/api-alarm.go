@@ -10,64 +10,36 @@ import (
 	Log "elibot-apiserver/log"
 )
 
-func getAllLogs(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("getAllLogs")
-	res, err := alarm.GetAllRecords()
-	if err!=nil {
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
-}
-
-func getLogsByTimeStamp(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("getLogsByTimeStamp")
-	vars := mux.Vars(r)
-	timestamp,_ := strconv.Atoi(vars["timestamp"])
-
-	res, err := alarm.GetRecordsByTimeStamp(uint32(timestamp))
-	if err!=nil {
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
-}
-
-func getLogsByErrNo(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("getLogsByErrNo")
-	vars := mux.Vars(r)
-
-	res, err := alarm.GetRecordsByErrNo(vars["errno"])
-	if err!=nil {
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
-}
-
-func getAlreadyReadTag(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("getAlreadyReadTag")
-	WriteSuccessResponse(w, alarm.GetAlreadyReadTag())
-}
-
-func getLogNumber(w http.ResponseWriter, r *http.Request) {
-	Log.Debug("getLogNumber")
-	WriteSuccessResponse(w, alarm.GetRecordsNumber())
-}
-
 func getLogs(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("getLogs")
 	vars := mux.Vars(r)
-	from,_ := strconv.Atoi(vars["from"])
+	start,_ := strconv.Atoi(vars["start"])
 	end,_ := strconv.Atoi(vars["end"])
-	if from < 0 || end < 0 || from > end {
+	if start < 0 || end < 0 || start > end {
 		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
 		return
 	}
-	res, err := alarm.GetRecords(from, end)
+	timestamp,_ := strconv.Atoi(vars["timestamp"])
+	res, err := alarm.GetRecords(start, end, uint32(timestamp))
+	if err!=nil {
+		WriteInternalServerErrorResponse(w, ERRQUERY)
+		return
+	}
+
+	WriteJsonSuccessResponse(w, res)
+}
+
+func getLogsByAlarmLevel(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("getLogsByAlarmLevel")
+	vars := mux.Vars(r)
+	start,_ := strconv.Atoi(vars["start"])
+	end,_ := strconv.Atoi(vars["end"])
+	if start < 0 || end < 0 || start > end {
+		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		return
+	}
+
+	res, err := alarm.GetRecordsByLevel(vars["level"], start, end, uint32(timestamp))
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRQUERY)
 		return

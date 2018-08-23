@@ -2,50 +2,39 @@ package alarm
 
 import (
 	"encoding/json"
-	"strconv"
 )
 
-func GetRecordsByTimeStamp(time uint32) ([]byte, error) {
-	var rec []Record
-	for _, r := range records {
-		if r.Time == time {
-			rec = append(rec, r)
-		}
-	}
-	return json.Marshal(Response{Alarm: rec}) 
+type Response struct {
+	Alarm		[]Record   		`json:"alarm"` 	
+	TotalSize 	int 			`json:"TotalSize"`	
 }
 
-func GetRecordsByErrNo(errno string) ([]byte, error) {
-	var rec []Record
-	for _, r := range records {
-		if r.ErrNo[0] == errno {
-			rec = append(rec, r)
-		}
-	}
-	return json.Marshal(Response{Alarm: rec}) 
-}
-
-func GetAlreadyReadTag() int {
-	if ret, err := strconv.Atoi(getTagFromSettings()); err==nil {
-		return ret
-	}
-	return 0
-}
-
-func GetRecordsNumber() int {
-	return len(records)
-}
-
-func GetRecords(from int, end int) ([]byte, error) {
+func GetRecords(start int, end int, timestamp uint32) ([]byte, error) {
 	defer func() {
-		setTagToSettings(strconv.Itoa(end))
+		clearUnReadRecordNumber()
 	}()
 	if end > len(records) {
 		end = len(records)
 	}
-	return json.Marshal(Response{Alarm: records[from:end]})
+
+	ret := getRecordsByTimeStamp(timestamp, records[start:end])
+	return json.Marshal(Response{Alarm: ret, TotalSize: len(ret)})
 }
 
-func GetAllRecords() ([]byte, error) {
-	return json.Marshal(Response{Alarm: records})
+func GetRecordsByLevel(level string, start int, end int, timestamp uint32) ([]byte, error) {
+	defer func() {
+		clearUnReadRecordNumber()
+	}()
+	if end > len(records) {
+		end = len(records)
+	}
+
+	tmp := getRecordsByTimeStamp(timestamp, records[start:end])
+	var rec []Record
+	for _, r := range tmp {
+		if r.ErrNo[0] == level {
+			rec = append(rec, r)
+		}
+	}
+	return json.Marshal(Response{Alarm: rec, TotalSize: len(rec)}) 
 }
