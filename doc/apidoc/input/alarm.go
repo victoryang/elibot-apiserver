@@ -19,7 +19,7 @@
 */
 
 /**
-* @api {get} /v1/alarm/level/:level?start=:start&end=:end&timestamp:=timestamp getLogsByAlarmLevel
+* @api {get} /v1/alarm/level/:level?start=:start&end=:end&timestamp=:timestamp getLogsByAlarmLevel
 * @apiVersion 0.1.0
 * @apiName getLogsByAlarmLevel
 * @apiGroup Alarm
@@ -27,7 +27,7 @@
 * @apiDescription getLogsByAlarmLevel
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.253:9000/v1/alarm/level/:level?start=:start&end=:end&timestamp:=timestamp
+* curl -X GET http://192.168.1.253:9000/v1/alarm/level/:level?start=:start&end=:end&timestamp=:timestamp
 *
 * @apiUse DefaultHeader
 *
