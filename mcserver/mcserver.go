@@ -1,7 +1,6 @@
 package mcserver
 
 import (
-	"errors"
 	"net"
 	"context"
 

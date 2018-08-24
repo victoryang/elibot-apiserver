@@ -6,7 +6,6 @@ import (
 	"context"
 
 	Log "elibot-apiserver/log"
-	"elibot-apiserver/mcserver/pool"
 )
 
 type Request struct {
