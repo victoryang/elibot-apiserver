@@ -52,7 +52,7 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 		res, err := HandleCommand(conn.(net.Conn), cmd)
 		if err!=nil {
 			if ok := checkConnTimeout(err); !ok {
-				conn.Close()
+				conn.(net.Conn).Close()
 				conn = nil
 			}
 		}
