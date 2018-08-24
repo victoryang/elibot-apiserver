@@ -40,7 +40,7 @@ func handleWriteEvent() {
 
 	var ret []Record
 	for _, r := range rec {
-		if strings.Contains(r.Msg, "error") {
+		if strings.Contains(r.ErrNo[0], "0") {
 			ret = append(ret, r)
 		}
 	}

@@ -16,11 +16,6 @@ const (
 	timeoutDuration = 5*time.Second
 )
 
-func freeConn(c net.Conn) {
-	c.Close()
-	c = nil
-}
-
 func setConnDeadline(conn net.Conn) {
 	conn.SetReadDeadline(time.Now().Add(timeoutDuration))
 }
@@ -37,17 +32,11 @@ func HandleCommand(conn net.Conn, command string) (string, error) {
 
 	err := writeConn(conn, command)
 	if err!=nil {
-		if ok := checkConnTimeout(err); !ok {
-			freeConn(conn)
-		}
 		return "", err
 	}
 
 	res, err := readConn(conn)
 	if err!=nil {
-		if ok := checkConnTimeout(err); !ok {
-			freeConn(conn)
-		}
 		return "", err
 	}
 	return parse(res), nil

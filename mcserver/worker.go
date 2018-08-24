@@ -50,6 +50,12 @@ func execute(ctx context.Context, ch chan Response, cmd string) {
 		return
 	default:
 		res, err := HandleCommand(conn.(net.Conn), cmd)
+		if err!=nil {
+			if ok := checkConnTimeout(err); !ok {
+				conn.Close()
+				conn = nil
+			}
+		}
 		SafeSendResponseToChannel(ch, Response{Result: res, Err: err})
 	}
 }
