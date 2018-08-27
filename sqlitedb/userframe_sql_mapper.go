@@ -5,26 +5,12 @@ package sqlitedb
 import "C"
 import (
 	"errors"
-	"unsafe"
 
 	Log "elibot-apiserver/log"
 )
 
 type UserframeSqlMapper struct {
 	Id		string
-}
-
-func (m *UserframeSqlMapper) register_userframe_sql_mapper(q_id string) error {
-	id := C.CString(q_id)
-	defer C.free(unsafe.Pointer(id))
-
-	usm := C.get_userframe_sql_mapper(id)
-	if usm == nil {
-		return errors.New("Getting sqlmapper fails")
-	}
-
-	C.register_sql_mapper(usm)
-	return nil
 }
 
 func (m *UserframeSqlMapper) GetID() string {
@@ -41,5 +27,5 @@ func (m *UserframeSqlMapper) RegisterSqlMapper(mode int) error {
 		return errors.New("Not support")
 	}
 
-	return m.register_userframe_sql_mapper(m.Id)
+	return nil
 }

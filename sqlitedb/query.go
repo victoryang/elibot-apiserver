@@ -26,7 +26,7 @@ func Db_query_with_params(q_id, db_name string, vars map[string]interface{}) ([]
 
     buf := C.mcsql_query_with_param(id, conn, C.DB_QUERY_MODE_CUSTOM, p.parameter, nil)
     if buf == nil {
-        return nil, errors.New("query empty")
+        return nil, errors.New("query return null")
     }
     res := C.GoString(buf)
     defer C.free(unsafe.Pointer(buf))
@@ -43,7 +43,7 @@ func Db_query(q_id string, db_name string) ([]byte, error){
 
     buf := C.mcsql_query(id, conn, C.DB_QUERY_MODE_STANDARD)
     if buf == nil {
-        return nil, errors.New("query empty")
+        return nil, errors.New("query return null")
     }
     res := C.GoString(buf)
     defer C.free(unsafe.Pointer(buf))

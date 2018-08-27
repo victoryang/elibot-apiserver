@@ -5,26 +5,12 @@ package sqlitedb
 import "C"
 import (
 	"errors"
-	"unsafe"
 
 	Log "elibot-apiserver/log"
 )
 
 type BookProgramSqlMapper struct {
 	Id         string
-}
-
-func (m *BookProgramSqlMapper) register_bookprogram_sql_mapper(q_id string) error {
-	id := C.CString(q_id)
-	defer C.free(unsafe.Pointer(id))
-
-	bsm := C.get_bookprogram_sql_mapper(id)
-	if bsm == nil {
-		return errors.New("Getting sqlmapper fails")
-	}
-
-	C.register_sql_mapper(bsm)
-	return nil
 }
 
 func (m *BookProgramSqlMapper) GetID() string {
@@ -41,5 +27,5 @@ func (m *BookProgramSqlMapper) RegisterSqlMapper(mode int) error {
 		return errors.New("Not support")
 	}
 
-	return m.register_bookprogram_sql_mapper(m.Id)
+	return nil
 }

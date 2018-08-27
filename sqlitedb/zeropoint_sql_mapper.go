@@ -5,26 +5,12 @@ package sqlitedb
 import "C"
 import (
 	"errors"
-	"unsafe"
 
 	Log "elibot-apiserver/log"
 )
 
 type ZeroPointSqlMapper struct {
 	Id         string
-}
-
-func (m *ZeroPointSqlMapper) register_zeropoint_sql_mapper(q_id string) error {
-	id := C.CString(q_id)
-	defer C.free(unsafe.Pointer(id))
-
-	zsm := C.get_zeropoint_sql_mapper(id)
-	if zsm == nil {
-		return errors.New("Getting sqlmapper fails")
-	}
-
-	C.register_sql_mapper(zsm)
-	return nil
 }
 
 func (m *ZeroPointSqlMapper) GetID() string {
@@ -41,5 +27,5 @@ func (m *ZeroPointSqlMapper) RegisterSqlMapper(mode int) error {
 		return errors.New("Not support")
 	}
 
-	return m.register_zeropoint_sql_mapper(m.Id)
+	return nil
 }

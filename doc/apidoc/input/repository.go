@@ -1,12 +1,12 @@
 /**
 * @apiDefine RequestBodyIndexAndValue
 *
-* @apiParam (Params) {string} index    Body Content: index
+* @apiParam (Params) {Number} index    Body Content: index
 * @apiParam (Params) {string} value    Body Content: value
 *
 * @apiParamExample {json} Request-Body (example):
 * 		{
-*			"index": "0",
+*			"index": 0,
 *			"value": "0"
 *		}
 */

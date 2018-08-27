@@ -5,26 +5,12 @@ package sqlitedb
 import "C"
 import (
 	"errors"
-	"unsafe"
 
 	Log "elibot-apiserver/log"
 )
 
 type ArcSqlMapper struct {
-	Id		string
-}
-
-func (m *ArcSqlMapper) register_arc_sql_mapper(q_id string) error {
-	id := C.CString(q_id)
-	defer C.free(unsafe.Pointer(id))
-
-	asm := C.get_arc_sql_mapper(id)
-	if asm == nil {
-		return errors.New("Getting sqlmapper fails")
-	}
-
-	C.register_sql_mapper(asm)
-	return nil
+	Id			string
 }
 
 func (m *ArcSqlMapper) GetID() string {
@@ -46,5 +32,5 @@ func (m *ArcSqlMapper) RegisterSqlMapper(mode int) error {
 		return errors.New("Not support")
 	}
 
-	return m.register_arc_sql_mapper(m.Id)
+	return nil
 }

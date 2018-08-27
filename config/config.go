@@ -51,6 +51,7 @@ var (
 	DefaultGlobalConfiguration = &GlobalConfiguration{
 		AccessLogsFile:			"/rbctrl/apiserver/log/access.Log",
 		ServerLogsFile:			"/rbctrl/apiserver/log/server.Log",
+		UploadPath:				"/rbctrl/",
 		Debug:					DefaultDebug,
 
 		Http:			DefaultHttpEntryPoint,
@@ -110,6 +111,7 @@ type Security struct {
 type GlobalConfiguration struct {
 	AccessLogsFile		string					`yaml:"accesslog,omitempty"`
 	ServerLogsFile		string					`yaml:"serverlog,omitempty"`
+	UploadPath 			string					`yaml:"upath,omitempty"`
 	Debug				*DEBUG					`yaml:"debug,omitempty"`
 
 	Http 				*HttpEntryPoint 				`yaml:"http,omitempty`
@@ -118,5 +120,5 @@ type GlobalConfiguration struct {
 
 	Databases			*Database				`yaml:"databases,omitempty"`
 	Admin 				*AdminSever 			`yaml:"admin,omitempty"`
-	Secure 				*Security				`yaml:security,omitempty`
+	Secure 				*Security				`yaml:"security,omitempty"`
 }

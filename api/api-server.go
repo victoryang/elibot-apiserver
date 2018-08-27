@@ -70,6 +70,7 @@ func (s *Server) configServerHandler() http.Handler {
 func NewApiServer(c *config.GlobalConfiguration) *Server {
 	s := new(Server)
 	
+	apiv1.SetRootPath(c.UploadPath)
 	s.AccessLog.File = c.AccessLogsFile
 	s.EntryPoint.httpServer = &http.Server {
 		Addr:			c.Http.ListenAddress,

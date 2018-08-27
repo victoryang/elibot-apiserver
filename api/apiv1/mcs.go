@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	duration = 3
+	duration = 10
 	space = " "
 	endline = "\n"
 )

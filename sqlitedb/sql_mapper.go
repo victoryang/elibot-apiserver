@@ -1,5 +1,12 @@
 package sqlitedb
 
+// #cgo CFLAGS: -I/root/mcserver/include -I../thirdparty/mcsql
+// #cgo LDFLAGS: -lsqlitedb -L../thirdparty/mcsql -lmcsql
+// #include<mcsqlmapper.h>
+import "C"
+import (
+	Log "elibot-apiserver/log"
+)
 // SqlMapper defines methods of a sql mapper
 type SqlMapper interface {
 	RegisterSqlMapper(mode int)		error
@@ -30,7 +37,7 @@ const (
 	ELIBOT_REF_GET_ALL
 )
 
-// BaseSqlMapper should be inherited by sql mappers
-type BaseSqlMapper struct {
-
+func InitSqlitedb() {
+	Log.Debug("init sqlitedb sqlmappers")
+	C.register_all_sql_mappers()
 }

@@ -88,5 +88,13 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	axisctrlapi.HandleFunc("/servo/{status}", setServoStatus).Methods("PUT")
 	axisctrlapi.HandleFunc("/dragteach/{status}", setDragteachStatus).Methods("PUT")
 
+	alarmapi := r.PathPrefix("/v1/alarm").Subrouter()
+	alarmapi.HandleFunc("/range", getLogs).Methods("GET").Queries("start", "{start}", "end", "{end}", "timestamp", "{timestamp}")
+	alarmapi.HandleFunc("/level/{level}", getLogsByAlarmLevel).Methods("GET").Queries("start", "{start}", "end", "{end}", "timestamp", "{timestamp}")
+
+	filesapi := r.PathPrefix("/v1/files").Subrouter()
+	filesapi.HandleFunc("/upload", handleUploadFile).Methods("POST")
+	filesapi.HandleFunc("/jbi", getJBIList).Methods("GET")
+
 	return r
 }

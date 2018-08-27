@@ -13,8 +13,10 @@ func (d *DEBUG) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	}
 
 	if d.Enable == true {
-		d.Level = 5
-	} else if d.Level == 0 {
+		if d.Level == 0 {
+			d.Level = 5
+		}	
+	} else {
 		d.Level = DefaultDebug.Level
 	}
 	Log.SetLevelInt(d.Level)
@@ -156,6 +158,10 @@ func (g *GlobalConfiguration) UnmarshalYAML(unmarshal func(interface{}) error) e
 
 	if g.ServerLogsFile == "" {
 		g.ServerLogsFile = DefaultGlobalConfiguration.ServerLogsFile
+	}
+
+	if g.UploadPath == "" {
+		g.UploadPath = DefaultGlobalConfiguration.UploadPath
 	}
 
 	if g.Debug == nil {

@@ -5,26 +5,12 @@ package sqlitedb
 import "C"
 import (
 	"errors"
-	"unsafe"
 
 	Log "elibot-apiserver/log"
 )
 
 type MetadataSqlMapper struct {
 	Id		string
-}
-
-func (m *MetadataSqlMapper) register_metadata_sql_mapper(q_id string) error {
-	id := C.CString(q_id)
-	defer C.free(unsafe.Pointer(id))
-
-	ism := C.get_metadata_sql_mapper(id)
-	if ism == nil {
-		return errors.New("Getting sqlmapper fails")
-	}
-
-	C.register_sql_mapper(ism)
-	return nil
 }
 
 func (m *MetadataSqlMapper) GetID() string {
@@ -41,5 +27,5 @@ func (m *MetadataSqlMapper) RegisterSqlMapper(mode int) error {
 		return errors.New("Not support")
 	}
 
-	return m.register_metadata_sql_mapper(m.Id)
+	return nil
 }
