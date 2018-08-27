@@ -50,9 +50,7 @@ func (p *Parameter) newReqParameter(vars map[string]interface{}) {
 
     var i C.int16_t = 0
     for k,v := range vars {
-        if err := setsSqlparams(k, v, C.get_sqlparam_index(p.parameter, i)); err != nil {
-            continue
-        }
+        setsSqlparams(k, v, C.get_sqlparam_index(p.parameter, i))
         i++
     }
     return
