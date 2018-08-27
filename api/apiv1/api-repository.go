@@ -32,7 +32,7 @@ func setArcParam(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("setArcParam ", md_id, d.Value, file_no, d.Index)
 	cmd := ConcatCommand(cmdSetArcParam, md_id, d.Value, file_no, d.Index)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
 func setInterference(w http.ResponseWriter, r *http.Request) {
@@ -48,7 +48,7 @@ func setInterference(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("setInterference ", md_id, d.Value, no, d.Index)
 	cmd := ConcatCommand(cmdSetInterference, md_id, d.Value, no, d.Index)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
 func setParam(w http.ResponseWriter, r *http.Request) {
@@ -63,7 +63,7 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("setParam ", md_id, d.Value, d.Index)
 	cmd := ConcatCommand(cmdSetParam, md_id, d.Value, d.Index)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
 func setToolFrame(w http.ResponseWriter, r *http.Request) {
@@ -80,7 +80,7 @@ func setToolFrame(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("setToolFrame ", md_id, d.Value, tool_no, pos_no, d.Index)
 	cmd := ConcatCommand(cmdSetToolFrame, md_id, d.Value, tool_no, pos_no, d.Index)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
 func setUserFrame(w http.ResponseWriter, r *http.Request) {
@@ -96,7 +96,7 @@ func setUserFrame(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("setUserFrame ", md_id, d.Value, userno)
 	cmd := ConcatCommand(cmdSetUserFrame, md_id, d.Value, userno)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
 func setZeroPoint(w http.ResponseWriter, r *http.Request) {
@@ -111,5 +111,5 @@ func setZeroPoint(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("setZeroPoint ", md_id, d.Value, d.Index)
 	cmd := ConcatCommand(cmdSetZeroPoint, md_id, d.Value, d.Index)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }

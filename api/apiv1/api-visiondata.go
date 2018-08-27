@@ -39,7 +39,7 @@ func setVisionCraftNum(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("set_visioncraftnum ", d.Value)
 	cmd := ConcatCommand(cmdSetVisionCraftNum, d.Value)
-	SendToMCServerWithTimeout(w, r, cmd, TagVisionData)
+	SendToMCServerWithTimeout(w, cmd, TagVisionData)
 }
 
 func setVisionDataNote(w http.ResponseWriter, r *http.Request) {
@@ -51,7 +51,7 @@ func setVisionDataNote(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("set_visiondatanote ", n.Value)
 	cmd := ConcatCommand(cmdSetVisionDataNote, n.Value...)
-	SendToMCServerWithTimeout(w, r, cmd, TagVisionData)
+	SendToMCServerWithTimeout(w, cmd, TagVisionData)
 }
 
 func setVisionData(w http.ResponseWriter, r *http.Request) {
@@ -67,55 +67,55 @@ func setVisionData(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("set_visiondata ", property, context, d.Value)
 	cmd := ConcatCommand(cmdSetVisionData, property, context, d.Value)
-	SendToMCServerWithTimeout(w, r, cmd, TagVisionData)
+	SendToMCServerWithTimeout(w, cmd, TagVisionData)
 }
 
 func saveVisionData(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("save_visiondata")
-	SendToMCServerWithTimeout(w, r, cmdSaveVisionData, TagVisionData)
+	SendToMCServerWithTimeout(w, cmdSaveVisionData, TagVisionData)
 }
 
 func triggerCamera(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("Camera_trigger")
-	SendToMCServerWithTimeout(w, r, cmdTriggerCamera, TagVisionData)
+	SendToMCServerWithTimeout(w, cmdTriggerCamera, TagVisionData)
 }
 
 func recordVisionEncoVal(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("recode_VisionEncoVal")
-	SendToMCServerWithTimeout(w, r, cmdRecordVisionEncoVal, TagVisionData)
+	SendToMCServerWithTimeout(w, cmdRecordVisionEncoVal, TagVisionData)
 }
 
 func setVisualCalibration(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("Visual_calibration")
-	SendToMCServerWithTimeout(w, r, cmdSetVisualCalibration, TagVisionData)
+	SendToMCServerWithTimeout(w, cmdSetVisualCalibration, TagVisionData)
 }
 
 func recordRobEncoVal(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("recode_RobEncoVal")
-	SendToMCServerWithTimeout(w, r, cmdRecordRobEncoVal, TagVisionData)
+	SendToMCServerWithTimeout(w, cmdRecordRobEncoVal, TagVisionData)
 }
 
 func recordRobotPoint(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("recode_RobotPoint")
-	SendToMCServerWithTimeout(w, r, cmdRecordRobotPoint, TagVisionData)
+	SendToMCServerWithTimeout(w, cmdRecordRobotPoint, TagVisionData)
 }
 
 func recordVisualPoint(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("recode_VisualPoint")
-	SendToMCServerWithTimeout(w, r, cmdRecordVisualPoint, TagVisionData)
+	SendToMCServerWithTimeout(w, cmdRecordVisualPoint, TagVisionData)
 }
 
 func takePhoto(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("take_photo")
-	SendToMCServerWithTimeout(w, r, cmdTakePhoto, TagVisionData)
+	SendToMCServerWithTimeout(w, cmdTakePhoto, TagVisionData)
 }
 
 func dataReresh(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("Data_refresh")
-	SendToMCServerWithTimeout(w, r, cmdDataRefresh, TagVisionData)
+	SendToMCServerWithTimeout(w, cmdDataRefresh, TagVisionData)
 }
 
 func goToPoint(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("goto_ThisPoint")
-	SendToMCServerWithTimeout(w, r, cmdGoToPoint, TagVisionData)
+	SendToMCServerWithTimeout(w, cmdGoToPoint, TagVisionData)
 }

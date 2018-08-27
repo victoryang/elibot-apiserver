@@ -52,7 +52,7 @@ func ParseBodyToObject(r *http.Request, des interface{}) error {
 	return nil
 }
 
-func SendToMCServerWithTimeout(w http.ResponseWriter, r *http.Request, cmd string, tag string) {
+func SendToMCServerWithTimeout(w http.ResponseWriter, cmd string, tag string) {
 	if mcs = mcserver.GetMcServer(); mcs == nil {
 		Log.Error("mcserver is not available right now")
 		WriteInternalServerErrorResponse(w, ERRMCSEVERNOTAVAILABLE)

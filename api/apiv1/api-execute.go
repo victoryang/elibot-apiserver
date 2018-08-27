@@ -30,11 +30,11 @@ func doRunCmd(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("run ", d.Args[:])
 	cmd := ConcatCommand(cmdRun, d.Args...)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithTimeout(w, cmd, TagExecute)
 }
 
 func doPause(w http.ResponseWriter, r *http.Request) {
-	SendToMCServerWithTimeout(w, r, cmdPause, TagExecute)
+	SendToMCServerWithTimeout(w, cmdPause, TagExecute)
 }
 
 func setRobotMode(w http.ResponseWriter, r *http.Request) {
@@ -43,7 +43,7 @@ func setRobotMode(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("set mode ", mode)
 	cmd := ConcatCommand(cmdMode, mode)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithTimeout(w, cmd, TagExecute)
 }
 
 func doClearAlarm(w http.ResponseWriter, r *http.Request) {
@@ -55,12 +55,12 @@ func doClearAlarm(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("clear alarm ", d.Args[:])
 	cmd := ConcatCommand(cmdClearAlarm, d.Args...)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithTimeout(w, cmd, TagExecute)
 }
 
 func doProgReset(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("progReset")
-	SendToMCServerWithTimeout(w, r, cmdResetProg, TagExecute)
+	SendToMCServerWithTimeout(w, cmdResetProg, TagExecute)
 }
 
 func setSpeed(w http.ResponseWriter, r *http.Request) {
@@ -69,7 +69,7 @@ func setSpeed(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("set speed ", data)
 	cmd := ConcatCommand(cmdSpeed, data)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithTimeout(w, cmd, TagExecute)
 }
 
 func setMainfile(w http.ResponseWriter, r *http.Request) {
@@ -78,7 +78,7 @@ func setMainfile(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("set main file ", filename)
 	cmd := ConcatCommand(cmdSetMainfile, filename)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithTimeout(w, cmd, TagExecute)
 }
 
 func setCycleMode(w http.ResponseWriter, r *http.Request) {
@@ -87,5 +87,5 @@ func setCycleMode(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("set cycle mode ", cyclemode)
 	cmd := ConcatCommand(cmdCycleMode, cyclemode)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithTimeout(w, cmd, TagExecute)
 }
