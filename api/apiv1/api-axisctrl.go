@@ -15,7 +15,7 @@ const (
 	cmdDragTeach = "drag_teach"
 )
 
-func setServoStatus (w http.ResponseWriter, r *http.Request){
+func setServoStatusv1 (w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	status := vars["status"]
 
