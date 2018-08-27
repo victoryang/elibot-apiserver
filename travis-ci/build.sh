@@ -13,6 +13,7 @@ sed -i 's/\/root\/mcserver/\/usr\/local\/include\/mcserver/g' thirdparty/mcsql/M
 sed -i 's/\/root\/mcserver/\/usr\/local\/include\/mcserver/g' thirdparty/mrj/Makefile
 sed -i 's/\/root\/mcserver/\/usr\/local\/include\/mcserver/g' sqlitedb/query.go
 sed -i 's/\/root\/mcserver/\/usr\/local\/include\/mcserver/g' shm/worker.go
+sed -i 's/\/root\/mcserver/\/usr\/local\/include\/mcserver/g' sqlitedb/sql_mapper.go
 
 sudo make -C thirdparty/mcsql/
 sudo make -C thirdparty/mrj/
