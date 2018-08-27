@@ -3,7 +3,7 @@ package apiv1
 import (
 	"net/http"
 	"net/rpc"
-	"rpc/jsonrpc"
+	"net/rpc/jsonrpc"
 
 	Log "elibot-apiserver/log"
 )
