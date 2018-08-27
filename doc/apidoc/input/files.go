@@ -21,7 +21,7 @@
 * @api {get} /v1/files/jbi getJBIList
 * @apiVersion 0.1.0
 * @apiName getJBIList
-* @apiGroup DBBackup
+* @apiGroup Files
 *
 * @apiDescription getJBIList
 *
