@@ -2,6 +2,7 @@ package apiv1
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 
@@ -28,8 +29,8 @@ func setArcParam(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setArcParam ", md_id, d.Value, file_no, d.Index)
-	SendToMCServerWithJsonRpc(w, cmdSetArcParam, ConcatParams(md_id, d.Value, file_no, d.Index))
+	Log.Debug("setArcParam ", md_id, d.Value, file_no, strconv.Itoa(d.Index))
+	SendToMCServerWithJsonRpc(w, cmdSetArcParam, ConcatParams(md_id, d.Value, file_no, strconv.Itoa(d.Index)))
 }
 
 func setInterference(w http.ResponseWriter, r *http.Request) {
@@ -43,8 +44,8 @@ func setInterference(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setInterference ", md_id, d.Value, no, d.Index)
-	SendToMCServerWithJsonRpc(w, cmdSetInterference, ConcatParams(md_id, d.Value, no, d.Index))
+	Log.Debug("setInterference ", md_id, d.Value, no, strconv.Itoa(d.Index))
+	SendToMCServerWithJsonRpc(w, cmdSetInterference, ConcatParams(md_id, d.Value, no, strconv.Itoa(d.Index)))
 }
 
 func setParam(w http.ResponseWriter, r *http.Request) {
@@ -57,8 +58,8 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setParam ", md_id, d.Value, d.Index)
-	SendToMCServerWithJsonRpc(w, cmdSetParam, ConcatParams(md_id, d.Value, d.Index))
+	Log.Debug("setParam ", md_id, d.Value, strconv.Itoa(d.Index))
+	SendToMCServerWithJsonRpc(w, cmdSetParam, ConcatParams(md_id, d.Value, strconv.Itoa(d.Index)))
 }
 
 func setToolFrame(w http.ResponseWriter, r *http.Request) {
@@ -73,8 +74,8 @@ func setToolFrame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setToolFrame ", md_id, d.Value, tool_no, pos_no, d.Index)
-	SendToMCServerWithJsonRpc(w, cmdSetToolFrame, ConcatParams(md_id, d.Value, tool_no, pos_no, d.Index))
+	Log.Debug("setToolFrame ", md_id, d.Value, tool_no, pos_no, strconv.Itoa(d.Index))
+	SendToMCServerWithJsonRpc(w, cmdSetToolFrame, ConcatParams(md_id, d.Value, tool_no, pos_no, strconv.Itoa(d.Index)))
 }
 
 func setUserFrame(w http.ResponseWriter, r *http.Request) {
@@ -102,6 +103,6 @@ func setZeroPoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setZeroPoint ", md_id, d.Value, d.Index)
-	SendToMCServerWithJsonRpc(w, cmdSetZeroPoint, ConcatParams(md_id, d.Value, d.Index))
+	Log.Debug("setZeroPoint ", md_id, d.Value, strconv.Itoa(d.Index))
+	SendToMCServerWithJsonRpc(w, cmdSetZeroPoint, ConcatParams(md_id, d.Value, strconv.Itoa(d.Index)))
 }
