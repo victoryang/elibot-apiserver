@@ -4,8 +4,6 @@ import (
 	"context"
 	"time"
 	"net/http"
-	"io/ioutil"
-	"encoding/json"
 
 	"elibot-apiserver/mcserver"
 	Log "elibot-apiserver/log"

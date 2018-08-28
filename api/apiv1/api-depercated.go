@@ -164,8 +164,8 @@ func setArcParam_deprecated (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setArcParam ", md_id, d.Value, file_no, d.Index)
-	cmd := ConcatCommand(cmdSetArcParam, md_id, d.Value, file_no, d.Index)
+	Log.Debug("setArcParam ", md_id, d.Value, file_no, strconv.Itoa(d.Index))
+	cmd := ConcatCommand(cmdSetArcParam, md_id, d.Value, file_no, strconv.Itoa(d.Index))
 	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
@@ -180,8 +180,8 @@ func setInterference_deprecated (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setInterference ", md_id, d.Value, no, d.Index)
-	cmd := ConcatCommand(cmdSetInterference, md_id, d.Value, no, d.Index)
+	Log.Debug("setInterference ", md_id, d.Value, no, strconv.Itoa(d.Index))
+	cmd := ConcatCommand(cmdSetInterference, md_id, d.Value, no, strconv.Itoa(d.Index))
 	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
@@ -195,8 +195,8 @@ func setParam_deprecated (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setParam ", md_id, d.Value, d.Index)
-	cmd := ConcatCommand(cmdSetParam, md_id, d.Value, d.Index)
+	Log.Debug("setParam ", md_id, d.Value, strconv.Itoa(d.Index))
+	cmd := ConcatCommand(cmdSetParam, md_id, d.Value, strconv.Itoa(d.Index))
 	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
@@ -212,8 +212,8 @@ func setToolFrame_deprecated (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setToolFrame ", md_id, d.Value, tool_no, pos_no, d.Index)
-	cmd := ConcatCommand(cmdSetToolFrame, md_id, d.Value, tool_no, pos_no, d.Index)
+	Log.Debug("setToolFrame ", md_id, d.Value, tool_no, pos_no, strconv.Itoa(d.Index))
+	cmd := ConcatCommand(cmdSetToolFrame, md_id, d.Value, tool_no, pos_no, strconv.Itoa(d.Index))
 	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
@@ -243,7 +243,7 @@ func setZeroPoint_deprecated (w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setZeroPoint ", md_id, d.Value, d.Index)
-	cmd := ConcatCommand(cmdSetZeroPoint, md_id, d.Value, d.Index)
+	Log.Debug("setZeroPoint ", md_id, d.Value, strconv.Itoa(d.Index))
+	cmd := ConcatCommand(cmdSetZeroPoint, md_id, d.Value, strconv.Itoa(d.Index))
 	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
