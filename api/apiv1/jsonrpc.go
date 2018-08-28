@@ -30,7 +30,7 @@ func NewJsonRpcClient() error {
 		return err
 	}
 	stream := NewBufferedStream(conn, jsonrpc2.VarintObjectCodec{})
-	JsonRpcClient = jsonrpc2.NewConn(ctx, ,stream, new(handler))
+	JsonRpcClient = jsonrpc2.NewConn(ctx, stream, new(handler))
 	return nil
 }
 
