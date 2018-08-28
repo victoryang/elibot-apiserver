@@ -102,7 +102,7 @@ func setCycleMode_deprecated (w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, cmd, TagExecute)
 }
 
-func setCoordinateMode(w http.ResponseWriter, r *http.Request) {
+func setCoordinateMode_deprecated (w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	mode := vars["mode"]
 
@@ -111,7 +111,7 @@ func setCoordinateMode(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, cmd, TagManualInterpolation)
 }
 
-func doManual(w http.ResponseWriter, r *http.Request) {
+func doManual_deprecated (w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	axis := vars["axis"]
 
@@ -127,7 +127,7 @@ func doManual(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, cmd, TagManualInterpolation)
 }
 
-func doRunForward(w http.ResponseWriter, r *http.Request) {
+func doRunForward_deprecated (w http.ResponseWriter, r *http.Request) {
 	d := &RequestDataForCommandArgs{}
 	if err := ParseBodyToObject(r, d); err!=nil {
 		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
@@ -139,7 +139,7 @@ func doRunForward(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, cmd, TagManualInterpolation)
 }
 
-func doRunToZero(w http.ResponseWriter, r *http.Request) {
+func doRunToZero_deprecated (w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	status := vars["status"]
 
@@ -148,12 +148,12 @@ func doRunToZero(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, cmd, TagManualInterpolation)
 }
 
-func doRobotStop(w http.ResponseWriter, r *http.Request) {
+func doRobotStop_deprecated (w http.ResponseWriter, r *http.Request) {
 	Log.Debug("robot stop")
 	SendToMCServerWithTimeout(w, cmdStop, TagManualInterpolation)
 }
 
-func setArcParam(w http.ResponseWriter, r *http.Request) {
+func setArcParam_deprecated (w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]
 	file_no := vars["file_no"]
@@ -169,7 +169,7 @@ func setArcParam(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
-func setInterference(w http.ResponseWriter, r *http.Request) {
+func setInterference_deprecated (w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]
 	no := vars["no"]
@@ -185,7 +185,7 @@ func setInterference(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
-func setParam(w http.ResponseWriter, r *http.Request) {
+func setParam_deprecated (w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]
 
@@ -200,7 +200,7 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
-func setToolFrame(w http.ResponseWriter, r *http.Request) {
+func setToolFrame_deprecated (w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]
 	tool_no := vars["tool_no"]
@@ -217,7 +217,7 @@ func setToolFrame(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
-func setUserFrame(w http.ResponseWriter, r *http.Request) {
+func setUserFrame_deprecated (w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]
 	userno := vars["userno"]
@@ -233,7 +233,7 @@ func setUserFrame(w http.ResponseWriter, r *http.Request) {
 	SendToMCServerWithTimeout(w, cmd, TagRepository)
 }
 
-func setZeroPoint(w http.ResponseWriter, r *http.Request) {
+func setZeroPoint_deprecated (w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]
 
