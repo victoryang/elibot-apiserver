@@ -10,7 +10,7 @@ import (
 	Log "elibot-apiserver/log"
 )
 
-var JsonRpcClient *rpc.Conn
+var JsonRpcClient *jsonrpc2.Conn
 var address string = "127.0.0.1:8055"
 var ctx_rpc, _ = context.WithCancel(context.Background())
 var JsonRpcTimeOut = 5 * time.Second

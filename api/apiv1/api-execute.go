@@ -27,7 +27,6 @@ func doRunCmd(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("run ", d.Args[:])
-	cmd := ConcatCommand(cmdRun, d.Args...)
 	SendToMCServerWithJsonRpc(w, cmdRun, ConcatParams(d.Args...))
 }
 
