@@ -10,16 +10,16 @@ import (
 	Log "elibot-apiserver/log"
 )
 
-var JsonRpcClient *rpc.Client
+var JsonRpcClient *rpc.Conn
 var address string = "127.0.0.1:8055"
-var ctx_base, _ = context.WithCancel(context.Background())
-var JsonRpcTimeOut = 5
+var ctx_rpc, _ = context.WithCancel(context.Background())
+var JsonRpcTimeOut = 5 * time.Second
 
 type handler struct {
 }
 
 func (h *handler)Handle(ctx context.Context, c *jsonrpc2.Conn, req *jsonrpc2.Request) {
-	fmt.Println("Receive request from server")
+	Log.Debug("Receive request from server")
 	return
 }
 
@@ -29,8 +29,8 @@ func NewJsonRpcClient() error {
 		Log.Error("Dial: ", err)
 		return err
 	}
-	stream := NewBufferedStream(conn, jsonrpc2.VarintObjectCodec{})
-	JsonRpcClient = jsonrpc2.NewConn(ctx, stream, new(handler))
+	stream := jsonrpc2.NewBufferedStream(conn, jsonrpc2.VarintObjectCodec{})
+	JsonRpcClient = jsonrpc2.NewConn(ctx_rpc, stream, new(handler))
 	return nil
 }
 
@@ -48,7 +48,7 @@ func ConcatParams(args ...string) []string {
 func SendToMCServerWithJsonRpc(w http.ResponseWriter, serviceMethod string, params interface{}) {
 	var reply bool
 
-	ctx, cancel := context.WithTimeout(ctx_base, JsonRpcTimeOut * time.Second)
+	ctx, cancel := context.WithTimeout(ctx_rpc, JsonRpcTimeOut)
 	defer cancel()
 
 	if err:=JsonRpcClient.Call(ctx, serviceMethod, params, &reply); err!=nil {
