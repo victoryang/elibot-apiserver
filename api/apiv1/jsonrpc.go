@@ -12,7 +12,7 @@ import (
 
 var JsonRpcClient *jsonrpc2.Conn
 var address string = "127.0.0.1:8055"
-var ctx_rpc, _ = context.WithCancel(context.Background())
+var ctx_rpc, cancel_rpc = context.WithCancel(context.Background())
 var JsonRpcTimeOut = 5 * time.Second
 
 type handler struct {
@@ -21,6 +21,11 @@ type handler struct {
 func (h *handler)Handle(ctx context.Context, c *jsonrpc2.Conn, req *jsonrpc2.Request) {
 	Log.Debug("Receive request from server")
 	return
+}
+
+func CloseJsonRpcClient() {
+	cancel_rpc()
+	JsonRpcClient.Close()
 }
 
 func NewJsonRpcClient() error {

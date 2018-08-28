@@ -40,6 +40,8 @@ func (s *Server) Shutdown() {
 		s.AccessLog.Logger.Close()
 	}
 
+	apiv1.CloseJsonRpcClient()
+
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
     defer cancel()
     // Doesn't block if no connections, but will otherwise wait
