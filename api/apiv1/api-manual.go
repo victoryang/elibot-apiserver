@@ -9,8 +9,6 @@ import (
 )
 
 const (
-	TagManualInterpolation = "apiv1:robot:manualinterpolation"
-
 	cmdCoord = "coord"
 	cmdManual = "manual "
 	cmdRunForward = "runForward"
@@ -23,8 +21,7 @@ func setCoordinateMode(w http.ResponseWriter, r *http.Request) {
 	mode := vars["mode"]
 
 	Log.Debug("set coord mode ", mode)
-	cmd := ConcatCommand(cmdCoord, mode)
-	SendToMCServerWithTimeout(w, r, cmd, TagManualInterpolation)
+	SendToMCServerWithJsonRpc(w, cmdCoord, ConcatParams(mode))
 }
 
 func doManual(w http.ResponseWriter, r *http.Request) {
@@ -38,9 +35,12 @@ func doManual(w http.ResponseWriter, r *http.Request) {
 	} 
 
 	Log.Debug("set mannual ", axis, d.Args[:])
-	cmdtmp := cmdManual + axis
-	cmd := ConcatCommand(cmdtmp, d.Args...)
-	SendToMCServerWithTimeout(w, r, cmd, TagManualInterpolation)
+	var params []string
+	params = append(params, axis)
+	for _,v := range d.Args {
+		params = append(params, v)
+	}
+	SendToMCServerWithJsonRpc(w, cmdManual, params)
 }
 
 func doRunForward(w http.ResponseWriter, r *http.Request) {
@@ -51,8 +51,7 @@ func doRunForward(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("run forward ", d.Args[:])
-	cmd := ConcatCommand(cmdRunForward, d.Args...)
-	SendToMCServerWithTimeout(w, r, cmd, TagManualInterpolation)
+	SendToMCServerWithJsonRpc(w, cmdRunForward, ConcatParams(d.Args...))
 }
 
 func doRunToZero(w http.ResponseWriter, r *http.Request) {
@@ -60,11 +59,10 @@ func doRunToZero(w http.ResponseWriter, r *http.Request) {
 	status := vars["status"]
 
 	Log.Debug("runToZero ", status)
-	cmd := ConcatCommand(cmdRunToZero, status)
-	SendToMCServerWithTimeout(w, r, cmd, TagManualInterpolation)
+	SendToMCServerWithJsonRpc(w, cmdRunToZero, ConcatParams(status))
 }
 
 func doRobotStop(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("robot stop")
-	SendToMCServerWithTimeout(w, r, cmdStop, TagManualInterpolation)
+	SendToMCServerWithJsonRpc(w, cmdStop, nil)
 }

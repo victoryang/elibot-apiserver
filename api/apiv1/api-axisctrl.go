@@ -9,8 +9,6 @@ import (
 )
 
 const (
-	TagAxisCtrl = "apiv1:robot:axisctrl"
-
 	cmdServo = "servo"
 	cmdDragTeach = "drag_teach"
 )
@@ -20,8 +18,7 @@ func setServoStatus (w http.ResponseWriter, r *http.Request){
 	status := vars["status"]
 
 	Log.Debug("servo ", status)
-	cmd := ConcatCommand(cmdServo, status)
-	SendToMCServerWithTimeout(w, r, cmd, TagAxisCtrl)
+	SendToMCServerWithJsonRpc(w, cmdServo, ConcatParams(status))
 }
 
 func setDragteachStatus (w http.ResponseWriter, r *http.Request){
@@ -29,6 +26,5 @@ func setDragteachStatus (w http.ResponseWriter, r *http.Request){
 	status := vars["status"]
 
 	Log.Debug("drag_teach ", status)
-	cmd := ConcatCommand(cmdDragTeach, status)
-	SendToMCServerWithTimeout(w, r, cmd, TagAxisCtrl)
+	SendToMCServerWithJsonRpc(w, cmdDragTeach, ConcatParams(status))
 }

@@ -9,8 +9,6 @@ import (
 )
 
 const (
-	TagExecute = "apiv1:robot:execute"
-
 	cmdRun = "run"
 	cmdPause = "pause"
 	cmdMode = "mode"
@@ -29,12 +27,11 @@ func doRunCmd(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("run ", d.Args[:])
-	cmd := ConcatCommand(cmdRun, d.Args...)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithJsonRpc(w, cmdRun, ConcatParams(d.Args...))
 }
 
 func doPause(w http.ResponseWriter, r *http.Request) {
-	SendToMCServerWithTimeout(w, r, cmdPause, TagExecute)
+	SendToMCServerWithJsonRpc(w, cmdPause, nil)
 }
 
 func setRobotMode(w http.ResponseWriter, r *http.Request) {
@@ -42,8 +39,7 @@ func setRobotMode(w http.ResponseWriter, r *http.Request) {
 	mode := vars["mode"]
 
 	Log.Debug("set mode ", mode)
-	cmd := ConcatCommand(cmdMode, mode)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithJsonRpc(w, cmdMode, ConcatParams(mode))
 }
 
 func doClearAlarm(w http.ResponseWriter, r *http.Request) {
@@ -54,13 +50,12 @@ func doClearAlarm(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("clear alarm ", d.Args[:])
-	cmd := ConcatCommand(cmdClearAlarm, d.Args...)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithJsonRpc(w, cmdClearAlarm, ConcatParams(d.Args...))
 }
 
 func doProgReset(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("progReset")
-	SendToMCServerWithTimeout(w, r, cmdResetProg, TagExecute)
+	SendToMCServerWithJsonRpc(w, cmdResetProg, nil)
 }
 
 func setSpeed(w http.ResponseWriter, r *http.Request) {
@@ -68,8 +63,7 @@ func setSpeed(w http.ResponseWriter, r *http.Request) {
 	data := vars["data"]
 
 	Log.Debug("set speed ", data)
-	cmd := ConcatCommand(cmdSpeed, data)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithJsonRpc(w, cmdSpeed, ConcatParams(data))
 }
 
 func setMainfile(w http.ResponseWriter, r *http.Request) {
@@ -77,8 +71,7 @@ func setMainfile(w http.ResponseWriter, r *http.Request) {
 	filename := vars["filename"]
 
 	Log.Debug("set main file ", filename)
-	cmd := ConcatCommand(cmdSetMainfile, filename)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithJsonRpc(w, cmdSetMainfile, ConcatParams(filename))
 }
 
 func setCycleMode(w http.ResponseWriter, r *http.Request) {
@@ -86,6 +79,5 @@ func setCycleMode(w http.ResponseWriter, r *http.Request) {
 	cyclemode := vars["cyclemode"]
 
 	Log.Debug("set cycle mode ", cyclemode)
-	cmd := ConcatCommand(cmdCycleMode, cyclemode)
-	SendToMCServerWithTimeout(w, r, cmd, TagExecute)
+	SendToMCServerWithJsonRpc(w, cmdCycleMode, ConcatParams(cyclemode))
 }

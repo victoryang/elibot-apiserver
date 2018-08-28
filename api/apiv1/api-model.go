@@ -2,7 +2,7 @@ package apiv1
 
 type RequestData struct {
 	// setting index for data
-	Index 		string 		`json:"index,omitempty"`
+	Index 		int 		`json:"index,omitempty"`
 
 	// certain value to set
 	//

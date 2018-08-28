@@ -2,6 +2,7 @@ package apiv1
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 
@@ -9,8 +10,6 @@ import (
 )
 
 const (
-	TagRepository = "apiv1:robot:repository"
-
 	cmdSetArcParam = "setArcParam"
 	cmdSetInterference = "setInterference"
 	cmdSetParam = "setParam"
@@ -30,9 +29,8 @@ func setArcParam(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setArcParam ", md_id, d.Value, file_no, d.Index)
-	cmd := ConcatCommand(cmdSetArcParam, md_id, d.Value, file_no, d.Index)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	Log.Debug("setArcParam ", md_id, d.Value, file_no, strconv.Itoa(d.Index))
+	SendToMCServerWithJsonRpc(w, cmdSetArcParam, ConcatParams(md_id, d.Value, file_no, strconv.Itoa(d.Index)))
 }
 
 func setInterference(w http.ResponseWriter, r *http.Request) {
@@ -46,9 +44,8 @@ func setInterference(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setInterference ", md_id, d.Value, no, d.Index)
-	cmd := ConcatCommand(cmdSetInterference, md_id, d.Value, no, d.Index)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	Log.Debug("setInterference ", md_id, d.Value, no, strconv.Itoa(d.Index))
+	SendToMCServerWithJsonRpc(w, cmdSetInterference, ConcatParams(md_id, d.Value, no, strconv.Itoa(d.Index)))
 }
 
 func setParam(w http.ResponseWriter, r *http.Request) {
@@ -61,9 +58,8 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setParam ", md_id, d.Value, d.Index)
-	cmd := ConcatCommand(cmdSetParam, md_id, d.Value, d.Index)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	Log.Debug("setParam ", md_id, d.Value, strconv.Itoa(d.Index))
+	SendToMCServerWithJsonRpc(w, cmdSetParam, ConcatParams(md_id, d.Value, strconv.Itoa(d.Index)))
 }
 
 func setToolFrame(w http.ResponseWriter, r *http.Request) {
@@ -78,9 +74,8 @@ func setToolFrame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setToolFrame ", md_id, d.Value, tool_no, pos_no, d.Index)
-	cmd := ConcatCommand(cmdSetToolFrame, md_id, d.Value, tool_no, pos_no, d.Index)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	Log.Debug("setToolFrame ", md_id, d.Value, tool_no, pos_no, strconv.Itoa(d.Index))
+	SendToMCServerWithJsonRpc(w, cmdSetToolFrame, ConcatParams(md_id, d.Value, tool_no, pos_no, strconv.Itoa(d.Index)))
 }
 
 func setUserFrame(w http.ResponseWriter, r *http.Request) {
@@ -95,8 +90,7 @@ func setUserFrame(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("setUserFrame ", md_id, d.Value, userno)
-	cmd := ConcatCommand(cmdSetUserFrame, md_id, d.Value, userno)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	SendToMCServerWithJsonRpc(w, cmdSetUserFrame, ConcatParams(md_id, d.Value, userno))
 }
 
 func setZeroPoint(w http.ResponseWriter, r *http.Request) {
@@ -109,7 +103,6 @@ func setZeroPoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	Log.Debug("setZeroPoint ", md_id, d.Value, d.Index)
-	cmd := ConcatCommand(cmdSetZeroPoint, md_id, d.Value, d.Index)
-	SendToMCServerWithTimeout(w, r, cmd, TagRepository)
+	Log.Debug("setZeroPoint ", md_id, d.Value, strconv.Itoa(d.Index))
+	SendToMCServerWithJsonRpc(w, cmdSetZeroPoint, ConcatParams(md_id, d.Value, strconv.Itoa(d.Index)))
 }

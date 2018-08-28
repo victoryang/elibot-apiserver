@@ -4,8 +4,6 @@ import (
 	"context"
 	"time"
 	"net/http"
-	"io/ioutil"
-	"encoding/json"
 
 	"elibot-apiserver/mcserver"
 	Log "elibot-apiserver/log"
@@ -37,22 +35,7 @@ func ConcatCommand(cmd string, vars ...string) string {
 	return command
 }
 
-func ParseBodyToObject(r *http.Request, des interface{}) error {
-	body, err := ioutil.ReadAll(r.Body)
-	defer r.Body.Close()
-	if err!=nil {
-		Log.Error("Parse fails: ", err)
-		return err
-	}
-
-	if err := json.Unmarshal(body, des); err!=nil {
-		Log.Error("Parse fails: ", err)
-		return err
-	}
-	return nil
-}
-
-func SendToMCServerWithTimeout(w http.ResponseWriter, r *http.Request, cmd string, tag string) {
+func SendToMCServerWithTimeout(w http.ResponseWriter, cmd string, tag string) {
 	if mcs = mcserver.GetMcServer(); mcs == nil {
 		Log.Error("mcserver is not available right now")
 		WriteInternalServerErrorResponse(w, ERRMCSEVERNOTAVAILABLE)
