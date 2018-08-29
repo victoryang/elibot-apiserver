@@ -34,9 +34,10 @@ func handleUploadFile(w http.ResponseWriter, r *http.Request) {
     }
     defer des.Close()
 
-    if encoding := r.Header.Get("Content-Encoding"); encoding!="" {
-    	Log.Print("content-Encoding set to gzip")
+    if encoding := r.Header.Get("Content-Encoding"); encoding=="gzip" {
+    	Log.Print("content-Encoding set to ", encoding)
     } else {
+    	Log.Print("content-Encoding not set to gzip: ", encoding)
     	if _, err := io.Copy(des, src); err!=nil {
 	    	Log.Error("Fail to copy data into file: ", err)
 	    	WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
