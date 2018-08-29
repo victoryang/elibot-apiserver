@@ -12,6 +12,7 @@
 * @apiUse DefaultHeader
 * 
 * @apiParam (Params) {string="on","off"} status  	URL Param: status to set
+* @apiParam (Params) {string[]="-f"} 	 [args] 	Body Param: args to set
 *
 * @apiUse DefaultJsonResponsesAndExample
 */

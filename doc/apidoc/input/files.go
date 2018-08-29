@@ -1,18 +1,17 @@
 /**
-* @api {post} /v1/files/upload UploadFile
+* @api {post} /v1/files/upload uploadFile
 * @apiVersion 0.1.0
-* @apiName UploadFile
+* @apiName uploadFile
 * @apiGroup Files
 *
-* @apiDescription UploadFile
+* @apiDescription uploadFile
 *
 * @apiExample Example usage:
 * curl -X POST http://192.168.1.253:9000/v1/files/upload
 *
-* @apiHeader {string="multipart/form-data"} Content-Type=multipart/form-data
+* @apiHeader {string="multipart/form-data"} 	Content-Type		Mutlpart/form-data file upload content-type
 *
-* @apiParam (Params) {string="fileupload"} 	fieldname  Body Param: field name for multipart/form-data
-* @apiParam (Params) {string} 	filename  	Body Param: file name for multipart/form-data
+* @apiParam (Params) {string="fileupload"}      form_file_key  		Multipart/form-data File Field Key: for server lookup
 *
 * @apiUse DefaultResponsesAndExample
 */
@@ -29,6 +28,24 @@
 * curl -X GET http://192.168.1.253:9000/v1/files/jbi
 *
 * @apiUse DefaultHeader
+*
+* @apiUse DefaultJsonResponsesAndExample
+*/
+
+/**
+* @api {get} /v1/files/jbi/:filename downloadJBIFile
+* @apiVersion 0.1.0
+* @apiName downloadJBIFile
+* @apiGroup Files
+*
+* @apiDescription downloadJBIFile
+*
+* @apiExample Example usage:
+* curl -X GET http://192.168.1.253:9000/v1/files/jbi/:filename
+*
+* @apiUse DefaultHeader
+*
+* @apiParam (Params) {string="*.jbi"} 	filename  	URL Param: file to get
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
