@@ -31,6 +31,7 @@ func doRunCmd(w http.ResponseWriter, r *http.Request) {
 }
 
 func doPause(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("pause")
 	SendToMCServerWithJsonRpc(w, cmdPause, nil)
 }
 

@@ -20,7 +20,9 @@ func (h *handler)Handle(ctx context.Context, c *jsonrpc2.Conn, req *jsonrpc2.Req
 
 func testRequest() {
 	var reply bool
-	if err := JsonRpcClient.Call(ctx, "servo", []string{"on"}, &reply); err!=nil {
+	ctx1, cancel := context.WithTimeout(ctx, 10 * time.Second)
+	defer cancel()
+	if err := JsonRpcClient.Call(ctx1, "servo", []string{"on"}, &reply); err!=nil {
 		fmt.Println("Error: ", err)
 	}
 
@@ -29,7 +31,9 @@ func testRequest() {
 
 func testRequest1() {
 	var reply bool
-	if err := JsonRpcClient.Call(ctx, "setArcParam",[]string{"arc.welder.prepareAspirationTime", "2", "0", "0"}, &reply); err!=nil {
+	ctx1, cancel := context.WithTimeout(ctx, 10 * time.Second)
+	defer cancel()
+	if err := JsonRpcClient.Call(ctx1, "setArcParam",[]string{"arc.welder.prepareAspirationTime", "2", "0", "0"}, &reply); err!=nil {
 		fmt.Println("Error: ", err)
 	}
 
