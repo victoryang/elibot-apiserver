@@ -23,15 +23,14 @@ func setServoStatus (w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	var args []string
-	if d.Args != nil {
-		args = append(ConcatParams(status), d.Args...)
-	} else {
-		args = ConcatParams(status)
+	var params []string
+	params = append(params, status)
+	for _,v := range d.Args {
+		params = append(params, v)
 	}
 
 	Log.Debug("servo ", status)
-	SendToMCServerWithJsonRpc(w, cmdServo, args)
+	SendToMCServerWithJsonRpc(w, cmdServo, params)
 }
 
 func setDragteachStatus (w http.ResponseWriter, r *http.Request){
