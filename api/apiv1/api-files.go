@@ -59,3 +59,13 @@ func getJBIList(w http.ResponseWriter, r *http.Request) {
 
     WriteSuccessResponse(w, list)
 }
+
+func downloadJBIFile(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	if !strings.Contains(vars["filename"], ".jbi") {
+		WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
+		return
+	}
+
+	http.ServeFile(w, r, RootPath + vars["filename"])
+}
