@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	Log "elibot-apiserver/log"
 )
 
 var RootPath string
