@@ -11,7 +11,7 @@
 *
 * @apiHeader {string="multipart/form-data"} 	Content-Type		Mutlpart/form-data file upload content-type
 *
-* @apiParam (Params) {string="fileupload"}      form_file_key  		Multipart/form-data File Key: for server lookup
+* @apiParam (Params) {string="fileupload"}      form_file_key  		Multipart/form-data File Field Key: for server lookup
 *
 * @apiUse DefaultResponsesAndExample
 */

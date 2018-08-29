@@ -103,7 +103,7 @@
 * @apiExample Example usage:
 * curl -X PUT http://192.168.1.253:9000/v1/settings/date/:date
 *
-* @apiParam (Params) {string} date  URL Param: date to set
+* @apiParam (Params) {string="1900-1-1", "12:00:00"} date  URL Param: date to set
 * @apiUse DefaultHeader
 *
 * @apiUse DefaultJsonResponsesAndExample

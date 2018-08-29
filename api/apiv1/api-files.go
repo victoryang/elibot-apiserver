@@ -18,6 +18,7 @@ func handleUploadFile(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(32 << 20)
 	src, handler, err := r.FormFile("fileupload")
 	if err!=nil {
+		Log.Error("Fail to get reader: ", err)
 		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
 		return
 	}
@@ -25,14 +26,20 @@ func handleUploadFile(w http.ResponseWriter, r *http.Request) {
 
 	des, err := os.OpenFile(RootPath + handler.Filename, os.O_WRONLY|os.O_CREATE, 0666)
     if err != nil {
+    	Log.Error("Fail to open file: ", err)
         WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
 		return
     }
     defer des.Close()
 
-    if _, err := io.Copy(des, src); err!=nil {
-    	WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
-		return
+    if encoding := r.Header.Get("Content-Encoding"); encoding!="" {
+    	Log.Print("content-Encoding set to gzip")
+    } else if {
+    	if _, err := io.Copy(des, src); err!=nil {
+	    	Log.Error("Fail to copy data into file: ", err)
+	    	WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
+			return
+	    }
     }
 
     WriteSuccessResponse(w, "succeed in uploading file " + handler.Filename)
