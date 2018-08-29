@@ -70,7 +70,7 @@ func downloadJBIFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	file, err := os.OpenFile(RootPath + filename, os.O_RONLY, 0666)
+	file, err := os.OpenFile(RootPath + filename, os.O_RDONLY, 0666)
     if err != nil {
     	Log.Error("Fail to open file: ", err)
         WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
