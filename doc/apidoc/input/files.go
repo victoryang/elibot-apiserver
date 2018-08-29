@@ -1,10 +1,10 @@
 /**
-* @api {post} /v1/files/upload UploadFile
+* @api {post} /v1/files/upload uploadFile
 * @apiVersion 0.1.0
-* @apiName UploadFile
+* @apiName uploadFile
 * @apiGroup Files
 *
-* @apiDescription UploadFile
+* @apiDescription uploadFile
 *
 * @apiExample Example usage:
 * curl -X POST http://192.168.1.253:9000/v1/files/upload

@@ -3,6 +3,7 @@ package apiv1
 import (
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/gorilla/mux"
 
@@ -247,4 +248,14 @@ func setZeroPoint_deprecated (w http.ResponseWriter, r *http.Request) {
 	Log.Debug("setZeroPoint ", md_id, d.Value, strconv.Itoa(d.Index))
 	cmd := ConcatCommand(cmdSetZeroPoint, md_id, d.Value, strconv.Itoa(d.Index))
 	SendToMCServerWithTimeout(w, cmd, TagRepository)
+}
+
+func downloadJBIFile_deprecated(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	if !strings.Contains(vars["filename"], ".jbi") {
+		WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
+		return
+	}
+
+	http.ServeFile(w, r, RootPath + vars["filename"])
 }
