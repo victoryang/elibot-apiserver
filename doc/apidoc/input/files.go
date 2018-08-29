@@ -31,3 +31,21 @@
 *
 * @apiUse DefaultJsonResponsesAndExample
 */
+
+/**
+* @api {get} /v1/files/jbi/:filename downloadJBIFile
+* @apiVersion 0.1.0
+* @apiName downloadJBIFile
+* @apiGroup Files
+*
+* @apiDescription downloadJBIFile
+*
+* @apiExample Example usage:
+* curl -X GET http://192.168.1.253:9000/v1/files/jbi/:filename
+*
+* @apiUse DefaultHeader
+*
+* @apiParam (Params) {string="*.jbi"} 	filename  	URL Param: file to get
+*
+* @apiUse DefaultJsonResponsesAndExample
+*/
