@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/gorilla/mux"
 	Log "elibot-apiserver/log"
@@ -63,10 +64,19 @@ func getJBIList(w http.ResponseWriter, r *http.Request) {
 
 func downloadJBIFile(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	if !strings.Contains(vars["filename"], ".jbi") {
+	filename := vars["filename"]
+	if !strings.Contains(filename, ".jbi") {
 		WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
 		return
 	}
 
-	http.ServeFile(w, r, RootPath + vars["filename"])
+	file, err := os.OpenFile(RootPath + filename, os.O_RONLY, 0666)
+    if err != nil {
+    	Log.Error("Fail to open file: ", err)
+        WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
+		return
+    }
+    defer file.Close()
+
+	http.ServeContent(w, r, filename, time.Now(), file)
 }
