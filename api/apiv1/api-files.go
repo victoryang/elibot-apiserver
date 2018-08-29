@@ -34,7 +34,7 @@ func handleUploadFile(w http.ResponseWriter, r *http.Request) {
 
     if encoding := r.Header.Get("Content-Encoding"); encoding!="" {
     	Log.Print("content-Encoding set to gzip")
-    } else if {
+    } else {
     	if _, err := io.Copy(des, src); err!=nil {
 	    	Log.Error("Fail to copy data into file: ", err)
 	    	WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
