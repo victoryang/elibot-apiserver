@@ -4,34 +4,6 @@
 */
 
 /**
-* @apiDefine DefaultResponsesAndExample
-* @apiSuccess {String} Body  returned json message from server
-*
-* @apiError (Error 5xx) InternalServerError Some error happens
-*
-* @apiErrorExample Response (example):
-*		HTTP/1.1 500 Internal Server Error
-*		{
-*			"errcode":	100,
-*			"errmsg":	"error!"		
-*		}
-*/
-
-/**
-* @apiDefine DefaultJsonResponsesAndExample
-* @apiSuccess {Object} Body  return json message to client
-*
-* @apiError (Error 5xx) InternalServerError Some error happens
-*
-* @apiErrorExample Response (example):
-*		HTTP/1.1 500 Internal Server Error
-*		{
-*			"errcode":	101,
-*			"errmsg":	"Mcserver is not available right now"		
-*		}
-*/
-
-/**
 * @apiDefine SuccessStringResponse
 * @apiSuccess {String} Body  return String message to client
 */
@@ -43,7 +15,7 @@
 
 /**
 * @apiDefine BadRequestJsonResponse
-* @apiError (Error 400) BadRequest 				Bad Request happen
+* @apiError (Error Status 400) BadRequest 				Bad Request
 *
 * @apiErrorExample Response (example):
 *		HTTP/1.1 400 Bad Request
@@ -55,12 +27,12 @@
 
 /**
 * @apiDefine InternalServerErrorJsonResponse
-* @apiError (Error 500) InternalServerError     Internal Server Error
+* @apiError (Error Status 500) InternalServerError     Internal Server Error
 *
 * @apiErrorExample Response (example):
 *		HTTP/1.1 500 Internal Server Error
 *		{
-*			"errcode":	101,
+*			"errcode":	200,
 *			"errmsg":	"Mcserver is not available right now"		
 *		}
 */

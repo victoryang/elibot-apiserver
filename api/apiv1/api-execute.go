@@ -22,7 +22,7 @@ const (
 func doRunCmd(w http.ResponseWriter, r *http.Request) {
 	d := &RequestDataForCommandArgs{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -46,7 +46,7 @@ func setRobotMode(w http.ResponseWriter, r *http.Request) {
 func doClearAlarm(w http.ResponseWriter, r *http.Request) {
 	d := &RequestDataForCommandArgs{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -69,10 +69,10 @@ func setSpeed(w http.ResponseWriter, r *http.Request) {
 
 func setMainfile(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	filename := vars["filename"]
+	progname := vars["progname"]
 
-	Log.Debug("set main file ", filename)
-	SendToMCServerWithJsonRpc(w, cmdSetMainfile, ConcatParams(filename))
+	Log.Debug("set main file ", progname)
+	SendToMCServerWithJsonRpc(w, cmdSetMainfile, ConcatParams(progname))
 }
 
 func setCycleMode(w http.ResponseWriter, r *http.Request) {

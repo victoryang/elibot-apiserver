@@ -14,7 +14,9 @@
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -33,7 +35,9 @@
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -52,7 +56,9 @@
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -71,7 +77,9 @@
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -90,7 +98,9 @@
 * @apiParam (Params) {string} start  URL Param: start index
 * @apiParam (Params) {string} end    URL Param: end index
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -110,7 +120,9 @@
 * @apiParam (Params) {string} end    URL Param: end index
 * @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -130,7 +142,9 @@
 * @apiParam (Params) {string} end    URL Param: end index 
 * @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -150,7 +164,9 @@
 * @apiParam (Params) {string} end    URL Param: end index 
 * @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -170,7 +186,9 @@
 * @apiParam (Params) {string} end    URL Param: end index 
 * @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -190,7 +208,9 @@
 * @apiParam (Params) {string} end    URL Param: end index 
 * @apiParam (Params) {string} num  	 URL Param: local var nest num
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -206,7 +226,9 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -222,7 +244,9 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -238,5 +262,7 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */

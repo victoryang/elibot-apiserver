@@ -13,7 +13,8 @@
 * 
 * @apiParam (Params) {string="joint","cart","tool","user","cylinder"} mode  	   URL Param: mode to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -33,7 +34,9 @@
 *
 * @apiParam (Params) {string="-r"} [args] 	   Body Param: args to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -51,7 +54,9 @@
 *
 * @apiParam (Params) {string[]="axis0, axis1..."} args 	   Body Param: args to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -69,7 +74,8 @@
 * 
 * @apiParam (Params) {string="origin","zero"} status  	   URL Param: status to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -85,5 +91,6 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */

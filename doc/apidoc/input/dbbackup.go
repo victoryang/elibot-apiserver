@@ -11,7 +11,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -27,7 +28,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -45,7 +47,8 @@
 * 
 * @apiParam (Params) {string} name  	   URL Param: db name to delete
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -63,5 +66,6 @@
 * 
 * @apiParam (Params) {string} name  	   URL Param: db name to restore
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */

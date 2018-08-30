@@ -38,7 +38,7 @@ func setDragteachStatus_deprecated (w http.ResponseWriter, r *http.Request){
 func doRunCmd_deprecated (w http.ResponseWriter, r *http.Request) {
 	d := &RequestDataForCommandArgs{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -63,7 +63,7 @@ func setRobotMode_deprecated (w http.ResponseWriter, r *http.Request) {
 func doClearAlarm_deprecated (w http.ResponseWriter, r *http.Request) {
 	d := &RequestDataForCommandArgs{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -119,7 +119,7 @@ func doManual_deprecated (w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestDataForCommandArgs{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	} 
 
@@ -132,7 +132,7 @@ func doManual_deprecated (w http.ResponseWriter, r *http.Request) {
 func doRunForward_deprecated (w http.ResponseWriter, r *http.Request) {
 	d := &RequestDataForCommandArgs{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -162,7 +162,7 @@ func setArcParam_deprecated (w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -178,7 +178,7 @@ func setInterference_deprecated (w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -193,7 +193,7 @@ func setParam_deprecated (w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -210,7 +210,7 @@ func setToolFrame_deprecated (w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -226,7 +226,7 @@ func setUserFrame_deprecated (w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -241,7 +241,7 @@ func setZeroPoint_deprecated (w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
