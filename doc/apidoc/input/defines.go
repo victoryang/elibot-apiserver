@@ -26,7 +26,41 @@
 * @apiErrorExample Response (example):
 *		HTTP/1.1 500 Internal Server Error
 *		{
+*			"errcode":	101,
+*			"errmsg":	"Mcserver is not available right now"		
+*		}
+*/
+
+/**
+* @apiDefine SuccessStringResponse
+* @apiSuccess {String} Body  return String message to client
+*/
+
+/**
+* @apiDefine SuccessJsonResponse
+* @apiSuccess {Object} Body  return json message to client
+*/
+
+/**
+* @apiDefine BadRequestJsonResponse
+* @apiError (Error 400) BadRequest 				Bad Request happen
+*
+* @apiErrorExample Response (example):
+*		HTTP/1.1 400 Bad Request
+*		{
 *			"errcode":	100,
-*			"errmsg":	"Some error!"		
+*			"errmsg":	"Could not parse request body"		
+*		}
+*/
+
+/**
+* @apiDefine InternalServerErrorJsonResponse
+* @apiError (Error 500) InternalServerError     Internal Server Error
+*
+* @apiErrorExample Response (example):
+*		HTTP/1.1 500 Internal Server Error
+*		{
+*			"errcode":	101,
+*			"errmsg":	"Mcserver is not available right now"		
 *		}
 */
