@@ -15,7 +15,7 @@
 
 /**
 * @apiDefine BadRequestJsonResponse
-* @apiError (Http Status Code 400) 		BadRequest 				Bad Request
+* @apiError (Error 400) 		BadRequest 				Bad Request
 *
 * @apiErrorExample Response (Http Status Code 400):
 *		HTTP/1.1 400 Bad Request
@@ -27,9 +27,9 @@
 
 /**
 * @apiDefine InternalServerErrorJsonResponse
-* @apiError (Http Status Code 500) 		InternalServerError     Internal Server Error
+* @apiError (Error 500) 		InternalServerError     Internal Server Error
 *
-* @apiErrorExample Response (Http Status Code 400):
+* @apiErrorExample Response (Http Status Code 500):
 *		HTTP/1.1 500 Internal Server Error
 *		{
 *			"errcode":	200,
