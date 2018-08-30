@@ -58,6 +58,8 @@ func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, ws
 			db.CloseDB()
 			mcs.Close()
 
+			Log.CloseFile()
+
 			os.Exit(0)
 		}
 	}
@@ -102,7 +104,6 @@ func main() {
 	if err := ConfigServerLog(cfg); err!=nil {
 		os.Exit(ERR_OPEN_LOG_FILE_FAIL)
 	}
-	defer Log.CloseFile()
 
 	auth.Init(cfg.Secure)
 
