@@ -117,8 +117,12 @@ func main() {
 
 	SetUpDatabase(cfg)
 
-	s := api.NewApiServer(cfg)
-	s.Run()
+	apiserver := api.NewApiServer(cfg)
+	if apiserver == nil {
+		Log.Error("Error in starting apiserver")
+		os.Exit(ERR_START_APISERVER)
+	}
+	apiserver.Run()
 	
 	gs := api.NewGrpcServer(cfg.Grpc)
 	if gs == nil {
@@ -139,5 +143,5 @@ func main() {
 		os.Exit(ERR_START_SHMSERVER)
 	}
 	shms.StartToWatch()
-	handleSignals(s, mcs, gs, wss, shms)
+	handleSignals(apiserver, mcs, gs, wss, shms)
 }
