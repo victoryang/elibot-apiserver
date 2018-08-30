@@ -228,6 +228,12 @@ func OpenFile(path string) error {
 func CloseFile() error {
 	logrus.SetOutput(os.Stdout)
 
+	if ok := checkFileSizeExceededMax(logFile); ok {
+		defer func() {
+			os.Rename(logFilePath, logFilePath + ".bak")
+		}()
+	}
+
 	if logFile != nil {
 		return logFile.Close()
 	}
