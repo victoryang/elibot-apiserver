@@ -5,19 +5,19 @@
 
 /**
 * @apiDefine SuccessStringResponse
-* @apiSuccess {String} Body  return String message to client
+* @apiSuccess {String} 	Body  return String message to client
 */
 
 /**
 * @apiDefine SuccessJsonResponse
-* @apiSuccess {Object} Body  return json message to client
+* @apiSuccess {Object} 	Body  return json message to client
 */
 
 /**
 * @apiDefine BadRequestJsonResponse
-* @apiError (Error Status 400) BadRequest 				Bad Request
+* @apiError (Http Status Code 400) 		BadRequest 				Bad Request
 *
-* @apiErrorExample Response (example):
+* @apiErrorExample Response (Http Status Code 400):
 *		HTTP/1.1 400 Bad Request
 *		{
 *			"errcode":	100,
@@ -27,9 +27,9 @@
 
 /**
 * @apiDefine InternalServerErrorJsonResponse
-* @apiError (Error Status 500) InternalServerError     Internal Server Error
+* @apiError (Http Status Code 500) 		InternalServerError     Internal Server Error
 *
-* @apiErrorExample Response (example):
+* @apiErrorExample Response (Http Status Code 400):
 *		HTTP/1.1 500 Internal Server Error
 *		{
 *			"errcode":	200,

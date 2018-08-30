@@ -14,6 +14,7 @@
 * @apiParam (Params) {string="fileupload"}      form_file_key  		Multipart/form-data File Field Key: for server lookup
 *
 * @apiUse SuccessStringResponse
+* @apiUse BadRequestJsonResponse
 * @apiUse InternalServerErrorJsonResponse
 */
 

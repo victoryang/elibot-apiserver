@@ -16,7 +16,7 @@ func getLogs(w http.ResponseWriter, r *http.Request) {
 	start,_ := strconv.Atoi(vars["start"])
 	end,_ := strconv.Atoi(vars["end"])
 	if start < 0 || end < 0 || start > end {
-		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		WriteBadRequestResponse(w, ERRINCORRECTRANGE)
 		return
 	}
 	timestamp,_ := strconv.Atoi(vars["timestamp"])
@@ -35,7 +35,7 @@ func getLogsByAlarmLevel(w http.ResponseWriter, r *http.Request) {
 	start,_ := strconv.Atoi(vars["start"])
 	end,_ := strconv.Atoi(vars["end"])
 	if start < 0 || end < 0 || start > end {
-		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		WriteBadRequestResponse(w, ERRINCORRECTRANGE)
 		return
 	}
 

@@ -167,5 +167,6 @@
 * @apiUse DefaultHeader
 *
 * @apiUse SuccessStringResponse
+* @apiUse BadRequestJsonResponse
 * @apiUse InternalServerErrorJsonResponse
 */

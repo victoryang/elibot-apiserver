@@ -23,7 +23,7 @@ func handleUploadFile(w http.ResponseWriter, r *http.Request) {
 	src, handler, err := r.FormFile("fileupload")
 	if err!=nil {
 		Log.Error("Fail to get reader: ", err)
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 	defer src.Close()

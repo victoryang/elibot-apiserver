@@ -14,7 +14,7 @@
 * @apiParam (Params) {string="on","off"} status  	URL Param: status to set
 * @apiParam (Params) {string[]="-f"} 	 [args] 	Body Param: args to set
 *
-* @apiUse SuccessJsonResponse
+* @apiUse SuccessStringResponse
 * @apiUse BadRequestJsonResponse
 * @apiUse InternalServerErrorJsonResponse
 */
@@ -34,6 +34,6 @@
 * 
 * @apiParam (Params) {string="on","off"} status  	   URL Param: status to set
 *
-* @apiUse SuccessJsonResponse
+* @apiUse SuccessStringResponse
 * @apiUse InternalServerErrorJsonResponse
 */
