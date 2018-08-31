@@ -5,6 +5,7 @@ const (
 
 	ERRINVALIDBODY = 100
 	ERRINCORRECTRANGE = 101
+	ERRINVALIDREQUEST = 102
 
 	ERRMCSEVERNOTAVAILABLE = 200
 	ERRREQUESTTIMEOUT = 201
@@ -17,12 +18,15 @@ const (
 	ERRRESTOREDB = 303
 
 	ERRRUNCMD = 400
+
+	ERRFILEOPENFAIL = 500
 )
 
 var ErrStringMap = map[int]string {
 	// 400
 	ERRINVALIDBODY: 				"Could not parse request body",
 	ERRINCORRECTRANGE:				"Request range is incorrect",
+	ERRINVALIDREQUEST:				"Request is invalid",
 
 	// 500
 	ERRMCSEVERNOTAVAILABLE:			"Mcserver is not available right now",
@@ -36,6 +40,8 @@ var ErrStringMap = map[int]string {
 	ERRRESTOREDB: 				"Fail to restore db",
 
 	ERRRUNCMD:					"Fail to run cmd",
+
+	ERRFILEOPENFAIL:			"Fail to open file",
 }
 
 func ErrMsg(errno int) string {
