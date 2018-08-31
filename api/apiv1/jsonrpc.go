@@ -59,6 +59,7 @@ func SendToMCServerWithJsonRpc(w http.ResponseWriter, serviceMethod string, para
 	if err:=JsonRpcClient.Call(ctx, serviceMethod, params, &reply); err!=nil {
 		Log.Error("Could not call request by rpc: ", err)
 		WriteInternalServerErrorResponse(w, ERRMCSEVERNOTAVAILABLE)
+		return
 	}
 
 	WriteSuccessResponse(w, reply)

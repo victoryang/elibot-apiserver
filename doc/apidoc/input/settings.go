@@ -22,7 +22,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -39,7 +40,8 @@
 * @apiParam (Params) {string} key  URL Param: key to get
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -57,7 +59,9 @@
 * @apiUse RequestValue
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -73,7 +77,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -89,7 +94,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -106,7 +112,8 @@
 * @apiParam (Params) {string="1900-1-1", "12:00:00"} date  URL Param: date to set
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -122,7 +129,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -158,5 +166,7 @@
 * @apiUse RequestBodyForSettingIP
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */

@@ -15,7 +15,9 @@
 * @apiParam (Params) {string} end  		URL Param: end to set
 * @apiParam (Params) {string} timestamp URL Param: timestamp to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -36,5 +38,7 @@
 * @apiParam (Params) {string} end  		URL Param: end to set
 * @apiParam (Params) {string} timestamp URL Param: timestamp to set
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */

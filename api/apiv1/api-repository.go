@@ -25,7 +25,7 @@ func setArcParam(w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -40,7 +40,7 @@ func setInterference(w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -54,7 +54,7 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -70,7 +70,7 @@ func setToolFrame(w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -85,7 +85,7 @@ func setUserFrame(w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 
@@ -99,7 +99,7 @@ func setZeroPoint(w http.ResponseWriter, r *http.Request) {
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 

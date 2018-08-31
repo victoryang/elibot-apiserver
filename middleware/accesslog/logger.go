@@ -48,6 +48,7 @@ type Logger struct {
 	dateFormat string
 	template   *template.Template
 	file 	   *os.File
+	filename   string
 }
 
 func openAccessLogFile(filePath string) (*os.File, error) {
@@ -66,6 +67,11 @@ func openAccessLogFile(filePath string) (*os.File, error) {
 }
 
 func (l *Logger) Close() error {
+	if ok := checkFileSizeExceededMax(l.file); ok {
+		defer func() {
+			os.Rename(l.filename, l.filename + ".bak")
+		}()
+	}
 	return l.file.Close()
 }
 
@@ -77,6 +83,7 @@ func NewLogger(filename string) (*Logger, error) {
 	}
 	logger := &Logger{ALogger: log.New(file, LoggerDefaultName, 0), dateFormat: LoggerDefaultDateFormat}
 	logger.file = file
+	logger.filename = filename
 	logger.SetFormat(LoggerDefaultFormat)
 	return logger, nil
 }

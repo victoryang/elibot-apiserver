@@ -105,6 +105,10 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 // SetParams sets r.Params to the JSON representation of v. If JSON
 // marshaling fails, it returns an error.
 func (r *Request) SetParams(v interface{}) error {
+	// if v is nil, don't set param
+	if v == nil {
+		return nil
+	}
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err

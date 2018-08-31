@@ -73,7 +73,9 @@ func NewApiServer(c *config.GlobalConfiguration) *Server {
 	s := new(Server)
 	
 	apiv1.SetRootPath(c.UploadPath)
-	apiv1.NewJsonRpcClient()
+	if err := apiv1.NewJsonRpcClient(); err!=nil {
+		return nil
+	}
 	s.AccessLog.File = c.AccessLogsFile
 	s.EntryPoint.httpServer = &http.Server {
 		Addr:			c.Http.ListenAddress,

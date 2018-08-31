@@ -13,7 +13,9 @@
 *
 * @apiParam (Params) {string="fileupload"}      form_file_key  		Multipart/form-data File Field Key: for server lookup
 *
-* @apiUse DefaultResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -29,7 +31,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -47,5 +50,7 @@
 *
 * @apiParam (Params) {string="*.jbi"} 	filename  	URL Param: file to get
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */

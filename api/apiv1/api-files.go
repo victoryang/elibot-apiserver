@@ -23,7 +23,7 @@ func handleUploadFile(w http.ResponseWriter, r *http.Request) {
 	src, handler, err := r.FormFile("fileupload")
 	if err!=nil {
 		Log.Error("Fail to get reader: ", err)
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 	defer src.Close()
@@ -66,14 +66,14 @@ func downloadJBIFile(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	filename := vars["filename"]
 	if !strings.Contains(filename, ".jbi") {
-		WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
+		WriteBadRequestResponse(w, ERRINVALIDREQUEST)
 		return
 	}
 
 	file, err := os.OpenFile(RootPath + filename, os.O_RDONLY, 0666)
     if err != nil {
     	Log.Error("Fail to open file: ", err)
-        WriteInternalServerErrorResponse(w, ERRREQUESTFAIL)
+        WriteInternalServerErrorResponse(w, ERRFILEOPENFAIL)
 		return
     }
     defer file.Close()

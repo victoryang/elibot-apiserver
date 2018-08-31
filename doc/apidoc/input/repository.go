@@ -24,7 +24,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -42,7 +43,8 @@
 * @apiParam (Params) {string} group    URL Param: group id
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -62,7 +64,9 @@
 * @apiParam (Params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -78,7 +82,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -94,7 +99,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -110,7 +116,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -126,7 +133,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -146,7 +154,9 @@
 * @apiParam (Params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -167,7 +177,8 @@
 * @apiParam (Params) {string} auth  	URL Param: auth to set
 * @apiParam (Params) {string} tech  	URL Param: tech to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -185,7 +196,8 @@
 *
 * @apiParam (Params) {string} lang  	URL Param: lang to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -201,7 +213,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -219,7 +232,8 @@
 *
 * @apiParam (Params) {string} md_id  	   URL Param: md_id to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -237,7 +251,8 @@
 *
 * @apiParam (Params) {string} group  		URL Param: group to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -256,7 +271,9 @@
 * @apiParam (Params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -272,7 +289,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -288,7 +306,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -309,7 +328,9 @@
 * @apiParam (Params) {string} pos_no   URL Param: pos num
 * @apiUse RequestBodyIndexAndValue
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -325,7 +346,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -345,7 +367,9 @@
 * @apiParam (Params) {string} md_id    URL Param: metadata id
 * @apiParam (Params) {string} value    Body Param: value to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -361,7 +385,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -380,5 +405,7 @@
 * @apiParam (Params) {string} md_id    URL Param: metadata id
 * @apiUse RequestBodyIndexAndValue
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */

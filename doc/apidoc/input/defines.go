@@ -4,29 +4,35 @@
 */
 
 /**
-* @apiDefine DefaultResponsesAndExample
-* @apiSuccess {String} Body  returned json message from server
+* @apiDefine SuccessStringResponse
+* @apiSuccess {String} 	Body  return String message to client
+*/
+
+/**
+* @apiDefine SuccessJsonResponse
+* @apiSuccess {Object} 	Body  return json message to client
+*/
+
+/**
+* @apiDefine BadRequestJsonResponse
+* @apiError (Error 400) 		BadRequest 				Bad Request
 *
-* @apiError (Error 5xx) InternalServerError Some error happens
-*
-* @apiErrorExample Response (example):
-*		HTTP/1.1 500 Internal Server Error
+* @apiErrorExample Response (Http Status Code 400):
+*		HTTP/1.1 400 Bad Request
 *		{
 *			"errcode":	100,
-*			"errmsg":	"error!"		
+*			"errmsg":	"Could not parse request body"		
 *		}
 */
 
 /**
-* @apiDefine DefaultJsonResponsesAndExample
-* @apiSuccess {Object} Body  return json message to client
+* @apiDefine InternalServerErrorJsonResponse
+* @apiError (Error 500) 		InternalServerError     Internal Server Error
 *
-* @apiError (Error 5xx) InternalServerError Some error happens
-*
-* @apiErrorExample Response (example):
+* @apiErrorExample Response (Http Status Code 500):
 *		HTTP/1.1 500 Internal Server Error
 *		{
-*			"errcode":	100,
-*			"errmsg":	"Some error!"		
+*			"errcode":	200,
+*			"errmsg":	"Mcserver is not available right now"		
 *		}
 */

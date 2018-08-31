@@ -20,7 +20,7 @@ import (
 )
 
 const (
-	configFile = "/rbctrl/configuration/elibot-server.yaml"
+	configFile = "/rbctrl/Config/elibot-server.yaml"
 	mcserverAddress = "127.0.0.1:8055"
 )
 
@@ -57,6 +57,8 @@ func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, ws
 
 			db.CloseDB()
 			mcs.Close()
+
+			Log.CloseFile()
 
 			os.Exit(0)
 		}
@@ -102,7 +104,6 @@ func main() {
 	if err := ConfigServerLog(cfg); err!=nil {
 		os.Exit(ERR_OPEN_LOG_FILE_FAIL)
 	}
-	defer Log.CloseFile()
 
 	auth.Init(cfg.Secure)
 
@@ -116,8 +117,12 @@ func main() {
 
 	SetUpDatabase(cfg)
 
-	s := api.NewApiServer(cfg)
-	s.Run()
+	apiserver := api.NewApiServer(cfg)
+	if apiserver == nil {
+		Log.Error("Error in starting apiserver")
+		os.Exit(ERR_START_APISERVER)
+	}
+	apiserver.Run()
 	
 	gs := api.NewGrpcServer(cfg.Grpc)
 	if gs == nil {
@@ -138,5 +143,5 @@ func main() {
 		os.Exit(ERR_START_SHMSERVER)
 	}
 	shms.StartToWatch()
-	handleSignals(s, mcs, gs, wss, shms)
+	handleSignals(apiserver, mcs, gs, wss, shms)
 }

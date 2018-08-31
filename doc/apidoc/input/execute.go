@@ -15,7 +15,9 @@
 *																									run -s, run one step, don't clear envirment.
 *																									run -f <file> -l <line> -n <count>, run from file@line
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -31,7 +33,8 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -49,7 +52,8 @@
 * 
 * @apiParam (Params) {string="play","teach","remote"} mode  	URL Param: mode to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -67,7 +71,9 @@
 * 
 * @apiParam (Params) {string[]="-f"} args  	   Body Param: -f for force to ClearAlarm ,ten minites
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse BadRequestJsonResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -83,7 +89,8 @@
 *
 * @apiUse DefaultHeader
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -101,7 +108,8 @@
 * 
 * @apiParam (Params) {string="0~10000"} data  	   URL Param: data to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -119,7 +127,8 @@
 * 
 * @apiParam (Params) {string} progname  	   URL Param: progname to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */
 
 /**
@@ -137,5 +146,6 @@
 * 
 * @apiParam (Params) {string="step","one","SERIES"} cyclemode  	   URL Param: cyclemode to set
 *
-* @apiUse DefaultJsonResponsesAndExample
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
 */

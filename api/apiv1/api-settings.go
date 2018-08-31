@@ -73,7 +73,7 @@ func getSystemIP(w http.ResponseWriter, r *http.Request) {
 func setSystemIP(w http.ResponseWriter, r *http.Request) {
 	d := &RequestDataForIP{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 	if err := settings.GenerateTemplateBackup(d.Address, d.Netmask, d.Network, d.Broadcast, d.Gateway); err!=nil {
@@ -115,7 +115,7 @@ func setSettingsKV(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 	err := settings.SetKeyValue(vars["key"], d.Value)

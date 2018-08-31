@@ -34,3 +34,9 @@ func WriteInternalServerErrorResponse(w http.ResponseWriter, errno int) {
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Write(r)
 }
+
+func WriteBadRequestResponse(w http.ResponseWriter, errno int) {
+	r := ToErrJson(errno)
+	w.WriteHeader(http.StatusBadRequest)
+	w.Write(r)
+}

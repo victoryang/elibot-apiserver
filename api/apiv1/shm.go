@@ -62,7 +62,7 @@ func getdRobV(w http.ResponseWriter, r *http.Request) {
 func getSysFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 	start, end, err := validateRange(r)
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		WriteBadRequestResponse(w, ERRINCORRECTRANGE)
 		return
 	}
 	ret := shm.GetSysVar(datatype, start, end)
@@ -92,13 +92,13 @@ func getdRobLV(w http.ResponseWriter, r *http.Request) {
 func getLocFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 	start, end, err := validateRange(r)
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		WriteBadRequestResponse(w, ERRINCORRECTRANGE)
 		return
 	}
 	vars := mux.Vars(r)
 	num, err := strconv.Atoi(vars["num"])
 	if err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		WriteBadRequestResponse(w, ERRINCORRECTRANGE)
 		return
 	}
 	ret := shm.GetLocVar(datatype, num, start, end)
