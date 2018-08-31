@@ -51,5 +51,6 @@
 * @apiParam (Params) {string="*.jbi"} 	filename  	URL Param: file to get
 *
 * @apiUse SuccessJsonResponse
+* @apiUse BadRequestJsonResponse
 * @apiUse InternalServerErrorJsonResponse
 */

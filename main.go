@@ -20,7 +20,7 @@ import (
 )
 
 const (
-	configFile = "/rbctrl/configuration/elibot-server.yaml"
+	configFile = "/rbctrl/Config/elibot-server.yaml"
 	mcserverAddress = "127.0.0.1:8055"
 )
 
