@@ -115,7 +115,7 @@ func setSettingsKV(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
-		WriteInternalServerErrorResponse(w, ERRINVALIDBODY)
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
 		return
 	}
 	err := settings.SetKeyValue(vars["key"], d.Value)
