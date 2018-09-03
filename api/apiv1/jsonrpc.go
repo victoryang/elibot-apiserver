@@ -47,6 +47,10 @@ func ConcatParams(args ...string) []string {
 		}
 		params = append(params, v)
 	}
+
+	if len(params) == 0 {
+		return nil
+	}
 	return params
 }
 

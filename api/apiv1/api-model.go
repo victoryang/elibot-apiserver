@@ -13,13 +13,13 @@ type RequestData struct {
 }
 
 type RequestDataForIP struct {
-	Address 		string 			`json:address, omitempty`
-	Netmask 		string 			`json:netmask, omitempty`
-	Network 		string 			`json:network, omitempty`
-	Broadcast 		string 			`json:broadcast, omitempty`
-	Gateway 		string 			`json:gateway, omitempty`
+	Address 		string 			`json:"address, omitempty"`
+	Netmask 		string 			`json:"netmask, omitempty"`
+	Network 		string 			`json:"network, omitempty"`
+	Broadcast 		string 			`json:"broadcast, omitempty"`
+	Gateway 		string 			`json:"gateway, omitempty"`
 }
 
 type RequestDataForCommandArgs struct {
-	Args 		[]string		`json:args, omitempty`
+	Args 		[]string		`json:"args, omitempty"`
 }
