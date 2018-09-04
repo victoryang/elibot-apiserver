@@ -17,6 +17,7 @@ import (
 	"elibot-apiserver/shm"
 	"elibot-apiserver/websocket"
 	"elibot-apiserver/alarm"
+	"elibot-apiserver/perf"
 )
 
 const (
@@ -114,6 +115,7 @@ func main() {
 	}
 
 	startAdminServer(cfg.Admin)
+	perf.StartPerfMonitor()
 
 	SetUpDatabase(cfg)
 
