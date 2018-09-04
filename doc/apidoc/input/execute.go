@@ -69,7 +69,7 @@
 *
 * @apiUse DefaultHeader
 * 
-* @apiParam (Params) {string[]="-f"} args  	   Body Param: -f for force to ClearAlarm ,ten minites
+* @apiParam (Params) {string[]="-f"} 	[args]  	   Body Param: -f for force to ClearAlarm ,ten minites
 *
 * @apiUse SuccessStringResponse
 * @apiUse BadRequestJsonResponse

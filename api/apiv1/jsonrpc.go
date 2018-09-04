@@ -47,19 +47,29 @@ func ConcatParams(args ...string) []string {
 		}
 		params = append(params, v)
 	}
+
 	return params
 }
 
-func SendToMCServerWithJsonRpc(w http.ResponseWriter, serviceMethod string, params interface{}) {
+func SendToMCServerWithJsonRpc(w http.ResponseWriter, serviceMethod string, params []string) {
 	var reply bool
 
 	ctx, cancel := context.WithTimeout(ctx_rpc, JsonRpcTimeOut)
 	defer cancel()
 
-	if err:=JsonRpcClient.Call(ctx, serviceMethod, params, &reply); err!=nil {
-		Log.Error("Could not call request by rpc: ", err)
-		WriteInternalServerErrorResponse(w, ERRMCSEVERNOTAVAILABLE)
-		return
+	Log.Debug("send to server, serviceMethod: ", serviceMethod, " params: ", params)
+	if len(params) == 0 {
+		if err:=JsonRpcClient.Call(ctx, serviceMethod, nil, &reply); err!=nil {
+			Log.Error("Could not call request by rpc: ", err)
+			WriteInternalServerErrorResponse(w, ERRMCSEVERNOTAVAILABLE)
+			return
+		}
+	} else {
+		if err:=JsonRpcClient.Call(ctx, serviceMethod, params, &reply); err!=nil {
+			Log.Error("Could not call request by rpc: ", err)
+			WriteInternalServerErrorResponse(w, ERRMCSEVERNOTAVAILABLE)
+			return
+		}
 	}
 
 	WriteSuccessResponse(w, reply)

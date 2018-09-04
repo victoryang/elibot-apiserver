@@ -73,7 +73,7 @@
 * @apiDescription rebootSystem
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.253:9000/v1/reboot
+* curl -X GET http://192.168.1.253:9000/v1/settings/reboot
 *
 * @apiUse DefaultHeader
 *
