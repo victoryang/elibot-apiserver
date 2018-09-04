@@ -18,5 +18,6 @@ cJSON* get_resource() {
 	cJSON_AddItemToObject(item, "locvar_num", cJSON_CreateNumber(SHARE_RES(locvar_num)));
 	cJSON_AddItemToObject(item, "analog_ioInput", cJSON_CreateDoubleArray(SHARE_RES(analog_ioInput), ANALOG_IN_NUM));
 	cJSON_AddItemToObject(item, "servo_dirve_mode", cJSON_CreateNumber(SHARE_RES(servo_dirve_mode)));
+	cJSON_AddItemToObject(item, "speed_modify_play", cJSON_CreateNumber(NVRAM_PARA(speed_modify_play)));
 	return item;
 }
