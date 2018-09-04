@@ -115,7 +115,7 @@ func main() {
 	}
 
 	startAdminServer(cfg.Admin)
-	perf.StartPerfMonitor()
+	go perf.StartPerfMonitor()
 
 	SetUpDatabase(cfg)
 
