@@ -37,3 +37,20 @@
 * @apiUse SuccessStringResponse
 * @apiUse InternalServerErrorJsonResponse
 */
+
+/**
+* @api {post} /v1/robot/axisctrl/sync syncRobot
+* @apiVersion 0.1.0
+* @apiName syncRobot
+* @apiGroup Axisctrl
+*
+* @apiDescription syncRobot
+*
+* @apiExample Example usage:
+* curl -X POST http://192.168.1.253:9000/v1/robot/axisctrl/sync
+*
+* @apiUse DefaultHeader
+*
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
+*/
