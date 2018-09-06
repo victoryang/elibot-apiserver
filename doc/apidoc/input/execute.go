@@ -159,7 +159,7 @@
 * @apiDescription doLoadFile
 *
 * @apiExample Example usage:
-* curl -X POST http://192.168.1.166:9000/v1/robot/execute/cmd_load/:filename
+* curl -X POST http://192.168.1.253:9000/v1/robot/execute/cmd_load/:filename
 *
 * @apiUse DefaultHeader
 * 
