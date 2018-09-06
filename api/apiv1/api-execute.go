@@ -17,6 +17,7 @@ const (
 	cmdSpeed = "speed"
 	cmdSetMainfile = "set_mainfile"
 	cmdCycleMode = "cycleMode"
+	cmdLoadFile = "load"
 )
 
 func doRunCmd(w http.ResponseWriter, r *http.Request) {
