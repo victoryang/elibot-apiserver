@@ -168,3 +168,22 @@
 * @apiUse SuccessStringResponse
 * @apiUse InternalServerErrorJsonResponse
 */
+
+/**
+* @api {put} /v1/robot/execute/curline/:lineno setCurLine
+* @apiVersion 0.1.0
+* @apiName setCurLine
+* @apiGroup Execute
+*
+* @apiDescription setCurLine
+*
+* @apiExample Example usage:
+* curl -X PUT http://192.168.1.253:9000/v1/robot/execute/curline/:lineno
+*
+* @apiUse DefaultHeader
+* 
+* @apiParam (Params) {string} 	lineno  	   URL Param: line no to set
+*
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
+*/

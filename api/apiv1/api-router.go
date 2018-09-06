@@ -77,6 +77,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	executeapi.HandleFunc("/mainprog/{progname}", setMainfile).Methods("PUT")
 	executeapi.HandleFunc("/cyclemode/{cyclemode}", setCycleMode).Methods("PUT")
 	executeapi.HandleFunc("/cmd_load/{filename}", doLoadFile).Methods("POST")
+	executeapi.HandleFunc("/curline/{lineno}", setCurLine).Methods("PUT")
 
 	manualinterpolationapi := robotapi.PathPrefix("/manual").Subrouter()
 	manualinterpolationapi.HandleFunc("/coord/{mode}", setCoordinateMode).Methods("PUT")

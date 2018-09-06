@@ -18,6 +18,7 @@ const (
 	cmdSetMainfile = "set_mainfile"
 	cmdCycleMode = "cycleMode"
 	cmdLoadFile = "load"
+	cmdSetCurLine = "set_curLine"
 )
 
 func doRunCmd(w http.ResponseWriter, r *http.Request) {
@@ -90,4 +91,12 @@ func doLoadFile(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("load file ", filename)
 	SendToMCServerWithJsonRpc(w, cmdLoadFile, ConcatParams(filename))
+}
+
+func setCurLine(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	lineno := vars["lineno"]
+
+	Log.Debug("set cur line ", lineno)
+	SendToMCServerWithJsonRpc(w, cmdSetCurLine, ConcatParams(lineno))
 }
