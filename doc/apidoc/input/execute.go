@@ -149,3 +149,22 @@
 * @apiUse SuccessStringResponse
 * @apiUse InternalServerErrorJsonResponse
 */
+
+/**
+* @api {post} /v1/robot/execute/cmd_load/:filename doLoadFile
+* @apiVersion 0.1.0
+* @apiName doLoadFile
+* @apiGroup Execute
+*
+* @apiDescription doLoadFile
+*
+* @apiExample Example usage:
+* curl -X POST http://192.168.1.166:9000/v1/robot/execute/cmd_load/:filename
+*
+* @apiUse DefaultHeader
+* 
+* @apiParam (Params) {string} 		filename  	   URL Param: file to load
+*
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
+*/

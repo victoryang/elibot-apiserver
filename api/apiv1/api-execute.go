@@ -82,3 +82,11 @@ func setCycleMode(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("set cycle mode ", cyclemode)
 	SendToMCServerWithJsonRpc(w, cmdCycleMode, ConcatParams(cyclemode))
 }
+
+func doLoadFile(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	filename := vars["filename"]
+
+	Log.Debug("load file ", filename)
+	SendToMCServerWithJsonRpc(w, cmdLoadFile, ConcatParams(filename))
+}
