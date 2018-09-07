@@ -9,8 +9,8 @@ import (
 type Record struct {
 	Time 			uint32			`json:"time"`
 	ErrNo 			[]string 		`json:"errno"`
-	Msg 			string 			`json:"msg"`
 	Args			[]string 		`json:"args"`
+	Msg 			string 			`json:"msg"`
 }
 
 func parseLineMessage(line string) (Record, error) {
@@ -24,10 +24,11 @@ func parseLineMessage(line string) (Record, error) {
 		return Record{}, err
 	}
 
+	last := len(list) - 1
 	return Record{
 		Time:	uint32(t),
 		ErrNo:	list[2:5],
-		Msg:	list[5],
-		Args:	list[6:],
+		Args:	list[5:last],
+		Msg:	list[last],
 	}, nil
 }
