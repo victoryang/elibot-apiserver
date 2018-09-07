@@ -82,7 +82,7 @@ func SendToMCServerWithJsonRpc(w http.ResponseWriter, serviceMethod string, para
 	defer cancel()
 
 	mux_rpc.Lock()
-	if JsonRpcClient.GetClosingStatus() {
+	if JsonRpcClient.IsClosed() {
 		// Current connection closed, reconnect 3 times
 		if err := reconnect(); err!=nil {
 			Log.Error("Could not reconnect to mcserver")

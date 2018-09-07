@@ -333,8 +333,8 @@ func NewConn(ctx context.Context, stream ObjectStream, h Handler, opt ...ConnOpt
 	return c
 }
 
-func (c *Conn) GetClosingStatus() bool {
-	return c.closing
+func (c *Conn) IsClosed() bool {
+	return c.shutdown || c.closing
 }
 
 // Close closes the JSON-RPC connection. The connection may not be
