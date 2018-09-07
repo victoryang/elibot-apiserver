@@ -85,7 +85,7 @@ define([
 
       _.each( param, function( val, key ) {
           var t = paramType[ key ].toLowerCase();
-          if ( t === 'object' || t === 'array' ) {
+          if ( t === 'object' || t === 'array' || t === 'string[]') {
               try {
                   param[ key ] = JSON.parse( val );
               } catch (e) {

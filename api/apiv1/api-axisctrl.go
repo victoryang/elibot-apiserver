@@ -11,6 +11,7 @@ import (
 const (
 	cmdServo = "servo"
 	cmdDragTeach = "drag_teach"
+	cmdGetEncode = "getEncode"
 )
 
 func setServoStatus (w http.ResponseWriter, r *http.Request){
@@ -39,4 +40,9 @@ func setDragteachStatus (w http.ResponseWriter, r *http.Request){
 
 	Log.Debug("drag_teach ", status)
 	SendToMCServerWithJsonRpc(w, cmdDragTeach, ConcatParams(status))
+}
+
+func syncRobot (w http.ResponseWriter, r *http.Request){
+	Log.Debug("getEncode")
+	SendToMCServerWithJsonRpc(w, cmdGetEncode, nil)
 }

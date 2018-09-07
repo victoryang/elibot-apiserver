@@ -76,6 +76,8 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	executeapi.HandleFunc("/speed/{data}", setSpeed).Methods("PUT")
 	executeapi.HandleFunc("/mainprog/{progname}", setMainfile).Methods("PUT")
 	executeapi.HandleFunc("/cyclemode/{cyclemode}", setCycleMode).Methods("PUT")
+	executeapi.HandleFunc("/cmd_load/{filename}", doLoadFile).Methods("POST")
+	executeapi.HandleFunc("/curline/{lineno}", setCurLine).Methods("PUT")
 
 	manualinterpolationapi := robotapi.PathPrefix("/manual").Subrouter()
 	manualinterpolationapi.HandleFunc("/coord/{mode}", setCoordinateMode).Methods("PUT")
@@ -87,6 +89,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	axisctrlapi := robotapi.PathPrefix("/axisctrl").Subrouter()
 	axisctrlapi.HandleFunc("/servo/{status}", setServoStatus).Methods("PUT")
 	axisctrlapi.HandleFunc("/dragteach/{status}", setDragteachStatus).Methods("PUT")
+	axisctrlapi.HandleFunc("/sync", syncRobot).Methods("POST")
 
 	alarmapi := r.PathPrefix("/v1/alarm").Subrouter()
 	alarmapi.HandleFunc("/range", getLogs).Methods("GET").Queries("start", "{start}", "end", "{end}", "timestamp", "{timestamp}")

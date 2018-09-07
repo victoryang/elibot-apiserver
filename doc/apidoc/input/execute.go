@@ -149,3 +149,41 @@
 * @apiUse SuccessStringResponse
 * @apiUse InternalServerErrorJsonResponse
 */
+
+/**
+* @api {post} /v1/robot/execute/cmd_load/:filename doLoadFile
+* @apiVersion 0.1.0
+* @apiName doLoadFile
+* @apiGroup Execute
+*
+* @apiDescription doLoadFile
+*
+* @apiExample Example usage:
+* curl -X POST http://192.168.1.253:9000/v1/robot/execute/cmd_load/:filename
+*
+* @apiUse DefaultHeader
+* 
+* @apiParam (Params) {string} 		filename  	   URL Param: file to load
+*
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
+*/
+
+/**
+* @api {put} /v1/robot/execute/curline/:lineno setCurLine
+* @apiVersion 0.1.0
+* @apiName setCurLine
+* @apiGroup Execute
+*
+* @apiDescription setCurLine
+*
+* @apiExample Example usage:
+* curl -X PUT http://192.168.1.253:9000/v1/robot/execute/curline/:lineno
+*
+* @apiUse DefaultHeader
+* 
+* @apiParam (Params) {string} 	lineno  	   URL Param: line no to set
+*
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
+*/
