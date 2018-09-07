@@ -32,19 +32,24 @@ func CloseJsonRpcClient() {
 
 func reconnect() error {
 	var maxRetryTimes = 3
+	var conn net.Conn
 	var err error
 	for maxRetryTimes > 0 {
-		conn, err1 := net.Dial("tcp", address)
-		if err != nil {
-			err = err1
-			continue
+		conn, err = net.Dial("tcp", address)
+		if err == nil {
+			break
+		} else {
+			maxRetryTimes--
 		}
-		stream := jsonrpc2.NewBufferedStream(conn, jsonrpc2.VarintObjectCodec{})
-		JsonRpcClient = jsonrpc2.NewConn(ctx_rpc, stream, new(handler))
-		return nil
 	}
 
-	return err
+	if err != nil {
+		return err
+	}
+
+	stream := jsonrpc2.NewBufferedStream(conn, jsonrpc2.VarintObjectCodec{})
+	JsonRpcClient = jsonrpc2.NewConn(ctx_rpc, stream, new(handler))
+	return nil
 }
 
 func NewJsonRpcClient() error {
