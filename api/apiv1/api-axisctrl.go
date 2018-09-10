@@ -12,6 +12,7 @@ const (
 	cmdServo = "servo"
 	cmdDragTeach = "drag_teach"
 	cmdGetEncode = "getEncode"
+	cmdSetZeroEncode = "setZeroEncode"
 )
 
 func setServoStatus (w http.ResponseWriter, r *http.Request){
@@ -45,4 +46,12 @@ func setDragteachStatus (w http.ResponseWriter, r *http.Request){
 func syncRobot (w http.ResponseWriter, r *http.Request){
 	Log.Debug("getEncode")
 	SendToMCServerWithJsonRpc(w, cmdGetEncode, nil)
+}
+
+func setZeroEncode (w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+	axisno := vars["axisno"]
+
+	Log.Debug("setZeroEncode ", axisno)
+	SendToMCServerWithJsonRpc(w, cmdSetZeroEncode, ConcatParams(axisno))
 }
