@@ -52,10 +52,8 @@ type Logger struct {
 }
 
 func openAccessLogFile(filePath string) (*os.File, error) {
-	dir := filepath.Dir(filePath)
-
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		return nil, fmt.Errorf("failed to create log path %s: %s", dir, err)
+	if ok := checkFileSizeExceededMax(filePath); ok {
+		os.Rename(filePath, filePath + ".bak")
 	}
 
 	file, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0664)
@@ -67,11 +65,6 @@ func openAccessLogFile(filePath string) (*os.File, error) {
 }
 
 func (l *Logger) Close() error {
-	if ok := checkFileSizeExceededMax(l.file); ok {
-		defer func() {
-			os.Rename(l.filename, l.filename + ".bak")
-		}()
-	}
 	return l.file.Close()
 }
 
