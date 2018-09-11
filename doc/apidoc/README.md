@@ -8,6 +8,8 @@
 	docker build -t apidoc/apidoc .
 
 ### cp directory input and template to /apidoc
+	cp -a /path/to/input .
+	cp -a /path/to/template .
 
 ### run docker image, generate website
 	docker run --rm -v ${PWD}:/apidoc -it apidoc/apidoc --input ./input --template ./template --output ./output -v
