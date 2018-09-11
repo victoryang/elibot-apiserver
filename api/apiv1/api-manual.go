@@ -10,7 +10,7 @@ import (
 
 const (
 	cmdCoord = "coord"
-	cmdManual = "manual "
+	cmdManual = "manual"
 	cmdRunForward = "runForward"
 	cmdRunToZero = "runToZero"
 	cmdStop = "stop"

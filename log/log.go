@@ -213,6 +213,10 @@ func Fatalln(args ...interface{}) {
 
 // OpenFile opens the log file using the specified path
 func OpenFile(path string) error {
+	if ok := checkFileSizeExceededMax(path); ok {
+		os.Rename(path, path + ".bak")
+	}
+
 	logFilePath = path
 	var err error
 	logFile, err = os.OpenFile(logFilePath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
@@ -227,12 +231,6 @@ func OpenFile(path string) error {
 // CloseFile closes the log and sets the Output to stdout
 func CloseFile() error {
 	logrus.SetOutput(os.Stdout)
-
-	if ok := checkFileSizeExceededMax(logFile); ok {
-		defer func() {
-			os.Rename(logFilePath, logFilePath + ".bak")
-		}()
-	}
 
 	if logFile != nil {
 		return logFile.Close()

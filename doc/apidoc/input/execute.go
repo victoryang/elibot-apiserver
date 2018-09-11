@@ -187,3 +187,20 @@
 * @apiUse SuccessStringResponse
 * @apiUse InternalServerErrorJsonResponse
 */
+
+/**
+* @api {post} /v1/robot/execute/cmd_gobackorigin doGobackOrigin
+* @apiVersion 0.1.0
+* @apiName doGobackOrigin
+* @apiGroup Execute
+*
+* @apiDescription doGobackOrigin
+*
+* @apiExample Example usage:
+* curl -X POST http://192.168.1.255:9000/v1/robot/execute/cmd_gobackorigin
+*
+* @apiUse DefaultHeader
+* 
+* @apiUse SuccessStringResponse
+* @apiUse InternalServerErrorJsonResponse
+*/
