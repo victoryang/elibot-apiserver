@@ -19,6 +19,7 @@ const (
 	cmdCycleMode = "cycleMode"
 	cmdLoadFile = "load"
 	cmdSetCurLine = "set_curLine"
+	cmdGobackOrigin = "getOrigin"
 )
 
 func doRunCmd(w http.ResponseWriter, r *http.Request) {
@@ -99,4 +100,9 @@ func setCurLine(w http.ResponseWriter, r *http.Request) {
 
 	Log.Debug("set cur line ", lineno)
 	SendToMCServerWithJsonRpc(w, cmdSetCurLine, ConcatParams(lineno))
+}
+
+func doGobackOrigin(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("gobackorigin")
+	SendToMCServerWithJsonRpc(w, cmdGobackOrigin, nil)
 }
