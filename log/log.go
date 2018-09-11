@@ -213,7 +213,7 @@ func Fatalln(args ...interface{}) {
 
 // OpenFile opens the log file using the specified path
 func OpenFile(path string) error {
-	if ok := checkFileSizeExceededMax(logFile); ok {
+	if ok := checkFileSizeExceededMax(path); ok {
 		os.Rename(path, path + ".bak")
 	}
 
