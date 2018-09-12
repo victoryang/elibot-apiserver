@@ -24,7 +24,7 @@ const (
 	mcserverAddress = "127.0.0.1:8055"
 )
 
-func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *websocket.WsServer, shms *shm.ShmServer) {
+func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *websocket.WsServer, shms *shm.ShmServer) error {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
@@ -50,7 +50,7 @@ func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, ws
 
 			Log.CloseFile()
 
-			returnError(0)
+			return nil
 		}
 	}
 }
@@ -122,5 +122,5 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 		return returnError(ERR_START_SHMSERVER)
 	}
 	shms.StartToWatch()
-	handleSignals(apiserver, mcs, gs, wss, shms)
+	return handleSignals(apiserver, mcs, gs, wss, shms)
 }
