@@ -10,8 +10,7 @@ func NewRootCmd() *cobra.Command {
 	rootCmd := &cobra.Command {
 		Use:	"elibot-server [option]",
 		Short:	"An api server for elibot",
-		Long:	`An api server for elibot written in go, 
-				providing a generic api service to control and get data from robot`,
+		Long:	`An api server for elibot written in go, \nproviding a generic api service to control and get data from robot`,
 		RunE:	runDaemon,
 	}
 
