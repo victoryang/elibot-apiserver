@@ -17,8 +17,7 @@ import (
 	"elibot-apiserver/shm"
 	"elibot-apiserver/websocket"
 	"elibot-apiserver/alarm"
-
-	"github.com/spf13/pflag"
+	"github.com/spf13/cobra"
 )
 
 const (
@@ -82,7 +81,7 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 	cfg := LoadConfig()
 	
 	if err := ConfigServerLog(cfg); err!=nil {
-		returnError(ERR_OPEN_LOG_FILE_FAIL)
+		return returnError(ERR_OPEN_LOG_FILE_FAIL)
 	}
 
 	auth.Init(cfg.Secure)
@@ -90,7 +89,7 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 	mcs := mcserver.NewMCServer(mcserverAddress, 3)
 	if mcs==nil {
 		Log.Error("Error in connecting to mc server")
-		returnError(ERR_START_MCSERVER)
+		return returnError(ERR_START_MCSERVER)
 	}
 
 	startAdminServer(cfg.Admin)
@@ -100,14 +99,14 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 	apiserver := api.NewApiServer(cfg)
 	if apiserver == nil {
 		Log.Error("Error in starting apiserver")
-		returnError(ERR_START_APISERVER)
+		return returnError(ERR_START_APISERVER)
 	}
 	apiserver.Run()
 	
 	gs := api.NewGrpcServer(cfg.Grpc)
 	if gs == nil {
 		Log.Error("Failed to start grpc server")
-		returnError(ERR_START_GRPCSERVER)
+		return returnError(ERR_START_GRPCSERVER)
 	}
 
 	wss := websocket.NewWsServer(cfg.Websocket)
@@ -120,7 +119,7 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 	shms,err := shm.NewServer(wss)
 	if err!=nil {
 		Log.Error(err.Error())
-		returnError(ERR_START_SHMSERVER)
+		return returnError(ERR_START_SHMSERVER)
 	}
 	shms.StartToWatch()
 	handleSignals(apiserver, mcs, gs, wss, shms)

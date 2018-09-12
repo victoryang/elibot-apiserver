@@ -14,6 +14,6 @@ const (
 	ERR_START_SHMSERVER
 )
 
-func returnError(errno int) {
-	return fmt.Errorf("Fail to start server due to: -" + errno)
+func returnError(errno int) error {
+	return fmt.Errorf("Fail to start server due to: -" + string(errno))
 }
