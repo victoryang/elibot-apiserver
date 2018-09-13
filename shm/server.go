@@ -37,7 +37,7 @@ func sender(ctx context.Context, ws *websocket.WsServer, hit chan []byte) {
 
 func (s *ShmServer) Shutdown() {
 	s.Cancel()
-	Log.Print("sharedmemory server shutting down")
+	Log.Print("shared memory server shutting down")
 }
 
 func handleMsg(msg []byte) {
