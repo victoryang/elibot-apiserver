@@ -10,5 +10,5 @@ case "$1" in
 
 	stop)
 		echo -n "stopping api-server"
-		killall -9 api-server
+		killall -2 api-server
 esac
