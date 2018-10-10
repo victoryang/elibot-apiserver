@@ -93,6 +93,9 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	axisctrlapi.HandleFunc("/sync", syncRobot).Methods("POST")
 	axisctrlapi.HandleFunc("/zeroencode/{axisno}", setZeroEncode).Methods("PUT")
 
+	userframeapi := robotapi.PathPrefix("/userframe").Subrouter()
+	userframeapi.HandleFunc("/userpos/{pos_no}", setUserPos).Methods("PUT")
+
 	alarmapi := r.PathPrefix("/v1/alarm").Subrouter()
 	alarmapi.HandleFunc("/range", getLogs).Methods("GET").Queries("start", "{start}", "end", "{end}", "timestamp", "{timestamp}")
 	alarmapi.HandleFunc("/level/{level}", getLogsByAlarmLevel).Methods("GET").Queries("start", "{start}", "end", "{end}", "timestamp", "{timestamp}")
