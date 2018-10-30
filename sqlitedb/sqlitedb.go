@@ -88,9 +88,25 @@ func GetAllToolframe() ([]byte, error) {
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
 }
 
+func GetToolframeByToolNo(vars map[string]interface{}) ([]byte, error) {
+    for k,v := range vars {
+        Log.Debug("key: ", k, " v ", v)
+    }
+    sm := new(ToolframeSqlMapper)
+    return RegisterAndQuery(sm, ELIBOT_COMMON_GET_TOOLFRAMES, vars)
+}
+
 func GetAllUserframe() ([]byte, error) {
     sm := new(UserframeSqlMapper)
     return RegisterAndQuery(sm, ELIBOT_GET_ALL_PARAMS, nil)
+}
+
+func GetUserframeByUserNo(vars map[string]interface{}) ([]byte, error) {
+    for k,v := range vars {
+        Log.Debug("key: ", k, " v ", v)
+    }
+    sm := new(UserframeSqlMapper)
+    return RegisterAndQuery(sm, ELIBOT_USER_FRAME_GET_BY_USER_NO, vars)
 }
 
 func GetAllZeropoint() ([]byte, error) {  
