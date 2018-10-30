@@ -198,7 +198,7 @@ func getToolframeByToolNo(w http.ResponseWriter, r *http.Request) {
 	queries := make(map[string]interface{})
 	toolno, _ := strconv.Atoi(vars["toolno"])
 	queries["tool_no"] = int32(toolno)
-	res, err := db.GetUserframeByUserNo(queries)
+	res, err := db.GetToolframeByToolNo(queries)
 	if err!=nil {
 		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)
