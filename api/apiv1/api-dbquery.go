@@ -197,7 +197,7 @@ func getToolframeByToolNo(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
 	toolno, _ := strconv.Atoi(vars["toolno"])
-	queries["toolno"] = int32(toolno)
+	queries["tool_no"] = int32(toolno)
 	res, err := db.GetUserframeByUserNo(queries)
 	if err!=nil {
 		Log.Error("Fail to query: ", err)
@@ -225,7 +225,7 @@ func getUserframeByUserNo(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	queries := make(map[string]interface{})
 	userno, _ := strconv.Atoi(vars["userno"])
-	queries["userno"] = int32(userno)
+	queries["user_no"] = int32(userno)
 	res, err := db.GetUserframeByUserNo(queries)
 	if err!=nil {
 		Log.Error("Fail to query: ", err)
