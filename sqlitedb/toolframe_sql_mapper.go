@@ -23,6 +23,9 @@ func (m *ToolframeSqlMapper) RegisterSqlMapper(mode int) error {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_COMMON_GET_ALL_TOOLFRAMES
 
+	case ELIBOT_COMMON_GET_TOOLFRAMES:
+		m.Id = C.ELIBOT_COMMON_GET_TOOLFRAMES
+
 	default:
 		return errors.New("Not support")
 	}

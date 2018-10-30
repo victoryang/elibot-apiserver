@@ -35,6 +35,9 @@ const (
 
 	/*For ref sqlmapper*/
 	ELIBOT_REF_GET_ALL
+
+	ELIBOT_USER_FRAME_GET_BY_USER_NO
+	ELIBOT_COMMON_GET_TOOLFRAMES
 )
 
 func InitSqlitedb() {

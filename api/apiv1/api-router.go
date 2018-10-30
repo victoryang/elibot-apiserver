@@ -51,8 +51,10 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	repositoryapi.HandleFunc("/params/{md_id}", setParam).Methods("PUT")
 	repositoryapi.HandleFunc("/ref", getAllRef).Methods("GET")
 	repositoryapi.HandleFunc("/toolframe", getAllToolframe).Methods("GET")
+	repositoryapi.HandleFunc("/toolframe/{toolno}", getToolframeByToolNo).Methods("GET")
 	repositoryapi.HandleFunc("/toolframe/{tool_no}/{md_id}/pos/{pos_no}", setToolFrame).Methods("PUT")
 	repositoryapi.HandleFunc("/userframe", getAllUserframe).Methods("GET")
+	repositoryapi.HandleFunc("/userframe/{userno}", getUserframeByUserNo).Methods("GET")
 	repositoryapi.HandleFunc("/userframe/{userno}/{md_id}", setUserFrame).Methods("PUT")
 	repositoryapi.HandleFunc("/zeropoint", getAllZeroPoint).Methods("GET")
 	repositoryapi.HandleFunc("/zeropoint/{md_id}", setZeroPoint).Methods("PUT")
@@ -95,6 +97,12 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 
 	userframeapi := robotapi.PathPrefix("/userframe").Subrouter()
 	userframeapi.HandleFunc("/userpos/{pos_no}", setUserPos).Methods("PUT")
+	userframeapi.HandleFunc("/cmd_gotouserpos/{pos_no}", doGotoUserPos).Methods("POST")
+	userframeapi.HandleFunc("/cmd_caluserframe", doCalUserFrame).Methods("POST")
+
+	autosettoolapi := robotapi.PathPrefix("/autosettool").Subrouter()
+	autosettoolapi.HandleFunc("cmd_gototoolpos/{num}", doGotoToolPos).Methods("POST")
+	autosettoolapi.HandleFunc("cmd_autosettoolframe", doAutoSetToolFrame).Methods("POST")
 
 	alarmapi := r.PathPrefix("/v1/alarm").Subrouter()
 	alarmapi.HandleFunc("/range", getLogs).Methods("GET").Queries("start", "{start}", "end", "{end}", "timestamp", "{timestamp}")
