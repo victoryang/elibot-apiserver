@@ -7,7 +7,7 @@
 * @apiDescription setUserPos
 *
 * @apiExample Example usage:
-* curl -X PUT http://192.168.1.166:9000/v1/robot/userframe/userpos/:pos_no
+* curl -X PUT http://192.168.1.253:9000/v1/robot/userframe/userpos/:pos_no
 *
 * @apiUse DefaultHeader
 * 
@@ -26,7 +26,7 @@
 * @apiDescription doGotoUserPos
 *
 * @apiExample Example usage:
-* curl -X POST http://192.168.1.166:9000/v1/robot/userframe/cmd_gotouserpos/:pos_no
+* curl -X POST http://192.168.1.253:9000/v1/robot/userframe/cmd_gotouserpos/:pos_no
 *
 * @apiUse DefaultHeader
 * 
@@ -45,7 +45,7 @@
 * @apiDescription doCalUserFrame
 *
 * @apiExample Example usage:
-* curl -X POST http://192.168.1.166:9000/v1/robot/userframe/cmd_caluserframe
+* curl -X POST http://192.168.1.253:9000/v1/robot/userframe/cmd_caluserframe
 *
 * @apiUse DefaultHeader
 *

@@ -7,7 +7,7 @@
 * @apiDescription doGotoToolPos
 *
 * @apiExample Example usage:
-* curl -X POST http://192.168.1.166:9000/v1/robot/autosettool/cmd_gototoolpos/:num
+* curl -X POST http://192.168.1.253:9000/v1/robot/autosettool/cmd_gototoolpos/:num
 *
 * @apiUse DefaultHeader
 * 
@@ -26,7 +26,7 @@
 * @apiDescription doAutoSetToolFrame
 *
 * @apiExample Example usage:
-* curl -X POST http://192.168.1.166:9000/v1/robot/autosettool/cmd_autosettoolframe
+* curl -X POST http://192.168.1.253:9000/v1/robot/autosettool/cmd_autosettoolframe
 *
 * @apiUse DefaultHeader
 *

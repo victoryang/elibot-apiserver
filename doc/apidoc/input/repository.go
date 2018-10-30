@@ -319,7 +319,7 @@
 * @apiDescription getToolframeByToolNo
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.166:9000/v1/robot/repository/toolframe/:tool_no
+* curl -X GET http://192.168.1.253:9000/v1/robot/repository/toolframe/:tool_no
 *
 * @apiUse DefaultHeader
 *
@@ -378,7 +378,7 @@
 * @apiDescription getUserframeByUserNo
 *
 * @apiExample Example usage:
-* curl -X GET http://192.168.1.166:9000/v1/robot/repository/userframe/:userno
+* curl -X GET http://192.168.1.253:9000/v1/robot/repository/userframe/:userno
 *
 * @apiUse DefaultHeader
 *
