@@ -18,8 +18,6 @@ const (
 	ERRRESTOREDB = 303
 
 	ERRRUNCMD = 400
-
-	ERRFILEOPENFAIL = 500
 )
 
 var ErrStringMap = map[int]string {
@@ -40,8 +38,6 @@ var ErrStringMap = map[int]string {
 	ERRRESTOREDB: 				"Fail to restore db",
 
 	ERRRUNCMD:					"Fail to run cmd",
-
-	ERRFILEOPENFAIL:			"Fail to open file",
 }
 
 func ErrMsg(errno int) string {
