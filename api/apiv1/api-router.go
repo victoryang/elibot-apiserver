@@ -104,6 +104,9 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	autosettoolapi.HandleFunc("/cmd_gototoolpos/{num}", doGotoToolPos).Methods("POST")
 	autosettoolapi.HandleFunc("/cmd_autosettoolframe", doAutoSetToolFrame).Methods("POST")
 
+	interferenceapi := robotapi.PathPrefix("/interference").Subrouter()
+	interferenceapi.HandleFunc("/data/{num}", setInterferData).Methods("POST")
+
 	alarmapi := r.PathPrefix("/v1/alarm").Subrouter()
 	alarmapi.HandleFunc("/range", getLogs).Methods("GET").Queries("start", "{start}", "end", "{end}", "timestamp", "{timestamp}")
 	alarmapi.HandleFunc("/level/{level}", getLogsByAlarmLevel).Methods("GET").Queries("start", "{start}", "end", "{end}", "timestamp", "{timestamp}")
