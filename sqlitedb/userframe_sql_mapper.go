@@ -23,6 +23,9 @@ func (m *UserframeSqlMapper) RegisterSqlMapper(mode int) error {
 	case ELIBOT_GET_ALL_PARAMS:
 		m.Id = C.ELIBOT_USER_FRAME_GET_ALL
 
+	case ELIBOT_USER_FRAME_GET_BY_USER_NO:
+		m.Id = C.ELIBOT_USER_FRAME_GET_BY_USER_NO
+
 	default:
 		return errors.New("Not support")
 	}

@@ -192,9 +192,41 @@ func getAllToolframe(w http.ResponseWriter, r *http.Request) {
 	WriteJsonSuccessResponse(w, res)
 }
 
+func getToolframeByToolNo(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting get toolframe by tool no")
+	vars := mux.Vars(r)
+	queries := make(map[string]interface{})
+	toolno, _ := strconv.Atoi(vars["toolno"])
+	queries["tool_no"] = int32(toolno)
+	res, err := db.GetToolframeByToolNo(queries)
+	if err!=nil {
+		Log.Error("Fail to query: ", err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
+		return
+	}
+
+	WriteJsonSuccessResponse(w, res)
+}
+
 func getAllUserframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all userframe")
 	res, err := db.GetAllUserframe()
+	if err!=nil {
+		Log.Error("Fail to query: ", err)
+		WriteInternalServerErrorResponse(w, ERRQUERY)
+		return
+	}
+
+	WriteJsonSuccessResponse(w, res)
+}
+
+func getUserframeByUserNo(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting get userframe by user no")
+	vars := mux.Vars(r)
+	queries := make(map[string]interface{})
+	userno, _ := strconv.Atoi(vars["userno"])
+	queries["user_no"] = int32(userno)
+	res, err := db.GetUserframeByUserNo(queries)
 	if err!=nil {
 		Log.Error("Fail to query: ", err)
 		WriteInternalServerErrorResponse(w, ERRQUERY)

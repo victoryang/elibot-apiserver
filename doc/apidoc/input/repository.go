@@ -311,6 +311,25 @@
 */
 
 /**
+* @api {get} /v1/robot/repository/toolframe/:tool_no getToolframeByToolNo
+* @apiVersion 0.1.0
+* @apiName getToolframeByToolNo
+* @apiGroup Repository
+*
+* @apiDescription getToolframeByToolNo
+*
+* @apiExample Example usage:
+* curl -X GET http://192.168.1.253:9000/v1/robot/repository/toolframe/:tool_no
+*
+* @apiUse DefaultHeader
+*
+* @apiParam (Params) {string} tool_no  URL Param: tool no to set
+*
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
+*/
+
+/**
 * @api {put} /v1/robot/repository/toolframes/:tool_no/:md_id/pos/:pos_no setToolFrame
 * @apiVersion 0.1.0
 * @apiName setToolFrame
@@ -345,6 +364,25 @@
 * curl -X GET http://192.168.1.253:9000/v1/robot/repository/userframe
 *
 * @apiUse DefaultHeader
+*
+* @apiUse SuccessJsonResponse
+* @apiUse InternalServerErrorJsonResponse
+*/
+
+/**
+* @api {get} /v1/robot/repository/userframe/:userno getUserframeByUserNo
+* @apiVersion 0.1.0
+* @apiName getUserframeByUserNo
+* @apiGroup Repository
+*
+* @apiDescription getUserframeByUserNo
+*
+* @apiExample Example usage:
+* curl -X GET http://192.168.1.253:9000/v1/robot/repository/userframe/:userno
+*
+* @apiUse DefaultHeader
+*
+* @apiParam (Params) {string} userno  URL Param: tool no to set
 *
 * @apiUse SuccessJsonResponse
 * @apiUse InternalServerErrorJsonResponse
