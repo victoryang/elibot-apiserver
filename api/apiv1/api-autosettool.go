@@ -5,7 +5,7 @@ import (
 
 	"github.com/gorilla/mux"
 
-	Log "api-server/log"
+	Log "elibot-apiserver/log"
 )
 
 const (
