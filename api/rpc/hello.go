@@ -24,7 +24,7 @@ func (s *helloserver) SayHello(ctx context.Context, in *pb.Req) (*pb.Reply, erro
 		defer cancel()
 		
 		if in.Name == 1 {
-			go SendToMCServer(command, nil, rCh)
+			go SendToMCServer(test_cmd, nil, rCh)
 		} else {
 			return &pb.Reply{Message: "test fail"}, errors.New("request name not 1")
 		}

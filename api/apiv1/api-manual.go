@@ -21,7 +21,7 @@ func setCoordinateMode(w http.ResponseWriter, r *http.Request) {
 	mode := vars["mode"]
 
 	Log.Debug("set coord mode ", mode)
-	SendToMCServerWithJsonRpc(w, cmdCoord, ConcatParams(mode))
+	SendToMCServer(w, cmdCoord, ConcatParams(mode))
 }
 
 func doManual(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +40,7 @@ func doManual(w http.ResponseWriter, r *http.Request) {
 	for _,v := range d.Args {
 		params = append(params, v)
 	}
-	SendToMCServerWithJsonRpc(w, cmdManual, params)
+	SendToMCServer(w, cmdManual, params)
 }
 
 func doRunForward(w http.ResponseWriter, r *http.Request) {
@@ -51,7 +51,7 @@ func doRunForward(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("run forward ", d.Args[:])
-	SendToMCServerWithJsonRpc(w, cmdRunForward, ConcatParams(d.Args...))
+	SendToMCServer(w, cmdRunForward, ConcatParams(d.Args...))
 }
 
 func doRunToZero(w http.ResponseWriter, r *http.Request) {
@@ -59,10 +59,10 @@ func doRunToZero(w http.ResponseWriter, r *http.Request) {
 	status := vars["status"]
 
 	Log.Debug("runToZero ", status)
-	SendToMCServerWithJsonRpc(w, cmdRunToZero, ConcatParams(status))
+	SendToMCServer(w, cmdRunToZero, ConcatParams(status))
 }
 
 func doRobotStop(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("robot stop")
-	SendToMCServerWithJsonRpc(w, cmdStop, nil)
+	SendToMCServer(w, cmdStop, nil)
 }

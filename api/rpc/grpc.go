@@ -7,17 +7,10 @@ import (
 	Log "elibot-apiserver/log"
 	hello "elibot-apiserver/serverpb/hello"
 	pb "elibot-apiserver/serverpb"
-	"elibot-apiserver/mcserver"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
-
-var McServer *mcserver.MCserver = nil
-
-func InitMcServer() {
-	McServer = mcserver.GetMcServer()
-}
 
 // set grpc options for optimization
 func setGrpcOptions(c *config.GrpcEntryPoint) []grpc.ServerOption {

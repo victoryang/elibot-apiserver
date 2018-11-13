@@ -2,9 +2,7 @@ package rpc
 
 import(
 	//Log "elibot-apiserver/log"
-	"errors"
 	"time"
-	"strconv"
 
 	"golang.org/x/net/context"
 	pb "elibot-apiserver/serverpb"
@@ -26,7 +24,7 @@ func (e *ExtAxis) GotoExtaxisPos (ctx context.Context, in *pb.Req) (*pb.Reply, e
 		c, cancel := context.WithTimeout(ctx, 3*time.Second)
 		defer cancel()
 
-		go SendToMCServer(command, nil, rCh)
+		go SendToMCServer(cmd, nil, rCh)
 
 		select {
 		case <-c.Done():

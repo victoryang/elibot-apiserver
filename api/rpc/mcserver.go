@@ -1,7 +1,6 @@
 package rpc
 
 import (
-    "net/http"
     "elibot-apiserver/mcserver"
 
     Log "elibot-apiserver/log"
@@ -25,7 +24,7 @@ func SendToMCServer(serviceMethod string, params interface{}, repch chan string)
 	err := mcserver.SendToMCServerWithJsonRpc(serviceMethod, params, &reply)
     if err!=nil {
         Log.Error("Could not call rpc request to mcserver: ", err)
-        WriteInternalServerErrorResponse(w, ERRMCSEVERNOTAVAILABLE)
+        repch <- "Mcserver is not available right now"
         return
     }
 
