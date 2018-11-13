@@ -126,5 +126,5 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 		return returnError(ERR_START_SHMSERVER)
 	}
 	shms.StartToWatch()
-	return handleSignals(apiserver, mcs, gs, wss, shms)
+	return handleSignals(apiserver, gs, wss, shms)
 }
