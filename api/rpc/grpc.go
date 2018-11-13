@@ -43,7 +43,6 @@ func Server(c *config.GrpcEntryPoint) *grpc.Server {
 
 	s := grpc.NewServer(opts...)
 
-	InitMcServer()
 	/* An hello example*/
 	hello.RegisterGreeterServer(s, NewHelloServer())
 
