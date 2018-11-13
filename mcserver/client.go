@@ -5,9 +5,9 @@ import (
 	"net"
 	"time"
 	"sync"
-	"api-server/jsonrpc2"
+	"elibot-apiserver/jsonrpc2"
 
-	Log "api-server/log"
+	Log "elibot-apiserver/log"
 )
 
 var McServerRpcClient *jsonrpc2.Conn
