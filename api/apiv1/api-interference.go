@@ -17,5 +17,5 @@ func setInterferData (w http.ResponseWriter, r *http.Request){
 	num := vars["num"]
 
 	Log.Debug("set_interf_data ", num)
-	SendToMCServer(w, cmdSetInterferData, ConcatParams(num))
+	SendToMCServerWithJsonRpc(w, cmdSetInterferData, ConcatParams(num))
 }
