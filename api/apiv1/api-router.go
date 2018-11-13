@@ -103,6 +103,8 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	autosettoolapi := robotapi.PathPrefix("/autosettool").Subrouter()
 	autosettoolapi.HandleFunc("/cmd_gototoolpos/{num}", doGotoToolPos).Methods("POST")
 	autosettoolapi.HandleFunc("/cmd_autosettoolframe", doAutoSetToolFrame).Methods("POST")
+	autosettoolapi.HandleFunc("/cmd_settoolpos/{tool_no}/{num}", doSetToolPos).Methods("POST")
+	autosettoolapi.HandleFunc("/cmd_cleartoolpos/{tool_no}/{num}", doClearToolPos).Methods("POST")
 
 	interferenceapi := robotapi.PathPrefix("/interference").Subrouter()
 	interferenceapi.HandleFunc("/data/{num}", setInterferData).Methods("POST")

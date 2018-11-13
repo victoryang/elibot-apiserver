@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"strconv"
 	"errors"
-	"elibot-apiserver/shm"
 
 	"github.com/gorilla/mux"
 )
@@ -62,11 +61,15 @@ func getdRobV(w http.ResponseWriter, r *http.Request) {
 func getSysFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 	start, end, err := validateRange(r)
 	if err!=nil {
-		WriteBadRequestResponse(w, ERRINCORRECTRANGE)
+		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
 		return
 	}
-	ret := shm.GetSysVar(datatype, start, end)
-	WriteJsonSuccessResponse(w, ret)
+
+	params := make(map[string]interface{})
+	params["datatype"] = int32(datatype)
+	params["start"] = int32(start)
+	params["end"] = int32(end)
+	SendToParamServer(w, "get_system_variables", params)
 }
 
 func getcRobLB(w http.ResponseWriter, r *http.Request) {
@@ -89,33 +92,35 @@ func getdRobLV(w http.ResponseWriter, r *http.Request) {
 	getLocFromShm(droblv, w, r)
 }
 
-func getLocFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
+func getLocFromShm(datatype int32, w http.ResponseWriter, r *http.Request) {
 	start, end, err := validateRange(r)
 	if err!=nil {
-		WriteBadRequestResponse(w, ERRINCORRECTRANGE)
+		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
 		return
 	}
 	vars := mux.Vars(r)
 	num, err := strconv.Atoi(vars["num"])
 	if err!=nil {
-		WriteBadRequestResponse(w, ERRINCORRECTRANGE)
+		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
 		return
 	}
-	ret := shm.GetLocVar(datatype, num, start, end)
-	WriteJsonSuccessResponse(w, ret)
+
+	params := make(map[string]interface{})
+	params["datatype"] = int32(datatype)
+	params["num"] = int32(num)
+	params["start"] = int32(start)
+	params["end"] = int32(end)
+	SendToParamServer(w, "get_local_variables", params)
 }
 
 func getPLCOnce(w http.ResponseWriter, r *http.Request) {
-	ret := shm.GetPLCOnce()
-	WriteJsonSuccessResponse(w, ret)
+	SendToParamServer(w, "get_plc_once", nil)
 }
 
 func getSharedOnce(w http.ResponseWriter, r *http.Request) {
-	ret := shm.GetSharedOnce()
-	WriteJsonSuccessResponse(w, ret)
+	SendToParamServer(w, "get_shared_once", nil)
 }
 
 func getNVOnce(w http.ResponseWriter, r *http.Request) {
-	ret := shm.GetNVOnce()
-	WriteJsonSuccessResponse(w, ret)
+	SendToParamServer(w, "get_nv_once", nil)
 }

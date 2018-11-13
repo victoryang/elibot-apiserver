@@ -40,8 +40,6 @@ func (s *Server) Shutdown() {
 		s.AccessLog.Logger.Close()
 	}
 
-	apiv1.CloseJsonRpcClient()
-
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
     defer cancel()
     // Doesn't block if no connections, but will otherwise wait
@@ -73,9 +71,7 @@ func NewApiServer(c *config.GlobalConfiguration) *Server {
 	s := new(Server)
 	
 	apiv1.SetRootPath(c.UploadPath)
-	if err := apiv1.NewJsonRpcClient(); err!=nil {
-		return nil
-	}
+
 	s.AccessLog.File = c.AccessLogsFile
 	s.EntryPoint.httpServer = &http.Server {
 		Addr:			c.Http.ListenAddress,
