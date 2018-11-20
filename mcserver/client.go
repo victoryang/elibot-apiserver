@@ -66,7 +66,7 @@ func SendToMCServerWithJsonRpc(serviceMethod string, params interface{}, reply *
     ctx, cancel := context.WithTimeout(ctx_rpc, JsonRpcTimeOut)
     defer cancel()
 
-    Log.Debug("send to param server, serviceMethod: ", serviceMethod, " params: ", params)
+    Log.Debug("send to mcserver, serviceMethod: ", serviceMethod, " params: ", params)
 
     mux_rpc.Lock()
     if McServerRpcClient.IsClosed() {
