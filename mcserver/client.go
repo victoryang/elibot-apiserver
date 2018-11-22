@@ -69,15 +69,14 @@ func SendToMCServerWithJsonRpc(serviceMethod string, params interface{}, reply *
     Log.Debug("send to mcserver, serviceMethod: ", serviceMethod, " params: ", params)
 
     mux_rpc.Lock()
+    defer mux_rpc.Unlock()
     if McServerRpcClient.IsClosed() {
         // Current connection closed, reconnect 3 times
         if err := reconnect(); err!=nil {
             Log.Error("Could not reconnect to param server")
-            mux_rpc.Unlock()
             return err
         }
     }
-    mux_rpc.Unlock()
 
     if err:=McServerRpcClient.Call(ctx, serviceMethod, params, reply); err!=nil {
         Log.Error("Could not call request by rpc: ", err)
