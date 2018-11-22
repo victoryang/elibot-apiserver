@@ -12,6 +12,7 @@ const (
 	ERR_START_GRPCSERVER
 	ERR_START_WSSERVER
 	ERR_START_SHMSERVER
+	ERR_START_PARAMSERVER
 )
 
 func returnError(errno int) error {

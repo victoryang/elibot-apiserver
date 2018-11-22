@@ -30,12 +30,12 @@ func doRunCmd(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("run ", d.Args[:])
-	SendToMCServerWithJsonRpc(w, cmdRun, ConcatParams(d.Args...))
+	SendToMCServer(w, cmdRun, ConcatParams(d.Args...))
 }
 
 func doPause(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("pause")
-	SendToMCServerWithJsonRpc(w, cmdPause, nil)
+	SendToMCServer(w, cmdPause, nil)
 }
 
 func setRobotMode(w http.ResponseWriter, r *http.Request) {
@@ -43,7 +43,7 @@ func setRobotMode(w http.ResponseWriter, r *http.Request) {
 	mode := vars["mode"]
 
 	Log.Debug("set mode ", mode)
-	SendToMCServerWithJsonRpc(w, cmdMode, ConcatParams(mode))
+	SendToMCServer(w, cmdMode, ConcatParams(mode))
 }
 
 func doClearAlarm(w http.ResponseWriter, r *http.Request) {
@@ -54,12 +54,12 @@ func doClearAlarm(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("clear alarm ", d.Args[:])
-	SendToMCServerWithJsonRpc(w, cmdClearAlarm, ConcatParams(d.Args...))
+	SendToMCServer(w, cmdClearAlarm, ConcatParams(d.Args...))
 }
 
 func doProgReset(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("progReset")
-	SendToMCServerWithJsonRpc(w, cmdResetProg, nil)
+	SendToMCServer(w, cmdResetProg, nil)
 }
 
 func setSpeed(w http.ResponseWriter, r *http.Request) {
@@ -67,7 +67,7 @@ func setSpeed(w http.ResponseWriter, r *http.Request) {
 	data := vars["data"]
 
 	Log.Debug("set speed ", data)
-	SendToMCServerWithJsonRpc(w, cmdSpeed, ConcatParams(data))
+	SendToMCServer(w, cmdSpeed, ConcatParams(data))
 }
 
 func setMainfile(w http.ResponseWriter, r *http.Request) {
@@ -75,7 +75,7 @@ func setMainfile(w http.ResponseWriter, r *http.Request) {
 	progname := vars["progname"]
 
 	Log.Debug("set main file ", progname)
-	SendToMCServerWithJsonRpc(w, cmdSetMainfile, ConcatParams(progname))
+	SendToMCServer(w, cmdSetMainfile, ConcatParams(progname))
 }
 
 func setCycleMode(w http.ResponseWriter, r *http.Request) {
@@ -83,7 +83,7 @@ func setCycleMode(w http.ResponseWriter, r *http.Request) {
 	cyclemode := vars["cyclemode"]
 
 	Log.Debug("set cycle mode ", cyclemode)
-	SendToMCServerWithJsonRpc(w, cmdCycleMode, ConcatParams(cyclemode))
+	SendToMCServer(w, cmdCycleMode, ConcatParams(cyclemode))
 }
 
 func doLoadFile(w http.ResponseWriter, r *http.Request) {
@@ -91,7 +91,7 @@ func doLoadFile(w http.ResponseWriter, r *http.Request) {
 	filename := vars["filename"]
 
 	Log.Debug("load file ", filename)
-	SendToMCServerWithJsonRpc(w, cmdLoadFile, ConcatParams(filename))
+	SendToMCServer(w, cmdLoadFile, ConcatParams(filename))
 }
 
 func setCurLine(w http.ResponseWriter, r *http.Request) {
@@ -99,10 +99,10 @@ func setCurLine(w http.ResponseWriter, r *http.Request) {
 	lineno := vars["lineno"]
 
 	Log.Debug("set cur line ", lineno)
-	SendToMCServerWithJsonRpc(w, cmdSetCurLine, ConcatParams(lineno))
+	SendToMCServer(w, cmdSetCurLine, ConcatParams(lineno))
 }
 
 func doGobackOrigin(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("gobackorigin")
-	SendToMCServerWithJsonRpc(w, cmdGobackOrigin, nil)
+	SendToMCServer(w, cmdGobackOrigin, nil)
 }

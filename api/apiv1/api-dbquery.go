@@ -6,244 +6,142 @@ import (
 
 	"github.com/gorilla/mux"
 
-	db "elibot-apiserver/sqlitedb"
 	Log "elibot-apiserver/log"
 )
 
 func getAllArc(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Arc")
-	res, err := db.GetAllArc()
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "arc_get_all", nil)
 }
 
 func getArcParams(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get Arc parameters")
 	vars := mux.Vars(r)
-	queries := make(map[string]interface{})
-
+	params := make(map[string]interface{})
 	file_no, _ := strconv.Atoi(vars["file_no"])
-	queries["file_no"] = int32(file_no)
-	queries["group"] = vars["group"]
-	res, err := db.GetArcParams(queries)
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
+	params["file_no"] = int32(file_no)
+	params["group"] = vars["group"]
 
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "arc_get_params", params)
 }
 
 func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all bookprograms")
-	res, err := db.GetAllBookprograms()
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "bookprogram_get_all", nil)
 }
 
 func getAllEnum(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Enum")
-	res, err := db.GetAllEnum()
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "enum_get_all", nil)
 }
 
 func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Extaxis")
-	res, err := db.GetAllExtaxis()
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "extaxis_get_all", nil)
 }
 
 func getAllInterference(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Interference")
-	res, err := db.GetAllInterference()
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "interference_get_all", nil)
 }
 
 func getAllIos(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all IOs")
 	vars := mux.Vars(r)
-	queries := make(map[string]interface{})
-	queries["group"] = vars["group"]
-	queries["lang"] = vars["lang"]
+	params := make(map[string]interface{})
+	params["group"] = vars["group"]
+	params["lang"] = vars["lang"]
 	auth, _ := strconv.Atoi(vars["auth"])
-	queries["auth"] = int32(auth)
+	params["auth"] = int32(auth)
 	tech, _ := strconv.Atoi(vars["tech"])
-	queries["tech"] = int32(tech)
+	params["tech"] = int32(tech)
 
-	res, err := db.GetAllIO(queries)
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "ios_get_all", params)
 }
 
 func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Metadata")
 	vars := mux.Vars(r)
+	params := make(map[string]interface{})
+	params["lang"] = vars["lang"]
 
-	queries := make(map[string]interface{})
-	queries["lang"] = vars["lang"]
-	res, err := db.GetAllMetadata(queries)
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
+	SendToParamServer(w, "metadata_get_all", params)
+}
 
-	WriteJsonSuccessResponse(w, res)
+func getAllOperationLog(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting get all Operation Log")
+
+	vars := mux.Vars(r)
+	params := make(map[string]interface{})
+	created_time, _ := strconv.Atoi(vars["created_time"])
+	params["created_time"] = int32(created_time)
+	start, _ := strconv.Atoi(vars["start"])
+	params["start"] = int32(start)
+	pageSize, _ := strconv.Atoi(vars["pageSize"])
+	params["pageSize"] = int32(pageSize)
+
+	SendToParamServer(w, "operation_record_get_all", params)
 }
 
 func getParams(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Parameter")
-	res, err := db.GetParams()
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "params_get_params", nil)
 }
 
 func getParameterById(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get Parameter by id")
 	vars := mux.Vars(r)
-	queries := make(map[string]interface{})
-	queries["md_id"] = vars["md_id"]
+	params := make(map[string]interface{})
+	params["md_id"] = vars["md_id"]
 
-	res, err := db.GetParameterById(queries)
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "params_get_valid_param_by_id", params)
 }
 
 func getParameterByGroup(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get Parameter by group")
 	vars := mux.Vars(r)
-	queries := make(map[string]interface{})
-	queries["group"] = vars["group"]
-	res, err := db.GetParameterByGroup(queries)
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	params := make(map[string]interface{})
+	params["group"] = vars["group"]
+	
+	SendToParamServer(w, "params_get_valid_param_by_group", params)
 }
 
 func getAllRef(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Ref")
-	res, err := db.GetAllRef()
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "ref_get_all", nil)
 }
 
 func getAllToolframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all toolframe")
-	res, err := db.GetAllToolframe()
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "toolframe_get_all", nil)
 }
 
 func getToolframeByToolNo(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get toolframe by tool no")
 	vars := mux.Vars(r)
-	queries := make(map[string]interface{})
+	params := make(map[string]interface{})
 	toolno, _ := strconv.Atoi(vars["toolno"])
-	queries["tool_no"] = int32(toolno)
-	res, err := db.GetToolframeByToolNo(queries)
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	params["tool_no"] = int32(toolno)
+	
+	SendToParamServer(w, "toolframe_get_by_toolno", params)
 }
 
 func getAllUserframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all userframe")
-	res, err := db.GetAllUserframe()
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "userframe_get_all", nil)
 }
 
 func getUserframeByUserNo(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get userframe by user no")
 	vars := mux.Vars(r)
-	queries := make(map[string]interface{})
+	params := make(map[string]interface{})
 	userno, _ := strconv.Atoi(vars["userno"])
-	queries["user_no"] = int32(userno)
-	res, err := db.GetUserframeByUserNo(queries)
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	params["user_no"] = int32(userno)
+	
+	SendToParamServer(w, "userframe_get_by_userno", params)
 }
 
 func getAllZeroPoint(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all zeropoint")
-	res, err := db.GetAllZeropoint()
-	if err!=nil {
-		Log.Error("Fail to query: ", err)
-		WriteInternalServerErrorResponse(w, ERRQUERY)
-		return
-	}
-
-	WriteJsonSuccessResponse(w, res)
+	SendToParamServer(w, "zeropoint_get_all", nil)
 }

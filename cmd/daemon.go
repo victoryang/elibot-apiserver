@@ -8,12 +8,13 @@ import (
 
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/api"
+	"elibot-apiserver/mcserver"
+	"elibot-apiserver/paramserver"
 	"elibot-apiserver/auth"
 	"elibot-apiserver/sqlitedb"
 	"elibot-apiserver/db"
 	"elibot-apiserver/settings"
 	"elibot-apiserver/config"
-	"elibot-apiserver/mcserver"
 	"elibot-apiserver/shm"
 	"elibot-apiserver/websocket"
 	"elibot-apiserver/alarm"
@@ -24,7 +25,7 @@ const (
 	mcserverAddress = "127.0.0.1:8055"
 )
 
-func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, wss *websocket.WsServer, shms *shm.ShmServer) error {
+func handleSignals(s *api.Server, gs *api.GrpcServer, wss *websocket.WsServer, shms *shm.ShmServer) error {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
@@ -46,7 +47,6 @@ func handleSignals(s *api.Server, mcs *mcserver.MCserver, gs *api.GrpcServer, ws
 			stopAdminServer()
 
 			db.CloseDB()
-			mcs.Close()
 
 			Log.CloseFile()
 
@@ -86,15 +86,19 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 
 	auth.Init(cfg.Secure)
 
-	mcs := mcserver.NewMCServer(mcserverAddress, 3)
-	if mcs==nil {
-		Log.Error("Error in connecting to mc server")
-		return returnError(ERR_START_MCSERVER)
-	}
-
 	startAdminServer(cfg.Admin)
 
 	SetUpDatabase(cfg)
+
+	if err := mcserver.NewRpcClient(); err!=nil {
+		Log.Error("Error to connect to mc server")
+		os.Exit(ERR_START_MCSERVER)
+	}
+
+	if err := paramserver.NewRpcClient(); err!=nil {
+		Log.Error("Error to connect to param server")
+		os.Exit(ERR_START_PARAMSERVER)
+	}
 
 	apiserver := api.NewApiServer(cfg)
 	if apiserver == nil {
@@ -122,5 +126,5 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 		return returnError(ERR_START_SHMSERVER)
 	}
 	shms.StartToWatch()
-	return handleSignals(apiserver, mcs, gs, wss, shms)
+	return handleSignals(apiserver, gs, wss, shms)
 }

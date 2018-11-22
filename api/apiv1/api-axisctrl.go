@@ -18,7 +18,7 @@ const (
 func setServoStatus (w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	status := vars["status"]
-
+	
 	d := &RequestDataForCommandArgs{}
 	if err := ParseBodyToObject(r, d); err!=nil {
 		WriteBadRequestResponse(w, ERRINVALIDBODY)
@@ -32,7 +32,7 @@ func setServoStatus (w http.ResponseWriter, r *http.Request){
 	}
 
 	Log.Debug("servo ", status)
-	SendToMCServerWithJsonRpc(w, cmdServo, params)
+	SendToMCServer(w, cmdServo, params)
 }
 
 func setDragteachStatus (w http.ResponseWriter, r *http.Request){
@@ -40,12 +40,12 @@ func setDragteachStatus (w http.ResponseWriter, r *http.Request){
 	status := vars["status"]
 
 	Log.Debug("drag_teach ", status)
-	SendToMCServerWithJsonRpc(w, cmdDragTeach, ConcatParams(status))
+	SendToMCServer(w, cmdDragTeach, ConcatParams(status))
 }
 
 func syncRobot (w http.ResponseWriter, r *http.Request){
 	Log.Debug("getEncode")
-	SendToMCServerWithJsonRpc(w, cmdGetEncode, nil)
+	SendToMCServer(w, cmdGetEncode, nil)
 }
 
 func setZeroEncode (w http.ResponseWriter, r *http.Request){
@@ -53,5 +53,5 @@ func setZeroEncode (w http.ResponseWriter, r *http.Request){
 	axisno := vars["axisno"]
 
 	Log.Debug("setZeroEncode ", axisno)
-	SendToMCServerWithJsonRpc(w, cmdSetZeroEncode, ConcatParams(axisno))
+	SendToMCServer(w, cmdSetZeroEncode, ConcatParams(axisno))
 }

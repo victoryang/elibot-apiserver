@@ -30,7 +30,7 @@ func setArcParam(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("setArcParam ", md_id, d.Value, file_no, strconv.Itoa(d.Index))
-	SendToMCServerWithJsonRpc(w, cmdSetArcParam, ConcatParams(md_id, d.Value, file_no, strconv.Itoa(d.Index)))
+	SendToMCServer(w, cmdSetArcParam, ConcatParams(md_id, d.Value, file_no, strconv.Itoa(d.Index)))
 }
 
 func setInterference(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +45,7 @@ func setInterference(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("setInterference ", md_id, d.Value, no, strconv.Itoa(d.Index))
-	SendToMCServerWithJsonRpc(w, cmdSetInterference, ConcatParams(md_id, d.Value, no, strconv.Itoa(d.Index)))
+	SendToMCServer(w, cmdSetInterference, ConcatParams(md_id, d.Value, no, strconv.Itoa(d.Index)))
 }
 
 func setParam(w http.ResponseWriter, r *http.Request) {
@@ -59,7 +59,7 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("setParam ", md_id, d.Value, strconv.Itoa(d.Index))
-	SendToMCServerWithJsonRpc(w, cmdSetParam, ConcatParams(md_id, d.Value, strconv.Itoa(d.Index)))
+	SendToMCServer(w, cmdSetParam, ConcatParams(md_id, d.Value, strconv.Itoa(d.Index)))
 }
 
 func setToolFrame(w http.ResponseWriter, r *http.Request) {
@@ -75,13 +75,14 @@ func setToolFrame(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("setToolFrame ", md_id, d.Value, tool_no, pos_no, strconv.Itoa(d.Index))
-	SendToMCServerWithJsonRpc(w, cmdSetToolFrame, ConcatParams(md_id, d.Value, tool_no, pos_no, strconv.Itoa(d.Index)))
+	SendToMCServer(w, cmdSetToolFrame, ConcatParams(md_id, d.Value, tool_no, pos_no, strconv.Itoa(d.Index)))
 }
 
 func setUserFrame(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	md_id := vars["md_id"]
-	userno := vars["userno"]
+	/*FIX: set 0 as default, leave api with userno*/
+	userno := "0"
 
 	d := &RequestData{}
 	if err := ParseBodyToObject(r, d); err!=nil {
@@ -90,7 +91,7 @@ func setUserFrame(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("setUserFrame ", md_id, d.Value, userno)
-	SendToMCServerWithJsonRpc(w, cmdSetUserFrame, ConcatParams(md_id, d.Value, userno))
+	SendToMCServer(w, cmdSetUserFrame, ConcatParams(md_id, d.Value, userno))
 }
 
 func setZeroPoint(w http.ResponseWriter, r *http.Request) {
@@ -104,5 +105,5 @@ func setZeroPoint(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("setZeroPoint ", md_id, d.Value, strconv.Itoa(d.Index))
-	SendToMCServerWithJsonRpc(w, cmdSetZeroPoint, ConcatParams(md_id, d.Value, strconv.Itoa(d.Index)))
+	SendToMCServer(w, cmdSetZeroPoint, ConcatParams(md_id, d.Value, strconv.Itoa(d.Index)))
 }
