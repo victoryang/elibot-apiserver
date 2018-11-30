@@ -3,8 +3,8 @@ package auth
 import (
 	"sync"
 
-	"api-server/db"
-	Log "api-server/log"
+	"elibot-apiserver/db"
+	Log "elibot-apiserver/log"
 )
 
 type Manager interface {
