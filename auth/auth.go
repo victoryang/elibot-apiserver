@@ -4,7 +4,7 @@ import (
 	"elibot-apiserver/config"
 )
 
-func Init(c *config.Security) {
-	SSLInit(c.SSLCert)
+func AuthInit(c *config.Security) error {
 	JwtTokenInit(c.Jwt)
+	return InitManager()
 }
