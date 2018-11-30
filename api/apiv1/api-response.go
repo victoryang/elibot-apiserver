@@ -40,3 +40,8 @@ func WriteBadRequestResponse(w http.ResponseWriter, errno int) {
 	w.WriteHeader(http.StatusBadRequest)
 	w.Write(r)
 }
+
+func WriteUnauthorizedResponse(w http.ResponseWriter) {
+	w.WriteHeader(http.StatusUnauthorized)
+	w.Write([]byte("Unauthorized"))
+}
