@@ -84,13 +84,13 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 		return returnError(ERR_OPEN_LOG_FILE_FAIL)
 	}
 
-	if err := auth.AuthInit(cfg.Secure); err!= nil {
-		os.Exit(ERR_AUTH_INIT_FAIL)
-	}
-
 	startAdminServer(cfg.Admin)
 
 	SetUpDatabase(cfg)
+
+	if err := auth.AuthInit(cfg.Secure); err!= nil {
+		os.Exit(ERR_AUTH_INIT_FAIL)
+	}
 
 	if err := mcserver.NewRpcClient(); err!=nil {
 		Log.Error("Error to connect to mc server")
