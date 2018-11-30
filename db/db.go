@@ -21,6 +21,10 @@ func SetupDB(dbname string) {
     return
 }
 
+func CloseDB() error {
+	return conn.Close()
+}
+
 func CreateTableIfNotExist(command string) error {
 	if err := PrepareAndExecuteCommand(command); err!=nil {
 		Log.Error("create table fails: ", err)
