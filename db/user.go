@@ -11,27 +11,46 @@ type User struct {
 	Authority		int 		`json:"authority"`
 }
 
-type Shadow struct {
-	Name 		string
-	SecretKey 	string
+type UserInfo struct {
+	User
+	UserId			int
+	Status			int
+	CreatedTime		string
+	ModifiedTime	string
 }
 
-var user_table = "elt_users"
+type Shadow struct {
+	UserId 		int
+	Password 	string
+}
+
+var user_table = "elt_user"
 var shadow_table = "elt_shadow"
-var userAddCommand = "INSERT INTO " + user_table + "(name, mail, mobile, authority) VALUES(?,?,?,?)"
-var userRemoveCommand = "DELETE FROM " + user_table + " WHERE name = ?"
-var secretAddCommand = "INSERT INTO " + shadow_table + " VALUES(?,?)"
-var secretRemoveCommand = "DELETE FROM " + shadow_table + " WHERE name = ?"
+
+// USER TABLE COMMAND
+var userInsertCommand = "INSERT INTO " + user_table + "(name, mail, mobile, authority) VALUES(?,?,?,?)"
+var userDeleteCommand = "DELETE FROM " + user_table + " WHERE name = ?"
+var userQueryCommand = "SELECT name, mail, mobile, authority FROM " + user_table
+var userUpdateCommand = "UPDATE " + user_table + " SET mail = ?, mobile = ?, authority = ? WHERE name = ?"
+
+// PASSWORD TABLE COMMAND
+var shadowInsertCommand = "INSERT INTO " + shadow_table + " VALUES((SELECT userid FROM " + user_table + " WHERE name = ?), ?)"
+var shadowDeleteCommand = "DELETE FROM " + shadow_table + " WHERE userid = (SELECT userid FROM " + user_table + " WHERE name = ?)"
+var shadowQueryCommand = "SELECT password FROM " + shadow_table + " WHERE userid = (SELECT userid FROM " + user_table + " WHERE name = ?)"
+var shadowUpdateCommand = "UPDATE " + shadow_table + " SET password = ? WHERE userid = (SELECT userid FROM " + user_table + " WHERE name = ?)"
 
 func InitUserTable() error {
-	command := "CREATE TABLE IF NOT EXISTS " + user_table + "(name TEXT PRIMARY KEY NOT NULL, mail TEXT, mobile TEXT,authority INTEGER)"
+	table := user_table +
+		"(userid INTEGER PRIMARY KEY AUTOINCREMENT, " +
+	    "name TEXT UNIQUE NOT NULL, mail TEXT, mobile TEXT, authority INTEGER NOT NULL, status INTEGER," +
+	    "ctime TimeStamp NOT NULL DEFAULT (datetime('now','localtime'))," +
+	    "mtime TimeStamp NOT NULL DEFAULT (datetime('now','localtime')))"
 
-    return CreateTableIfNotExist(command)
+    return InitializeTable(table)
 }
 
 func GetUsersList() []User {
-	command := "SELECT * FROM " + user_table
-	rows, err := DoQuery(command)
+	rows, err := DoQuery(userQueryCommand)
 	if err!=nil {
 		Log.Error("Could not get user list")
 		return nil
@@ -53,15 +72,14 @@ func GetUsersList() []User {
 }
 
 func ModifyUser(u User) error {
-	command := "UPDATE " + user_table + "SET mail = ?, mobile = ?, authority = ? WHERE name = ?"
-	return PrepareAndExecuteCommand(command, u.Mail, u.Mobile, u.Authority, u.Name)
+	return PrepareAndExecuteCommand(userUpdateCommand, u.Mail, u.Mobile, u.Authority, u.Name)
 }
 
-func AddUserWithSecretkey(name string, mail string, mobile string, authority int, secretkey string) bool {
+func AddUserWithPassword(u User, password string) bool {
 	mu.Lock()
 	defer mu.Unlock()
 
-	if name == "" || secretkey == "" {
+	if u.Name == "" || password == "" {
 		return false
 	}
 
@@ -72,26 +90,26 @@ func AddUserWithSecretkey(name string, mail string, mobile string, authority int
 	}
 	defer tx.Rollback()
 
-	stmtU, err1 := tx.Prepare(userAddCommand)
+	stmtU, err1 := tx.Prepare(userInsertCommand)
 	if err1!=nil {
 		Log.Error("failed to prepare stmtU: ", err1)
 		return false
 	}
 	defer stmtU.Close()
 
-	if _, err2 := stmtU.Exec(name, mail, mobile, authority); err2!=nil {
+	if _, err2 := stmtU.Exec(u.Name, u.Mail, u.Mobile, u.Authority); err2!=nil {
 		Log.Error("failed to exec stmtU: ", err2)
 		return false
 	}
 
-	stmtS, err3 := tx.Prepare(secretAddCommand)
+	stmtS, err3 := tx.Prepare(shadowInsertCommand)
 	if err!=nil {
 		Log.Error("failed to prepare stmtS: ", err3)
 		return false
 	}
 	defer stmtS.Close()
 
-	if _, err4 := stmtS.Exec(name, secretkey); err4!=nil {
+	if _, err4 := stmtS.Exec(u.Name, password); err4!=nil {
 		Log.Error("failed to exec stmtS: ", err4)
 		return false
 	}
@@ -103,7 +121,7 @@ func AddUserWithSecretkey(name string, mail string, mobile string, authority int
 	return true
 }
 
-func RemoveUserWithSecretkey(name string) bool {
+func RemoveUserAndPassword(name string) bool {
 	mu.Lock()
 	defer mu.Unlock()
 
@@ -118,7 +136,7 @@ func RemoveUserWithSecretkey(name string) bool {
 	}
 	defer tx.Rollback()
 
-	stmtS, err1 := tx.Prepare(secretRemoveCommand)
+	stmtS, err1 := tx.Prepare(shadowDeleteCommand)
 	if err1!=nil {
 		Log.Error("failed to prepare stmtS: ", err1)
 		return false
@@ -130,7 +148,7 @@ func RemoveUserWithSecretkey(name string) bool {
 		return false
 	}
 
-	stmtU, err3 := tx.Prepare(userRemoveCommand)
+	stmtU, err3 := tx.Prepare(userDeleteCommand)
 	if err!=nil {
 		Log.Error("failed to prepare stmtU: ", err3)
 		return false
@@ -150,14 +168,13 @@ func RemoveUserWithSecretkey(name string) bool {
 }
 
 func InitShadow() error {
-	command := "CREATE TABLE IF NOT EXISTS " + shadow_table + "(name TEXT PRIMARY KEY NOT NULL, secretkey TEXT NOT NULL)"
+	table := shadow_table + "(userid INTEGER PRIMARY KEY NOT NULL, password TEXT NOT NULL)"
 
-    return CreateTableIfNotExist(command)
+    return InitializeTable(table)
 }
 
-func VerifySecretkey(name string, secretkey string) bool {
-	command := "SELECT secretkey FROM " + shadow_table + " WHERE name = ?"
-	rows, err := DoQuery(command, name)
+func VerifyPassword(name string, password string) bool {
+	rows, err := DoQuery(shadowQueryCommand, name)
 	if err!=nil {
 		Log.Error("failed to query: ", err)
 		return false
@@ -172,10 +189,9 @@ func VerifySecretkey(name string, secretkey string) bool {
 		}
 	}
 	
-	return v == secretkey
+	return v == password
 }
 
-func ModifySecretkey(name string, secretkey string) error {
-	command := "UPDATE " + user_table + "SET " + secretkey + " = ? WHERE name = ?"
-	return PrepareAndExecuteCommand(command, secretkey, name)
+func ModifyPassword(name string, password string) error {
+	return PrepareAndExecuteCommand(shadowUpdateCommand, password, name)
 }

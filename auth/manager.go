@@ -2,6 +2,8 @@ package auth
 
 import (
 	"sync"
+	"encoding/base64"
+	"crypto/md5"
 
 	"elibot-apiserver/db"
 	Log "elibot-apiserver/log"
@@ -59,7 +61,7 @@ func (m *UserManager) GetUser(name string, user *db.User) bool {
 
 	for _, u := range m.Users {
 		if u.Name == name {
-			user = &u
+			*user = u
 			return true
 		}
 	}
@@ -67,36 +69,38 @@ func (m *UserManager) GetUser(name string, user *db.User) bool {
 	return false
 }
 
-func (m *UserManager) AddUser(u db.User, secretkey string) bool {
-	m.Mutex.Lock()
-	defer m.Mutex.Unlock()
+func (m *UserManager) AddUser(u db.User, pwd string) bool {
+	var epwd string
+	if err := encodePassword(pwd, &epwd); err!=nil {
+		return false
+	}
 
-	if !db.AddUserWithSecretkey(u.Name, u.Mail, u.Mobile, u.Authority, secretkey) {
+	if !db.AddUserWithPassword(u, epwd) {
 		Log.Error("Could not add item into user table")
 		return false
 	}
-	
+
+	m.Mutex.Lock()
+	defer m.Mutex.Unlock()
+
 	m.UpdateUserList()
 	return true
 }
 
 func (m *UserManager) RemoveUser(name string) bool {
-	m.Mutex.Lock()
-	defer m.Mutex.Unlock()
-
-	if !db.RemoveUserWithSecretkey(name) {
+	if !db.RemoveUserAndPassword(name) {
 		Log.Error("Could not remove item from user table")
 		return false
 	}
-	
+
+	m.Mutex.Lock()
+	defer m.Mutex.Unlock()
+
 	m.UpdateUserList()
 	return true
 }
 
 func (m *UserManager) ModifyUser(u db.User) bool {
-	m.Mutex.Lock()
-	defer m.Mutex.Unlock()
-
 	if u.Name == "" {
 		return false
 	}
@@ -110,29 +114,64 @@ func (m *UserManager) ModifyUser(u db.User) bool {
 		if u.Mobile == "" {
 			u.Mobile = old.Mobile
 		}
+	} else {
+		Log.Error("Could not modify user: not found")
+                return false
 	}
 
 	if err := db.ModifyUser(u); err!=nil {
-		Log.Error("Could not update user table: ", err)
+		Log.Error("Could not update user: ", err)
 		return false
 	}
-	
+
+	m.Mutex.Lock()
+    defer m.Mutex.Unlock()
+
 	m.UpdateUserList()
 	return true
 }
 
-func (m *UserManager) ChangePassword(name string, password string) bool {
-	m.Mutex.Lock()
-	defer m.Mutex.Unlock()
+func encodePassword(password string, epassword *string) error {
+	pw, err := base64.URLEncoding.DecodeString(password);
+	if err == nil {
+		sli := md5.Sum(pw)
+		*epassword = base64.StdEncoding.EncodeToString(sli[:])
+	}
 
-	if name == "" || password == "" {
+	return err
+}
+
+func (m *UserManager) VerifyPassword(name string, pwd string) bool {
+	var epwd string
+	if err := encodePassword(pwd, &epwd); err!=nil {
 		return false
 	}
 
-	if err := db.ModifySecretkey(name, password); err!=nil {
+	return db.VerifyPassword(name, epwd)
+}
+
+func (m *UserManager) ChangePassword(name string, spwd string, dpwd string) bool {
+	var espwd string
+	if err := encodePassword(spwd, &espwd); err!=nil {
+		return false
+	}
+
+	if !db.VerifyPassword(name, espwd) {
+		return false
+	}
+
+	var edpwd string
+	if err := encodePassword(dpwd, &edpwd); err!=nil {
+		return false
+	}
+
+	if err := db.ModifyPassword(name, edpwd); err!=nil {
 		Log.Error("Could change password: ", err)
 		return false
 	}
+
+	m.Mutex.Lock()
+	defer m.Mutex.Unlock()
 	
 	m.UpdateUserList()
 	return true

@@ -28,7 +28,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if res := db.VerifySecretkey(username, password); !res {
+	if res := auth.GetUserManager().VerifyPassword(username, password); !res {
 		WriteUnauthorizedResponse(w)
 		return
 	}
@@ -55,7 +55,11 @@ func getUserList(w http.ResponseWriter, r *http.Request) {
 func getUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	var u db.User
-	auth.GetUserManager().GetUser(vars["username"], &u)
+	if !auth.GetUserManager().GetUser(vars["username"], &u) {
+		WriteNotFoundResponse(w)
+		return
+	}
+
 	WriteSuccessResponse(w, u)
 }
 
@@ -88,6 +92,11 @@ func modifyUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if vars["username"] == "" || vars["password"] == "" {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
+
 	u.Name = vars["username"]
 	success := auth.GetUserManager().ModifyUser(u)
 	WriteSuccessResponse(w, success)
@@ -96,6 +105,11 @@ func modifyUser(w http.ResponseWriter, r *http.Request) {
 func changePassword(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	success := auth.GetUserManager().ChangePassword(vars["username"], vars["password"])
+	if vars["username"] == "" || vars["old_password"] == "" || vars["password"] == "" {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
+
+	success := auth.GetUserManager().ChangePassword(vars["username"], vars["old_password"], vars["password"])
 	WriteSuccessResponse(w, success)
 }
