@@ -45,3 +45,8 @@ func WriteUnauthorizedResponse(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusUnauthorized)
 	w.Write([]byte("Unauthorized"))
 }
+
+func WriteNotFoundResponse(w http.ResponseWriter) {
+	w.WriteHeader(http.StatusNotFound)
+	w.Write([]byte("Not found"))
+}

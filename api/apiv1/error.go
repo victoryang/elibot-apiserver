@@ -11,6 +11,7 @@ const (
 	ERRREQUESTTIMEOUT = 201
 	ERRREQUESTFAIL = 202
 	ERRQUERY = 203
+	ERR_REQ_INVALID_PARAMETER = 204
 
 	ERRBACKUPDB = 300
 	ERRLISTDBS = 301
@@ -31,6 +32,7 @@ var ErrStringMap = map[int]string {
 	ERRREQUESTTIMEOUT:				"Request times out or cancelled",
 	ERRREQUESTFAIL:					"Request fails",
 	ERRQUERY:						"Fail to query",
+	ERR_REQ_INVALID_PARAMETER:		"Invalid parameter",
 
 	ERRBACKUPDB: 				"Fail to backup db",
 	ERRLISTDBS: 				"Fail to list dbs",
