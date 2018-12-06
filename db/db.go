@@ -25,6 +25,13 @@ func CloseDB() error {
 	return conn.Close()
 }
 
+func InitializeTable(table string) error {
+	if err := PrepareAndExecuteCommand("CREATE TABLE IF NOT EXISTS " + table); err!=nil {
+		Log.Error("Initialize table fails: ", err)
+	}
+	return nil
+}
+
 func CreateTableIfNotExist(command string) error {
 	if err := PrepareAndExecuteCommand(command); err!=nil {
 		Log.Error("create table fails: ", err)
