@@ -101,10 +101,6 @@ func (m *UserManager) RemoveUser(name string) bool {
 }
 
 func (m *UserManager) ModifyUser(u db.User) bool {
-	if u.Name == "" {
-		return false
-	}
-
 	var old db.User
 	if m.GetUser(u.Name, &old) {
 		if u.Mail == "" {
@@ -116,7 +112,7 @@ func (m *UserManager) ModifyUser(u db.User) bool {
 		}
 	} else {
 		Log.Error("Could not modify user: not found")
-                return false
+        return false
 	}
 
 	if err := db.ModifyUser(u); err!=nil {
@@ -150,22 +146,13 @@ func (m *UserManager) VerifyPassword(name string, pwd string) bool {
 	return db.VerifyPassword(name, epwd)
 }
 
-func (m *UserManager) ChangePassword(name string, spwd string, dpwd string) bool {
-	var espwd string
-	if err := encodePassword(spwd, &espwd); err!=nil {
+func (m *UserManager) ChangePassword(name string, pwd string) bool {
+	var epwd string
+	if err := encodePassword(pwd, &epwd); err!=nil {
 		return false
 	}
 
-	if !db.VerifyPassword(name, espwd) {
-		return false
-	}
-
-	var edpwd string
-	if err := encodePassword(dpwd, &edpwd); err!=nil {
-		return false
-	}
-
-	if err := db.ModifyPassword(name, edpwd); err!=nil {
+	if err := db.ModifyPassword(name, epwd); err!=nil {
 		Log.Error("Could change password: ", err)
 		return false
 	}

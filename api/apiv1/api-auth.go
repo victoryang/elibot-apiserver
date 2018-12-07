@@ -28,7 +28,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	username := vars["username"]
-	if res := auth.GetUserManager().VerifyPassword(username, vars["pwd"]); !res {
+	if !auth.GetUserManager().VerifyPassword(username, vars["pwd"]) {
 		WriteUnauthorizedResponse(w)
 		return
 	}
@@ -133,7 +133,7 @@ func modifyUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if res := auth.GetUserManager().VerifyPassword(vars["username"], vars["pwd"]); !res {
+	if !auth.GetUserManager().VerifyPassword(vars["username"], vars["pwd"]) {
 		WriteUnauthorizedResponse(w)
 		return
 	}
@@ -155,7 +155,12 @@ func changePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !auth.GetUserManager().ChangePassword(vars["username"], vars["spwd"], vars["dpwd"]) {
+	if !auth.GetUserManager().VerifyPassword(vars["username"], vars["spwd"]) {
+		WriteUnauthorizedResponse(w)
+		return
+	}
+
+	if !auth.GetUserManager().ChangePassword(vars["username"], vars["dpwd"]) {
 		WriteInternalServerErrorResponse(w, ERRFAILTOOPERATEPWD)
 		return
 	}
