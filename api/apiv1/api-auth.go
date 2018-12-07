@@ -20,27 +20,28 @@ func getSourceIp(r *http.Request) string {
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
-	username := r.FormValue("username")
-	password := r.FormValue("password")
+	vars := mux.Vars(r)
 
-	if username == "" || password == "" {
+	if vars["username"] == "" || vars["pwd"] == "" {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
+
+	username := vars["username"]
+	if res := auth.GetUserManager().VerifyPassword(username, vars["pwd"]); !res {
 		WriteUnauthorizedResponse(w)
 		return
 	}
 
-	if res := auth.GetUserManager().VerifyPassword(username, password); !res {
-		WriteUnauthorizedResponse(w)
+	ip := getSourceIp(r)
+	if auth.CheckSession(ip) {
+		WriteMethodNotAllowedResponse(w)
 		return
 	}
 
-	token := auth.SetSession(username, getSourceIp(r))
+	token := auth.SetSession(username, ip)
 
-	cookie := &http.Cookie {
-		Name: 	"session",
-		Value: 	token,
-	}
-	http.SetCookie(w, cookie)
-	WriteSuccessResponse(w, "login successfully")
+	WriteSuccessResponse(w, token)
 }
 
 func logoutHandler(w http.ResponseWriter, r *http.Request) {
@@ -49,7 +50,28 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getUserList(w http.ResponseWriter, r *http.Request) {
-	WriteSuccessResponse(w, auth.GetUserManager().GetUsersList())
+	start, end, err := validateRange(r)
+	if err != nil {
+		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		return
+	}
+
+	users := auth.GetUserManager().GetUsersList()
+	if start > len(users) {
+		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		return
+	} else if end > len(users) {
+		end = len(users)
+	}
+
+	type UserList struct{
+		Users 			[]db.User 	`json:"users"`
+		TotalPageSize 	int 		`json:"totalPageSize"`
+	}
+
+	res := users[start:end]
+
+	WriteSuccessResponse(w, UserList{Users: res, TotalPageSize: len(users)})
 }
 
 func getUser(w http.ResponseWriter, r *http.Request) {
@@ -72,8 +94,13 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if vars["username"] == "" || vars["pwd"] == "" {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
+
 	u.Name = vars["username"]
-	success := auth.GetUserManager().AddUser(u, vars["password"])
+	success := auth.GetUserManager().AddUser(u, vars["pwd"])
 	WriteSuccessResponse(w, success)
 }
 
@@ -92,8 +119,13 @@ func modifyUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if vars["username"] == "" || vars["password"] == "" {
+	if vars["username"] == "" || vars["pwd"] == "" {
 		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
+
+	if res := auth.GetUserManager().VerifyPassword(vars["username"], vars["pwd"]); !res {
+		WriteUnauthorizedResponse(w)
 		return
 	}
 
@@ -105,11 +137,11 @@ func modifyUser(w http.ResponseWriter, r *http.Request) {
 func changePassword(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	if vars["username"] == "" || vars["old_password"] == "" || vars["password"] == "" {
+	if vars["username"] == "" || vars["spwd"] == "" || vars["dpwd"] == "" {
 		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
 		return
 	}
 
-	success := auth.GetUserManager().ChangePassword(vars["username"], vars["old_password"], vars["password"])
+	success := auth.GetUserManager().ChangePassword(vars["username"], vars["spwd"], vars["dpwd"])
 	WriteSuccessResponse(w, success)
 }

@@ -13,7 +13,7 @@ func createToken(username string) string {
 	token := jwt.New(jwt.SigningMethodHS256)
 	token.Claims.(jwt.MapClaims)["username"] = username
 
-	tokenString, err := token.SignedString(Signature)
+	tokenString, err := token.SignedString([]byte(Signature))
 	if err != nil {
 		Log.Error("Failed to sign token: ", err)
 	}
