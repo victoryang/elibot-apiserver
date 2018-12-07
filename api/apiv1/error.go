@@ -20,7 +20,7 @@ const (
 
 	ERRRUNCMD = 400
 
-	ERRFAILTOLISTUSERS = 501
+	ERRFAILTOLISTUSER = 501
 	ERRFAILTOOPERATEUSER = 502
 	ERRFAILTOOPERATEPWD = 503
 )
@@ -45,7 +45,7 @@ var ErrStringMap = map[int]string {
 
 	ERRRUNCMD:					"Fail to run cmd",
 
-	ERRFAILTOLISTUSERS: 			"Fail to list user",
+	ERRFAILTOLISTUSER: 			"Fail to list user",
 	ERRFAILTOOPERATEUSER:		"Fail to operate user",
 	ERRFAILTOOPERATEPWD:			"Fail to operate password",
 }

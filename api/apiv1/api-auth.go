@@ -102,7 +102,7 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 	u.Name = vars["username"]
 
 	if !auth.GetUserManager().AddUser(u, vars["pwd"]) {
-		WriteInternalServerErrorResponse(w, ERRFAILTOADDUSER)
+		WriteInternalServerErrorResponse(w, ERRFAILTOOPERATEUSER)
 		return
 	}
 
@@ -112,7 +112,7 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 func removeUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	if !auth.GetUserManager().RemoveUser(vars["username"]) {
-		WriteInternalServerErrorResponse(w, ERRFAILTOREMOVEUSER)
+		WriteInternalServerErrorResponse(w, ERRFAILTOOPERATEUSER)
 		return
 	}
 
@@ -140,7 +140,7 @@ func modifyUser(w http.ResponseWriter, r *http.Request) {
 
 	u.Name = vars["username"]
 	if !auth.GetUserManager().ModifyUser(u) {
-		WriteInternalServerErrorResponse(w, ERRFAILTOMODIFYUSER)
+		WriteInternalServerErrorResponse(w, ERRFAILTOOPERATEUSER)
 		return
 	}
 
@@ -156,7 +156,7 @@ func changePassword(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !auth.GetUserManager().ChangePassword(vars["username"], vars["spwd"], vars["dpwd"]) {
-		WriteInternalServerErrorResponse(w, ERRFAILTOCHANGEPWD)
+		WriteInternalServerErrorResponse(w, ERRFAILTOOPERATEPWD)
 		return
 	}
 
