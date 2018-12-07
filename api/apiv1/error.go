@@ -47,11 +47,11 @@ var ErrStringMap = map[int]string {
 
 	ERRRUNCMD:					"Fail to run cmd",
 
-	ERRFAILTOLISTUSER: 			"Fail to list user"
-	ERRFAILTOADDUSER:			"Fail to add user"
-	ERRFAILTOREMOVEUSER: 		"Fail to remove user"
-	ERRFAILTOMODIFYUSER:		"Fail to modify user"
-	ERRFAILTOCHANGEPWD:			"Fail to change password"
+	ERRFAILTOLISTUSER: 			"Fail to list user",
+	ERRFAILTOADDUSER:			"Fail to add user",
+	ERRFAILTOREMOVEUSER: 		"Fail to remove user",
+	ERRFAILTOMODIFYUSER:		"Fail to modify user",
+	ERRFAILTOCHANGEPWD:			"Fail to change password",
 }
 
 func ErrMsg(errno int) string {
