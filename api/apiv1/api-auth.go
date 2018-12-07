@@ -46,7 +46,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 func logoutHandler(w http.ResponseWriter, r *http.Request) {
 	auth.ClearSession(getSourceIp(r))
-	WriteSuccessResponse(w, "logout successfully")
+	WriteSuccessResponse(w, "logout successfully\n")
 }
 
 func getUserList(w http.ResponseWriter, r *http.Request) {
@@ -106,7 +106,7 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, "Add user successfully")
+	WriteSuccessResponse(w, "Add user successfully\n")
 }
 
 func removeUser(w http.ResponseWriter, r *http.Request) {
@@ -116,7 +116,7 @@ func removeUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, "Remove user successfully")
+	WriteSuccessResponse(w, "Remove user successfully\n")
 }
 
 func modifyUser(w http.ResponseWriter, r *http.Request) {
@@ -144,7 +144,7 @@ func modifyUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, "Modify user successfully")
+	WriteSuccessResponse(w, "Modify user successfully\n")
 }
 
 func changePassword(w http.ResponseWriter, r *http.Request) {
@@ -160,5 +160,5 @@ func changePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteSuccessResponse(w, "Change password successfully")
+	WriteSuccessResponse(w, "Change password successfully\n")
 }
