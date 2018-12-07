@@ -17,7 +17,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	r.HandleFunc("/logout", logoutHandler).Methods("POST")
 
 	userapi := r.PathPrefix("/v1/users").Subrouter()
-	userapi.HandleFunc("/", getUserList).Methods("GET").Queries("start", "{start}", "end", "{end}")
+	userapi.HandleFunc("/", getUserList).Methods("GET").Queries("start", "{start}", "end", "{end}").Name("getUserList")
 	userapi.HandleFunc("/{username}", getUser).Methods("GET")
 	userapi.HandleFunc("/{username}", addUser).Methods("POST").Queries("pwd", "{pwd}")
 	userapi.HandleFunc("/{username}", modifyUser).Methods("PUT").Queries("pwd", "{pwd}")

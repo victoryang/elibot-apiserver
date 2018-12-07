@@ -9,6 +9,7 @@ import (
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/middleware"
 	"elibot-apiserver/middleware/accesslog"
+	"elibot-apiserver/middleware/authentication"
 	"elibot-apiserver/config"
 	
 	"github.com/gorilla/mux"
@@ -63,6 +64,8 @@ func (s *Server) configServerHandler() http.Handler {
 	n.Use(middleware.NewCorsHandler())
 
 	n.UseHandler(apiv1.RegisterAPIv1(r))
+
+	n.Use(authentication.NewAuthMiddleware((*mux.Router)(r)))
 	// Register all routers.
 	return n
 }
