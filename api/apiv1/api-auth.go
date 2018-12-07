@@ -52,13 +52,13 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 func getUserList(w http.ResponseWriter, r *http.Request) {
 	start, end, err := validateRange(r)
 	if err != nil {
-		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		WriteBadRequestResponse(w, ERRINCORRECTRANGE)
 		return
 	}
 
 	users := auth.GetUserManager().GetUsersList()
 	if start > len(users) {
-		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
+		WriteBadRequestResponse(w, ERRINCORRECTRANGE)
 		return
 	} else if end > len(users) {
 		end = len(users)
