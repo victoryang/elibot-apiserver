@@ -19,6 +19,12 @@ const (
 	ERRRESTOREDB = 303
 
 	ERRRUNCMD = 400
+
+	ERRFAILTOLISTUSER = 501
+	ERRFAILTOADDUSER = 502
+	ERRFAILTOREMOVEUSER = 503
+	ERRFAILTOMODIFYUSER = 504
+	ERRFAILTOCHANGEPWD = 505
 )
 
 var ErrStringMap = map[int]string {
@@ -40,6 +46,12 @@ var ErrStringMap = map[int]string {
 	ERRRESTOREDB: 				"Fail to restore db",
 
 	ERRRUNCMD:					"Fail to run cmd",
+
+	ERRFAILTOLISTUSER: 			"Fail to list user"
+	ERRFAILTOADDUSER:			"Fail to add user"
+	ERRFAILTOREMOVEUSER: 		"Fail to remove user"
+	ERRFAILTOMODIFYUSER:		"Fail to modify user"
+	ERRFAILTOCHANGEPWD:			"Fail to change password"
 }
 
 func ErrMsg(errno int) string {

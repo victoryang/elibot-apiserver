@@ -35,7 +35,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 
 	ip := getSourceIp(r)
 	if auth.CheckSession(ip) {
-		WriteMethodNotAllowedResponse(w)
+		WriteForbiddenResponse(w)
 		return
 	}
 
@@ -78,7 +78,7 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	var u db.User
 	if !auth.GetUserManager().GetUser(vars["username"], &u) {
-		WriteNotFoundResponse(w)
+		WriteInternalServerErrorResponse(w, ERRFAILTOLISTUSER)
 		return
 	}
 
@@ -100,14 +100,23 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	u.Name = vars["username"]
-	success := auth.GetUserManager().AddUser(u, vars["pwd"])
-	WriteSuccessResponse(w, success)
+
+	if !auth.GetUserManager().AddUser(u, vars["pwd"]) {
+		WriteInternalServerErrorResponse(w, ERRFAILTOADDUSER)
+		return
+	}
+
+	WriteSuccessResponse(w, "Add user successfully")
 }
 
 func removeUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	success := auth.GetUserManager().RemoveUser(vars["username"])
-	WriteSuccessResponse(w, success)
+	if !auth.GetUserManager().RemoveUser(vars["username"]) {
+		WriteInternalServerErrorResponse(w, ERRFAILTOREMOVEUSER)
+		return
+	}
+
+	WriteSuccessResponse(w, "Remove user successfully")
 }
 
 func modifyUser(w http.ResponseWriter, r *http.Request) {
@@ -130,8 +139,13 @@ func modifyUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	u.Name = vars["username"]
-	success := auth.GetUserManager().ModifyUser(u)
-	WriteSuccessResponse(w, success)
+	vars := mux.Vars(r)
+	if !auth.GetUserManager().ModifyUser(u) {
+		WriteInternalServerErrorResponse(w, ERRFAILTOMODIFYUSER)
+		return
+	}
+
+	WriteSuccessResponse(w, "Modify user successfully")
 }
 
 func changePassword(w http.ResponseWriter, r *http.Request) {
@@ -142,6 +156,10 @@ func changePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	success := auth.GetUserManager().ChangePassword(vars["username"], vars["spwd"], vars["dpwd"])
-	WriteSuccessResponse(w, success)
+	if !auth.GetUserManager().ChangePassword(vars["username"], vars["spwd"], vars["dpwd"]) {
+		WriteInternalServerErrorResponse(w, ERRFAILTOCHANGEPWD)
+		return
+	}
+
+	WriteSuccessResponse(w, "Change password successfully")
 }
