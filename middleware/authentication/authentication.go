@@ -31,7 +31,7 @@ func getSourceIP(r *http.Request) string {
 }
 
 func getTokenFromHeader(r *http.Request, token *string) bool {
-	auth, ok := r.Header.Get("Authorization")
+	auth := r.Header.Get("Authorization")
 	if auth == "" {
 		return false
 	}
