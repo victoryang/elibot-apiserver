@@ -50,3 +50,8 @@ func WriteNotFoundResponse(w http.ResponseWriter) {
 	w.WriteHeader(http.StatusNotFound)
 	w.Write([]byte("Not found"))
 }
+
+func WriteMethodNotAllowedResponse(w http.ResponseWriter) {
+	w.WriteHeader(http.StatusMethodNotAllowed)
+	w.Write([]byte("Method not allow"))
+}
