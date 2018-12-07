@@ -31,7 +31,7 @@ var shadow_table = "elt_shadow"
 var userInsertCommand = "INSERT INTO " + user_table + "(name, mail, mobile, authority) VALUES(?,?,?,?)"
 var userDeleteCommand = "DELETE FROM " + user_table + " WHERE name = ?"
 var userQueryCommand = "SELECT name, mail, mobile, authority FROM " + user_table
-var userUpdateCommand = "UPDATE " + user_table + " SET mail = ?, mobile = ?, authority = ? WHERE name = ?"
+var userUpdateCommand = "UPDATE " + user_table + " SET mail = ?, mobile = ?, authority = ? , mtime = datetime('now','localtime') WHERE name = ?"
 
 // PASSWORD TABLE COMMAND
 var shadowInsertCommand = "INSERT INTO " + shadow_table + " VALUES((SELECT userid FROM " + user_table + " WHERE name = ?), ?)"
