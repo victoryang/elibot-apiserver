@@ -139,7 +139,6 @@ func modifyUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	u.Name = vars["username"]
-	vars := mux.Vars(r)
 	if !auth.GetUserManager().ModifyUser(u) {
 		WriteInternalServerErrorResponse(w, ERRFAILTOMODIFYUSER)
 		return
