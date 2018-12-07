@@ -20,11 +20,9 @@ const (
 
 	ERRRUNCMD = 400
 
-	ERRFAILTOLISTUSER = 501
-	ERRFAILTOADDUSER = 502
-	ERRFAILTOREMOVEUSER = 503
-	ERRFAILTOMODIFYUSER = 504
-	ERRFAILTOCHANGEPWD = 505
+	ERRFAILTOLISTUSERS = 501
+	ERRFAILTOOPERATEUSER = 502
+	ERRFAILTOOPERATEPWD = 503
 )
 
 var ErrStringMap = map[int]string {
@@ -47,11 +45,9 @@ var ErrStringMap = map[int]string {
 
 	ERRRUNCMD:					"Fail to run cmd",
 
-	ERRFAILTOLISTUSER: 			"Fail to list user",
-	ERRFAILTOADDUSER:			"Fail to add user",
-	ERRFAILTOREMOVEUSER: 		"Fail to remove user",
-	ERRFAILTOMODIFYUSER:		"Fail to modify user",
-	ERRFAILTOCHANGEPWD:			"Fail to change password",
+	ERRFAILTOLISTUSERS: 			"Fail to list user",
+	ERRFAILTOOPERATEUSER:		"Fail to operate user",
+	ERRFAILTOOPERATEPWD:			"Fail to operate password",
 }
 
 func ErrMsg(errno int) string {
