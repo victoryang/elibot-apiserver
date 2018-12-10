@@ -23,6 +23,7 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	userapi.HandleFunc("/{username}", modifyUser).Methods("PUT").Queries("pwd", "{pwd}")
 	userapi.HandleFunc("/{username}", removeUser).Methods("DELETE")
 	userapi.HandleFunc("/{username}/password/{dpwd}", changePassword).Methods("PUT").Queries("spwd", "{spwd}")
+	userapi.HandleFunc("/{username}/password/{pwd}", verifyPwdOnceLogined).Methods("POST")
 
 	resourceapi := r.PathPrefix("/v1/resource").Subrouter()
 	resourceapi.HandleFunc("/sysvar/crobb", getcRobB).Methods("GET").Queries("start", "{start}", "end", "{end}")

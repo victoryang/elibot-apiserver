@@ -128,3 +128,26 @@ func changePassword(w http.ResponseWriter, r *http.Request) {
 
 	WriteSuccessResponse(w, "Change password successfully\n")
 }
+
+func verifyPwdOnceLogined(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	ip := getSourceIP(r)
+	if auth.CheckSession(ip) {
+		WriteForbiddenResponse(w)
+		return
+	}
+
+	if vars["username"] == "" || vars["pwd"] == "" {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
+
+	username := vars["username"]
+	if !auth.GetUserManager().VerifyPassword(username, vars["pwd"]) {
+		WriteUnauthorizedResponse(w)
+		return
+	}
+
+	WriteSuccessResponse(w, true)
+}
