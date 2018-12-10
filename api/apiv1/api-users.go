@@ -133,7 +133,7 @@ func verifyPwdOnceLogined(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
 	ip := getSourceIP(r)
-	if auth.CheckSession(ip) {
+	if !auth.CheckSession(ip) {
 		WriteForbiddenResponse(w)
 		return
 	}
