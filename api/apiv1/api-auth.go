@@ -29,7 +29,14 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token := auth.SetSession(username, ip)
+	var authority int
+	if !auth.GetUserManager().GetUserAuthority(username, &authority) {
+		Log.Debug("Can't get authority for this user")
+		WriteUnauthorizedResponse(w)
+		return
+	}
+
+	token := auth.SetSession(username, authority, ip)
 
 	WriteSuccessResponse(w, token)
 }

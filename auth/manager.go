@@ -53,11 +53,23 @@ func (m *UserManager) UpdateUserList() {
 	m.Users = db.GetUsersList()
 }
 
-func (m *UserManager) GetUser(name string, user *db.User) bool {
+func (m *UserManager) GetUserAuthority(name string, authority *int) bool {
 	m.Mutex.Lock()
 	defer m.Mutex.Unlock()
 
-	m.UpdateUserList()
+	for _, u := range m.Users {
+		if u.Name == name {
+			*authority = u.Authority
+			return true
+		}
+	}
+
+	return false
+}
+
+func (m *UserManager) GetUser(name string, user *db.User) bool {
+	m.Mutex.Lock()
+	defer m.Mutex.Unlock()
 
 	for _, u := range m.Users {
 		if u.Name == name {
@@ -157,9 +169,5 @@ func (m *UserManager) ChangePassword(name string, pwd string) bool {
 		return false
 	}
 
-	m.Mutex.Lock()
-	defer m.Mutex.Unlock()
-	
-	m.UpdateUserList()
 	return true
 }

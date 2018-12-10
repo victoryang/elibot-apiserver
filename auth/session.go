@@ -6,16 +6,22 @@ import (
 
 type Session struct {
 	Username 		string
+	Authority 		int
 	Token 			string
 }
 
 var loginSession = make(map[string]Session)
 
-func SetSession(username string, ip string) string {
+func GetLoginedUserAuthority(ip string) int {
+	return loginSession[ip].Authority
+}
+
+func SetSession(username string, authority int, ip string) string {
 	token := createToken(username)
 
 	session := Session {
 		Username: 	username,
+		Authority: 	authority,
 		Token:		token,
 	}
 
