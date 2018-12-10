@@ -23,7 +23,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ip := getSourceIp(r)
+	ip := getSourceIP(r)
 	if auth.CheckSession(ip) {
 		WriteForbiddenResponse(w)
 		return
@@ -35,6 +35,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func logoutHandler(w http.ResponseWriter, r *http.Request) {
-	auth.ClearSession(getSourceIp(r))
+	auth.ClearSession(getSourceIP(r))
 	WriteSuccessResponse(w, "logout successfully\n")
 }
