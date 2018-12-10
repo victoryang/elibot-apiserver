@@ -7,7 +7,6 @@ import (
 	"github.com/gorilla/mux"
 
 	"elibot-apiserver/auth"
-	"elibot-apiserver/db"
 	//Log "elibot-apiserver/log"
 )
 
