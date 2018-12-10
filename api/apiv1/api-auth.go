@@ -6,7 +6,7 @@ import (
 	"github.com/gorilla/mux"
 
 	"elibot-apiserver/auth"
-	//Log "elibot-apiserver/log"
+	Log "elibot-apiserver/log"
 )
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
