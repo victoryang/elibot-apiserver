@@ -2,9 +2,9 @@ package apiv1
 
 import (
 	"net/http"
+	"strconv"
 
 	"elibot-apiserver/auth"
-	"elibot-apiserver/db"
 	Log "elibot-apiserver/log"
 )
 
@@ -42,7 +42,7 @@ func InitRemoteModeFromParamServer() {
 	remoteMode = int(reply)
 }
 
-func InitAuthorization() error {
+func InitAuthorization() {
 	InitRemoteModeFromParamServer()
 }
 
@@ -50,7 +50,7 @@ func isRemoteReq(ip string) bool {
 	return ip != "127.0.0.1"
 }
 
-func VerifyFunc(funcId string, authority id) bool {
+func VerifyFunc(funcId string, authority int) bool {
 	return true
 }
 
