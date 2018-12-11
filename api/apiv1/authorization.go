@@ -29,7 +29,7 @@ func isLocalReq(ip string) bool {
 	return ip == "127.0.0.1"
 }
 
-func checkAuthorization(authority string, funcName string) bool {
+func checkAuthorization(authority int, funcName string) bool {
 	return true
 }
 
