@@ -89,6 +89,7 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 	SetUpDatabase(cfg)
 
 	if err := auth.AuthInit(cfg.Secure); err!= nil {
+		Log.Error("Error to init auth module")
 		os.Exit(ERR_AUTH_INIT_FAIL)
 	}
 

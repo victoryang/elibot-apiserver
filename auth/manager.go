@@ -29,12 +29,12 @@ func GetUserManager() *UserManager {
 
 func InitManager() error {
 	if err := db.InitUserTable(); err!=nil {
-    	Log.Error("Could not initialize the user table")
+    	Log.Error("Could not initialize the user table: ", err)
     	return err
     }
 
     if err := db.InitShadow(); err!=nil {
-    	Log.Error("Could not initialize the shadow table")
+    	Log.Error("Could not initialize the shadow table: ", err)
     	return err
     }
 
