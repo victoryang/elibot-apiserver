@@ -33,6 +33,15 @@ func SendToMCServer(w http.ResponseWriter, serviceMethod string, params interfac
 	WriteJsonSuccessResponse(w, []byte(reply))
 }
 
+func InternalSendToMCServer(serviceMethod string, params interface{}, reply interface{}) error {
+    if err := mcserver.SendToMCServerWithJsonRpc(serviceMethod, params, reply); err!=nil {
+        Log.Error("Could not call internal request to mcserver: ", err)
+        return err
+    }
+
+    return nil
+}
+
 func SendToParamServer(w http.ResponseWriter, serviceMethod string, params interface{}) {
     var reply string
 
@@ -44,4 +53,13 @@ func SendToParamServer(w http.ResponseWriter, serviceMethod string, params inter
     }
 
     WriteJsonSuccessResponse(w, []byte(reply))
+}
+
+func InternalSendToParamServer(serviceMethod string, params interface{}, reply interface{}) error {
+    if err := paramserver.SendToParamServerWithJsonRpc(serviceMethod, params, reply); err!=nil {
+        Log.Error("Could not call internal request to param server: ", err)
+        return err
+    }
+
+    return nil
 }
