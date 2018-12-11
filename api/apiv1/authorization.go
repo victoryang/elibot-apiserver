@@ -4,41 +4,63 @@ import (
 	"net/http"
 
 	"elibot-apiserver/auth"
-	//Log "elibot-apiserver/log"
+	"elibot-apiserver/db"
+	Log "elibot-apiserver/log"
 )
 
-type AuthorityTree map[string]int
+const (
+	DefualtMode = 0
+	RemoteModeId = "param.global.remoteAccessEnabled"
+	cmdGetRemoteMode = "get_remote_mode_status"
+)
 
-var remoteMode bool
+var remoteMode int
 
-func GetRemoteMode() bool {
+func remoteModeOff() bool {
+	return remoteMode == DefualtMode
+}
+
+func GetRemoteMode() int {
 	return remoteMode
 }
 
-func SetRemoteMode(mode bool) {
-	remoteMode = mode
+func SetRemoteMode(mode string) {
+	v, e := strconv.Atoi(mode)
+	if e == nil {
+		remoteMode = v
+	}
 }
 
-func InitAuthorization() {
-	// initialize remote mode value from db
+func InitRemoteModeFromParamServer() {
+	var reply int32
+	if err := InternalSendToParamServer(cmdGetRemoteMode, nil, &reply); err!=nil {
+		Log.Error("init remote mode error, set to default")
+		remoteMode = DefualtMode
+		return
+	}
 
-	// initialize authorization tree from mcserver
+	remoteMode = int(reply)
 }
 
-func isLocalReq(ip string) bool {
-	return ip == "127.0.0.1"
+func InitAuthorization() error {
+	InitRemoteModeFromParamServer()
 }
 
-func checkAuthorization(authority int, funcName string) bool {
+func isRemoteReq(ip string) bool {
+	return ip != "127.0.0.1"
+}
+
+func VerifyFunc(funcId string, authority id) bool {
 	return true
 }
 
-func CHECKAUTHORIZATION(r *http.Request, funcName string) bool {
+func CHECKAUTHORIZATION(w http.ResponseWriter, r *http.Request, funcId string) bool {
 	ip := getSourceIP(r)
 
 	// Forbid remote ip, if remote mode not on
-	if !GetRemoteMode() {
-		if !isLocalReq(ip) {
+	if remoteModeOff() {
+		if isRemoteReq(ip) {
+			WriteForbiddenResponse(w)
 			return false
 		}
 	}
@@ -47,14 +69,15 @@ func CHECKAUTHORIZATION(r *http.Request, funcName string) bool {
 	if auth.CheckSession(ip) {
 		token := getTokenFromHeader(r)
 		if !auth.VerifySessionToken(token, ip) {
+			WriteUnauthorizedResponse(w)
 			return false
 		}
 
 		authority = auth.GetLoginedUserAuthority(ip)
 	}
 
-	// TODO
-	if !checkAuthorization(authority, funcName) {
+	if !VerifyFunc(funcId, authority) {
+		WriteUnauthorizedResponse(w)
 		return false
 	}
 

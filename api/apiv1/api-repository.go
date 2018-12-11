@@ -65,7 +65,11 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 	if err := InternalSendToMCServer(cmdSetParam, params, &reply); err!=nil {
 		WriteInternalServerErrorResponse(w, ERRMCSEVERNOTAVAILABLE)
         return
-	}	
+	}
+
+	if md_id == RemoteModeId {
+		SetRemoteMode(d.Value)
+	}
 
 	WriteJsonSuccessResponse(w, []byte(reply))
 }
