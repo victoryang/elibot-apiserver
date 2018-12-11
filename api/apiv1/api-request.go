@@ -15,18 +15,17 @@ func getSourceIP(r *http.Request) string {
 	return ip
 }
 
-func getTokenFromHeader(r *http.Request, token *string) bool {
+func getTokenFromHeader(r *http.Request) string {
 	auth := r.Header.Get("Authorization")
 	if auth == "" {
-		return false
+		return ""
 	}
 
 	parts := strings.Split(auth, " ")
 	if len(parts) != 2 || strings.ToLower(parts[0]) != "bearer" {
 		Log.Error("Authorization header format must be Bearer {token}")
-		return false
+		return ""
 	}
 
-	*token = parts[1]
-	return true
+	return parts[1]
 }
