@@ -74,7 +74,7 @@ func NewApiServer(c *config.GlobalConfiguration) *Server {
 	s := new(Server)
 	
 	apiv1.SetRootPath(c.UploadPath)
-	apiv1.InitAuthorization()
+	apiv1.InitAuthorization(c.Secure.WhiteList)
 
 	s.AccessLog.File = c.AccessLogsFile
 	s.EntryPoint.httpServer = &http.Server {

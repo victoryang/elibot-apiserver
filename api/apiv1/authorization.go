@@ -15,6 +15,7 @@ const (
 )
 
 var remoteMode int
+var whitelist = make([]string, 0)
 
 func remoteModeOff() bool {
 	return remoteMode == DefualtMode
@@ -42,12 +43,18 @@ func InitRemoteModeFromParamServer() {
 	remoteMode = int(reply)
 }
 
-func InitAuthorization() {
+func InitAuthorization(wl []string) {
+	whitelist = append(whitelist, wl...)
 	InitRemoteModeFromParamServer()
 }
 
 func isRemoteReq(ip string) bool {
-	return ip != "127.0.0.1"
+	for _, v := range whitelist {
+		if ip == v {
+			return true
+		}
+	}
+	return false
 }
 
 func VerifyFunc(funcId string, authority int) bool {
@@ -57,11 +64,19 @@ func VerifyFunc(funcId string, authority int) bool {
 func CHECKAUTHORIZATION(w http.ResponseWriter, r *http.Request, funcId string) bool {
 	ip := getSourceIP(r)
 
-	// Forbid remote ip, if remote mode not on
-	if remoteModeOff() {
-		if isRemoteReq(ip) {
+	/* Reject remote request, if: 
+	 * 1. remote mode not on
+	 * 2. remote mode on, but no user login
+	 */
+	if isRemoteReq(ip) {
+		if remoteModeOff() {
 			WriteForbiddenResponse(w)
 			return false
+		} else {
+			if !auth.CheckSession(ip) {
+				WriteUnauthorizedResponse(w)
+				return false
+			}
 		}
 	}
 

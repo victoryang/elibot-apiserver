@@ -46,6 +46,7 @@ var (
 	DefaultSecurity = &Security {
 		SSLCert:			DefaultCertificate,
 		Jwt:				DefaultJwtToken,
+		WhiteList: 			[]string{"127.0.0.1"},
 	}
 
 	DefaultGlobalConfiguration = &GlobalConfiguration{
@@ -106,6 +107,7 @@ type Certificate struct {
 type Security struct {
 	SSLCert				*Certificate 	`yaml:"cert,omitempty"`
 	Jwt 				*JwtToken		`yaml:"jwt,omitempty"`
+	WhiteList			[]string		`yaml:"whitelist,omitempty"`
 }
 
 type GlobalConfiguration struct {
@@ -114,9 +116,9 @@ type GlobalConfiguration struct {
 	UploadPath 			string					`yaml:"upath,omitempty"`
 	Debug				*DEBUG					`yaml:"debug,omitempty"`
 
-	Http 				*HttpEntryPoint 				`yaml:"http,omitempty`
-	Grpc 				*GrpcEntryPoint 				`yaml:"grpc,omitempty`
-	Websocket 			*WebsocketEntryPoint 		`yaml:"websocket,omitempty`
+	Http 				*HttpEntryPoint 				`yaml:"http,omitempty"`
+	Grpc 				*GrpcEntryPoint 				`yaml:"grpc,omitempty"`
+	Websocket 			*WebsocketEntryPoint 		`yaml:"websocket,omitempty"`
 
 	Databases			*Database				`yaml:"databases,omitempty"`
 	Admin 				*AdminSever 			`yaml:"admin,omitempty"`
