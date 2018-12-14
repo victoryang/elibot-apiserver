@@ -131,5 +131,6 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	filesapi.HandleFunc("/jbi", getJBIList).Methods("GET")
 	filesapi.HandleFunc("/jbi/{filename}", downloadJBIFile).Methods("GET")
 
+	r.Use(NewAuthenticationMiddleware().Middleware)
 	return r
 }

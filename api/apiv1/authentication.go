@@ -5,7 +5,10 @@ import (
 	"strconv"
 
 	"elibot-apiserver/auth"
+	"api-server/db"
 	Log "elibot-apiserver/log"
+
+	"github.com/gorilla/mux"
 )
 
 const (
@@ -35,11 +38,12 @@ func SetRemoteMode(mode string) {
 func InitRemoteModeFromParamServer() {
 	var reply int32
 	if err := InternalSendToParamServer(cmdGetRemoteMode, nil, &reply); err!=nil {
-		Log.Error("init remote mode error, set to default")
+		Log.Error("init remote mode error: ", err)
 		remoteMode = DefualtMode
 		return
 	}
 
+	Log.Debug("init remote mode: ", reply)
 	remoteMode = int(reply)
 }
 
@@ -51,17 +55,13 @@ func InitAuthorization(wl []string) {
 func isRemoteReq(ip string) bool {
 	for _, v := range whitelist {
 		if ip == v {
-			return true
+			return false
 		}
 	}
-	return false
-}
-
-func VerifyFunc(funcId string, authority int) bool {
 	return true
 }
 
-func CHECKAUTHORIZATION(w http.ResponseWriter, r *http.Request, funcId string) bool {
+func authenticator(w http.ResponseWriter, r *http.Request, next http.Handler) {
 	ip := getSourceIP(r)
 
 	/* Reject remote request, if: 
@@ -71,11 +71,11 @@ func CHECKAUTHORIZATION(w http.ResponseWriter, r *http.Request, funcId string) b
 	if isRemoteReq(ip) {
 		if remoteModeOff() {
 			WriteForbiddenResponse(w)
-			return false
+			return
 		} else {
 			if !auth.CheckSession(ip) {
 				WriteUnauthorizedResponse(w)
-				return false
+				return
 			}
 		}
 	}
@@ -85,16 +85,31 @@ func CHECKAUTHORIZATION(w http.ResponseWriter, r *http.Request, funcId string) b
 		token := getTokenFromHeader(r)
 		if !auth.VerifySessionToken(token, ip) {
 			WriteUnauthorizedResponse(w)
-			return false
+			return
 		}
 
 		authority = auth.GetLoginedUserAuthority(ip)
 	}
 
-	if !VerifyFunc(funcId, authority) {
+	funcId := mux.CurrentRoute(r).GetName()
+	Log.Debug("currentRoute is: ", funcId)
+	if !db.VerifyFunc(funcId, authority) {
 		WriteUnauthorizedResponse(w)
-		return false
+		return
 	}
 
-	return true
+	next.ServeHTTP(w, r)
+}
+
+type AuthenticationMiddleware struct {
+}
+
+func NewAuthenticationMiddleware() *AuthenticationMiddleware {
+	return &AuthenticationMiddleware{}
+}
+
+func (awm *AuthenticationMiddleware) Middleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request){
+		authenticator(w, r, next)
+	})
 }
