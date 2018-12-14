@@ -5,7 +5,6 @@ import (
 	"strconv"
 
 	"elibot-apiserver/auth"
-	"elibot-apiserver/db"
 	Log "elibot-apiserver/log"
 
 	"github.com/gorilla/mux"
