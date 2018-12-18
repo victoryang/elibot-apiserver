@@ -12,6 +12,10 @@ import (
 
 const (
 	DefualtMode = 0
+
+	AuthorityAdmin = 0
+	AuthorityLogout = 40
+
 	RemoteModeId = "param.global.remoteAccessEnabled"
 	cmdGetRemoteMode = "get_remote_mode_status"
 )
@@ -65,9 +69,16 @@ func VerifyFunc(funcId string, authority int) bool {
 }
 
 func authenticator(w http.ResponseWriter, r *http.Request, next http.Handler) {
+	funcId := mux.CurrentRoute(r).GetName()
+
+	if funcId == "login" || funcId == "logout" {
+		next.ServeHTTP(w, r)
+		return
+	}
+
 	ip := getSourceIP(r)
 
-	/* Reject remote request, if: 
+	/* Reject remote request, if:
 	 * 1. remote mode not on
 	 * 2. remote mode on, but no user login
 	 */
@@ -83,7 +94,7 @@ func authenticator(w http.ResponseWriter, r *http.Request, next http.Handler) {
 		}
 	}
 
-	var authority int = 0
+	var authority int = AuthorityLogout
 	if auth.CheckSession(ip) {
 		token := getTokenFromHeader(r)
 		if !auth.VerifySessionToken(token, ip) {
@@ -94,11 +105,12 @@ func authenticator(w http.ResponseWriter, r *http.Request, next http.Handler) {
 		authority = auth.GetLoginedUserAuthority(ip)
 	}
 
-	funcId := mux.CurrentRoute(r).GetName()
-	Log.Debug("currentRoute is: ", funcId)
-	if !VerifyFunc(funcId, authority) {
-		WriteUnauthorizedResponse(w)
-		return
+	if MustVerify(funcId) {
+		Log.Debug("currentRoute is: ", funcId)
+		if !db.VerifyFunc(funcId, authority) {
+			WriteUnauthorizedResponse(w)
+			return
+		}
 	}
 
 	next.ServeHTTP(w, r)

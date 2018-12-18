@@ -10,6 +10,10 @@ import (
 	//Log "elibot-apiserver/log"
 )
 
+const (
+	ADMINISTRATOR = "Admin"
+)
+
 func getUserList(w http.ResponseWriter, r *http.Request) {
 	start, end, err := validateRange(r)
 	if err != nil {
@@ -61,6 +65,10 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	u.Name = vars["username"]
+	if u.Name == ADMINISTRATOR || u.Authority == AuthorityAdmin {
+		WriteForbiddenResponse(w)
+		return
+	}
 
 	if !auth.GetUserManager().AddUser(u, vars["pwd"]) {
 		WriteInternalServerErrorResponse(w, ERRFAILTOOPERATEUSER)
@@ -72,6 +80,11 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 
 func removeUser(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
+	if vars["username"] == ADMINISTRATOR {
+		WriteForbiddenResponse(w)
+		return
+	}
+
 	if !auth.GetUserManager().RemoveUser(vars["username"]) {
 		WriteInternalServerErrorResponse(w, ERRFAILTOOPERATEUSER)
 		return
