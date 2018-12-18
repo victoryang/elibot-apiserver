@@ -1,7 +1,7 @@
 package shm
 
 // #cgo CFLAGS: -I/root/mcserver/include/
-// #cgo LDFLAGS: -lshare
+// #cgo LDFLAGS: -lrobresource
 import "C"
 import(
 	"context"

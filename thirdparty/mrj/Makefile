@@ -13,22 +13,22 @@ libmrj.so: mrj.o mcnv.o mcresource.o mcplc.o mcvars.o cJSON.o
 	$(CC) $(SHARED) -o $@ $^
 
 test: main.c mrj.o mcnv.o mcresource.o mcvars.o cJSON.o
-	$(CC) $(CPPFLAGS) -o $@ $^ -lm -lshare
+	$(CC) $(CPPFLAGS) -o $@ $^ -lm -lrobresource
 
 mrj.o: mrj.c
-	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lshare
+	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lrobresource
 
 mcnv.o: mcnv.c
-	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lshare
+	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lrobresource
 
 mcresource.o: mcresource.c
-	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lshare
+	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lrobresource
 
 mcplc.o: mcplc.c
-	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lshare
+	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lrobresource
 
 mcvars.o: mcvars.c
-	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lshare
+	$(CC) $(CPPFLAGS) -o $@ -c $^ -lm -lrobresource
 
 cJSON.o: cJSON.c
 	$(CC) -fPIC -Wall -o $@ -c $^
