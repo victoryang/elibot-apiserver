@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"os"
 	"elibot-apiserver/config"
 )
 
@@ -28,6 +29,15 @@ func GetKey() string {
 func IsSSL() bool {
 	return SSLEnable
 }
+
+func FileExists(path string) bool {
+	st, e := os.Stat(path)
+	// If file exists and is regular return true.
+	if e == nil && st.Mode().IsRegular() {
+		return true
+	}
+	return false
+} 
 
 func SSLInit(c *config.Certificate) {
 	ssl = new(SSL)

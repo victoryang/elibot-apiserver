@@ -29,14 +29,28 @@ func ToErrJson(errno int) []byte {
 	return r
 }
 
+// 500
 func WriteInternalServerErrorResponse(w http.ResponseWriter, errno int) {
 	r := ToErrJson(errno)
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Write(r)
 }
 
+// 400
 func WriteBadRequestResponse(w http.ResponseWriter, errno int) {
 	r := ToErrJson(errno)
 	w.WriteHeader(http.StatusBadRequest)
 	w.Write(r)
+}
+
+// 401
+func WriteUnauthorizedResponse(w http.ResponseWriter) {
+	w.WriteHeader(http.StatusUnauthorized)
+	w.Write([]byte("Unauthorized"))
+}
+
+// 403
+func WriteForbiddenResponse(w http.ResponseWriter) {
+	w.WriteHeader(http.StatusForbidden)
+	w.Write([]byte("Forbidden"))
 }

@@ -59,7 +59,19 @@ func setParam(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Log.Debug("setParam ", md_id, d.Value, strconv.Itoa(d.Index))
-	SendToMCServer(w, cmdSetParam, ConcatParams(md_id, d.Value, strconv.Itoa(d.Index)))
+
+	var reply string
+	params := ConcatParams(md_id, d.Value, strconv.Itoa(d.Index))
+	if err := InternalSendToMCServer(cmdSetParam, params, &reply); err!=nil {
+		WriteInternalServerErrorResponse(w, ERRMCSEVERNOTAVAILABLE)
+        return
+	}
+
+	if md_id == RemoteModeId {
+		SetRemoteMode(d.Value)
+	}
+
+	WriteJsonSuccessResponse(w, []byte(reply))
 }
 
 func setToolFrame(w http.ResponseWriter, r *http.Request) {

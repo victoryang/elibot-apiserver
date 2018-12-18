@@ -18,12 +18,18 @@ func SetupDB(dbname string) {
     if conn, err = sql.Open("sqlite3", dbname+"?_journal_mode=WAL"); err!=nil {
     	Log.Error("failed to setup db: ", err)
     }
-
     return
 }
 
 func CloseDB() error {
 	return conn.Close()
+}
+
+func InitializeTable(table string) error {
+	if err := PrepareAndExecuteCommand("CREATE TABLE IF NOT EXISTS " + table); err!=nil {
+		Log.Error("Initialize table fails: ", err)
+	}
+	return nil
 }
 
 func CreateTableIfNotExist(command string) error {
@@ -33,30 +39,10 @@ func CreateTableIfNotExist(command string) error {
 	return nil
 }
 
-func iterateRows(rows *sql.Rows) map[string]string {
-	maps := make(map[string]string)
-	for rows.Next() {
-		var key string
-		var value string
-		if err := rows.Scan(&key, &value); err!=nil {
-			Log.Error("scan rows fails: ", err)
-			continue
-		}
-		maps[key] = value
-	}
-	return maps
-}
-
-func DoQueryCommand(command string, args ...interface{}) (map[string]string, error){
+func DoQuery(command string, args ...interface{}) (*sql.Rows, error){
 	mu.Lock()
 	defer mu.Unlock()
-	rows, err := conn.Query(command, args...)
-	if err!=nil {
-		Log.Error("failed to query: ", err)
-		return nil, err
-	}
-	defer rows.Close()
-	return iterateRows(rows), nil
+	return conn.Query(command, args...)
 }
 
 func PrepareAndExecuteCommand(command string, args ...interface{}) error {

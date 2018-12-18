@@ -143,6 +143,8 @@ func (s *Security) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	if s.Jwt == nil {
 		s.Jwt = DefaultSecurity.Jwt
 	}
+
+	s.WhiteList = append(s.WhiteList, DefaultSecurity.WhiteList...)
 	return nil
 }
 

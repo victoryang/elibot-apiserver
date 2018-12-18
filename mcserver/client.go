@@ -62,7 +62,7 @@ func NewRpcClient() error {
 	return nil
 }
 
-func SendToMCServerWithJsonRpc(serviceMethod string, params interface{}, reply *string) error {
+func SendToMCServerWithJsonRpc(serviceMethod string, params interface{}, reply interface{}) error {
     ctx, cancel := context.WithTimeout(ctx_rpc, JsonRpcTimeOut)
     defer cancel()
 

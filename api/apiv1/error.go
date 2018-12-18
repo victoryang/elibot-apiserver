@@ -11,6 +11,7 @@ const (
 	ERRREQUESTTIMEOUT = 201
 	ERRREQUESTFAIL = 202
 	ERRQUERY = 203
+	ERR_REQ_INVALID_PARAMETER = 204
 
 	ERRBACKUPDB = 300
 	ERRLISTDBS = 301
@@ -18,6 +19,10 @@ const (
 	ERRRESTOREDB = 303
 
 	ERRRUNCMD = 400
+
+	ERRFAILTOLISTUSER = 501
+	ERRFAILTOOPERATEUSER = 502
+	ERRFAILTOOPERATEPWD = 503
 )
 
 var ErrStringMap = map[int]string {
@@ -31,6 +36,7 @@ var ErrStringMap = map[int]string {
 	ERRREQUESTTIMEOUT:				"Request times out or cancelled",
 	ERRREQUESTFAIL:					"Request fails",
 	ERRQUERY:						"Fail to query",
+	ERR_REQ_INVALID_PARAMETER:		"Invalid parameter",
 
 	ERRBACKUPDB: 				"Fail to backup db",
 	ERRLISTDBS: 				"Fail to list dbs",
@@ -38,6 +44,10 @@ var ErrStringMap = map[int]string {
 	ERRRESTOREDB: 				"Fail to restore db",
 
 	ERRRUNCMD:					"Fail to run cmd",
+
+	ERRFAILTOLISTUSER: 			"Fail to list user",
+	ERRFAILTOOPERATEUSER:		"Fail to operate user",
+	ERRFAILTOOPERATEPWD:			"Fail to operate password",
 }
 
 func ErrMsg(errno int) string {

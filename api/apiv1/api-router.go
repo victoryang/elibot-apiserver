@@ -12,6 +12,19 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 
 	r.HandleFunc("/", hello).Methods("GET")
 	r.HandleFunc("/health", handleHealth).Methods("GET")
+
+	r.HandleFunc("/login", loginHandler).Methods("POST").Queries("username", "{username}", "pwd", "{pwd}").Name("login")
+	r.HandleFunc("/logout", logoutHandler).Methods("POST").Name("logout")
+
+	userapi := r.PathPrefix("/v1/users").Subrouter()
+	userapi.HandleFunc("/", getUserList).Methods("GET").Queries("start", "{start}", "end", "{end}").Name("getUserList")
+	userapi.HandleFunc("/{username}", getUser).Methods("GET")
+	userapi.HandleFunc("/{username}", addUser).Methods("POST").Queries("pwd", "{pwd}")
+	userapi.HandleFunc("/{username}", modifyUser).Methods("PUT").Queries("pwd", "{pwd}")
+	userapi.HandleFunc("/{username}", removeUser).Methods("DELETE")
+	userapi.HandleFunc("/{username}/password/{dpwd}", changePassword).Methods("PUT").Queries("spwd", "{spwd}")
+	userapi.HandleFunc("/{username}/password/{pwd}", verifyPwdOnceLogined).Methods("POST")
+
 	resourceapi := r.PathPrefix("/v1/resource").Subrouter()
 	resourceapi.HandleFunc("/sysvar/crobb", getcRobB).Methods("GET").Queries("start", "{start}", "end", "{end}")
 	resourceapi.HandleFunc("/sysvar/irobi", getiRobI).Methods("GET").Queries("start", "{start}", "end", "{end}")
@@ -118,5 +131,6 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	filesapi.HandleFunc("/jbi", getJBIList).Methods("GET")
 	filesapi.HandleFunc("/jbi/{filename}", downloadJBIFile).Methods("GET")
 
+	r.Use(NewAuthenticationMiddleware().Middleware)
 	return r
 }

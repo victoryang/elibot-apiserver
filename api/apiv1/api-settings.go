@@ -46,7 +46,7 @@ func getSystemDate(w http.ResponseWriter, r *http.Request) {
 
 func setSystemDate(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	cmd := exec.Command("date", "-s", vars["date"])
+	cmd := exec.Command("/bin/sh", "-c", "date -s " + vars["date"] + "; ./hw.sh ")
 	runShell(cmd, w)
 }
 
