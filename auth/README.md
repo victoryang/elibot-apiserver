@@ -20,3 +20,5 @@ admin
 	}
 
 	result: GhANLA2rGcRDDn1zdis0Iw==
+
+	curl -X POST -d '{"authority": 2}' --header "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxIn0.tyRrkjOmz-mbdFHBFef_0NIXk_mN5cF9tJ65ShOEvxk" http://192.168.1.253:9000/v1/users/test9?pwd=MTIz
