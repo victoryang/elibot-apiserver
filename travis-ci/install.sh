@@ -15,4 +15,4 @@ sudo ln -s /usr/arm-linux-gnueabihf/lib/libz.so.1.2.8 /usr/arm-linux-gnueabihf/l
 sudo mkdir /usr/local/include/mcserver/
 sudo tar -xvf build/include/include.tar.gz -C /usr/local/include/mcserver/
 sudo cp build/include/config.h /usr/local/include/mcserver/
-sudo cp build/lib/libshare.a /usr/arm-linux-gnueabihf/lib/
+sudo cp build/lib/librobresource.so /usr/arm-linux-gnueabihf/lib/
