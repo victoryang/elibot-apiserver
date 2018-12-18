@@ -68,6 +68,14 @@ func VerifyFunc(funcId string, authority int) bool {
 	return true
 }
 
+func MustVerify(funcId string) bool {
+	if funcId == "" {
+		return false
+	}
+
+	return true
+}
+
 func authenticator(w http.ResponseWriter, r *http.Request, next http.Handler) {
 	funcId := mux.CurrentRoute(r).GetName()
 
@@ -107,7 +115,7 @@ func authenticator(w http.ResponseWriter, r *http.Request, next http.Handler) {
 
 	if MustVerify(funcId) {
 		Log.Debug("currentRoute is: ", funcId)
-		if !db.VerifyFunc(funcId, authority) {
+		if !VerifyFunc(funcId, authority) {
 			WriteUnauthorizedResponse(w)
 			return
 		}
