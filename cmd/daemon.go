@@ -124,7 +124,7 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 	wss := websocket.NewWsServer(cfg.Websocket)
 	wss.Run()
 
-	if err := alarm.NewAlarmMonitor(wss); err!=nil {
+	if err := alarm.NewAlarmMonitor(); err!=nil {
 		Log.Error("Could not watch server log")
 	}
 
