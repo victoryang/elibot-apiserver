@@ -9,7 +9,7 @@ import (
 )
 
 var logfile = "/rbctrl/mcserver-err.log"
-var ws *websocket.WsServer
+var serviceMethod = "push_message_to_network"
 var records []Record
 
 type WsResponse struct {
@@ -45,11 +45,21 @@ func handleWriteEvent() {
 		}
 	}
 
-	rsp, err := json.Marshal(WsResponse{Alarm: ret, NewItemNo: getUnReadRecordNumber()})
+	message, err := json.Marshal(WsResponse{Alarm: ret, NewItemNo: getUnReadRecordNumber()})
 	if err!=nil {
 		Log.Error("Could not marshal to json ", err)
 	} else {
-		ws.PushBytes(rsp)
+		var reply bool
+		params := make(map[string]interface{})
+		params["message"] = string(message)
+
+	    err := paramserver.SendToParamServerWithJsonRpc(serviceMethod, params, &reply)
+	    if err!=nil {
+	        Log.Error("Could not call rpc request to param server: ", err)
+	        return
+	    }
+
+	    Log.Debug("reply is ", reply)
 	}
 	return
 }
@@ -73,13 +83,12 @@ func InitRecords() {
 	return
 }
 
-func NewAlarmMonitor(s *websocket.WsServer) error{
+func NewAlarmMonitor() error {
 	InitRecords()
 	fw, err := NewFileWatcher(logfile, AlarmHandler)
 	if err!=nil {
 		return err
 	}
 	fw.Watch()
-	ws = s
 	return nil
 }
