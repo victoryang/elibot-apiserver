@@ -5,7 +5,7 @@ import (
 	"strings"
 	"github.com/fsnotify/fsnotify"
 	Log "elibot-apiserver/log"
-	"elibot-apiserver/websocket"
+	"elibot-apiserver/paramserver"
 )
 
 var logfile = "/rbctrl/mcserver-err.log"
