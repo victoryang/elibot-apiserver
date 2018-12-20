@@ -13,8 +13,10 @@ import (
 const (
 	DefualtMode = 0
 
-	AuthorityAdmin = 0
-	AuthorityLogout = 40
+	AuthorityAdmin = 1
+	AuthorityLogout = 5
+	AuthorityRemoteExpert = 6
+	AuthorityRemoteOperator = 7
 
 	RemoteModeId = "param.global.remoteAccessEnabled"
 	cmdGetRemoteMode = "get_remote_mode_status"
@@ -36,6 +38,14 @@ func SetRemoteMode(mode string) {
 	if e == nil {
 		remoteMode = v
 	}
+}
+
+func isRemoteAuthority(authority int) bool {
+	if authority == AuthorityRemoteExpert || authority == AuthorityRemoteOperator {
+		return true
+	}
+
+	return false
 }
 
 func InitRemoteModeFromParamServer() {
