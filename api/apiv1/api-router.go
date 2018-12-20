@@ -107,6 +107,9 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	axisctrlapi.HandleFunc("/dragteach/{status}", setDragteachStatus).Methods("PUT")
 	axisctrlapi.HandleFunc("/sync", syncRobot).Methods("POST")
 	axisctrlapi.HandleFunc("/zeroencode/{axisno}", setZeroEncode).Methods("PUT")
+	axisctrlapi.HandleFunc("/record_pos/cmd_start", doStartRecord).Methods("POST")
+	axisctrlapi.HandleFunc("/record_pos/cmd_end", doEndRecord).Methods("POST")
+	axisctrlapi.HandleFunc("/record_pos/cmd_save/{name}", doSaveRecord).Methods("POST")
 
 	userframeapi := robotapi.PathPrefix("/userframe").Subrouter()
 	userframeapi.HandleFunc("/userpos/{pos_no}", setUserPos).Methods("PUT")
