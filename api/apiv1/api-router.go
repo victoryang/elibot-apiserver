@@ -134,6 +134,14 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	filesapi.HandleFunc("/jbi", getJBIList).Methods("GET")
 	filesapi.HandleFunc("/jbi/{filename}", downloadJBIFile).Methods("GET")
 
+	encryptionapi := r.PathPrefix("/v1/encryption").Subrouter()
+	encryptionapi.HandleFunc("/state", getEncryptionStatus).Methods("GET")
+	encryptionapi.HandleFunc("/remaintime", getEncryptionRemainTime).Methods("GET")
+	encryptionapi.HandleFunc("/machinecode", generateMachineCode).Methods("POST")
+	encryptionapi.HandleFunc("/machinecode", getMachineCode).Methods("GET")
+	encryptionapi.HandleFunc("/encrypt/{id}", doEncrypt).Methods("POST")
+	encryptionapi.HandleFunc("/decrypt/{lisence}", doDecrypt).Methods("POST")
+
 	r.Use(NewAuthenticationMiddleware().Middleware)
 	return r
 }

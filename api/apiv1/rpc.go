@@ -63,3 +63,13 @@ func InternalSendToParamServer(serviceMethod string, params interface{}, reply i
 
     return nil
 }
+
+func SendToParamServerWithReply(w http.ResponseWriter, serviceMethod string, params interface{}, reply interface{}) {
+    if err := paramserver.SendToParamServerWithJsonRpc(serviceMethod, params, reply); err!=nil {
+        Log.Error("Could not call internal request to param server: ", err)
+        WriteInternalServerErrorResponse(w, ERRMCSEVERNOTAVAILABLE)
+        return
+    }
+
+    WriteSuccessResponse(w, reply)
+}
