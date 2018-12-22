@@ -18,6 +18,7 @@ import (
 	"elibot-apiserver/shm"
 	"elibot-apiserver/websocket"
 	"elibot-apiserver/alarm"
+	"elibot-apiserver/netlink"
 	"github.com/spf13/cobra"
 )
 
@@ -25,7 +26,7 @@ const (
 	mcserverAddress = "127.0.0.1:8055"
 )
 
-func handleSignals(s *api.Server, gs *api.GrpcServer, wss *websocket.WsServer, shms *shm.ShmServer) error {
+func handleSignals(s *api.Server, gs *api.GrpcServer, wss *websocket.WsServer, nlsServer *netlink.NLServer, shms *shm.ShmServer) error {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
@@ -38,6 +39,10 @@ func handleSignals(s *api.Server, gs *api.GrpcServer, wss *websocket.WsServer, s
 		default:
 			// stop server
 			shms.Shutdown()
+
+			if nlsServer!=nil {
+				nlsServer.Close()
+			}
 
 			wss.Shutdown()
 
@@ -119,9 +124,15 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 	wss := websocket.NewWsServer(cfg.Websocket)
 	wss.Run()
 
-	if err := alarm.NewAlarmMonitor(wss); err!=nil {
+	if err := alarm.NewAlarmMonitor(); err!=nil {
 		Log.Error("Could not watch server log")
 	}
+
+	nlsServer := netlink.NewNetlinkServer()
+	if nlsServer == nil {
+		Log.Error("Error in starting nlsserver")
+	}
+	nlsServer.Start()
 
 	shms,err := shm.NewServer(wss)
 	if err!=nil {
@@ -129,5 +140,5 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 		return returnError(ERR_START_SHMSERVER)
 	}
 	shms.StartToWatch()
-	return handleSignals(apiserver, gs, wss, shms)
+	return handleSignals(apiserver, gs, wss, nlsServer, shms)
 }

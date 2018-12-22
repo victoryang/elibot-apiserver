@@ -23,15 +23,15 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ip := getSourceIP(r)
-	if auth.CheckSession(ip) {
-		WriteForbiddenResponse(w)
-		return
-	}
-
 	var authority int
 	if !auth.GetUserManager().GetUserAuthority(username, &authority) {
 		Log.Debug("Can't get authority for this user")
+		WriteUnauthorizedResponse(w)
+		return
+	}
+
+	ip := getSourceIP(r)
+	if isRemoteReq(ip) && !isRemoteAuthority(authority) {
 		WriteUnauthorizedResponse(w)
 		return
 	}

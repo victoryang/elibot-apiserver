@@ -13,6 +13,9 @@ const (
 	cmdDragTeach = "drag_teach"
 	cmdGetEncode = "getEncode"
 	cmdSetZeroEncode = "setZeroEncode"
+	cmdStartRecord = "start_record_pos"
+	cmdEndRecord = "end_record_pos"
+	cmdSaveRecord = "save_record_pos"
 )
 
 func setServoStatus (w http.ResponseWriter, r *http.Request){
@@ -54,4 +57,22 @@ func setZeroEncode (w http.ResponseWriter, r *http.Request){
 
 	Log.Debug("setZeroEncode ", axisno)
 	SendToMCServer(w, cmdSetZeroEncode, ConcatParams(axisno))
+}
+
+func doStartRecord (w http.ResponseWriter, r *http.Request){
+    Log.Debug("start_record_pos ")
+    SendToMCServer(w, cmdStartRecord, nil)
+}
+
+func doEndRecord (w http.ResponseWriter, r *http.Request){
+    Log.Debug("end_record_pos ")
+    SendToMCServer(w, cmdEndRecord, nil)
+}
+
+func doSaveRecord (w http.ResponseWriter, r *http.Request){
+    vars := mux.Vars(r)
+    name := vars["name"]
+
+    Log.Debug("save_record_pos ", name)
+    SendToMCServer(w, cmdSaveRecord, ConcatParams(name))
 }
