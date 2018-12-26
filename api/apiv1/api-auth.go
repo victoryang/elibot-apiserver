@@ -42,6 +42,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func logoutHandler(w http.ResponseWriter, r *http.Request) {
-	auth.ClearSession(getSourceIP(r))
+	auth.ClearSession(getTokenFromHeader(r))
 	WriteSuccessResponse(w, "logout successfully\n")
 }

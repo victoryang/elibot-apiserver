@@ -7,43 +7,39 @@ import (
 type Session struct {
 	Username 		string
 	Authority 		int
-	Token 			string
+	IP 				string
 }
 
+// loginSession   [token]Session
 var loginSession = make(map[string]Session)
 
-func GetLoginedUserAuthority(ip string) int {
-	return loginSession[ip].Authority
+func GetLoginedUserAuthority(token string) int {
+	return loginSession[token].Authority
+}
+
+func GetLoginedUserInfo(token string) Session {
+	return loginSession[token]
 }
 
 func SetSession(username string, authority int, ip string) string {
-	token := createToken(username)
-
+	token := createToken(username, ip)
 	session := Session {
 		Username: 	username,
 		Authority: 	authority,
-		Token:		token,
+		IP:			ip,
 	}
 
-	loginSession[ip] = session
+	loginSession[token] = session
 
 	return token
 }
 
-func CheckSession(ip string) bool {
-	_, ok := loginSession[ip]
+func CheckSession(token string) bool {
+	_, ok := loginSession[token]
 
 	return ok
 }
 
-func VerifySessionToken(token string, ip string) bool {
-	if _, ok := loginSession[ip]; !ok {
-		return false
-	}
-
-	return loginSession[ip].Token == token
-}
-
-func ClearSession(ip string) {
-	delete(loginSession, ip)
+func ClearSession(token string) {
+	delete(loginSession, token)
 }

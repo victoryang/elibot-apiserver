@@ -96,31 +96,30 @@ func authenticator(w http.ResponseWriter, r *http.Request, next http.Handler) {
 
 	ip := getSourceIP(r)
 
+	var authority int = AuthorityLogout
+	if token := getTokenFromHeader(r); token!="" {
+		if !auth.CheckSession(token) {
+			WriteUnauthorizedResponse(w)
+			return
+		}
+
+		authority = auth.GetLoginedUserAuthority(token)
+	}
+
 	/* Reject remote request, if:
 	 * 1. remote mode not on
-	 * 2. remote mode on, but no user login
+	 * 2. remote mode on, but not a logined user
 	 */
 	if isRemoteReq(ip) {
 		if remoteModeOff() {
 			WriteForbiddenResponse(w)
 			return
 		} else {
-			if !auth.CheckSession(ip) {
+			if authority == AuthorityLogout {
 				WriteUnauthorizedResponse(w)
 				return
 			}
 		}
-	}
-
-	var authority int = AuthorityLogout
-	if auth.CheckSession(ip) {
-		token := getTokenFromHeader(r)
-		if !auth.VerifySessionToken(token, ip) {
-			WriteUnauthorizedResponse(w)
-			return
-		}
-
-		authority = auth.GetLoginedUserAuthority(ip)
 	}
 
 	if MustVerify(funcId) {
