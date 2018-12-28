@@ -91,7 +91,7 @@ func AddUserWithPassword(u User, password string) int {
 	}
 	defer stmtU.Close()
 
-	if _, err2 := stmtU.Exec(u.Name, u.Mail, u.Mobile, u.Authority, defautlStatus); err2!=nil {
+	if _, err2 := stmtU.Exec(u.Name, u.Mail, u.Mobile, u.Authority); err2!=nil {
 		return ErrCode(err2)
 	}
 
