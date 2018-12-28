@@ -25,6 +25,16 @@ const (
 var remoteMode int
 var whitelist = make([]string, 0)
 
+var redirectFuncIdMap = map[string]string{
+	"param.softlimit.limit_min_pos": "PARAM0200030",
+	"param.softlimit.limit_max_pos": "PARAM0200030",
+	"param.speed.speed_max_joint": "PARAM0200040",
+	"param.speed.speed_min_joint": "PARAM0200040",
+	"param.global.remoteAccessEnabled": "PARAM0200060",
+	"param.system.lcd_backlight": "SYSSETTING130020010",
+	"param.system.lcd_time": "SYSSETTING130020020",
+}
+
 func remoteModeOff() bool {
 	return remoteMode == DefualtMode
 }
@@ -86,6 +96,24 @@ func MustVerify(funcId string) bool {
 	return true
 }
 
+func MustRedirectFuncId(funcId string) bool {
+	ret := false
+	switch funcId {
+		case "setParam":
+			ret = true
+		default:
+	}
+
+	return ret
+}
+
+func redirectFuncId(funcId *string, r *http.Request) {
+	id := mux.Vars(r)["md_id"]
+	if redirect, ok := redirectFuncIdMap[id]; ok {
+		*funcId = redirect
+	}
+}
+
 func authenticator(w http.ResponseWriter, r *http.Request, next http.Handler) {
 	funcId := mux.CurrentRoute(r).GetName()
 
@@ -124,6 +152,12 @@ func authenticator(w http.ResponseWriter, r *http.Request, next http.Handler) {
 
 	if MustVerify(funcId) {
 		Log.Debug("currentRoute is: ", funcId)
+
+		if MustRedirectFuncId(funcId) {
+			redirectFuncId(&funcId, r)
+			Log.Debug("redirect to route ", funcId)
+		}
+
 		if !VerifyFunc(funcId, authority) {
 			WriteUnauthorizedResponse(w)
 			return
