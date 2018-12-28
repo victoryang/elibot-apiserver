@@ -31,9 +31,12 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	ip := getSourceIP(r)
-	if isRemoteReq(ip) && !isRemoteAuthority(authority) {
-		WriteUnauthorizedResponse(w)
-		return
+	if isRemoteReq(ip) {
+		if remoteModeOff() || !isRemoteAuthority(authority) {
+			Log.Debug("remote check fails")
+			WriteForbiddenResponse(w)
+			return
+		}
 	}
 
 	token := auth.SetSession(username, authority, ip)
