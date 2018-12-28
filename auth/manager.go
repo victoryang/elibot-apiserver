@@ -81,22 +81,22 @@ func (m *UserManager) GetUser(name string, user *db.User) bool {
 	return false
 }
 
-func (m *UserManager) AddUser(u db.User, pwd string) bool {
+func (m *UserManager) AddUser(u db.User, pwd string) int {
 	var epwd string
 	if err := encodePassword(pwd, &epwd); err!=nil {
-		return false
+		return ErrConvertPwd
 	}
 
-	if !db.AddUserWithPassword(u, epwd) {
-		Log.Error("Could not add item into user table")
-		return false
+	if errCode := db.AddUserWithPassword(u, epwd); errCode!=db.ErrNone {
+		Log.Error("Could not add item into user table: ", errCode)
+		return errCode
 	}
 
 	m.Mutex.Lock()
 	defer m.Mutex.Unlock()
 
 	m.UpdateUserList()
-	return true
+	return ErrNone
 }
 
 func (m *UserManager) RemoveUser(name string) bool {

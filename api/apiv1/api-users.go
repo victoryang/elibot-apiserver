@@ -70,8 +70,8 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !auth.GetUserManager().AddUser(u, vars["pwd"]) {
-		WriteInternalServerErrorResponse(w, ERRFAILTOOPERATEUSER)
+	if eCode := auth.GetUserManager().AddUser(u, vars["pwd"]); eCode!=auth.ErrNone {
+		WriteInternalServerErrorResponse(w, eCode)
 		return
 	}
 

@@ -75,50 +75,42 @@ func ModifyUser(u User) error {
 	return PrepareAndExecuteCommand(userUpdateCommand, u.Mail, u.Mobile, u.Authority, u.Name)
 }
 
-func AddUserWithPassword(u User, password string) bool {
+func AddUserWithPassword(u User, password string) int {
 	mu.Lock()
 	defer mu.Unlock()
 
-	if u.Name == "" || password == "" {
-		return false
-	}
-
 	tx, err := conn.Begin()
 	if err!=nil {
-		Log.Error("failed to begin transaction")
-		return false
+		return ErrCode(err)
 	}
 	defer tx.Rollback()
 
 	stmtU, err1 := tx.Prepare(userInsertCommand)
 	if err1!=nil {
-		Log.Error("failed to prepare stmtU: ", err1)
-		return false
+		return ErrCode(err1)
 	}
 	defer stmtU.Close()
 
-	if _, err2 := stmtU.Exec(u.Name, u.Mail, u.Mobile, u.Authority); err2!=nil {
-		Log.Error("failed to exec stmtU: ", err2)
-		return false
+	if _, err2 := stmtU.Exec(u.Name, u.Mail, u.Mobile, u.Authority, defautlStatus); err2!=nil {
+		return ErrCode(err2)
 	}
 
 	stmtS, err3 := tx.Prepare(shadowInsertCommand)
 	if err!=nil {
-		Log.Error("failed to prepare stmtS: ", err3)
-		return false
+		return ErrCode(err3)
 	}
 	defer stmtS.Close()
 
 	if _, err4 := stmtS.Exec(u.Name, password); err4!=nil {
-		Log.Error("failed to exec stmtS: ", err4)
-		return false
+		return ErrCode(err4)
 	}
 
-	if err = tx.Commit(); err!=nil {
-		return false
+	err = tx.Commit()
+	if err!=nil {
+		return ErrCode(err)
 	}
 
-	return true
+	return ErrNone
 }
 
 func RemoveUserAndPassword(name string) bool {
