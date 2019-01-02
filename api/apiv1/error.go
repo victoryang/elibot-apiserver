@@ -20,9 +20,14 @@ const (
 
 	ERRRUNCMD = 400
 
+	// User management
 	ERRFAILTOLISTUSER = 501
 	ERRFAILTOOPERATEUSER = 502
 	ERRFAILTOOPERATEPWD = 503
+
+	// Err From Modules
+	ERRADDEXISTUSER = 102067
+	ERRCONVERTPWD = 200001
 )
 
 var ErrStringMap = map[int]string {
@@ -47,7 +52,11 @@ var ErrStringMap = map[int]string {
 
 	ERRFAILTOLISTUSER: 			"Fail to list user",
 	ERRFAILTOOPERATEUSER:		"Fail to operate user",
-	ERRFAILTOOPERATEPWD:			"Fail to operate password",
+	ERRFAILTOOPERATEPWD:		"Fail to operate password",
+
+	// User Management
+	ERRADDEXISTUSER:			"User exists",
+	ERRCONVERTPWD:				"Wrong format password",
 }
 
 func ErrMsg(errno int) string {

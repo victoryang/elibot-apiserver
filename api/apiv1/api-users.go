@@ -70,8 +70,8 @@ func addUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !auth.GetUserManager().AddUser(u, vars["pwd"]) {
-		WriteInternalServerErrorResponse(w, ERRFAILTOOPERATEUSER)
+	if eCode := auth.GetUserManager().AddUser(u, vars["pwd"]); eCode!=auth.ErrNone {
+		WriteInternalServerErrorResponse(w, eCode)
 		return
 	}
 
@@ -124,14 +124,28 @@ func modifyUser(w http.ResponseWriter, r *http.Request) {
 func changePassword(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 
-	if vars["username"] == "" || vars["spwd"] == "" || vars["dpwd"] == "" {
+	if vars["username"] == "" || vars["dpwd"] == "" {
 		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
 		return
 	}
 
-	if !auth.GetUserManager().VerifyPassword(vars["username"], vars["spwd"]) {
+	token := getTokenFromHeader(r)
+	if !auth.CheckSession(token) {
 		WriteUnauthorizedResponse(w)
 		return
+	}
+
+	cu := auth.GetLoginedUserInfo(token)
+	if cu.Username != ADMINISTRATOR && cu.Username != vars["username"] {
+		WriteForbiddenResponse(w)
+		return
+	}
+
+	if cu.Username == vars["username"] {
+		if !auth.GetUserManager().VerifyPassword(vars["username"], vars["spwd"]) {
+			WriteUnauthorizedResponse(w)
+			return
+		}
 	}
 
 	if !auth.GetUserManager().ChangePassword(vars["username"], vars["dpwd"]) {
