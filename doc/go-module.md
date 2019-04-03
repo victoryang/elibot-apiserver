@@ -1,5 +1,7 @@
 # Go Module
 
+[Athens](https://docs.gomods.io/)
+
 ## Enable Go Module
     GO111MODULE=on
 
@@ -14,4 +16,8 @@
     go build -mod=vendor
 
 ## Edit go.mod
-    go mod edit -require="{module_name}@{version_number}"
+    go mod edit -require={module_name}@{version_number}
+
+## Replace go.mod
+    go mod edit -replace={old}[@v]={new}[@v]
+    go mod edit -dropreplace={old}[@v]
