@@ -8,7 +8,7 @@ MRJ = thirdparty/mrj/
 all: api-server
 
 api-server: libmrj.so libmcsql.so
-	CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 $(GO) build -v -o $@
+	CC=arm-linux-gnueabihf-gcc GOOS=linux GOARCH=arm GOARM=6 CGO_ENABLED=1 $(GO) build -v -mod=vendor -o $@
 
 clean:
 	$(MAKE) -C $(MCSQL) clean
