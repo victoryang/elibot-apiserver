@@ -247,8 +247,7 @@ char* elt_get_sysvar(int datatype, int start, int end) {
     return ret;
 }
 
-int elt_get_io_in(int addr)
-{
+int elt_get_io_in(int addr) {
     int index = 0;
     int value = 0;
 
@@ -267,8 +266,7 @@ int elt_get_io_in(int addr)
     return value;
 }
 
-int elt_get_io_out(int addr)
-{
+int elt_get_io_out(int addr) {
     int index = 0;
     int value = 0;
 
@@ -287,8 +285,7 @@ int elt_get_io_out(int addr)
     return value;
 }
 
-int elt_get_io_vin(int addr)
-{
+int elt_get_io_vin(int addr) {
     int index = 0;
     int value = 0;
 
@@ -303,8 +300,7 @@ int elt_get_io_vin(int addr)
     return value;
 }
 
-int elt_get_io_vout(int addr)
-{
+int elt_get_io_vout(int addr) {
     int index = 0;
     int value = 0;
 
@@ -323,8 +319,7 @@ int elt_get_io_vout(int addr)
     return value;
 }
 
-static cJSON* setElementToArray(volatile uint8_t* base, int array_size)
-{
+static cJSON* setElementToArray(volatile uint8_t* base, int array_size) {
     int i=0;
     cJSON* array = cJSON_CreateArray();
     for (;i<array_size;i++) {
@@ -333,8 +328,7 @@ static cJSON* setElementToArray(volatile uint8_t* base, int array_size)
     return array;
 }
 
-static cJSON* get_plc()
-{
+static cJSON* get_plc() {
     cJSON* item = cJSON_CreateObject();
     cJSON_AddItemToObject(item, "PLC_IN", setElementToArray(SHARE_RES(plc).PLC_IN, IO_IN_NUM));
     cJSON_AddItemToObject(item, "PLC_OUT", setElementToArray(SHARE_RES(plc).PLC_OUT, IO_OUT_NUM));
@@ -344,8 +338,7 @@ static cJSON* get_plc()
     return item;
 }
 
-char* elt_get_plc()
-{
+char* elt_get_plc() {
     cJSON* root = cJSON_CreateObject();
     cJSON_AddItemToObject(root, "plc", get_plc());
 
@@ -354,8 +347,7 @@ char* elt_get_plc()
     return ret;
 }
 
-char* elt_get_main_program_name()
-{
+char* elt_get_main_program_name() {
     cJSON* json = cJSON_CreateString(GetMainfile());
 
     char *ret = cJSON_PrintUnformatted(json);
@@ -363,23 +355,19 @@ char* elt_get_main_program_name()
     return ret;
 }
 
-int elt_get_manual_speed_rate()
-{
+int elt_get_manual_speed_rate() {
     return GetManualSpeedRate();
 }
 
-int elt_get_tool_num()
-{
+int elt_get_tool_num() {
     return GetToolNumber();
 }
 
-int elt_get_user_num()
-{
+int elt_get_user_num() {
     return GetUserNumber();
 }
 
-static cJSON* get_zero_encode()
-{
+static cJSON* get_zero_encode() {
     int i = 0;
     cJSON* item;
     item = cJSON_CreateArray();
@@ -389,8 +377,7 @@ static cJSON* get_zero_encode()
     return item;
 }
 
-static cJSON* get_origin()
-{
+static cJSON* get_origin() {
     int i = 0;
     cJSON* item;
     item = cJSON_CreateArray();
@@ -400,8 +387,7 @@ static cJSON* get_origin()
     return item;
 }
 
-static cJSON* get_nv()
-{
+static cJSON* get_nv() {
     cJSON* item;
     item = cJSON_CreateObject();
     cJSON_AddItemToObject(item, "projectname", cJSON_CreateString(GetMainfile()));
@@ -418,8 +404,7 @@ static cJSON* get_nv()
     return item;
 }
 
-char* elt_get_nv()
-{
+char* elt_get_nv() {
     cJSON* root = cJSON_CreateObject();
     cJSON_AddItemToObject(root, "nv", get_nv());
 
@@ -428,13 +413,11 @@ char* elt_get_nv()
     return ret;
 }
 
-int elt_get_robot_state()
-{
+int elt_get_robot_state() {
     return GetRobotState();
 }
 
-char* elt_get_cur_robot_pos()
-{
+char* elt_get_cur_robot_pos() {
     cJSON* json = cJSON_CreateDoubleArray(RobotRes_MachPos_base, AXIS_COUNT);
 
     char *ret = cJSON_PrintUnformatted(json);
@@ -442,8 +425,7 @@ char* elt_get_cur_robot_pos()
     return ret;
 }
 
-char* elt_get_cur_robot_pose()
-{
+char* elt_get_cur_robot_pose() {
     cJSON* json = cJSON_CreateDoubleArray(RobotRes_MachPose_base, 6);
 
     char *ret = cJSON_PrintUnformatted(json);
@@ -451,33 +433,27 @@ char* elt_get_cur_robot_pose()
     return ret;
 }
 
-int elt_get_cur_program_line()
-{
+int elt_get_cur_program_line() {
     return GetCurLine();
 }
 
-int elt_get_servo_enabled()
-{
+int elt_get_servo_enabled() {
     return GetServoReady();
 }
 
-int elt_can_motor_run()
-{
+int elt_can_motor_run() {
     return GETMOTOR_RUN_STATE();
 }
 
-int elt_get_speed_modify_play()
-{
+int elt_get_speed_modify_play() {
     return NVRAM_PARA(speed_modify_play);
 }
 
-int elt_get_robot_mode()
-{
+int elt_get_robot_mode() {
     return GET_TEACH_MODE();
 }
 
-static cJSON* get_resource()
-{
+static cJSON* get_resource() {
     cJSON* item;
     item = cJSON_CreateObject();
     cJSON_AddItemToObject(item, "autorun_cycleMode", cJSON_CreateNumber(GET_AUTORUN_CYCLEMODE()));
@@ -499,8 +475,7 @@ static cJSON* get_resource()
     return item;
 }
 
-char* elt_get_resource()
-{
+char* elt_get_resource() {
     cJSON* root = cJSON_CreateObject();
     cJSON_AddItemToObject(root, "resource", get_resource());
 
@@ -509,28 +484,23 @@ char* elt_get_resource()
     return ret;
 }
 
-int elt_get_remote_mode_status()
-{
+int elt_get_remote_mode_status() {
     return (int)GetRemoteAccessState();
 }
 
-int elt_get_encryption_status()
-{
+int elt_get_encryption_status() {
     return GetEncryptState();
 }
 
-int elt_get_encryption_remain_time()
-{
+int elt_get_encryption_remain_time() {
     return GetEncryptRemainTime();
 }
 
-char* elt_get_machine_code()
-{
+char* elt_get_machine_code() {
     return GetEncryptMachCode();
 }
 
-int elt_resource_init()
-{
+int elt_resource_init() {
     int ret = init_nvram(NULL);
     if (ret < 0)
     {

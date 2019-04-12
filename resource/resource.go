@@ -10,45 +10,31 @@ import (
     "unsafe"
 )
 
+func decode(cstr *C.char) []byte {
+    gostr := C.GoString(cstr)
+    defer C.free(unsafe.Pointer(cstr))
+
+    return []byte(gostr)
+}
+
 func GetNVOnce() []byte {
-    cstr := C.elt_get_nv()
-
-    gostr := C.GoString(cstr)
-    defer C.free(unsafe.Pointer(cstr))
-
-    return []byte(gostr)
+    return decode(C.elt_get_nv())
 }
 
-func GetSysVar(datatype int, start int, end int) []byte {
-    cstr := C.elt_get_sysvar(C.int(datatype), C.int(start), C.int(end))
-    gostr := C.GoString(cstr)
-    defer C.free(unsafe.Pointer(cstr))
-    return []byte(gostr)
+func GetSysVar(dtype int, start int, end int) []byte {
+    return decode(C.elt_get_sysvar(C.int(dtype), C.int(start), C.int(end)))
 }
 
-func GetLocVar(datatype int, num int, start int, end int) []byte {
-    cstr := C.elt_get_locvar(C.int(datatype), C.int(num), C.int(start), C.int(end))
-    gostr := C.GoString(cstr)
-    defer C.free(unsafe.Pointer(cstr))
-    return []byte(gostr)
+func GetLocVar(dtype int, num int, start int, end int) []byte {
+    return decode(C.elt_get_locvar(C.int(dtype), C.int(num), C.int(start), C.int(end)))
 }
 
 func GetPLCOnce() []byte {
-    cstr := C.elt_get_plc()
-
-    gostr := C.GoString(cstr)
-    defer C.free(unsafe.Pointer(cstr))
-
-    return []byte(gostr)
+    return decode(C.elt_get_plc())
 }
 
-func GetSharedOnce() []byte {
-    cstr := C.elt_get_resource()
-
-    gostr := C.GoString(cstr)
-    defer C.free(unsafe.Pointer(cstr))
-
-    return []byte(gostr)
+func GetResourceOnce() []byte {
+    return decode(C.elt_get_resource())
 }
 
 var crc_nv int = 0
