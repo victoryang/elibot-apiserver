@@ -15,7 +15,7 @@ import (
 	"elibot-apiserver/db"
 	"elibot-apiserver/settings"
 	"elibot-apiserver/config"
-	"elibot-apiserver/shm"
+	"elibot-apiserver/resource"
 	"elibot-apiserver/websocket"
 	"elibot-apiserver/alarm"
 	"elibot-apiserver/netlink"
@@ -26,7 +26,7 @@ const (
 	mcserverAddress = "127.0.0.1:8055"
 )
 
-func handleSignals(s *api.Server, gs *api.GrpcServer, wss *websocket.WsServer, nlsServer *netlink.NLServer, shms *shm.ShmServer) error {
+func handleSignals(s *api.Server, gs *api.GrpcServer, wss *websocket.WsServer, nlsServer *netlink.NLServer, reserver *resource.ResServer) error {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
@@ -38,7 +38,7 @@ func handleSignals(s *api.Server, gs *api.GrpcServer, wss *websocket.WsServer, n
 			//reload config file
 		default:
 			// stop server
-			shms.Shutdown()
+			reserver.Shutdown()
 
 			if nlsServer!=nil {
 				nlsServer.Close()
@@ -134,11 +134,10 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 	}
 	nlsServer.Start()
 
-	shms,err := shm.NewServer(wss)
-	if err!=nil {
-		Log.Error(err.Error())
-		return returnError(ERR_START_SHMSERVER)
-	}
-	shms.StartToWatch()
-	return handleSignals(apiserver, gs, wss, nlsServer, shms)
+	reserver,err := resource.NewServer(wss)
+    if err != nil {
+        os.Exit(ERR_START_RESERVER)
+    }
+    reserver.Start()
+	return handleSignals(apiserver, gs, wss, nlsServer, reserver)
 }
