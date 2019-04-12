@@ -8,8 +8,8 @@ import(
     "time"
     "sync"
 
-    "api-server/websocket"
-    Log "api-server/log"
+    "elibot-apiserver/websocket"
+    Log "elibot-apiserver/log"
 )
 
 const (
