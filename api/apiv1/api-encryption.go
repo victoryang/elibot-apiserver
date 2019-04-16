@@ -16,14 +16,12 @@ const (
 
 func getEncryptionStatus(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get encryption status")
-	var status int
-	SendToParamServerWithReply(w, "get_encryption_status", nil, &status)
+	WriteSuccessResponse(w, resource.GetEncryptionStatus())
 }
 
 func getEncryptionRemainTime(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get encryption remain time")
-	var remaintime int
-	SendToParamServerWithReply(w, "get_encryption_remain_time", nil, &remaintime)
+	WriteSuccessResponse(w, resource.GetEncryptionRemainTime())
 }
 
 func generateMachineCode(w http.ResponseWriter, r *http.Request) {

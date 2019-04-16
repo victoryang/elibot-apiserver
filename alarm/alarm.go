@@ -5,11 +5,10 @@ import (
 	"strings"
 	"github.com/fsnotify/fsnotify"
 	Log "elibot-apiserver/log"
-	"elibot-apiserver/paramserver"
+	"elibot-apiserver/websocket"
 )
 
 var logfile = "/rbctrl/mcserver-err.log"
-var serviceMethod = "push_message_to_network"
 var records []Record
 
 type WsResponse struct {
@@ -46,20 +45,10 @@ func handleWriteEvent() {
 	}
 
 	message, err := json.Marshal(WsResponse{Alarm: ret, NewItemNo: getUnReadRecordNumber()})
-	if err!=nil {
+	if err != nil {
 		Log.Error("Could not marshal to json ", err)
 	} else {
-		var reply bool
-		params := make(map[string]interface{})
-		params["message"] = string(message)
-
-	    err := paramserver.SendToParamServerWithJsonRpc(serviceMethod, params, &reply)
-	    if err!=nil {
-	        Log.Error("Could not call rpc request to param server: ", err)
-	        return
-	    }
-
-	    Log.Debug("reply is ", reply)
+		websocket.PushBytes(message)
 	}
 	return
 }

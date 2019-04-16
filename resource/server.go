@@ -27,13 +27,12 @@ func REGISTERFUNC(k string, f WatchFunc) {
 }
 
 type ResServer struct {
-    Wss         *websocket.WsServer
     Hit         chan []byte
     Ctx         context.Context
     Cancel      context.CancelFunc
 }
 
-func sender(ctx context.Context, ws *websocket.WsServer, hit chan []byte) {
+func sender(ctx context.Context, hit chan []byte) {
     Log.Print("Shared memory server started...")
 
     DONE:
@@ -42,9 +41,7 @@ func sender(ctx context.Context, ws *websocket.WsServer, hit chan []byte) {
         case <-ctx.Done():
             break DONE
         case res := <-hit:
-            if ws != nil {
-                ws.PushBytes(res)
-            }
+            websocket.PushBytes(res)
         }
     }
 }
@@ -82,14 +79,13 @@ func (s *ResServer) Shutdown() {
 
 func (s *ResServer) Start() {
     go worker(s.Ctx, s.Hit)
-    go sender(s.Ctx, s.Wss, s.Hit)
+    go sender(s.Ctx, s.Hit)
 }
 
-func NewServer(server *websocket.WsServer) (*ResServer, error){
+func NewServer() (*ResServer, error){
     s := new(ResServer)
     ctx, cancel := context.WithCancel(context.Background())
     s = &ResServer{
-        Wss:    server,
         Hit:    make(chan []byte, BufferSize),
         Ctx:    ctx,
         Cancel: cancel,
@@ -99,7 +95,7 @@ func NewServer(server *websocket.WsServer) (*ResServer, error){
         return nil, err
     }
     initWatchFuncs()
-    server.NotificationRegister(handleMsg)
+    websocket.NotificationRegister(handleMsg)
     return s, nil
 }
 

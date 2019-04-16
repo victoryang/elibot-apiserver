@@ -9,7 +9,6 @@ import (
 	Log "elibot-apiserver/log"
 	"elibot-apiserver/api"
 	"elibot-apiserver/mcserver"
-	"elibot-apiserver/paramserver"
 	"elibot-apiserver/auth"
 	"elibot-apiserver/sqlitedb"
 	"elibot-apiserver/db"
@@ -26,7 +25,7 @@ const (
 	mcserverAddress = "127.0.0.1:8055"
 )
 
-func handleSignals(s *api.Server, gs *api.GrpcServer, wss *websocket.WsServer, nlsServer *netlink.NLServer, reserver *resource.ResServer) error {
+func handleSignals(s *api.Server, gs *api.GrpcServer, nlsServer *netlink.NLServer, reserver *resource.ResServer) error {
 	signal.Ignore()
 	signalQueue := make(chan os.Signal)
 	signal.Notify(signalQueue, syscall.SIGHUP, os.Interrupt)
@@ -44,7 +43,7 @@ func handleSignals(s *api.Server, gs *api.GrpcServer, wss *websocket.WsServer, n
 				nlsServer.Close()
 			}
 
-			wss.Shutdown()
+			websocket.Shutdown()
 
 			gs.Shutdown()
 			
@@ -102,11 +101,6 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 		os.Exit(ERR_START_MCSERVER)
 	}
 
-	if err := paramserver.NewRpcClient(); err!=nil {
-		Log.Error("Error to connect to param server")
-		os.Exit(ERR_START_PARAMSERVER)
-	}
-
 	apiserver := api.NewApiServer(cfg)
 	if apiserver == nil {
 		Log.Error("Error in starting apiserver")
@@ -120,8 +114,7 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 		return returnError(ERR_START_GRPCSERVER)
 	}
 
-	wss := websocket.NewWsServer(cfg.Websocket)
-	wss.Run()
+	websocket.StartServer(cfg.Websocket)
 
 	if err := alarm.NewAlarmMonitor(); err!=nil {
 		Log.Error("Could not watch server log")

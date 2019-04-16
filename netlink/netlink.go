@@ -7,11 +7,7 @@ import (
 	"syscall"
 
 	Log "elibot-apiserver/log"
-	"elibot-apiserver/paramserver"
-)
-
-const (
-	serviceMethod = "push_message_to_network"
+	"elibot-apiserver/websocket"
 )
 
 var ctx, cancel = context.WithCancel(context.Background())
@@ -39,17 +35,7 @@ func handleMsg(msg []byte) {
 	if err!=nil {
 		Log.Error("Could not marshal to json ", err)
 	} else {
-		var reply bool
-		params := make(map[string]interface{})
-		params["message"] = string(message)
-
-	    err := paramserver.SendToParamServerWithJsonRpc(serviceMethod, params, &reply)
-	    if err!=nil {
-	        Log.Error("Could not call rpc request to param server: ", err)
-	        return
-	    }
-
-	    Log.Debug("reply is ", reply)
+		websocket.PushBytes(message)
 	}
 	return
 }

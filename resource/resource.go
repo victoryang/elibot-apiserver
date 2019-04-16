@@ -37,6 +37,85 @@ func GetResourceOnce() []byte {
     return decode(C.elt_get_resource())
 }
 
+/*v2 api*/
+func GetIoInput(addr int) int {
+    return int(C.elt_get_io_in(C.int(addr)))
+}
+
+func GetIoOutput(addr int) int {
+    return int(C.elt_get_io_out(C.int(addr)))
+}
+
+func GetIoVirtualInput(addr int) int {
+    return int(C.elt_get_io_vin(C.int(addr)))
+}
+
+func GetIoVirtualOutput(addr int) int {
+    return int(C.elt_get_io_vout(C.int(addr)))
+}
+
+func GetRobotState() int {
+    return int(C.elt_get_robot_state())
+}
+
+func GetRobotMode() int {
+    return int(C.elt_get_robot_mode())
+}
+
+func GetCurRobotPos() []byte {
+    return decode(C.elt_get_cur_robot_pos())
+}
+
+func GetCurRobotPose() []byte {
+    return decode(C.elt_get_cur_robot_pose())
+}
+
+func GetCurProgramLine() int {
+    return int(C.elt_get_cur_program_line())
+}
+
+func GetServoStatus() int {
+    return int(C.elt_get_servo_enabled())
+}
+
+func GetMotorStatus() int {
+    return int(C.elt_can_motor_run())
+}
+
+func GetPlaySpeed() int {
+    return int(C.elt_get_speed_modify_play())
+}
+
+func GetMainProgramName() []byte {
+    return decode(C.elt_get_main_program_name())
+}
+
+func GetManualSpeedRate() int {
+    return int(C.elt_get_manual_speed_rate())
+}
+
+func GetToolNum() int {
+    return int(C.elt_get_tool_num())
+}
+
+func GetUserNum() int {
+    return int(C.elt_get_user_num())
+}
+
+func GetEncryptionStatus() int {
+    return int(C.elt_get_encryption_status())
+}
+
+func GetEncryptionRemainTime() int {
+    return int(C.elt_get_encryption_remain_time())
+}
+
+func GetRemoteModeFromResource() int {
+    return int(C.elt_get_remote_mode_status())
+}
+
+/*--------------------------------------------------*/
+
 var crc_nv int = 0
 var crc_resource int = 0
 var crc_plc int = 0
