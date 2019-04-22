@@ -126,10 +126,10 @@ func runDaemon(cmd *cobra.Command, args []string) error {
 	}
 	nlsServer.Start()
 
-	reserver,err := resource.NewServer(wss)
+	reserver,err := resource.NewServer()
     if err != nil {
         os.Exit(ERR_START_RESERVER)
     }
     reserver.Start()
-	return handleSignals(apiserver, gs, wss, nlsServer, reserver)
+	return handleSignals(apiserver, gs, nlsServer, reserver)
 }
