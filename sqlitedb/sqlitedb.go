@@ -7,7 +7,7 @@ import "C"
 import (
     "unsafe"
 
-    //Log "api-server/log"
+    //Log "elibot-apiserver/log"
 )
 
 func InitSqliteDB(db_name string) {

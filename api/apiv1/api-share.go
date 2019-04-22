@@ -6,7 +6,7 @@ import (
 	"errors"
 
 	"github.com/gorilla/mux"
-	"api-server/resource"
+	"elibot-apiserver/resource"
 )
 
 const (

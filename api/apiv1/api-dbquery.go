@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/mux"
 
 	Log "elibot-apiserver/log"
-	db "api-server/sqlitedb"
+	db "elibot-apiserver/sqlitedb"
 )
 
 func getAllArc(w http.ResponseWriter, r *http.Request) {
