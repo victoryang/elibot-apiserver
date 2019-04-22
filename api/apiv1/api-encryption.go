@@ -3,6 +3,7 @@ package apiv1
 import (
 	"net/http"
 	Log "elibot-apiserver/log"
+	"elibot-apiserver/resource"
 
 	"github.com/gorilla/mux"
 )
