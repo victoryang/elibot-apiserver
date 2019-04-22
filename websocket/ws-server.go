@@ -41,7 +41,7 @@ func StartServer(c *config.WebsocketEntryPoint) {
     Server.hub = NewHub()
     go Server.hub.Run()
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-                ServeHome("assets/index.html",w,r)
+                ServeHome(c.IndexFile,w,r)
         })
     http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
                 ServeWs(Server.hub, w, r)
