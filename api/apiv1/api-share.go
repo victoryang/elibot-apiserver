@@ -6,6 +6,7 @@ import (
 	"errors"
 
 	"github.com/gorilla/mux"
+	"elibot-apiserver/resource"
 )
 
 const (
@@ -65,11 +66,7 @@ func getSysFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	params := make(map[string]interface{})
-	params["datatype"] = int32(datatype)
-	params["start"] = int32(start)
-	params["end"] = int32(end)
-	SendToParamServer(w, "get_system_variables", params)
+	WriteJsonSuccessResponse(w, resource.GetSysVar(datatype, start, end))
 }
 
 func getcRobLB(w http.ResponseWriter, r *http.Request) {
@@ -92,7 +89,7 @@ func getdRobLV(w http.ResponseWriter, r *http.Request) {
 	getLocFromShm(droblv, w, r)
 }
 
-func getLocFromShm(datatype int32, w http.ResponseWriter, r *http.Request) {
+func getLocFromShm(datatype int, w http.ResponseWriter, r *http.Request) {
 	start, end, err := validateRange(r)
 	if err!=nil {
 		WriteInternalServerErrorResponse(w, ERRINCORRECTRANGE)
@@ -105,22 +102,34 @@ func getLocFromShm(datatype int32, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	params := make(map[string]interface{})
-	params["datatype"] = int32(datatype)
-	params["num"] = int32(num)
-	params["start"] = int32(start)
-	params["end"] = int32(end)
-	SendToParamServer(w, "get_local_variables", params)
+	WriteJsonSuccessResponse(w, resource.GetLocVar(datatype, num, start, end))
 }
 
 func getPLCOnce(w http.ResponseWriter, r *http.Request) {
-	SendToParamServer(w, "get_plc_once", nil)
+	WriteJsonSuccessResponse(w, resource.GetPLCOnce())
 }
 
 func getSharedOnce(w http.ResponseWriter, r *http.Request) {
-	SendToParamServer(w, "get_shared_once", nil)
+	WriteJsonSuccessResponse(w, resource.GetResourceOnce())
 }
 
 func getNVOnce(w http.ResponseWriter, r *http.Request) {
-	SendToParamServer(w, "get_nv_once", nil)
+	WriteJsonSuccessResponse(w, resource.GetNVOnce())
+}
+
+func setSysVarBID(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	d := &RequestData{}
+	if err := ParseBodyToObject(r, d); err!=nil {
+		WriteBadRequestResponse(w, ERRINVALIDBODY)
+		return
+	}
+
+	params := make(map[string]interface{})
+	params["index"] = strconv.Itoa(d.Index)
+	params["type"] = vars["type"]
+	params["value"] = d.Value
+
+	SendToMCServer(w, "setSysVarBID", params)
 }

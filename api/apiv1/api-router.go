@@ -40,12 +40,6 @@ func RegisterAPIv1(r *mux.Router) http.Handler {
 	resourceapi.HandleFunc("/shared", getSharedOnce).Methods("GET")
 	resourceapi.HandleFunc("/nv", getNVOnce).Methods("GET")
 
-	dbapi := r.PathPrefix("/v1/db").Subrouter()
-	dbapi.HandleFunc("/backup", DBBackupDB).Methods("POST")
-	dbapi.HandleFunc("/backup", DBListBackups).Methods("GET")
-	dbapi.HandleFunc("/backup/{name}", DBDelBackup).Methods("DELETE")
-	dbapi.HandleFunc("/backup/{name}/restore", DBRestoreBackup).Methods("POST")
-
 	robotapi := r.PathPrefix("/v1/robot").Subrouter()
 	repositoryapi := robotapi.PathPrefix("/repository").Subrouter()
 	repositoryapi.HandleFunc("/arc", getAllArc).Methods("GET")

@@ -6,6 +6,7 @@ import (
 
 	"elibot-apiserver/auth"
 	Log "elibot-apiserver/log"
+	"elibot-apiserver/resource"
 
 	"github.com/gorilla/mux"
 )
@@ -58,21 +59,10 @@ func isRemoteAuthority(authority int) bool {
 	return false
 }
 
-func InitRemoteModeFromParamServer() {
-	var reply int32
-	if err := InternalSendToParamServer(cmdGetRemoteMode, nil, &reply); err!=nil {
-		Log.Error("init remote mode error: ", err)
-		remoteMode = DefualtMode
-		return
-	}
-
-	Log.Debug("init remote mode: ", reply)
-	remoteMode = int(reply)
-}
-
 func InitAuthorization(wl []string) {
 	whitelist = append(whitelist, wl...)
-	InitRemoteModeFromParamServer()
+	remoteMode = resource.GetRemoteModeFromResource()
+	Log.Debug("init remote mode: ", remoteMode)
 }
 
 func isRemoteReq(ip string) bool {

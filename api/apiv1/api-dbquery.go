@@ -7,141 +7,167 @@ import (
 	"github.com/gorilla/mux"
 
 	Log "elibot-apiserver/log"
+	db "elibot-apiserver/sqlitedb"
 )
 
 func getAllArc(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Arc")
-	SendToParamServer(w, "arc_get_all", nil)
+	WriteJsonSuccessResponse(w, db.GetAllArc())
 }
 
 func getArcParams(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get Arc parameters")
 	vars := mux.Vars(r)
-	params := make(map[string]interface{})
-	file_no, _ := strconv.Atoi(vars["file_no"])
-	params["file_no"] = int32(file_no)
-	params["group"] = vars["group"]
+	file_no, err := strconv.Atoi(vars["file_no"])
+	if err!=nil {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
 
-	SendToParamServer(w, "arc_get_params", params)
+	WriteJsonSuccessResponse(w, db.GetArcParams(int32(file_no), vars["group"]))
 }
 
 func getAllBookprograms(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all bookprograms")
-	SendToParamServer(w, "bookprogram_get_all", nil)
+	WriteJsonSuccessResponse(w, db.GetAllBookprograms())
+}
+
+func getAllDynamics(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting get all dynamics")
+	WriteJsonSuccessResponse(w, db.GetAllDynamics())
+}
+
+func getDynamicsById(w http.ResponseWriter, r *http.Request) {
+	Log.Debug("starting get dynamics by id")
+	vars := mux.Vars(r)
+
+	WriteJsonSuccessResponse(w, db.GetDynamicsById(vars["id"]))
 }
 
 func getAllEnum(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Enum")
-	SendToParamServer(w, "enum_get_all", nil)
+	WriteJsonSuccessResponse(w, db.GetAllEnum())
 }
 
 func getAllExtaxis(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Extaxis")
-	SendToParamServer(w, "extaxis_get_all", nil)
+	WriteJsonSuccessResponse(w, db.GetAllExtaxis())
 }
 
 func getAllInterference(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Interference")
-	SendToParamServer(w, "interference_get_all", nil)
+	WriteJsonSuccessResponse(w, db.GetAllInterference())
 }
 
 func getAllIos(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all IOs")
 	vars := mux.Vars(r)
-	params := make(map[string]interface{})
-	params["group"] = vars["group"]
-	params["lang"] = vars["lang"]
-	auth, _ := strconv.Atoi(vars["auth"])
-	params["auth"] = int32(auth)
-	tech, _ := strconv.Atoi(vars["tech"])
-	params["tech"] = int32(tech)
+	auth, err := strconv.Atoi(vars["auth"])
+	if err!=nil {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
 
-	SendToParamServer(w, "ios_get_all", params)
+	tech, err1 := strconv.Atoi(vars["tech"])
+	if err1!=nil {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
+
+	WriteJsonSuccessResponse(w, db.GetAllIO(vars["group"], vars["lang"], int32(auth), int32(tech)))
 }
 
 func getAllMetadata(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Metadata")
 	vars := mux.Vars(r)
-	params := make(map[string]interface{})
-	params["lang"] = vars["lang"]
 
-	SendToParamServer(w, "metadata_get_all", params)
+	WriteJsonSuccessResponse(w, db.GetAllMetadata(vars["lang"]))
 }
 
 func getAllOperationLog(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Operation Log")
 
 	vars := mux.Vars(r)
-	params := make(map[string]interface{})
-	created_time, _ := strconv.Atoi(vars["created_time"])
-	params["created_time"] = int32(created_time)
-	start, _ := strconv.Atoi(vars["start"])
-	params["start"] = int32(start)
-	pageSize, _ := strconv.Atoi(vars["pageSize"])
-	params["pageSize"] = int32(pageSize)
+	created_time, err := strconv.Atoi(vars["created_time"])
+	if err!=nil {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
 
-	SendToParamServer(w, "operation_record_get_all", params)
+	start, err1 := strconv.Atoi(vars["start"])
+	if err1!=nil {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
+
+	page_size, err2 := strconv.Atoi(vars["pageSize"])
+	if err2!=nil {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
+
+	WriteJsonSuccessResponse(w, db.GetAllOperationRecord(int32(created_time), int32(start), int32(page_size)))
 }
 
 func getParams(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Parameter")
-	SendToParamServer(w, "params_get_params", nil)
+	WriteJsonSuccessResponse(w, db.GetParams())
 }
 
 func getParameterById(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get Parameter by id")
 	vars := mux.Vars(r)
-	params := make(map[string]interface{})
-	params["md_id"] = vars["md_id"]
 
-	SendToParamServer(w, "params_get_valid_param_by_id", params)
+	WriteJsonSuccessResponse(w, db.GetParameterById(vars["md_id"]))
 }
 
 func getParameterByGroup(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get Parameter by group")
 	vars := mux.Vars(r)
-	params := make(map[string]interface{})
-	params["group"] = vars["group"]
 	
-	SendToParamServer(w, "params_get_valid_param_by_group", params)
+	WriteJsonSuccessResponse(w, db.GetParameterByGroup(vars["group"]))
 }
 
 func getAllRef(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all Ref")
-	SendToParamServer(w, "ref_get_all", nil)
+	WriteJsonSuccessResponse(w, db.GetAllRef())
 }
 
 func getAllToolframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all toolframe")
-	SendToParamServer(w, "toolframe_get_all", nil)
+	WriteJsonSuccessResponse(w, db.GetAllToolframe())
 }
 
 func getToolframeByToolNo(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get toolframe by tool no")
 	vars := mux.Vars(r)
-	params := make(map[string]interface{})
-	toolno, _ := strconv.Atoi(vars["toolno"])
-	params["tool_no"] = int32(toolno)
+	toolno, err := strconv.Atoi(vars["toolno"])
+	if err!=nil {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
 	
-	SendToParamServer(w, "toolframe_get_by_toolno", params)
+	WriteJsonSuccessResponse(w, db.GetToolframeByToolNo(int32(toolno)))
 }
 
 func getAllUserframe(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all userframe")
-	SendToParamServer(w, "userframe_get_all", nil)
+	WriteJsonSuccessResponse(w, db.GetAllUserframe())
 }
 
 func getUserframeByUserNo(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get userframe by user no")
 	vars := mux.Vars(r)
-	params := make(map[string]interface{})
-	userno, _ := strconv.Atoi(vars["userno"])
-	params["user_no"] = int32(userno)
+	userno, err := strconv.Atoi(vars["userno"])
+	if err!=nil {
+		WriteBadRequestResponse(w, ERR_REQ_INVALID_PARAMETER)
+		return
+	}
 	
-	SendToParamServer(w, "userframe_get_by_userno", params)
+	WriteJsonSuccessResponse(w, db.GetUserframeByUserNo(int32(userno)))
 }
 
 func getAllZeroPoint(w http.ResponseWriter, r *http.Request) {
 	Log.Debug("starting get all zeropoint")
-	SendToParamServer(w, "zeropoint_get_all", nil)
+	WriteJsonSuccessResponse(w, db.GetAllZeropoint())
 }

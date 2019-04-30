@@ -11,3 +11,12 @@ A api server for elibot
 
 ## build
 	make
+
+## Bump to go 1.12
+    - check missing deps
+       - export GO111MODULE=on
+       - go list -m all
+    - update deps
+       - go mod edit -replace={old}[@v]={new}[@v]
+    - update vendor
+       - go mod vendor
