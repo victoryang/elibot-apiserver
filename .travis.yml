@@ -4,9 +4,9 @@ dist: trusty
 language: go
 
 go:
-  - "1.10.x"
+  - "1.12.x"
 
-go_import_path: ${GOPATH}/src/github.com/victoryang/
+go_import_path: github.com/victoryang/
 
 install:
   - chmod +x travis-ci/install.sh && sh -C travis-ci/install.sh
