@@ -7,14 +7,13 @@ require (
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/golang/protobuf v1.2.0
 	github.com/gorilla/mux v1.6.2
-	github.com/gorilla/websocket v0.0.0-20180605202552-5ed622c449da
+	github.com/gorilla/websocket v1.4.1
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/mattn/go-sqlite3 v0.0.0-20180719091609-b3511bfdd742
 	github.com/rs/cors v1.6.0
 	github.com/sirupsen/logrus v1.2.0
 	github.com/spf13/cobra v0.0.0-20180829160745-99dc12355885
 	github.com/spf13/pflag v0.0.0-20180831151432-298182f68c66 // indirect
-	github.com/square/certstrap v1.1.1
 	github.com/stretchr/testify v1.3.0 // indirect
 	github.com/urfave/negroni v0.0.0-20180130044549-22c5532ea862
 	golang.org/x/net v0.0.0-20190311183353-d8887717615a
